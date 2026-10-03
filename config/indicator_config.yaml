@@ -1,0 +1,12 @@
+{
+  "version": "0.1",
+  "principle": "Facts are data. Greatness is a weighting problem.",
+  "dimensions": [
+    "Regular Season Individual Performance", "Peak", "Longevity", "Playoffs",
+    "Awards", "Team Success", "Defense", "Era Dominance", "Availability / Durability"
+  ],
+  "standardization": "within-season z-score, winsorized to [-3,3]",
+  "peak_windows": [1, 3, 5, 7],
+  "missing_policy": "NA remains unobserved; composites reweight only observed inputs",
+  "model_feature_policy": "use dimension scores to reduce conceptual double counting"
+}

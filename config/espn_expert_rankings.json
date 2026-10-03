@@ -1,0 +1,92 @@
+{
+  "version": "0.3",
+  "researched_at": "2026-10-03",
+  "selection_note": "ESPN节目语境中的不同历史观点样本，不代表ESPN官方立场；并非总体球迷的随机样本。",
+  "experts": [
+    {
+      "id": "stephen-a-2023",
+      "name": "Stephen A. Smith",
+      "role": "ESPN · First Take 主持人",
+      "date": "2023-11-07",
+      "source": {
+        "title": "Stephen's A-List: Top 5 NBA players of all time | First Take",
+        "url": "https://www.youtube.com/watch?v=6xxZ5s1be5E"
+      },
+      "ranking": [
+        "jordami01",
+        "jamesle01",
+        "abdulka01",
+        "johnsma02",
+        "russebi01"
+      ],
+      "note": "采用该次节目公开 Top 5；仅在这五人之间拟合顺序，未入榜球员不被视作低于第五。",
+      "evidence": "ESPN原始视频链接；名单由同期媒体转录交叉核实。",
+      "supporting_sources": [
+        {"title": "The Cold Wire：2023-11-07 逐名转录", "url": "https://www.thecoldwire.com/stephen-a-smith-reveals-his-top-5-nba-players-of-all-time/"},
+        {"title": "Fadeaway World：同期榜单转述", "url": "https://fadeawayworld.net/stephen-a-smith-reveals-top-5-all-time-nba-players"}
+      ]
+    },
+    {
+      "id": "perkins-2021",
+      "name": "Kendrick Perkins",
+      "role": "ESPN 评论员 · 个人公开榜单",
+      "date": "2021-10-15",
+      "source": {
+        "title": "Kendrick Perkins — My top 10 players of all time",
+        "url": "https://twitter.com/KendrickPerkins/status/1449078408168738822"
+      },
+      "ranking": [
+        "jamesle01",
+        "jordami01",
+        "abdulka01",
+        "johnsma02",
+        "birdla01",
+        "onealsh01",
+        "chambwi01",
+        "duncati01",
+        "bryanko01",
+        "russebi01"
+      ],
+      "note": "采用 2021 年个人 Top 10，不宣称是他今天的最新观点。原帖图片未在本次直接复核，使用同期媒体转录交叉核对。",
+      "evidence": "媒体转录交叉核实；保留原帖链接，不标作原图已复核。",
+      "supporting_sources": [
+        {"title": "SportsRush：2021-10-16 完整前十与嵌入原帖", "url": "https://thesportsrush.com/nba-news-kendrick-perkins-picks-lebron-james-as-his-goat-over-michael-jordan-twitterati-objects-to-kobe-bryant-and-hakeem-olajuwon-being-placed-too-low-on-big-perks-list-of-all-time-top-10-play/"},
+        {"title": "Fadeaway World：同期前三名核对", "url": "https://fadeawayworld.net/nba-fans-exploded-after-kendrick-perkins-chose-his-top-75-nba-players-of-all-time-im-triggered-at-the-ridiculousness-of-your-list"}
+      ]
+    },
+    {
+      "id": "skip-2026",
+      "name": "Skip Bayless",
+      "role": "前 ESPN 主持人 · First Take 回访",
+      "date": "2026-05-08",
+      "source": {
+        "title": "Skip Bayless has Stephen A. DEFENDING LEBRON JAMES! | First Take",
+        "url": "https://www.youtube.com/watch?v=CF4zR_NaAck"
+      },
+      "ranking": [
+        "jordami01",
+        "johnsma02",
+        "onealsh01",
+        "abdulka01",
+        "duncati01",
+        "russebi01",
+        "bryanko01",
+        "birdla01",
+        "jamesle01",
+        "chambwi01"
+      ],
+      "note": "前 ESPN 主持人在 2026-05-08 一次性回访中的 Top 10；并非 ESPN 现任主持人。此榜与七维统计可能存在较大冲突，界面如实展示拟合误差。",
+      "evidence": "ESPN原始节目链接；完整顺序经同期文字报道校对；身份由ESPN新闻稿核实。",
+      "supporting_sources": [
+        {
+          "title": "ESPN：一次性回访节目公告",
+          "url": "https://espnpressroom.com/press-release/first-take-to-reunite-stephen-a-smith-skip-bayless-for-one-time-show-on-may-8/"
+        },
+        {
+          "title": "Sporting News / Yahoo：完整榜单转录",
+          "url": "https://sports.yahoo.com/articles/eight-players-skip-bayless-over-172125645.html"
+        }
+      ]
+    }
+  ]
+}

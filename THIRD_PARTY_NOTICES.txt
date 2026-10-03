@@ -1,0 +1,42 @@
+True GOAT — Third-party data and references
+
+本项目不是 NBA、CBA、EuroLeague、ESPN 或其他来源的官方产品，来源不对本项目背书。以下说明不是对全部代码、全部数据的统一再许可，也不声明已取得所有来源内容的额外再授权。
+
+1. Sumitro Datta — NBA Stats (1947-present)
+https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats
+发布者数据卡标注 CC0-1.0：https://creativecommons.org/publicdomain/zero/1.0/
+原始统计派生自 Basketball-Reference；第三方原有权利不因数据卡标注而转移。
+
+2. Gonzalo Gigena — NBA All Time Stats / nba-datasets
+https://www.kaggle.com/datasets/gonzalogigena/nba-all-time-stats
+https://github.com/gonzalo-gigena/nba-datasets
+原作者仓库 MIT，Copyright (c) 2024 Gonzalo Gigena。
+完整上游许可：licenses/GONZALO_MIT.txt
+
+3. Brescou — NBA Statistics Repository
+https://github.com/Brescou/NBA-dataset-stats-player-team
+MIT，Copyright (c) 2023 Brescou。
+完整上游许可：licenses/BRESCOU_MIT.txt
+
+4. FiveThirtyEight — Historical RAPTOR and other NBA data
+https://github.com/fivethirtyeight/nba-player-advanced-metrics
+按发布者公开数据通用声明 https://github.com/fivethirtyeight/data 标注 CC-BY-4.0。
+特定历史仓库未附独立 LICENSE，不将通用声明扩大为额外授权。
+许可：https://creativecommons.org/licenses/by/4.0/
+许可全文：licenses/FIVETHIRTYEIGHT_CC_BY_4.0.txt
+本项目进行了球员筛选、合并核验、单位转换、缺失标记、归一化、汇总统计和派生评分；这些修改和结论不代表原作者观点。数据及许可材料按原许可 AS IS 提供，不附带保证。
+
+5. NBA 官方历史页、新浪 CBA 公开档案、EuroLeague 公开登记资料、公开媒体排名
+逐项来源、日期与链接见各数据包 sources、config/player-aliases.json 和页面来源说明。
+仅保存所用有限事实、简短来源标题和本项目自己的统计或摘要；不再分发完整文章、照片、PDF 或原始网页。
+未找到上述页面的统一开放数据许可，不将其宣称为 CC0/MIT，不授予超出来源的权利。
+中文译名、绰号与拼音是人工检索标签，不声称是唯一官方译名。
+
+6. 弗一把
+https://shnlfriberg.online/
+https://github.com/shnlfriberg/csgofriberg
+仅参考有限猜测次数、颜色和方向反馈的玩法。篮球版独立实现，未复制该项目 AGPL 代码或视觉素材，也非关联产品。
+
+统计快照不是实时数据；完整季后赛/总决赛记录截至2023–24，常规赛、球队及MVP快照截至2025–26，其余按各来源注明日期。
+原始大体积数据、文章全文缓存、私人路径、凭据和本地导出不包含在公开发布包内。
+权利人如需更正数据或提出来源、权利问题，请通过代码仓库 Issue 反馈。

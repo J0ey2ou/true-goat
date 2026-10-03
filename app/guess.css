@@ -1,0 +1,172 @@
+.guess-page { font-variant-numeric:tabular-nums; }
+.guess-page .guess-nav { display:flex; align-items:center; gap:7px; }
+.guess-page .guess-nav a { color:var(--muted); font-size:13px; text-decoration:none; border-radius:6px; padding:10px 14px; white-space:nowrap; }
+.guess-page .guess-nav a[aria-current] { color:var(--lime); background:#2c3724; }
+.guess-page .guess-main { max-width:1520px; }
+.guess-page .guess-hero { display:flex; align-items:center; justify-content:space-between; gap:30px; padding:44px 0 32px; }
+.guess-page .guess-hero h1 { font-size:clamp(30px,3.2vw,45px); font-weight:600; line-height:1.25; letter-spacing:-1.5px; margin:12px 0 15px; }
+.guess-page .guess-hero h1 span { color:var(--lime); }
+.guess-page .guess-hero p { font-size:13px; color:var(--muted); margin:0; line-height:1.8; }
+.guess-page .guess-hero-number { font-size:70px; font-weight:300; letter-spacing:-3px; line-height:1; text-align:right; }
+.guess-page .guess-hero-number span { display:block; font:8px var(--font); letter-spacing:1.5px; margin-top:12px; color:var(--muted); }
+.guess-page .guess-loading { padding:70px 20px; color:var(--muted); text-align:center; }
+.guess-page .guess-settings { display:flex; align-items:center; gap:25px; padding:18px 22px; margin-bottom:20px; }
+.guess-page .guess-mode { display:flex; gap:4px; padding:4px; background:#10180e; border:1px solid #394532; border-radius:8px; }
+.guess-page .guess-mode button { background:transparent; border:0; color:var(--muted); border-radius:5px; padding:10px 17px; font-size:12px; white-space:nowrap; }
+.guess-page .guess-mode button[aria-pressed=true] { background:var(--lime); color:#26321e; font-weight:600; }
+.guess-page .guess-pool-label { display:flex; align-items:center; gap:12px; color:var(--muted); font-size:11px; }
+.guess-page .guess-pool-label select { width:175px; padding:10px 12px; font-size:12px; }
+.guess-page .guess-pool-meta { margin-left:auto; display:grid; text-align:right; gap:3px; }
+.guess-page .guess-pool-meta strong { font-size:13px; font-weight:500; }
+.guess-page .guess-pool-meta span { font-size:10px; color:var(--muted); }
+.guess-page .guess-layout { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:20px; align-items:start; }
+.guess-page .guess-board { min-width:0; padding:24px; }
+.guess-page .guess-board-head { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.guess-page .guess-board-head h2 { margin:7px 0 0; font-size:24px; font-weight:500; letter-spacing:-.4px; }
+.guess-page #guess-board-title { scroll-margin-top:100px; }
+.guess-page .guess-counter { white-space:nowrap; display:flex; gap:9px; align-items:baseline; }
+.guess-page .guess-counter strong { font:34px ui-monospace,monospace; color:var(--lime); }
+.guess-page .guess-counter span { font-size:13px; color:var(--muted); }
+.guess-page .guess-round-note { font-size:11px; line-height:1.8; color:var(--muted); margin:16px 0 20px; }
+.guess-page .guess-year-filter { display:grid; grid-template-columns:minmax(90px,1fr) minmax(70px,100px) 10px minmax(70px,100px) auto; align-items:end; gap:8px; margin-bottom:16px; padding:14px; border:1px solid #3c4834; border-radius:7px; background:#192215; }
+.guess-page .guess-filter-title { align-self:center; display:grid; gap:3px; }
+.guess-page .guess-filter-title strong { font-size:11px; font-weight:500; }
+.guess-page .guess-filter-title span { font-size:9px; color:var(--muted); }
+.guess-page .guess-year-filter label { display:grid; gap:4px; min-width:0; color:var(--muted); font-size:9px; }
+.guess-page .guess-year-filter input { width:100%; min-width:0; height:33px; padding:6px 9px; color:var(--text); background:#252e22; border:1px solid #526045; border-radius:5px; font:12px var(--font); }
+.guess-page .guess-year-filter input[aria-invalid=true] { border-color:var(--orange); }
+.guess-page .guess-year-dash { color:var(--muted); align-self:center; padding-top:15px; }
+.guess-page #guess-year-clear { height:33px; font-size:10px; padding:5px 9px; color:#baccaa; border:1px solid #526045; background:transparent; border-radius:5px; }
+.guess-page #guess-year-clear:disabled { opacity:.4; cursor:default; }
+.guess-page .guess-year-filter p { grid-column:1/-1; margin:0; font-size:9px; color:var(--muted); line-height:1.7; }
+.guess-page #guess-year-note { margin-top:2px; }
+.guess-page #guess-year-status { color:#aec497; }
+.guess-page #guess-year-status.invalid { color:var(--orange); }
+.guess-page .guess-form { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px; }
+.guess-page .guess-combobox { position:relative; min-width:0; }
+.guess-page #guess-search { background:#252e22; border:1px solid #546345; border-radius:7px; color:var(--text); width:100%; min-width:0; height:47px; padding:12px 14px; font-size:13px; }
+.guess-page #guess-search::placeholder { color:#899980; }
+.guess-page #guess-search:disabled { opacity:.5; }
+.guess-page #guess-submit { width:auto; margin:0; gap:8px; justify-content:center; padding:12px 17px; white-space:nowrap; }
+.guess-page .guess-options { position:absolute; z-index:4; top:calc(100% + 6px); left:0; right:0; max-height:330px; overflow:auto; background:#20291c; border:1px solid #65764f; border-radius:7px; box-shadow:0 18px 40px #0007; }
+.guess-page .guess-option { padding:11px 13px; border-bottom:1px solid #37452d; display:flex; justify-content:space-between; gap:10px; cursor:pointer; font-size:12px; }
+.guess-page .guess-option[aria-selected=true] { background:#3b4b2e; }
+.guess-page .guess-option strong { font-weight:500; overflow-wrap:anywhere; }
+.guess-page .guess-option small { display:block; font-size:10px; color:var(--muted); }
+.guess-page .guess-option>span:last-child { white-space:nowrap; font-size:10px; color:#a7ba94; }
+.guess-page .guess-input-hint { font-size:10px; color:#8d9d81; line-height:1.7; margin:9px 0 0; }
+.guess-page .guess-message { font-size:11px; min-height:27px; padding-top:7px; color:var(--orange); }
+.guess-page .guess-legend { display:flex; flex-wrap:wrap; gap:9px 15px; color:var(--muted); font-size:10px; margin:18px 0; }
+.guess-page .guess-legend>span { display:flex; align-items:center; gap:5px; }
+.guess-page .guess-legend i { width:11px; height:11px; border-radius:2px; display:inline-block; }
+.guess-page .correct { background:#345737; border:1px solid #638258; }
+.guess-page .close { background:#66522a; border:1px solid #988044; }
+.guess-page .wrong { background:#30372e; border:1px solid #495243; }
+.guess-page .unknown { background:#20271d; border:1px dashed #758269; color:#a2ae97; }
+.guess-page .guess-history-head { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:10px; padding:12px 0; border-top:1px solid var(--line); }
+.guess-page .guess-history-head>span:last-child { font-size:9px; }
+.guess-page .guess-history-note { margin:-3px 0 12px; color:#8d9d81; font-size:9px; line-height:1.7; }
+.guess-page .guess-row { display:block; padding:14px; margin-bottom:12px; background:#1b2417; border:1px solid #405036; border-radius:8px; }
+.guess-page .guess-player { min-width:0; padding-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.guess-page .guess-player strong { font-size:13px; font-weight:500; overflow-wrap:anywhere; }
+.guess-page .guess-player small { display:block; font-size:10px; color:var(--muted); margin-top:3px; overflow-wrap:anywhere; }
+.guess-page .guess-order { flex-shrink:0; font:11px ui-monospace,monospace; letter-spacing:1px; color:var(--lime); }
+.guess-page .guess-clue-group + .guess-clue-group { margin-top:12px; }
+.guess-page .guess-clue-group h3 { margin:0 0 7px; font-size:9px; line-height:1.3; color:var(--muted); font-weight:400; letter-spacing:.5px; }
+.guess-page .guess-clue-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:6px; }
+.guess-page .guess-cell { min-width:0; min-height:91px; border-radius:5px; display:grid; grid-template-rows:15px minmax(30px,auto) 14px; align-items:center; justify-items:center; text-align:center; padding:8px 5px; row-gap:3px; }
+.guess-page .cell-label { font-size:9px; line-height:1.3; opacity:.8; white-space:nowrap; }
+.guess-page .guess-cell .cell-value { font-size:14px; line-height:1.5; overflow-wrap:anywhere; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; max-width:100%; }
+.guess-page .guess-cell[data-key=teams] .cell-value { font-size:10px; }
+.guess-page .guess-cell small { display:block; font-size:9px; opacity:.8; line-height:1.5; }
+.guess-page .cell-arrow { font-size:17px; line-height:1; margin-left:3px; color:#fff; }
+.guess-page .guess-empty { padding:38px 10px 45px; border-block:1px dashed #45503c; text-align:center; color:var(--muted); }
+.guess-page .guess-empty strong { font-size:15px; font-weight:500; color:#c0cdb3; }
+.guess-page .guess-empty p { font-size:11px; line-height:1.8; max-width:330px; margin:10px auto 0; }
+.guess-page .guess-empty p span { color:#b8cca3; }
+.guess-page .guess-result { margin-top:24px; padding:22px; background:#27351f; border:1px solid #5b7640; border-radius:8px; scroll-margin-top:85px; }
+.guess-page .guess-result h3 { margin:5px 0 12px; color:var(--lime); font-size:23px; font-weight:500; overflow-wrap:anywhere; }
+.guess-page .guess-result p { font-size:11px; line-height:1.9; color:#b8c9a8; margin:8px 0; }
+.guess-page .guess-result a { color:var(--lime); overflow-wrap:anywhere; }
+.guess-page .guess-result-links { display:flex; flex-wrap:wrap; gap:8px 15px; margin-top:12px; }
+.guess-page .guess-result-links a { font-size:11px; }
+.guess-page .guess-result-metrics { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); margin:16px 0 12px; gap:6px; }
+.guess-page .guess-result-metrics>div { min-width:0; background:#1d2b17; border:1px solid #4a6138; border-radius:5px; padding:12px 4px; text-align:center; }
+.guess-page .guess-result-metrics dt { font-size:9px; color:var(--muted); line-height:1.5; }
+.guess-page .guess-result-metrics dd { margin:6px 0 0; font:18px ui-monospace,monospace; color:var(--lime); }
+.guess-page .guess-result-coverage { font-size:10px; line-height:1.8; color:#b8c9a8; }
+.guess-page .guess-result-coverage summary { cursor:pointer; color:var(--text); }
+.guess-page .guess-result-coverage ul { padding-left:17px; }
+.guess-page .guess-result-coverage li { padding-block:3px; }
+.guess-page .guess-result-coverage strong { font-weight:500; color:#cfddc3; }
+.guess-page .guess-board-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:22px; }
+.guess-page .guess-board-actions button { font-size:11px; padding:10px 13px; gap:8px; }
+.guess-page #guess-next-day { font-size:10px; color:var(--muted); margin-left:auto; }
+.guess-page .guess-share-text { width:100%; max-width:100%; min-height:170px; margin-top:15px; padding:12px; border:1px solid #657751; border-radius:6px; background:#172113; color:var(--text); font:12px/1.8 ui-monospace,monospace; resize:vertical; }
+.guess-page .guess-aside { display:grid; gap:16px; }
+.guess-page .guess-rules,.guess-page .guess-about { padding:22px; }
+.guess-page .guess-aside h2 { font-size:19px; font-weight:500; margin:7px 0 17px; }
+.guess-page .guess-rules ol { padding-left:18px; margin:0; font-size:11px; line-height:1.9; color:var(--muted); }
+.guess-page .guess-rules li { padding-left:3px; margin-bottom:14px; }
+.guess-page .guess-rules strong { color:#d0d9c8; font-weight:500; }
+.guess-page .guess-small,.guess-page .guess-about p { font-size:11px; color:var(--muted); line-height:1.9; }
+.guess-page .guess-metric-notes { margin-top:16px; font-size:10px; color:var(--muted); line-height:1.9; }
+.guess-page .guess-metric-notes summary { cursor:pointer; color:#cbd8bf; }
+.guess-page .guess-about a { color:var(--lime); }
+.guess-page .guess-source-link { font-size:11px; }
+.guess-page .guess-about details { margin-top:18px; font-size:11px; color:var(--muted); }
+.guess-page .guess-about summary { cursor:pointer; color:var(--text); }
+.guess-page .guess-footer { font-size:10px; padding-bottom:24px; }
+.guess-page .guess-footer a { text-decoration:none; }
+@media(max-width:1150px){
+  .guess-page .guess-layout { grid-template-columns:minmax(0,1fr); }
+  .guess-page .guess-aside { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:700px){
+  .guess-page .topbar { height:auto; min-height:70px; padding-block:14px; flex-wrap:wrap; gap:10px; }
+  .guess-page .guess-nav { gap:2px; }
+  .guess-page .guess-nav a { padding:7px; font-size:10px; }
+  .guess-page .brand { font-size:12px; gap:6px; }
+  .guess-page .brand-mark { width:28px; height:28px; font-size:22px; }
+  .guess-page .guess-hero { padding:30px 0 24px; }
+  .guess-page .guess-hero h1 { font-size:30px; letter-spacing:-1px; }
+  .guess-page .guess-hero p { font-size:11px; max-width:300px; }
+  .guess-page .guess-hero-number { display:none; }
+  .guess-page .guess-settings { display:grid; grid-template-columns:minmax(0,1fr) auto; padding:16px; gap:15px 10px; }
+  .guess-page .guess-mode { grid-column:1/-1; }
+  .guess-page .guess-mode button { flex:1; padding:10px 13px; }
+  .guess-page .guess-pool-label { display:grid; gap:5px; font-size:10px; }
+  .guess-page .guess-pool-label select { width:100%; min-width:0; font-size:12px; padding:9px 7px; }
+  .guess-page .guess-pool-meta { align-self:end; padding-bottom:4px; }
+  .guess-page .guess-pool-meta strong { font-size:11px; }
+  .guess-page .guess-pool-meta span { font-size:9px; max-width:158px; overflow-wrap:anywhere; }
+  .guess-page .guess-board { padding:18px; }
+  .guess-page .guess-board-head { gap:10px; }
+  .guess-page .guess-board-head h2 { font-size:20px; }
+  .guess-page .guess-counter strong { font-size:28px; }
+  .guess-page .guess-counter { gap:5px; }
+  .guess-page .guess-counter span { font-size:11px; }
+  .guess-page .guess-round-note { font-size:10px; }
+  .guess-page .guess-year-filter { grid-template-columns:minmax(0,1fr) 9px minmax(0,1fr) auto; padding:12px; gap:7px; }
+  .guess-page .guess-filter-title { grid-column:1/-1; display:flex; align-items:center; gap:8px; margin-bottom:2px; }
+  .guess-page .guess-form { gap:7px; }
+  .guess-page #guess-search { font-size:12px; padding:11px 9px; }
+  .guess-page #guess-submit { font-size:11px; padding:10px 12px; }
+  .guess-page .guess-option { padding:11px 9px; }
+  .guess-page .guess-legend { font-size:9px; gap:8px 10px; }
+  .guess-page .guess-history-head { font-size:10px; }
+  .guess-page .guess-row { padding:10px; margin-bottom:10px; }
+  .guess-page .guess-player { padding-bottom:11px; }
+  .guess-page .guess-player strong { font-size:13px; }
+  .guess-page .guess-player small { font-size:10px; }
+  .guess-page .guess-clue-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .guess-page .guess-cell { min-height:86px; padding:7px 4px; }
+  .guess-page .guess-cell[data-key=teams] { grid-column:span 2; }
+  .guess-page .guess-cell .cell-value { font-size:13px; }
+  .guess-page .guess-cell[data-key=teams] .cell-value { font-size:10px; }
+  .guess-page .guess-aside { grid-template-columns:minmax(0,1fr); }
+  .guess-page .guess-board-actions { gap:9px; }
+  .guess-page #guess-next-day { margin-left:0; flex-basis:100%; }
+  .guess-page .guess-result { padding:17px; }
+  .guess-page .guess-result-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}

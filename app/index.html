@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111411">
+  <title>True GOAT · 你的篮球价值观</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d7f879'/%3E%3Ctext x='7' y='24' font-size='24' font-family='sans-serif' font-weight='bold' fill='%23111411'%3EG%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/layout.css">
+  <script type="module" src="/ui.mjs"></script>
+</head>
+<body class="lab-page">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="True GOAT 首页"><span class="brand-mark">G.</span> TRUE GOAT <span class="brand-divider">/</span> <span class="brand-cn">真正的山羊</span></a>
+    <nav class="page-nav" aria-label="主导航"><a href="/" aria-current="page">排名实验室</a><a href="/players">球员库 <span>300</span></a><a href="/guess">猜球员</a></nav>
+    <div class="top-actions"><button id="open-model" class="button outline" disabled>查看我的模型 <span>↗</span></button></div>
+  </header>
+  <main>
+    <section class="hero">
+      <div><div class="eyebrow">THE GREATEST IS A MATTER OF VALUES</div><h1>GOAT，由你定义<span>。</span></h1><p>同一份数据，不同的篮球价值观。独立调整每项系数，看看历史如何重新排序。</p></div>
+      <div class="hero-aside"><span class="hero-number">300</span><span>位球员 · 7 个维度<br>没有预设的正确答案</span></div>
+    </section>
+    <section class="formula-band" aria-label="加性模型速览"><span class="formula-tag">加性模型 04</span><div><strong>50 + 常规赛贡献 + 巅峰贡献 + … + 大众参考贡献</strong><p>系数独立，不合计为 100%；每一分都可以逐项追溯。</p></div><button id="formula-help" class="text-button">怎么计算？ ↗</button></section>
+    <div id="loading" role="status">正在载入球员数据与评论员模型…</div>
+    <div class="workspace" id="workspace" hidden>
+      <aside class="controls panel">
+        <div class="section-heading"><span class="step">01</span><h2>从一种观点出发</h2></div>
+        <label class="field-label" for="expert-select">评论员观点 / 起始模型</label>
+        <select id="expert-select"></select>
+        <div id="expert-info" class="expert-info"></div>
+        <button id="open-source" class="text-button">查看公开排序与拟合情况 ↗</button>
+        <div class="rule"></div>
+        <div class="section-heading"><span class="step">02</span><h2>调出你的价值观</h2><button id="reset" class="text-button reset">重置</button></div>
+        <p class="hint">每项系数独立，调整它不会改变其他项。系数 1 表示该维度每高出基准 10 分，总分加 1 分。</p>
+        <div id="sliders"></div>
+        <div class="anchor-box"><div class="prior-label"><label for="prior-coef"><span class="coef-symbol">γ</span> 大众参考系数</label><input id="prior-number" class="coef-number" type="number" min="0" max="10" step="0.001" value="0" aria-label="大众参考系数数值"></div><input id="prior-coef" type="range" min="0" max="10" step="0.01" value="0"><p>独立加上 γ ×（大众指数 − 50）÷ 10。设为 0 则不启用；未入榜者中性处理。</p></div>
+        <div class="control-footer"><span id="model-state">评论员拟合起点</span><button id="share" class="text-button">复制模型链接 ↗</button></div>
+      </aside>
+      <section class="ranking panel" aria-labelledby="ranking-title">
+        <div class="ranking-head"><div><div class="eyebrow">YOUR ALL-TIME LIST</div><h2 id="ranking-title">你的历史排名</h2></div><span class="live-badge"><i></i> 实时计算</span></div>
+        <div id="podium" class="podium"></div>
+        <div class="list-toolbar"><label class="search-field"><span>⌕</span><input id="search" type="search" placeholder="搜索球员 / 中文名" aria-label="搜索排行榜"></label><span id="result-count">前 20 位</span></div>
+        <div class="table-wrap"><table class="ranking-table"><colgroup><col class="rank-col"><col class="name-col"><col class="score-col"><col class="change-col"></colgroup><thead><tr><th scope="col">排名</th><th scope="col">球员</th><th scope="col">模型分</th><th scope="col">较起点</th></tr></thead><tbody id="rank-rows"></tbody></table></div>
+        <button id="show-all" class="show-all">展开全部 300 位球员 ↓</button>
+        <p class="table-note">显示值已舍入，排序使用完整精度；模型分不是百分制，可超过 100。</p>
+      </section>
+      <aside class="insights">
+        <section class="target-card panel">
+          <div class="section-heading"><span class="step">03</span><h2>让谁更靠前？</h2></div>
+          <label class="sr-only" for="target-select">选择目标球员</label><select id="target-select"></select>
+          <div class="quick-targets" id="quick-targets"></div>
+          <div id="target-summary"></div>
+          <a id="target-profile-link" class="profile-link" href="/players">背景数据与入选依据 <span>↗</span></a>
+          <div class="mini-heading">哪些滑杆最有帮助？</div><div id="suggestions"></div>
+          <button id="find-weights" class="button primary">探索更有利的系数 <span>↗</span></button>
+          <div id="search-result" class="search-result" aria-live="polite"></div>
+          <p class="hint">建议只改变评分标准，不改球员数据；不保证每位球星都能成为第一。</p>
+        </section>
+        <section class="breakdown-card panel"><div class="eyebrow">PLAYER PROFILE</div><h3>数据画像</h3><div id="profile"></div><p class="hint" id="target-data-note"></p><p class="hint">此处为七维指数；原始统计与背景资料可在球员库查看。</p></section>
+        <div class="method-note"><span>↗</span><p>模型应当可解释。<br>点击顶部「查看我的模型」，了解每一分从哪里来。</p></div>
+      </aside>
+    </div>
+    <footer><span>TRUE GOAT · FACTS ARE DATA. GREATNESS IS A WEIGHTING PROBLEM.</span><a class="text-button" href="/THIRD_PARTY_NOTICES.txt">数据出处与许可 ↗</a><button id="data-notes" class="text-button">数据边界与方法说明 ↗</button></footer>
+  </main>
+  <dialog id="model-dialog" aria-labelledby="dialog-title"><div class="dialog-head"><div><div class="eyebrow" id="dialog-kicker">UNDER THE HOOD</div><h2 id="dialog-title">我的评级模型</h2></div><button id="close-dialog" class="close-button" aria-label="关闭窗口">×</button></div><div id="dialog-body"></div></dialog>
+  <div id="toast" role="status" class="toast" hidden></div>
+  <div id="mobile-live" class="mobile-live" hidden><div><span id="mobile-player"></span><strong id="mobile-rank"></strong></div><button id="jump-ranking" class="text-button">查看排名 ↓</button></div>
+</body>
+</html>

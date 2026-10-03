@@ -1,0 +1,994 @@
+{
+  "version": "0.4",
+  "researched_at": "2026-10-03",
+  "selection_note": "ESPN节目语境中的不同历史观点样本，不代表ESPN官方立场；并非总体球迷的随机样本。",
+  "schemaVersion": 4,
+  "dataVersion": "0.2",
+  "dataAccessDate": "2026-08-15",
+  "method": {
+    "name": "Regularized independent additive partial-order preference simulation",
+    "dimensions": [
+      "regular_season",
+      "peak",
+      "longevity",
+      "playoffs",
+      "awards",
+      "defense",
+      "team_success"
+    ],
+    "scoreFormula": "50 + sum(beta[k] * ((component[k] - 50) / 10)) + gamma * ((public_prior - 50) / 10)",
+    "missingPolicy": "Missing components and public priors use neutral 50 (centered contribution 0), not raw zero. Expose coverage; never redistribute coefficients.",
+    "undefinedScorePolicy": "null if every positively activated term is missing; the deliberately all-zero model returns intercept 50 for everyone",
+    "objective": "mean(max(0, margin - (score[higher]-score[lower]))^2) + regularization * sum((beta-default)^2)",
+    "margin": 0.75,
+    "regularization": 0.1,
+    "coefficientConstraints": "0 <= beta[k] <= 10 independently; no sum constraint; fixed intercept 50; gamma=0 during expert fitting",
+    "defaultCoefficients": {
+      "regular_season": 1.6,
+      "peak": 2.0,
+      "longevity": 1.4000000000000001,
+      "playoffs": 1.7999999999999998,
+      "awards": 1.4000000000000001,
+      "defense": 1.0,
+      "team_success": 0.8
+    },
+    "intercept": 50,
+    "defaultPriorCoefficient": 0,
+    "coefficientInterpretation": "A 10-point increase in component k adds beta[k] score points, holding other components fixed.",
+    "observationPolicy": "All pairwise comparisons within the published list plus explicit constraints; no implicit loss for unlisted players",
+    "interpretation": "Preference simulation only; no Bayesian posterior or probability claim",
+    "fitValidation": "Nine deterministic starts; in-sample comparisons reported, no held-out validation",
+    "dataFreshnessNote": "Source publication dates describe opinions, not updates to the fixed player-data snapshot."
+  },
+  "experts": [
+    {
+      "id": "stephen-a-2023",
+      "name": "Stephen A. Smith",
+      "role": "ESPN · First Take 主持人",
+      "date": "2023-11-07",
+      "source": {
+        "title": "Stephen's A-List: Top 5 NBA players of all time | First Take",
+        "url": "https://www.youtube.com/watch?v=6xxZ5s1be5E"
+      },
+      "ranking": [
+        "jordami01",
+        "jamesle01",
+        "abdulka01",
+        "johnsma02",
+        "russebi01"
+      ],
+      "note": "采用该次节目公开 Top 5；仅在这五人之间拟合顺序，未入榜球员不被视作低于第五。",
+      "evidence": "ESPN原始视频链接；名单由同期媒体转录交叉核实。",
+      "supporting_sources": [
+        {
+          "title": "The Cold Wire：2023-11-07 逐名转录",
+          "url": "https://www.thecoldwire.com/stephen-a-smith-reveals-his-top-5-nba-players-of-all-time/"
+        },
+        {
+          "title": "Fadeaway World：同期榜单转述",
+          "url": "https://fadeawayworld.net/stephen-a-smith-reveals-top-5-all-time-nba-players"
+        }
+      ],
+      "coefficients": {
+        "regular_season": 1.1890208069956745,
+        "peak": 1.8096003279890038,
+        "longevity": 0.2101223268269414,
+        "playoffs": 1.7191684560980667,
+        "awards": 1.409810101869366,
+        "defense": 1.851421873517633,
+        "team_success": 0.6161510945214742
+      },
+      "priorCoefficient": 0.0,
+      "fit": {
+        "playerCount": 5,
+        "pairCount": 10,
+        "satisfiedPairs": 10,
+        "pairwiseAccuracy": 1.0,
+        "baselinePairwiseAccuracy": 0.8,
+        "marginSatisfiedPairs": 7,
+        "marginAccuracy": 0.7,
+        "rankedPlayers": [
+          {
+            "player_id": "jordami01",
+            "player_name": "Michael Jordan",
+            "publishedRank": 1,
+            "modelRank": 1,
+            "allPlayerRank": 1,
+            "score": 88.49252039549881
+          },
+          {
+            "player_id": "jamesle01",
+            "player_name": "LeBron James",
+            "publishedRank": 2,
+            "modelRank": 2,
+            "allPlayerRank": 2,
+            "score": 88.49092631250548
+          },
+          {
+            "player_id": "abdulka01",
+            "player_name": "Kareem Abdul-Jabbar",
+            "publishedRank": 3,
+            "modelRank": 3,
+            "allPlayerRank": 3,
+            "score": 88.23449895618387
+          },
+          {
+            "player_id": "johnsma02",
+            "player_name": "Magic Johnson",
+            "publishedRank": 4,
+            "modelRank": 4,
+            "allPlayerRank": 10,
+            "score": 82.3135935745994
+          },
+          {
+            "player_id": "russebi01",
+            "player_name": "Bill Russell",
+            "publishedRank": 5,
+            "modelRank": 5,
+            "allPlayerRank": 41,
+            "score": 67.52762254810438
+          }
+        ],
+        "modelRankScope": "within explicitly observed players; allPlayerRank uses the full 300-player pool",
+        "unsatisfiedConstraints": [],
+        "observedPairs": [
+          {
+            "higher": "jordami01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "russebi01"
+          }
+        ],
+        "objective": 0.34320826880103,
+        "baselineObjective": 1.3848542046620844,
+        "coefficientDistanceFromDefault": 1.5447700193356613,
+        "comparisonDirectionRank": 4,
+        "coefficientDegreesOfFreedom": 7,
+        "startsAttempted": 9,
+        "startsConverged": 9,
+        "convergedObjectiveSpread": 2.429723089392155e-13,
+        "solver": "scipy.optimize.minimize / SLSQP",
+        "solverSuccess": true,
+        "solverMessage": "Optimization terminated successfully",
+        "guaranteesPublishedOrder": false,
+        "limitations": [
+          "Only the explicitly published comparisons are fitted; unlisted players are not assumed inferior.",
+          "Coefficients are a regularized preference simulation, not the commentator's actual formula or endorsement.",
+          "Partial ordinal rankings do not uniquely identify seven coefficients; default coefficients influence the result.",
+          "Pairwise accuracy is in-sample fit, not an independent prediction test or a GOAT probability.",
+          "The seven fixed historical components may not encode a commentator's complete criteria.",
+          "Independent coefficients are applied to every candidate without player-specific bonuses or rank overrides.",
+          "Scores are additive points, not percentages, and may exceed 100 or fall below zero."
+        ]
+      }
+    },
+    {
+      "id": "perkins-2021",
+      "name": "Kendrick Perkins",
+      "role": "ESPN 评论员 · 个人公开榜单",
+      "date": "2021-10-15",
+      "source": {
+        "title": "Kendrick Perkins — My top 10 players of all time",
+        "url": "https://twitter.com/KendrickPerkins/status/1449078408168738822"
+      },
+      "ranking": [
+        "jamesle01",
+        "jordami01",
+        "abdulka01",
+        "johnsma02",
+        "birdla01",
+        "onealsh01",
+        "chambwi01",
+        "duncati01",
+        "bryanko01",
+        "russebi01"
+      ],
+      "note": "采用 2021 年个人 Top 10，不宣称是他今天的最新观点。原帖图片未在本次直接复核，使用同期媒体转录交叉核对。",
+      "evidence": "媒体转录交叉核实；保留原帖链接，不标作原图已复核。",
+      "supporting_sources": [
+        {
+          "title": "SportsRush：2021-10-16 完整前十与嵌入原帖",
+          "url": "https://thesportsrush.com/nba-news-kendrick-perkins-picks-lebron-james-as-his-goat-over-michael-jordan-twitterati-objects-to-kobe-bryant-and-hakeem-olajuwon-being-placed-too-low-on-big-perks-list-of-all-time-top-10-play/"
+        },
+        {
+          "title": "Fadeaway World：同期前三名核对",
+          "url": "https://fadeawayworld.net/nba-fans-exploded-after-kendrick-perkins-chose-his-top-75-nba-players-of-all-time-im-triggered-at-the-ridiculousness-of-your-list"
+        }
+      ],
+      "coefficients": {
+        "regular_season": 1.8361240717780818,
+        "peak": 1.8644951616154257,
+        "longevity": 0.5945201028125099,
+        "playoffs": 1.8901398957877817,
+        "awards": 1.255896202201028,
+        "defense": 0.9594606496516916,
+        "team_success": 0.7797747752292452
+      },
+      "priorCoefficient": 0.0,
+      "fit": {
+        "playerCount": 10,
+        "pairCount": 45,
+        "satisfiedPairs": 42,
+        "pairwiseAccuracy": 0.9333333333333333,
+        "baselinePairwiseAccuracy": 0.8222222222222222,
+        "marginSatisfiedPairs": 35,
+        "marginAccuracy": 0.7777777777777778,
+        "rankedPlayers": [
+          {
+            "player_id": "jamesle01",
+            "player_name": "LeBron James",
+            "publishedRank": 1,
+            "modelRank": 1,
+            "allPlayerRank": 1,
+            "score": 91.32365516843788
+          },
+          {
+            "player_id": "jordami01",
+            "player_name": "Michael Jordan",
+            "publishedRank": 2,
+            "modelRank": 3,
+            "allPlayerRank": 3,
+            "score": 89.73724104706535
+          },
+          {
+            "player_id": "abdulka01",
+            "player_name": "Kareem Abdul-Jabbar",
+            "publishedRank": 3,
+            "modelRank": 2,
+            "allPlayerRank": 2,
+            "score": 90.6297980398207
+          },
+          {
+            "player_id": "johnsma02",
+            "player_name": "Magic Johnson",
+            "publishedRank": 4,
+            "modelRank": 4,
+            "allPlayerRank": 4,
+            "score": 86.10084866458581
+          },
+          {
+            "player_id": "birdla01",
+            "player_name": "Larry Bird",
+            "publishedRank": 5,
+            "modelRank": 7,
+            "allPlayerRank": 8,
+            "score": 85.28824186422243
+          },
+          {
+            "player_id": "onealsh01",
+            "player_name": "Shaquille O'Neal",
+            "publishedRank": 6,
+            "modelRank": 5,
+            "allPlayerRank": 6,
+            "score": 85.6842936744566
+          },
+          {
+            "player_id": "chambwi01",
+            "player_name": "Wilt Chamberlain",
+            "publishedRank": 7,
+            "modelRank": 6,
+            "allPlayerRank": 7,
+            "score": 85.58626634382118
+          },
+          {
+            "player_id": "duncati01",
+            "player_name": "Tim Duncan",
+            "publishedRank": 8,
+            "modelRank": 8,
+            "allPlayerRank": 9,
+            "score": 84.96025392596925
+          },
+          {
+            "player_id": "bryanko01",
+            "player_name": "Kobe Bryant",
+            "publishedRank": 9,
+            "modelRank": 9,
+            "allPlayerRank": 13,
+            "score": 82.95842175058056
+          },
+          {
+            "player_id": "russebi01",
+            "player_name": "Bill Russell",
+            "publishedRank": 10,
+            "modelRank": 10,
+            "allPlayerRank": 46,
+            "score": 67.80550980463642
+          }
+        ],
+        "modelRankScope": "within explicitly observed players; allPlayerRank uses the full 300-player pool",
+        "unsatisfiedConstraints": [
+          {
+            "higher": "jordami01",
+            "lower": "abdulka01",
+            "higherName": "Michael Jordan",
+            "lowerName": "Kareem Abdul-Jabbar",
+            "scoreGap": -0.8925569927553454
+          },
+          {
+            "higher": "birdla01",
+            "lower": "onealsh01",
+            "higherName": "Larry Bird",
+            "lowerName": "Shaquille O'Neal",
+            "scoreGap": -0.39605181023416947
+          },
+          {
+            "higher": "birdla01",
+            "lower": "chambwi01",
+            "higherName": "Larry Bird",
+            "lowerName": "Wilt Chamberlain",
+            "scoreGap": -0.29802447959875167
+          }
+        ],
+        "observedPairs": [
+          {
+            "higher": "jamesle01",
+            "lower": "jordami01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "chambwi01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "chambwi01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "chambwi01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "bryanko01",
+            "lower": "russebi01"
+          }
+        ],
+        "objective": 0.20646913880202367,
+        "baselineObjective": 0.49946861386821756,
+        "coefficientDistanceFromDefault": 0.8682497378452064,
+        "comparisonDirectionRank": 7,
+        "coefficientDegreesOfFreedom": 7,
+        "startsAttempted": 9,
+        "startsConverged": 9,
+        "convergedObjectiveSpread": 2.51687559682523e-13,
+        "solver": "scipy.optimize.minimize / SLSQP",
+        "solverSuccess": true,
+        "solverMessage": "Optimization terminated successfully",
+        "guaranteesPublishedOrder": false,
+        "limitations": [
+          "Only the explicitly published comparisons are fitted; unlisted players are not assumed inferior.",
+          "Coefficients are a regularized preference simulation, not the commentator's actual formula or endorsement.",
+          "Partial ordinal rankings do not uniquely identify seven coefficients; default coefficients influence the result.",
+          "Pairwise accuracy is in-sample fit, not an independent prediction test or a GOAT probability.",
+          "The seven fixed historical components may not encode a commentator's complete criteria.",
+          "Independent coefficients are applied to every candidate without player-specific bonuses or rank overrides.",
+          "Scores are additive points, not percentages, and may exceed 100 or fall below zero."
+        ]
+      }
+    },
+    {
+      "id": "skip-2026",
+      "name": "Skip Bayless",
+      "role": "前 ESPN 主持人 · First Take 回访",
+      "date": "2026-05-08",
+      "source": {
+        "title": "Skip Bayless has Stephen A. DEFENDING LEBRON JAMES! | First Take",
+        "url": "https://www.youtube.com/watch?v=CF4zR_NaAck"
+      },
+      "ranking": [
+        "jordami01",
+        "johnsma02",
+        "onealsh01",
+        "abdulka01",
+        "duncati01",
+        "russebi01",
+        "bryanko01",
+        "birdla01",
+        "jamesle01",
+        "chambwi01"
+      ],
+      "note": "前 ESPN 主持人在 2026-05-08 一次性回访中的 Top 10；并非 ESPN 现任主持人。此榜与七维统计可能存在较大冲突，界面如实展示拟合误差。",
+      "evidence": "ESPN原始节目链接；完整顺序经同期文字报道校对；身份由ESPN新闻稿核实。",
+      "supporting_sources": [
+        {
+          "title": "ESPN：一次性回访节目公告",
+          "url": "https://espnpressroom.com/press-release/first-take-to-reunite-stephen-a-smith-skip-bayless-for-one-time-show-on-may-8/"
+        },
+        {
+          "title": "Sporting News / Yahoo：完整榜单转录",
+          "url": "https://sports.yahoo.com/articles/eight-players-skip-bayless-over-172125645.html"
+        }
+      ],
+      "coefficients": {
+        "regular_season": 0.0,
+        "peak": 0.0,
+        "longevity": 1.8684104084940218e-17,
+        "playoffs": 0.25796233862903595,
+        "awards": 0.3688398770093644,
+        "defense": 9.466042981764565e-17,
+        "team_success": 0.809335918996058
+      },
+      "priorCoefficient": 0.0,
+      "fit": {
+        "playerCount": 10,
+        "pairCount": 45,
+        "satisfiedPairs": 32,
+        "pairwiseAccuracy": 0.7111111111111111,
+        "baselinePairwiseAccuracy": 0.5555555555555556,
+        "marginSatisfiedPairs": 9,
+        "marginAccuracy": 0.2,
+        "rankedPlayers": [
+          {
+            "player_id": "jordami01",
+            "player_name": "Michael Jordan",
+            "publishedRank": 1,
+            "modelRank": 3,
+            "allPlayerRank": 3,
+            "score": 56.695242242363776
+          },
+          {
+            "player_id": "johnsma02",
+            "player_name": "Magic Johnson",
+            "publishedRank": 2,
+            "modelRank": 2,
+            "allPlayerRank": 2,
+            "score": 56.712153625300644
+          },
+          {
+            "player_id": "onealsh01",
+            "player_name": "Shaquille O'Neal",
+            "publishedRank": 3,
+            "modelRank": 7,
+            "allPlayerRank": 7,
+            "score": 56.22332970538623
+          },
+          {
+            "player_id": "abdulka01",
+            "player_name": "Kareem Abdul-Jabbar",
+            "publishedRank": 4,
+            "modelRank": 1,
+            "allPlayerRank": 1,
+            "score": 56.872589371513875
+          },
+          {
+            "player_id": "duncati01",
+            "player_name": "Tim Duncan",
+            "publishedRank": 5,
+            "modelRank": 6,
+            "allPlayerRank": 6,
+            "score": 56.2242784262858
+          },
+          {
+            "player_id": "russebi01",
+            "player_name": "Bill Russell",
+            "publishedRank": 6,
+            "modelRank": 8,
+            "allPlayerRank": 9,
+            "score": 56.000034804562475
+          },
+          {
+            "player_id": "bryanko01",
+            "player_name": "Kobe Bryant",
+            "publishedRank": 7,
+            "modelRank": 5,
+            "allPlayerRank": 5,
+            "score": 56.352084428405846
+          },
+          {
+            "player_id": "birdla01",
+            "player_name": "Larry Bird",
+            "publishedRank": 8,
+            "modelRank": 9,
+            "allPlayerRank": 10,
+            "score": 55.7162954462861
+          },
+          {
+            "player_id": "jamesle01",
+            "player_name": "LeBron James",
+            "publishedRank": 9,
+            "modelRank": 4,
+            "allPlayerRank": 4,
+            "score": 56.66088272388578
+          },
+          {
+            "player_id": "chambwi01",
+            "player_name": "Wilt Chamberlain",
+            "publishedRank": 10,
+            "modelRank": 10,
+            "allPlayerRank": 11,
+            "score": 55.591839137310416
+          }
+        ],
+        "modelRankScope": "within explicitly observed players; allPlayerRank uses the full 300-player pool",
+        "unsatisfiedConstraints": [
+          {
+            "higher": "jordami01",
+            "lower": "johnsma02",
+            "higherName": "Michael Jordan",
+            "lowerName": "Magic Johnson",
+            "scoreGap": -0.016911382936868335
+          },
+          {
+            "higher": "jordami01",
+            "lower": "abdulka01",
+            "higherName": "Michael Jordan",
+            "lowerName": "Kareem Abdul-Jabbar",
+            "scoreGap": -0.17734712915009965
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "abdulka01",
+            "higherName": "Magic Johnson",
+            "lowerName": "Kareem Abdul-Jabbar",
+            "scoreGap": -0.1604357462132313
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "abdulka01",
+            "higherName": "Shaquille O'Neal",
+            "lowerName": "Kareem Abdul-Jabbar",
+            "scoreGap": -0.649259666127648
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "duncati01",
+            "higherName": "Shaquille O'Neal",
+            "lowerName": "Tim Duncan",
+            "scoreGap": -0.0009487208995722085
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "bryanko01",
+            "higherName": "Shaquille O'Neal",
+            "lowerName": "Kobe Bryant",
+            "scoreGap": -0.1287547230196182
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "jamesle01",
+            "higherName": "Shaquille O'Neal",
+            "lowerName": "LeBron James",
+            "scoreGap": -0.43755301849954975
+          },
+          {
+            "higher": "duncati01",
+            "lower": "bryanko01",
+            "higherName": "Tim Duncan",
+            "lowerName": "Kobe Bryant",
+            "scoreGap": -0.127806002120046
+          },
+          {
+            "higher": "duncati01",
+            "lower": "jamesle01",
+            "higherName": "Tim Duncan",
+            "lowerName": "LeBron James",
+            "scoreGap": -0.43660429759997754
+          },
+          {
+            "higher": "russebi01",
+            "lower": "bryanko01",
+            "higherName": "Bill Russell",
+            "lowerName": "Kobe Bryant",
+            "scoreGap": -0.3520496238433708
+          },
+          {
+            "higher": "russebi01",
+            "lower": "jamesle01",
+            "higherName": "Bill Russell",
+            "lowerName": "LeBron James",
+            "scoreGap": -0.6608479193233023
+          },
+          {
+            "higher": "bryanko01",
+            "lower": "jamesle01",
+            "higherName": "Kobe Bryant",
+            "lowerName": "LeBron James",
+            "scoreGap": -0.30879829547993154
+          },
+          {
+            "higher": "birdla01",
+            "lower": "jamesle01",
+            "higherName": "Larry Bird",
+            "lowerName": "LeBron James",
+            "scoreGap": -0.9445872775996804
+          }
+        ],
+        "observedPairs": [
+          {
+            "higher": "jordami01",
+            "lower": "johnsma02"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "jordami01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "onealsh01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "johnsma02",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "abdulka01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "onealsh01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "duncati01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "abdulka01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "russebi01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "duncati01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "russebi01",
+            "lower": "bryanko01"
+          },
+          {
+            "higher": "russebi01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "russebi01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "russebi01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "bryanko01",
+            "lower": "birdla01"
+          },
+          {
+            "higher": "bryanko01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "bryanko01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "jamesle01"
+          },
+          {
+            "higher": "birdla01",
+            "lower": "chambwi01"
+          },
+          {
+            "higher": "jamesle01",
+            "lower": "chambwi01"
+          }
+        ],
+        "objective": 1.7352982680543967,
+        "baselineObjective": 46.74688511165421,
+        "coefficientDistanceFromDefault": 3.600174788495136,
+        "comparisonDirectionRank": 7,
+        "coefficientDegreesOfFreedom": 7,
+        "startsAttempted": 9,
+        "startsConverged": 9,
+        "convergedObjectiveSpread": 4.3365311341858614e-13,
+        "solver": "scipy.optimize.minimize / SLSQP",
+        "solverSuccess": true,
+        "solverMessage": "Optimization terminated successfully",
+        "guaranteesPublishedOrder": false,
+        "limitations": [
+          "Only the explicitly published comparisons are fitted; unlisted players are not assumed inferior.",
+          "Coefficients are a regularized preference simulation, not the commentator's actual formula or endorsement.",
+          "Partial ordinal rankings do not uniquely identify seven coefficients; default coefficients influence the result.",
+          "Pairwise accuracy is in-sample fit, not an independent prediction test or a GOAT probability.",
+          "The seven fixed historical components may not encode a commentator's complete criteria.",
+          "Independent coefficients are applied to every candidate without player-specific bonuses or rank overrides.",
+          "Scores are additive points, not percentages, and may exceed 100 or fall below zero."
+        ]
+      }
+    }
+  ]
+}

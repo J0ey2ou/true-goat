@@ -1,0 +1,80 @@
+{
+  "access_date": "2026-08-15",
+  "sources": [
+    {
+      "source_id": "kaggle_sumitrodatta_nba",
+      "title": "NBA Stats (1947-present)",
+      "url": "https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats",
+      "download_url": "https://www.kaggle.com/api/v1/datasets/download/sumitrodatta/nba-aba-baa-stats",
+      "local_path": "data/raw/kaggle_nba_aba_baa/nba-aba-baa-stats_2026-08-15.zip",
+      "extract_path": "data/raw/kaggle_nba_aba_baa/csv",
+      "source_type": "public dataset derived from Basketball-Reference",
+      "official_status": "non-official",
+      "license": "CC0 Public Domain",
+      "quality": "B",
+      "coverage": "BAA/NBA/ABA regular season 1947-2026; awards mostly through 2025"
+    },
+    {
+      "source_id": "fivethirtyeight_historical",
+      "title": "Historical RAPTOR and other NBA data",
+      "url": "https://github.com/fivethirtyeight/nba-player-advanced-metrics",
+      "download_url": "https://raw.githubusercontent.com/fivethirtyeight/nba-player-advanced-metrics/master/nba-data-historical.csv",
+      "local_path": "data/raw/nba_data_historical_538.csv",
+      "source_type": "published analytics dataset",
+      "official_status": "non-official",
+      "license": "FiveThirtyEight data license snapshot retained",
+      "quality": "B",
+      "coverage": "NBA regular season and playoffs 1977-2020"
+    },
+    {
+      "source_id": "brescou_nba_stats",
+      "title": "NBA Statistics Repository",
+      "url": "https://github.com/Brescou/NBA-dataset-stats-player-team",
+      "download_url": "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/player/player_stats_traditional_po.csv",
+      "local_path": "data/raw/player_stats_traditional_po_1996_2023.csv",
+      "artifacts": [
+        {
+          "download_url": "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/player/player_stats_advanced_po.csv",
+          "local_path": "data/raw/player_stats_advanced_po_1996_2023.csv"
+        },
+        {
+          "download_url": "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/player/player_stats_traditionnal_rs.csv",
+          "local_path": "data/raw/player_stats_traditional_rs_1996_2023.csv"
+        },
+        {
+          "download_url": "https://raw.githubusercontent.com/Brescou/NBA-dataset-stats-player-team/main/player/player_stats_advanced_rs.csv",
+          "local_path": "data/raw/player_stats_advanced_rs_1996_2023.csv"
+        }
+      ],
+      "source_type": "public NBA statistics repository",
+      "official_status": "non-official",
+      "license": "MIT",
+      "quality": "C",
+      "coverage": "NBA playoffs 1996-97 through 2022-23"
+    },
+    {
+      "source_id": "gonzalogigena_nba_all_time",
+      "title": "NBA All Time Stats (1947-Present)",
+      "url": "https://www.kaggle.com/datasets/gonzalogigena/nba-all-time-stats",
+      "download_url": "https://www.kaggle.com/api/v1/datasets/download/gonzalogigena/nba-all-time-stats",
+      "local_path": "data/raw/kaggle_nba_all_time/nba-all-time-stats_2026-08-15.zip",
+      "extract_path": "data/raw/kaggle_nba_all_time/csv",
+      "source_type": "public dataset derived from Basketball-Reference",
+      "official_status": "non-official",
+      "license": "MIT",
+      "quality": "B",
+      "coverage": "NBA/BAA/ABA game results and regular-season/playoff statistics from 1947; dataset snapshot last updated 2024"
+    },
+    {
+      "source_id": "nba_official_history",
+      "title": "NBA official history pages",
+      "url": "https://www.nba.com/history",
+      "local_path": "data/raw/nba_*_official.md",
+      "source_type": "league official",
+      "official_status": "official",
+      "license": "reference-only page snapshots",
+      "quality": "A",
+      "coverage": "champions, MVP, DPOY, Finals MVP, All-NBA, All-Defense through 2025-26"
+    }
+  ]
+}

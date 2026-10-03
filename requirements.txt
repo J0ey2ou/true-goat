@@ -1,0 +1,7 @@
+pandas>=3.0
+numpy>=2.3
+scipy>=1.16
+scipy>=1.16
+
+# Excel authoring is performed with the bundled @oai/artifact-tool runtime.
+# No scraping package is required; network snapshots are cached under data/raw.

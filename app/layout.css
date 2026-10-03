@@ -1,0 +1,58 @@
+/* v0.4: explicit column geometry, equal-height podiums and independent coefficients. */
+.lab-page{font-size:14px;font-variant-numeric:tabular-nums}
+.lab-page .topbar{gap:24px;height:82px}
+.lab-page .brand{flex-shrink:0}.lab-page .brand-cn{font-size:12px}
+.page-nav{display:flex;align-self:stretch;align-items:stretch;gap:28px;margin-left:auto;margin-right:20px}
+.page-nav a{display:flex;align-items:center;gap:7px;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent;font-size:13px;white-space:nowrap}
+.page-nav a[aria-current=page]{color:var(--lime);border-bottom-color:var(--lime)}
+.page-nav a span{font:9px ui-monospace,monospace;color:var(--muted);background:var(--panel2);padding:2px 5px;border-radius:4px}
+.lab-page .hero{padding:38px 0 28px}.lab-page .hero p{font-size:13px;line-height:1.8}
+.formula-band{display:flex;align-items:center;gap:16px;border:1px solid #3a4830;background:#1c2517;border-radius:10px;padding:15px 20px;margin:0 0 24px}
+.formula-tag{font-size:10px;white-space:nowrap;letter-spacing:1px;color:var(--lime);border-right:1px solid #415333;padding:4px 16px 4px 0}
+.formula-band>div{min-width:0;flex:1}.formula-band strong{font-size:13px;font-weight:500;line-height:1.5}.formula-band p{font-size:11px;color:var(--muted);margin:5px 0 0}.formula-band button{white-space:nowrap}
+.lab-page .workspace{grid-template-columns:minmax(270px,300px) minmax(350px,1fr) minmax(270px,300px);gap:20px}
+.lab-page .workspace>*{min-width:0}.lab-page .controls,.lab-page .target-card,.lab-page .breakdown-card{padding:22px}
+.lab-page .section-heading{min-height:25px;margin-bottom:16px}.lab-page .section-heading h2{font-size:15px}.lab-page .hint{font-size:11px;line-height:1.75}
+.lab-page .expert-info{min-height:94px;font-size:11px}.lab-page .field-label{font-size:11px}.lab-page select{height:43px}
+.lab-page .slider-row{display:grid;grid-template-columns:minmax(0,1fr) 80px;column-gap:10px;row-gap:9px;align-items:center;margin:0;padding:16px 0;border-bottom:1px solid #2d382b}
+.lab-page .slider-label{margin:0;display:flex;justify-content:flex-start;gap:8px;min-width:0;font-size:12px}
+.lab-page .slider-label>span{display:inline}.coef-symbol{font:11px ui-monospace,monospace;color:var(--muted);width:19px;display:inline-block}
+.lab-page .coef-number{background:#111a10;color:var(--lime);border:1px solid #4b5b3d;border-radius:5px;width:80px;height:31px;padding:4px 7px;text-align:right;font:12px ui-monospace,monospace;font-variant-numeric:tabular-nums;appearance:textfield}
+.lab-page .coef-number::-webkit-inner-spin-button,.lab-page .coef-number::-webkit-outer-spin-button{appearance:none;margin:0}
+.lab-page .slider-row>input[type=range]{grid-column:1/-1;width:100%;margin:6px 0}
+.lab-page .slider-desc{grid-column:1/-1;margin:0;min-height:32px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-size:10px;line-height:16px}
+.lab-page .prior-label{display:flex;align-items:center;justify-content:space-between;gap:7px;margin-bottom:11px}.lab-page .prior-label label{display:block;font-size:11px;margin:0}
+.lab-page .anchor-box{padding:14px;margin-top:20px}.lab-page .anchor-box p{font-size:10px}
+.lab-page .control-footer{flex-wrap:wrap;gap:12px;line-height:1.5}
+.lab-page .ranking-head{padding:22px 22px 20px;min-height:96px}
+.lab-page .podium{grid-template-columns:repeat(3,minmax(0,1fr));padding:0 20px 22px;gap:9px}
+.lab-page .podium-card{display:flex;flex-direction:column;min-width:0;min-height:184px;padding:14px 12px}
+.lab-page .podium-name{font-size:15px;line-height:21px;min-height:42px;margin-top:15px;overflow-wrap:anywhere;position:relative}
+.lab-page .podium-en{font-size:9px;line-height:14px;min-height:28px;overflow-wrap:anywhere;margin:3px 0 10px}
+.lab-page .podium-score{margin-top:auto;font-size:23px;line-height:1.15;display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.lab-page .podium-score small{margin:0;font-size:8px;letter-spacing:.3px}
+.lab-page .podium-monogram{top:20px;right:-5px;font-size:55px}
+.lab-page .list-toolbar{padding:12px 20px}.lab-page .search-field{min-width:0;flex:1}.lab-page .search-field input{width:100%;max-width:210px}
+.lab-page .ranking-table{table-layout:fixed;width:100%}.lab-page .rank-col{width:55px}.lab-page .score-col{width:83px}.lab-page .change-col{width:75px}
+.lab-page .ranking-table th,.lab-page .ranking-table td{box-sizing:border-box;vertical-align:middle;padding:12px 8px}
+.lab-page .ranking-table th{height:39px;font-size:10px;line-height:15px}.lab-page .ranking-table td{height:63px}
+.lab-page .ranking-table th:first-child,.lab-page .ranking-table td:first-child{width:auto;padding-left:20px}
+.lab-page .ranking-table th:last-child,.lab-page .ranking-table td:last-child{width:auto;padding-right:20px}
+.lab-page .ranking-table th:nth-child(3),.lab-page .ranking-table td:nth-child(3),.lab-page .ranking-table th:nth-child(4),.lab-page .ranking-table td:nth-child(4){text-align:right}
+.lab-page .player-main{display:block;width:100%;font-size:12px;line-height:18px;white-space:normal;overflow-wrap:anywhere;color:inherit}
+.lab-page .player-sub{font-size:9px;line-height:14px;margin-top:3px;overflow-wrap:anywhere}.lab-page .numeric{font-size:12px}.lab-page .delta{font:10px ui-monospace,monospace}
+.lab-page .target-stats{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-height:49px;margin:23px 0 10px}.lab-page .target-rank{font-size:42px;line-height:1.2}.lab-page .target-score{font:12px ui-monospace,monospace;white-space:nowrap}
+.lab-page .target-gap{min-height:40px;margin-bottom:13px;font-size:11px}.profile-link{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;font-size:11px;color:var(--lime);text-decoration:none}
+.lab-page .suggestion{padding:12px}.lab-page .suggestion-main{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start;font-size:12px}.lab-page .suggestion-sub{display:block;margin-top:6px;line-height:1.6}
+.lab-page .profile-row{grid-template-columns:56px minmax(0,1fr) 38px;gap:10px;min-height:20px;margin:10px 0}
+.lab-page .profile-row b{font-size:11px}.lab-page #target-data-note{padding-top:12px;border-top:1px solid var(--line)}
+.lab-page #model-dialog{max-width:760px}.lab-page #dialog-body table{table-layout:fixed;width:100%;font-variant-numeric:tabular-nums}
+.lab-page #dialog-body th,.lab-page #dialog-body td{padding:9px 7px;vertical-align:middle}
+.lab-page #dialog-body th:first-child,.lab-page #dialog-body td:first-child{width:34%;white-space:normal;text-align:left}
+.lab-page #dialog-body .contribution-table th:not(:first-child),.lab-page #dialog-body .contribution-table td:not(:first-child){text-align:right}
+.lab-page #dialog-body .source-table th:first-child,.lab-page #dialog-body .source-table td:first-child{width:17%}
+.missing-label{display:block;font-size:9px;color:var(--orange);line-height:1.6}.total-row{background:#293822}.lab-page .model-actions .primary{margin:0;width:auto}
+@media(min-width:1500px){.lab-page .workspace{grid-template-columns:320px minmax(430px,1fr) 320px;gap:22px}.lab-page .controls,.lab-page .target-card,.lab-page .breakdown-card{padding:24px}.lab-page .podium-card{min-height:182px}}
+@media(max-width:1190px){.lab-page .workspace{grid-template-columns:280px minmax(310px,1fr)}.lab-page .insights{grid-column:1/-1;grid-template-columns:1fr 1fr}.lab-page .brand-cn,.lab-page .brand-divider{display:none}.page-nav{margin-right:0;gap:22px}.lab-page .podium-name{font-size:14px}}
+@media(max-width:760px){.lab-page .topbar{height:auto;min-height:72px;display:grid;grid-template-columns:1fr auto;padding:13px 5% 0;gap:8px 14px}.lab-page .top-actions{grid-column:2;grid-row:1}.page-nav{grid-row:2;grid-column:1/-1;margin:0;gap:28px;height:40px}.page-nav a{font-size:12px}.lab-page .brand{font-size:15px}.lab-page .brand-mark{width:31px;height:31px;font-size:24px}.lab-page .hero{padding:29px 0 23px}.lab-page .hero h1{font-size:34px}.lab-page .hero p{font-size:12px;max-width:100%}.formula-band{display:grid;grid-template-columns:1fr auto;gap:10px;padding:14px;margin-bottom:18px}.formula-tag{border:0;padding:0;font-size:9px}.formula-band>div{grid-column:1/-1;grid-row:2}.formula-band strong{font-size:12px}.formula-band p{font-size:10px}.formula-band button{grid-column:2;grid-row:1}.lab-page .workspace{display:flex;flex-direction:column;gap:18px}.lab-page .controls,.lab-page .ranking,.lab-page .insights{width:100%}.lab-page .insights{display:flex;flex-direction:column}.lab-page .controls{padding:20px}.lab-page .expert-info{min-height:0;padding-bottom:9px}.lab-page .slider-row{padding:14px 0}.lab-page .slider-desc{font-size:10px}.lab-page .podium{padding:0 14px 18px;gap:7px}.lab-page .podium-card{padding:11px 8px;min-height:183px}.lab-page .podium-name{font-size:13px;line-height:19px;min-height:38px}.lab-page .podium-en{font-size:8px;line-height:12px;min-height:36px}.lab-page .podium-score{font-size:21px}.lab-page .ranking-head{min-height:91px;padding:20px 16px}.lab-page .list-toolbar{padding:11px 14px}.lab-page .rank-col{width:43px}.lab-page .score-col{width:64px}.lab-page .change-col{width:57px}.lab-page .ranking-table th,.lab-page .ranking-table td{padding:11px 6px}.lab-page .ranking-table td:first-child,.lab-page .ranking-table th:first-child{padding-left:14px}.lab-page .ranking-table td:last-child,.lab-page .ranking-table th:last-child{padding-right:14px}.lab-page .player-main{font-size:11px}.lab-page .player-sub{font-size:8px}.lab-page .numeric{font-size:11px}.lab-page .ranking{scroll-margin-top:135px}.lab-page #dialog-body th,.lab-page #dialog-body td{font-size:10px;line-height:1.65;padding:8px 4px}.lab-page #dialog-body th:first-child,.lab-page #dialog-body td:first-child{width:33%}.lab-page #dialog-body .source-table th:first-child,.lab-page #dialog-body .source-table td:first-child{width:15%}.lab-page .model-actions{flex-direction:column}.lab-page .model-actions .primary{width:100%}.lab-page .quick-targets{flex-wrap:wrap}.lab-page .control-footer{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.lab-page *{scroll-behavior:auto!important}}

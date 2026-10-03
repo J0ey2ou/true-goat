@@ -1,0 +1,41 @@
+{
+  "version": "GOAT Model v0.2",
+  "component_order": [
+    "regular_season", "peak", "longevity", "playoffs", "awards", "defense", "team_success"
+  ],
+  "human_weights": {
+    "regular_season": 0.16,
+    "peak": 0.20,
+    "longevity": 0.14,
+    "playoffs": 0.18,
+    "awards": 0.14,
+    "defense": 0.10,
+    "team_success": 0.08
+  },
+  "pure_data_weights": {
+    "regular_season": 0.20,
+    "peak": 0.23,
+    "longevity": 0.18,
+    "playoffs": 0.17,
+    "awards": 0.09,
+    "defense": 0.09,
+    "team_success": 0.04
+  },
+  "pure_method": "inverse mean absolute component-correlation weighting; configured pure_data_weights are retained as a documented fallback only",
+  "ridge_alphas": [0.1, 1.0, 10.0, 100.0],
+  "cross_validation_folds": 5,
+  "cross_validation_repeats": 20,
+  "expert_fit_constraint": "non-negative component coefficients; higher component scores cannot lower the fitted public-ranking score",
+  "final_ranking_model": "empirical-Bayes-style precision blend of weighted public-ranking prior and repeated out-of-fold model evidence",
+  "bootstrap_iterations": 250,
+  "sensitivity_multipliers": [0.25, 0.5, 1.0, 1.5, 2.0, 3.0],
+  "prior_strength_multipliers": [0.0, 0.5, 1.0, 1.5, 2.0],
+  "source_weight_uncertainty_draws": 1000,
+  "source_weight_log_sd": 0.25,
+  "elasticity_random_draws": 500,
+  "elasticity_dirichlet_concentration": 45.0,
+  "make_goat_top_n": 50,
+  "make_goat_search_draws": 20000,
+  "random_seed": 20260815,
+  "missing_component_policy": "renormalize available component weights; never impute missing as zero"
+}

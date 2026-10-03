@@ -1,0 +1,42 @@
+{
+  "version": "0.1",
+  "leagues_in_scope": ["NBA", "BAA"],
+  "master_target": 300,
+  "master_min": 280,
+  "master_max": 330,
+  "minimum_career_games": 100,
+  "pool_a": {
+    "mvp_min": 1,
+    "dpoy_min": 1,
+    "all_nba_first_min": 2,
+    "all_nba_total_min": 4,
+    "all_star_min": 6,
+    "leader_titles_min": 2,
+    "honor_score_percentile": 0.965,
+    "force_nba_anniversary_team": true
+  },
+  "pool_b": {
+    "initial_top_n": 180,
+    "min_top_n": 80,
+    "max_top_n": 260,
+    "adjust_step": 1,
+    "era_representatives_per_decade": 5,
+    "season_min_games_floor": 20,
+    "season_min_league_games_share": 0.35
+  },
+  "pool_c": {
+    "include_external_ranked": true,
+    "include_nba_50": true,
+    "include_nba_75": true,
+    "include_hof_with_all_star_min": 3,
+    "era_representatives_per_decade": 3,
+    "discussion_cases": [
+      "Tracy McGrady", "Vince Carter", "Allen Iverson", "Dwight Howard",
+      "Russell Westbrook", "Carmelo Anthony", "Derrick Rose", "Grant Hill",
+      "Penny Hardaway", "Yao Ming", "Manu Ginobili", "Tony Parker",
+      "Klay Thompson", "Draymond Green", "Kyrie Irving", "Luka Doncic",
+      "Nikola Jokic", "Joel Embiid", "Jayson Tatum", "Shai Gilgeous-Alexander",
+      "Victor Wembanyama", "Jimmy Butler", "Paul George", "Pau Gasol"
+    ]
+  }
+}

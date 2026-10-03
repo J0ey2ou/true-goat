@@ -1,0 +1,37 @@
+{
+  "version": "Public Ranking Prior v0.2",
+  "principle": "Ordered public rankings form a transparent prior; official unranked anniversary teams remain recognition evidence and are not converted into ranks.",
+  "sources": {
+    "ESPN_2022": {
+      "reliability_weight": 1.00,
+      "rationale": "Large ESPN expert panel with thousands of head-to-head votes and an explicit NBA-only scope."
+    },
+    "HoopsHype_2021": {
+      "reliability_weight": 0.95,
+      "rationale": "Eight staff ballots with the highest and lowest ballots removed before aggregation."
+    },
+    "CBS_2017": {
+      "reliability_weight": 0.85,
+      "rationale": "Seven named panelists aggregated by average rank; older and shorter than the two highest-weight sources."
+    },
+    "Bleacher_Report_2025": {
+      "reliability_weight": 0.75,
+      "rationale": "Recent 100-player staff list with broad criteria, but a less explicitly quantified aggregation procedure."
+    }
+  },
+  "consensus": {
+    "score": "reliability-weighted mean of each list's 0-100 normalized rank score",
+    "diagnostic_robust_score": "75% reliability-weighted mean + 25% reliability-weighted median",
+    "minimum_sources_for_model_training": 2,
+    "missing_list_policy": "absence from a shorter list is unobserved, not zero"
+  },
+  "bayesian_update": {
+    "single_source_score_sd": 14.0,
+    "between_source_disagreement_multiplier": 1.0,
+    "model_oof_rmse_floor": 8.0,
+    "model_oof_rmse_ceiling": 20.0,
+    "maximum_prior_weight": 0.85,
+    "minimum_prior_weight": 0.0,
+    "unranked_player_policy": "use model evidence only; do not penalize absence from public lists"
+  }
+}

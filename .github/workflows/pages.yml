@@ -1,0 +1,44 @@
+name: Publish True GOAT
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check scoring, game and source data
+        run: node --test app/tests/model.test.mjs app/tests/guess.test.mjs app/tests/player-search.test.mjs app/tests/guess-data.test.mjs app/tests/static-build.test.mjs
+      - name: Build static site from the explicit file allowlist
+        run: node scripts/16_build_static_site.mjs
+      - name: Upload website only
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
