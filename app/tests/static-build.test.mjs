@@ -168,6 +168,7 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     assert.equal(await page.locator('#target-select').inputValue(), 'jordami01');
     await page.locator('.page-nav a[href="./guess.html"]').click();
     await page.locator('#guess-app').waitFor({state:'visible'});
+    await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
     await page.locator('#guess-search').fill('哈登');
     const candidate = page.locator('.guess-option').first();
     assert.match(await candidate.innerText(), /Harden/);

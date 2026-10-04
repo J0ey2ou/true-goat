@@ -1,43 +1,51 @@
 /** A read-only introduction: demos never invoke the ranking or game engines. */
-export const STORAGE_KEY = 'true-goat-onboarding-v1';
+export const STORAGE_KEY = 'true-goat-onboarding-v2';
+const PAGE_SCOPES = ['lab', 'directory', 'guess'];
+
+export function onboardingStorageKey(page = 'lab') {
+  if (!PAGE_SCOPES.includes(page)) throw new TypeError('Unknown onboarding page');
+  return `${STORAGE_KEY}:${page}`;
+}
 
 function browserStorage() {
   try { return globalThis.localStorage; } catch { return undefined; }
 }
 
-export function readOnboardingState(storage = browserStorage()) {
+export function readOnboardingState(storage = browserStorage(), page = 'lab') {
   try {
-    const state = JSON.parse(storage?.getItem(STORAGE_KEY) ?? 'null');
-    return state?.seen === true && (state.version === undefined || state.version === 1) ? state : null;
+    const state = JSON.parse(storage?.getItem(onboardingStorageKey(page)) ?? 'null');
+    return state?.seen === true && state.version === 2 && state.page === page ? state : null;
   } catch { return null; }
 }
 
-export function markOnboardingSeen(reason = 'dismissed', storage = browserStorage()) {
-  const state = { version: 1, seen: true, reason, seenAt: new Date().toISOString() };
-  try { storage?.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* Private browsing may block storage. */ }
+export function markOnboardingSeen(reason = 'dismissed', storage = browserStorage(), page = 'lab') {
+  const key = onboardingStorageKey(page);
+  const state = { version: 2, page, seen: true, reason, seenAt: new Date().toISOString() };
+  try { storage?.setItem(key, JSON.stringify(state)); } catch { /* Private browsing may block storage. */ }
   return state;
 }
 
-const OVERVIEW = [
-  {
-    label: '01 / 定义你的伟大', title: '没有标准答案，只有你的标准。',
+const PAGE_INTROS = {
+  lab: {
+    label: '排名实验室 / 定义你的伟大', title: '没有标准答案，只有你的标准。',
     description: '从评论员观点出发，独立调整每个系数。你更看重巅峰、荣誉，还是漫长生涯？排名会随之重新计算。',
     takeaway: '这是加性模型，不是百分比分配：调大一项，不会挤掉其他项。', demo: 'model',
   },
-  {
-    label: '02 / 看懂排名背后', title: '先认识球员，再比较伟大。',
+  directory: {
+    label: '球员库 / 看懂排名背后', title: '先认识球员，再比较伟大。',
     description: '球员库展示 300 位候选人的入选路径、履历、荣誉与数据来源。搜索熟悉的名字，把判断建立在事实之上。',
     takeaway: '入选不等于高排名；不同年份与统计口径，会在档案中说明。', demo: 'directory',
   },
-  {
-    label: '03 / 换一种方式认识篮球', title: '八次机会，用线索找到他。',
+  guess: {
+    label: '猜球员 / 换一种方式认识篮球', title: '八次机会，用线索找到他。',
     description: '进入猜球员，选择 NBA、CBA 或全球男子精选池。支持中文、英文和绰号搜索，每次有效提交后都会得到属性反馈。',
-    takeaway: '先玩再研究也可以。无需账号即可体验；猜测与模型保存在当前浏览器。', demo: 'guess',
+    takeaway: '无需账号即可体验。可以限定实际出场赛季与球队；猜测进度保存在当前浏览器。', demo: 'guess',
   },
-];
+};
 
 const PAGE_TOURS = {
   lab: {
+    page: 'lab', startLabel: '开始调整模型 →',
     ready: '#workspace', label: '排名实验室', primary: '#expert-select',
     steps: [
       { title: '选一个起点，不是选一个答案。', description: '先看看评论员观点。这里的系数是根据其公开排序拟合的解释性近似，并不是评论员亲自公布的评分公式。', target: '#expert-select', targetLabel: '评论员观点选择器', tip: '你可以从一个预设开始，再形成自己的标准。' },
@@ -47,6 +55,7 @@ const PAGE_TOURS = {
     ],
   },
   directory: {
+    page: 'directory', startLabel: '浏览球员档案 →',
     ready: '#directory-content', label: '球员库', primary: '#directory-search',
     steps: [
       { title: '从一个熟悉的名字开始。', description: '输入中文名、英文名或球队，再按位置、主要年代与入选路径筛选。筛选只影响列表，不改变实验室的候选池。', target: '#directory-search', targetLabel: '姓名与球队搜索', tip: '试试乔丹、Curry 或 BOS；也可以随时清除筛选。' },
@@ -55,10 +64,12 @@ const PAGE_TOURS = {
     ],
   },
   guess: {
+    page: 'guess', startLabel: '开始猜球员 →',
     ready: '#guess-app', label: '猜球员', primary: '#guess-pool',
     steps: [
       { title: '先选范围，再选挑战方式。', description: 'NBA、CBA 与全球男子精选池分别出题。每日挑战在北京时间零点更新；自由练习可以换题。名单是精选样本，不是完整联赛名单。', target: '#guess-pool', targetLabel: '球员池选择器', tip: '首次体验推荐 NBA 池，从你熟悉的球员开始。' },
-      { title: '中文、英文、绰号，都可以。', description: '在 NBA 池可试着搜索「哈登」或「大胡子」。输入不会扣次数，点击候选或回车提交才算一次有效猜测；重复或无效提交不扣次数。', target: '#guess-search', targetLabel: '猜球员搜索框', tip: '赛季筛选只限制搜索候选，不会改变本局答案。' },
+      { title: '赛季与球队，真正限定出题范围。', description: '题目球员必须在所选赛季范围内实际出场；同时指定球队时，还需在相应赛季为该队出场。球队选项随 NBA、CBA 与国际池切换，缺少可核实记录的球员不会进入筛选题池。', target: '#guess-year-from', targetLabel: '出题赛季与球队筛选', tip: '设置好范围后应用筛选，开启符合条件的新一局；搜索候选和答案使用同一个范围。' },
+      { title: '中文、英文、绰号，都可以。', description: '在 NBA 池可试着搜索「哈登」或「大胡子」。输入不会扣次数，点击候选或回车提交才算一次有效猜测；重复或无效提交不扣次数。', target: '#guess-search', targetLabel: '猜球员搜索框', tip: '若搜索不到熟悉的名字，检查他是否符合当前生效的赛季和球队范围。' },
       { title: '读懂颜色，也读懂箭头。', description: '绿色表示一致，黄色表示接近或集合重合。↑ 表示答案更大，↓ 表示更小；「未知」表示资料不足或不可比较，不代表 0。', target: '.guess-legend', targetLabel: '线索图例', tip: 'NBA 生涯指标有不同数据截止年，详情见右侧规则与口径。' },
       { title: '逐步缩小范围，八次找到本人。', description: '每次提交后，在猜测记录中比较基本资料与生涯指标。全部属性相同也不等于猜中，最终以球员身份为准。', target: '#guess-history', fallback: '#guess-search', targetLabel: '猜测记录区域', tip: '这里的演示不会消耗机会、改变答案或写入任何猜测。' },
     ],
@@ -100,7 +111,7 @@ export function initOnboarding(document = globalThis.document) {
   let openedInSession = false;
   let stopWaiting = () => {};
   let removeHighlight = () => {};
-  const steps = () => mode === 'overview' ? OVERVIEW : config.steps;
+  const steps = () => mode === 'overview' ? [PAGE_INTROS[config.page]] : config.steps;
   const $ = selector => dialog.querySelector(selector);
   const otherDialogOpen = () => [...document.querySelectorAll('dialog[open]')].some(item => item !== dialog);
 
@@ -108,13 +119,16 @@ export function initOnboarding(document = globalThis.document) {
     const step = steps()[index];
     const overview = mode === 'overview';
     dialog.dataset.guideMode = mode;
+    dialog.dataset.guidePage = config.page;
     dialog.dataset.guideStep = String(index);
     $('#tg-guide-content').innerHTML = `<div class="tg-guide-heading"><span class="tg-guide-kicker">${overview ? step.label : `${config.label} / ${String(index + 1).padStart(2, '0')} 步上手`}</span><h2 id="tg-guide-title" tabindex="-1">${step.title}</h2><p id="tg-guide-description">${step.description}</p></div>${overview ? demoMarkup(step.demo) : `<div class="tg-guide-tour-card"><span class="tg-guide-demo-label">现在去找</span><div><b aria-hidden="true">${String(index + 1).padStart(2, '0')}</b><strong>${step.targetLabel}</strong><span aria-hidden="true">↗</span></div><p>点击「带我试试」后，将定位并高亮实际入口。<br>不会替你操作，也不会更改现有设置。</p></div>`}<p class="tg-guide-takeaway"><span aria-hidden="true">↗</span>${overview ? step.takeaway : step.tip}</p>`;
     $('#tg-guide-progress').innerHTML = steps().map((_, stepIndex) => `<button type="button" data-guide-dot="${stepIndex}" aria-label="查看第 ${stepIndex + 1} 步" ${stepIndex === index ? 'aria-current="step"' : ''}><span></span></button>`).join('') + `<span class="tg-guide-count" aria-live="polite">${index + 1} / ${steps().length}</span>`;
     $('[data-guide-back]').disabled = index === 0;
+    $('[data-guide-back]').hidden = overview;
+    $('#tg-guide-progress').hidden = overview;
     $('[data-guide-next]').hidden = index === steps().length - 1;
     $('[data-guide-start]').hidden = overview && index !== steps().length - 1;
-    $('[data-guide-start]').textContent = overview ? '开始探索 →' : '带我试试 ↗';
+    $('[data-guide-start]').textContent = overview ? config.startLabel : '带我试试 ↗';
     dialog.scrollTop = 0;
     if (announce) $('#tg-guide-title').focus({ preventScroll: true });
   }
@@ -190,7 +204,7 @@ export function initOnboarding(document = globalThis.document) {
   });
   dialog.addEventListener('cancel', () => { closeReason = 'skipped'; });
   dialog.addEventListener('close', () => {
-    markOnboardingSeen(closeReason);
+    markOnboardingSeen(closeReason, browserStorage(), config.page);
     const target = pendingTarget;
     pendingTarget = null;
     if (target) highlight(target);
@@ -204,12 +218,12 @@ export function initOnboarding(document = globalThis.document) {
 
   // Do not intercept shared models / player links or compete with an existing dialog.
   const deepLink = window.location.hash.startsWith('#model') || new URLSearchParams(window.location.search).has('player');
-  if (readOnboardingState() || deepLink || otherDialogOpen()) return;
+  if (readOnboardingState(browserStorage(), config.page) || deepLink || otherDialogOpen()) return;
   let observer;
   let timeout;
   stopWaiting = () => { observer?.disconnect(); window.clearTimeout(timeout); };
   const tryAutomaticOpen = () => {
-    if (openedInSession || readOnboardingState() || otherDialogOpen()) { stopWaiting(); return; }
+    if (openedInSession || readOnboardingState(browserStorage(), config.page) || otherDialogOpen()) { stopWaiting(); return; }
     if (visible(document.querySelector(config.ready))) { stopWaiting(); open('overview', null); }
   };
   observer = new window.MutationObserver(tryAutomaticOpen);

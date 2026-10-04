@@ -2,10 +2,11 @@
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
 import { chromium, browserOptions } from './browser-runtime.mjs';
+import { filterKey } from '../guess-engine.mjs';
 const BASE = (process.env.GOAT_BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/,'');
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1120}});
-await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
+await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page = await context.newPage();
 const errors = [],passed = [];
 page.on('pageerror',error => errors.push(error.message));
@@ -13,7 +14,7 @@ page.on('console',msg => { if (msg.type() === 'error') errors.push(msg.text()); 
 const check = (label,value) => { assert.ok(value,label); passed.push(label); };
 const screenshot = name => fileURLToPath(new URL(name,import.meta.url));
 let data;
-const state = async (mode = 'daily',pool = 'nba') => page.evaluate(({mode,pool,version}) => JSON.parse(localStorage.getItem(`true-goat-guess:v1:${version}:${mode}:${pool}`)),{mode,pool,version:data.version});
+const state = async (mode = 'daily',pool = 'nba') => page.evaluate(key => JSON.parse(localStorage.getItem(key)),`true-goat-guess:v2:${data.version}:${mode}:${pool}:${encodeURIComponent(filterKey({}))}`);
 const attempts = async () => Number(await page.locator('#guess-attempts').textContent());
 const guess = async (player,method = 'click') => {
   await page.locator('#guess-search').fill(player.name);
@@ -49,25 +50,14 @@ try {
   await page.locator('#guess-search').fill('Michael Jordan');
   await page.locator('#guess-year-from').fill('2000');
   await page.locator('#guess-year-to').fill('2000');
-  check('retirement gap is excluded using actual seasons',await page.locator('#guess-submit').isDisabled() && (await page.locator('#guess-message').textContent()).includes('赛季'));
-  await page.locator('#guess-year-from').fill('1995');
-  await page.locator('#guess-year-to').fill('1995');
-  check('inclusive season-ending year matches actual appearance',await page.locator('.guess-option[data-id="jordami01"]').isVisible());
-  await page.locator('#guess-year-from').fill('2004');
-  await page.locator('#guess-year-to').fill('');
-  check('open-ended lower year bound excludes retired player',await page.locator('#guess-submit').isDisabled());
-  await page.locator('#guess-year-from').fill('');
-  await page.locator('#guess-year-to').fill('1984');
-  check('upper bound uses season end rather than debut calendar year',await page.locator('#guess-submit').isDisabled());
-  await page.locator('#guess-year-to').fill('1985');
-  check('inclusive upper bound finds debut season',await page.locator('.guess-option[data-id="jordami01"]').isVisible());
+  check('pending range blocks guesses until explicitly applied',await page.locator('#guess-search').isDisabled() && await page.locator('#guess-submit').isDisabled() && (await page.locator('#guess-year-status').textContent()).includes('待应用'));
   await page.locator('#guess-year-from').fill('2020');
   await page.locator('#guess-year-to').fill('1990');
   check('reversed interval shows error and blocks submission',await page.locator('#guess-year-from').getAttribute('aria-invalid') === 'true' && (await page.locator('#guess-year-status').textContent()).includes('不能晚于') && await page.locator('#guess-submit').isDisabled());
-  await page.locator('#guess-search').press('Enter');
+  await page.locator('#guess-form').dispatchEvent('submit');
   check('invalid year submission does not consume a guess',await attempts() === 0);
-  await page.locator('#guess-year-clear').click();
-  check('clear restores candidates without changing answer',await page.locator('.guess-option[data-id="jordami01"]').isVisible() && (await state()).answerId === nbaInitial.answerId && await attempts() === 0 && await page.locator('#guess-year-from').inputValue() === '' && await page.locator('#guess-year-to').inputValue() === '');
+  await page.locator('#guess-filter-cancel').click();
+  check('cancel restores applied range without changing answer',await page.locator('.guess-option[data-id="jordami01"]').isVisible() && (await state()).answerId === nbaInitial.answerId && await attempts() === 0 && await page.locator('#guess-year-from').inputValue() === '' && await page.locator('#guess-year-to').inputValue() === '');
   await page.locator('#guess-search').fill('');
   await page.locator('#guess-search').focus(); await page.locator('#guess-search').press('Enter');
   check('empty Enter does not consume a guess',await attempts() === 0);
@@ -146,10 +136,10 @@ try {
   await guess(cbaGuess);
   await page.locator('#guess-pool').selectOption('nba');
   check('practice pools preserve separate progress',await attempts() === 0 && (await state('practice','cba')).guesses.length === 1);
-  await page.evaluate(({version}) => {
-    localStorage.setItem('true-goat-guess:preferences:v1',JSON.stringify({mode:'daily',pool:'nba'}));
-    localStorage.setItem(`true-goat-guess:v1:${version}:daily:nba`,'{not valid JSON');
-  },{version:data.version});
+  await page.evaluate(({version,rangeKey}) => {
+    localStorage.setItem('true-goat-guess:preferences:v2',JSON.stringify({mode:'daily',pool:'nba',filtersByPool:{}}));
+    localStorage.setItem(`true-goat-guess:v2:${version}:daily:nba:${encodeURIComponent(rangeKey)}`,'{not valid JSON');
+  },{version:data.version,rangeKey:filterKey({})});
   await page.reload(); await page.locator('#guess-app').waitFor({state:'visible'});
   check('broken localStorage recovers fixed daily answer',await attempts() === 0 && (await state()).answerId === nbaStart.answerId && (await page.locator('#guess-message').textContent()).includes('旧进度'));
   await page.clock.install({time:new Date('2026-10-03T15:59:30Z')});
@@ -180,11 +170,11 @@ try {
   check('mobile answer layout remains bounded',await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await page.locator('#guess-result').screenshot({path:screenshot('guess-mobile-answer.png')});
   const foreignAnswer = data.players.find(player => !player.directoryId && player.pools.includes('global'));
-  await page.evaluate(({version,answerId}) => {
-    const key = `true-goat-guess:v1:${version}:practice:global`;
+  await page.evaluate(({version,answerId,rangeKey}) => {
+    const key = `true-goat-guess:v2:${version}:practice:global:${encodeURIComponent(rangeKey)}`;
     const saved = JSON.parse(localStorage.getItem(key));
     localStorage.setItem(key,JSON.stringify({...saved,answerId,guesses:[],status:'playing'}));
-  },{version:data.version,answerId:foreignAnswer.id});
+  },{version:data.version,answerId:foreignAnswer.id,rangeKey:filterKey({})});
   await page.reload(); await page.locator('#guess-app').waitFor({state:'visible'});
   await guess(foreignAnswer);
   check('non-NBA answer avoids nonexistent directory link',await page.locator('#guess-result a[href^="/players"]').count() === 0 && await page.locator('#guess-result a[href^="http"]').count() > 0);

@@ -28,15 +28,21 @@
 .guess-page .guess-counter strong { font:34px ui-monospace,monospace; color:var(--lime); }
 .guess-page .guess-counter span { font-size:13px; color:var(--muted); }
 .guess-page .guess-round-note { font-size:11px; line-height:1.8; color:var(--muted); margin:16px 0 20px; }
-.guess-page .guess-year-filter { display:grid; grid-template-columns:minmax(90px,1fr) minmax(70px,100px) 10px minmax(70px,100px) auto; align-items:end; gap:8px; margin-bottom:16px; padding:14px; border:1px solid #3c4834; border-radius:7px; background:#192215; }
+.guess-page .guess-year-filter { display:grid; grid-template-columns:minmax(140px,1fr) minmax(90px,115px) 10px minmax(90px,115px) minmax(150px,1.4fr); align-items:end; gap:12px; margin-bottom:20px; padding:20px 22px; border:1px solid #556d3d; border-radius:10px; background:#192215; }
 .guess-page .guess-filter-title { align-self:center; display:grid; gap:3px; }
-.guess-page .guess-filter-title strong { font-size:11px; font-weight:500; }
+.guess-page .guess-filter-title strong { font-size:14px; font-weight:600; color:var(--lime); }
 .guess-page .guess-filter-title span { font-size:9px; color:var(--muted); }
 .guess-page .guess-year-filter label { display:grid; gap:4px; min-width:0; color:var(--muted); font-size:9px; }
-.guess-page .guess-year-filter input { width:100%; min-width:0; height:33px; padding:6px 9px; color:var(--text); background:#252e22; border:1px solid #526045; border-radius:5px; font:12px var(--font); }
+.guess-page .guess-year-filter input,.guess-page .guess-year-filter select { width:100%; min-width:0; height:39px; padding:6px 9px; color:var(--text); background:#252e22; border:1px solid #526045; border-radius:5px; font:12px var(--font); }
 .guess-page .guess-year-filter input[aria-invalid=true] { border-color:var(--orange); }
 .guess-page .guess-year-dash { color:var(--muted); align-self:center; padding-top:15px; }
-.guess-page #guess-year-clear { height:33px; font-size:10px; padding:5px 9px; color:#baccaa; border:1px solid #526045; background:transparent; border-radius:5px; }
+.guess-page .guess-filter-actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:9px;flex-wrap:wrap}
+.guess-page .guess-filter-actions button { min-height:38px; font-size:11px; padding:7px 13px; color:var(--text); border:1px solid #526045; background:transparent; border-radius:6px; }
+.guess-page #guess-filter-apply{background:var(--lime);color:var(--bg);font-weight:600;border-color:var(--lime)}
+.guess-page .guess-filter-actions button:disabled{cursor:default;opacity:.45}
+.guess-page .guess-active-filter{padding:11px 13px;background:var(--panel2);border-left:3px solid var(--lime);font-size:11px;line-height:1.8;color:var(--text);margin:0 0 18px;overflow-wrap:anywhere}
+.guess-page .guess-proof{font-size:11px;line-height:1.9;border-top:1px solid var(--line);margin-top:16px;padding-top:12px}
+.guess-page .guess-proof ul{padding-left:18px}.guess-page .guess-proof a{color:var(--lime)}
 .guess-page #guess-year-clear:disabled { opacity:.4; cursor:default; }
 .guess-page .guess-year-filter p { grid-column:1/-1; margin:0; font-size:9px; color:var(--muted); line-height:1.7; }
 .guess-page #guess-year-note { margin-top:2px; }
@@ -147,7 +153,8 @@
   .guess-page .guess-counter { gap:5px; }
   .guess-page .guess-counter span { font-size:11px; }
   .guess-page .guess-round-note { font-size:10px; }
-  .guess-page .guess-year-filter { grid-template-columns:minmax(0,1fr) 9px minmax(0,1fr) auto; padding:12px; gap:7px; }
+  .guess-page .guess-year-filter { grid-template-columns:minmax(0,1fr) 9px minmax(0,1fr); padding:16px; gap:10px 8px; }
+  .guess-page .guess-team-label{grid-column:1/-1}
   .guess-page .guess-filter-title { grid-column:1/-1; display:flex; align-items:center; gap:8px; margin-bottom:2px; }
   .guess-page .guess-form { gap:7px; }
   .guess-page #guess-search { font-size:12px; padding:11px 9px; }

@@ -2,16 +2,16 @@
 // Uses actual first visits: no onboarding completion flag is pre-seeded.
 import assert from 'node:assert/strict';
 import {chromium, browserOptions} from './browser-runtime.mjs';
+import {STORAGE_KEY, onboardingStorageKey} from '../onboarding.mjs';
 
 const base = new URL(process.env.GOAT_TEST_URL || 'http://127.0.0.1:8766/');
 base.pathname = base.pathname.replace(/index\.html$/, '').replace(/\/?$/, '/');
 const staticRoutes = process.env.GOAT_TEST_STATIC === '1' || base.pathname !== '/';
 const pages = [
-  {name:'lab', route:'', ready:'#workspace'},
-  {name:'players', route:staticRoutes ? 'players.html' : 'players', ready:'#directory-content'},
-  {name:'guess', route:staticRoutes ? 'guess.html' : 'guess', ready:'#guess-app'},
+  {name:'lab', demo:'model', title:'没有标准答案，只有你的标准。', route:'', ready:'#workspace'},
+  {name:'directory', demo:'directory', title:'先认识球员，再比较伟大。', route:staticRoutes ? 'players.html' : 'players', ready:'#directory-content'},
+  {name:'guess', demo:'guess', title:'八次机会，用线索找到他。', route:staticRoutes ? 'guess.html' : 'guess', ready:'#guess-app'},
 ];
-const STORAGE = 'true-goat-onboarding-v1';
 const browser = await chromium.launch(browserOptions);
 const results = [];
 const errors = [];
@@ -50,15 +50,32 @@ async function skip(page) {
 
 async function appSnapshot(page) {
   return page.evaluate(key => ({
-    storage:Object.fromEntries(Object.keys(localStorage).filter(name => name !== key).sort().map(name => [name, localStorage.getItem(name)])),
+    storage:Object.fromEntries(Object.keys(localStorage).filter(name => !name.startsWith(key + ':')).sort().map(name => [name, localStorage.getItem(name)])),
     coefficients:[...document.querySelectorAll('[data-coefficient]')].map(element => [element.id, element.value]),
     prior:document.querySelector('#prior-coef')?.value,
     target:document.querySelector('#target-select')?.value,
     attempts:document.querySelector('#guess-attempts')?.textContent,
     guesses:document.querySelector('#guess-history')?.innerHTML,
+    guessFilters:['#guess-pool','#guess-year-from','#guess-year-to','#guess-team'].map(selector => [selector, document.querySelector(selector)?.value]),
     directorySearch:document.querySelector('#directory-search')?.value,
     url:location.href,
-  }), STORAGE);
+  }), STORAGE_KEY);
+}
+
+async function assertPageIntro(page, definition) {
+  assert.equal(await guide(page).getAttribute('data-guide-page'), definition.name);
+  assert.equal(await guide(page).getAttribute('data-guide-step'), '0');
+  assert.equal(await page.locator('#tg-guide-title').innerText(), definition.title);
+  assert.equal(await guide(page).locator('.tg-guide-demo').count(), 1, 'only the current page animation is rendered');
+  assert.equal(await guide(page).locator(`.tg-guide-demo-${definition.demo}`).count(), 1);
+  for (const other of pages.filter(item => item !== definition)) {
+    assert.equal(await guide(page).locator(`.tg-guide-demo-${other.demo}`).count(), 0, 'no animation belonging to another page');
+    assert.equal((await guide(page).innerText()).includes(other.title), false, 'no heading belonging to another page');
+  }
+  assert.equal(await control(page, 'next').isVisible(), false, 'no next page introduction');
+  assert.equal(await control(page, 'back').isVisible(), false, 'no previous page introduction');
+  assert.equal(await page.locator('#tg-guide-progress').isVisible(), false, 'a single page introduction needs no slide pagination');
+  assert.equal(await control(page, 'start').isVisible(), true);
 }
 
 async function assertBounded(page, label) {
@@ -99,22 +116,15 @@ async function walkTour(page, eachStep = async () => {}) {
 
 try {
   for (const definition of pages) {
-    await check(`${definition.name}: actual first visit, navigation, skip, revisit and replay`, () => withPage(async page => {
+    await check(`${definition.name}: page-specific first visit, skip, revisit and replay`, () => withPage(async page => {
       await ready(page, definition);
       await waitForMode(page, 'overview');
-      assert.equal(await guide(page).getAttribute('data-guide-step'), '0');
+      await assertPageIntro(page, definition);
       assert.ok((await guide(page).getAttribute('aria-labelledby')) || (await guide(page).getAttribute('aria-label')), 'intro has an accessible name');
       const before = await appSnapshot(page);
-      await control(page, 'next').click();
-      assert.equal(await guide(page).getAttribute('data-guide-step'), '1');
-      await control(page, 'back').click();
-      assert.equal(await guide(page).getAttribute('data-guide-step'), '0');
-      await guide(page).locator('[data-guide-dot="2"]').click();
-      assert.equal(await guide(page).getAttribute('data-guide-step'), '2');
-      await guide(page).locator('[data-guide-dot="0"]').click();
       await skip(page);
-      await page.waitForFunction(key => Boolean(localStorage.getItem(key)), STORAGE);
-      assert.ok(await page.evaluate(key => localStorage.getItem(key), STORAGE), 'skip records only a tutorial preference');
+      await page.waitForFunction(key => Boolean(localStorage.getItem(key)), onboardingStorageKey(definition.name));
+      assert.ok(await page.evaluate(key => localStorage.getItem(key), onboardingStorageKey(definition.name)), 'skip records only this page tutorial preference');
       assert.deepEqual(await appSnapshot(page), before, 'overview does not mutate application state');
       await page.reload();
       await page.locator(definition.ready).waitFor({state:'visible'});
@@ -123,6 +133,7 @@ try {
       const opener = page.locator('[data-open-guide]').first();
       await opener.click();
       await waitForMode(page, 'overview');
+      await assertPageIntro(page, definition);
       await page.keyboard.press('Escape');
       await guide(page).waitFor({state:'hidden'});
       await page.waitForFunction(() => document.activeElement?.hasAttribute('data-open-guide'));
@@ -148,21 +159,35 @@ try {
     }));
   }
 
-  await check('dismissal carries across pages without suppressing manual help', () => withPage(async page => {
-    await ready(page, pages[0]);
-    await waitForMode(page, 'overview');
-    await skip(page);
-    await page.waitForFunction(key => Boolean(localStorage.getItem(key)), STORAGE);
-    for (const definition of pages.slice(1)) {
+  await check('each page gets its own first visit; dismissal never suppresses another page', () => withPage(async page => {
+    for (const definition of pages) {
+      await ready(page, definition);
+      await waitForMode(page, 'overview');
+      await assertPageIntro(page, definition);
+      await skip(page);
+      await page.waitForFunction(key => Boolean(localStorage.getItem(key)), onboardingStorageKey(definition.name));
+    }
+    for (const definition of pages) {
       await ready(page, definition);
       await page.waitForTimeout(400);
-      assert.equal(await guide(page).isVisible(), false, 'one introduction per browser, not per page');
+      assert.equal(await guide(page).isVisible(), false, 'each visited page independently remembers completion');
       await page.locator('[data-open-guide]').first().click();
       await waitForMode(page, 'overview');
+      await assertPageIntro(page, definition);
       await page.keyboard.press('Escape');
       await guide(page).waitFor({state:'hidden'});
     }
   }));
+
+  await check('legacy global completion cannot hide the new page-specific introductions', () => withPage(async page => {
+    for (const definition of pages) {
+      await ready(page, definition);
+      await waitForMode(page, 'overview');
+      await assertPageIntro(page, definition);
+      await skip(page);
+    }
+    assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('true-goat-onboarding-v1')).seen), true);
+  }, {}, () => localStorage.setItem('true-goat-onboarding-v1', JSON.stringify({version:1, seen:true}))));
 
   await check('overview completion highlights the real entry; keyboard focus stays within modal', () => withPage(async page => {
     await ready(page, pages[0]);
@@ -172,9 +197,7 @@ try {
       await page.keyboard.press(index % 4 === 3 ? 'Shift+Tab' : 'Tab');
       assert.equal(await guide(page).evaluate(dialog => dialog.contains(document.activeElement)), true, 'Tab cannot escape the modal');
     }
-    await control(page, 'next').click();
-    await control(page, 'next').click();
-    assert.equal(await guide(page).getAttribute('data-guide-step'), '2');
+    await assertPageIntro(page, pages[0]);
     await control(page, 'start').click();
     await guide(page).waitFor({state:'hidden'});
     await page.waitForFunction(() => document.activeElement?.id === 'expert-select' && document.activeElement.classList.contains('tg-guide-highlight'));
@@ -219,14 +242,14 @@ try {
   });
 
   await check('reduced-motion preference disables guide animation', () => withPage(async page => {
-    await ready(page, pages[0]);
-    await waitForMode(page, 'overview');
-    for (let step = 0; step < 3; step += 1) {
+    for (const definition of pages) {
+      await ready(page, definition);
+      await waitForMode(page, 'overview');
+      await assertPageIntro(page, definition);
       const animated = await guide(page).evaluate(dialog => dialog.getAnimations({subtree:true}).filter(animation => animation.playState === 'running' && Number(animation.effect?.getTiming().duration) > 0).length);
-      assert.equal(animated, 0, 'no running animation under reduced-motion at step ' + step);
-      if (step < 2) await control(page, 'next').click();
+      assert.equal(animated, 0, 'no running animation under reduced-motion on ' + definition.name);
+      await skip(page);
     }
-    await skip(page);
   }, {reducedMotion:'reduce'}));
 
   await check('blocked localStorage does not prevent guest onboarding or gameplay', () => withPage(async page => {
@@ -252,10 +275,8 @@ try {
         await withPage(async page => {
           await ready(page, definition);
           await waitForMode(page, 'overview');
-          for (let step = 0; step < 3; step += 1) {
-            await assertBounded(page, `${definition.name} overview ${step}`);
-            if (step < 2) await control(page, 'next').click();
-          }
+          await assertPageIntro(page, definition);
+          await assertBounded(page, `${definition.name} overview`);
           await skip(page);
           await page.locator('[data-open-tour]').first().click();
           await walkTour(page, step => assertBounded(page, `${definition.name} tour ${step}`));

@@ -8,11 +8,12 @@ const browser=await chromium.launch(browserOptions);
 const base=process.env.GOAT_TEST_URL||'http://127.0.0.1:8765';
 const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
 // Dedicated onboarding tests exercise first visits; this suite exercises returning users.
-await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
+await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page=await context.newPage(),errors=[],results=[];
 const track=p=>{p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text());});};
 track(page);
 const payload=await(await fetch(base+'/data/players.json')).json(),players=payload.players;
+const expertData=await(await fetch(base+'/data/experts.json')).json();
 const state=p=>(p||page).evaluate(()=>JSON.parse(localStorage.getItem('true-goat-v04')));
 const ready=p=>(p||page).locator('#workspace').waitFor({state:'visible'});
 async function setRange(id,value,p=page){await p.locator('#'+id).evaluate((e,v)=>{e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));},String(value));}
@@ -20,11 +21,11 @@ async function test(name,fn){try{await fn();results.push({name,passed:true});con
 async function overflow(p){return p.evaluate(()=>({body:document.documentElement.scrollWidth>innerWidth+1,dialog:[...document.querySelectorAll('dialog[open]')].some(d=>d.scrollWidth>d.clientWidth+1)}));}
 try {
   await page.goto(base);await ready();
-  await test('initial additive UI and three fitted presets',async()=>{
+  await test('initial additive UI and all source-backed fitted presets',async()=>{
     assert.equal(await page.locator('[data-coefficient]').count(),7);
-    assert.equal(await page.locator('#expert-select option').count(),4);
+    assert.equal(await page.locator('#expert-select option').count(),expertData.experts.length+1);
     assert.equal((await state()).v,4);
-    for(const id of ['stephen-a-2023','perkins-2021','skip-2026']){
+    for(const id of expertData.experts.map(expert=>expert.id)){
       await page.selectOption('#expert-select',id);
       await page.click('#open-source');assert.match(await page.locator('#dialog-body').innerText(),/没有总和约束/);await page.keyboard.press('Escape');
     }
@@ -99,7 +100,7 @@ try {
   });
   await test('legacy percentage state migrates explicitly without deleting the original',async()=>{
     const c=await browser.newContext();const p=await c.newPage();track(p);
-    await p.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
+    await p.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v2:lab',JSON.stringify({version:2,page:'lab',seen:true})));
     const legacy={v:3,preset:'balanced',weights:payload.default_user_weights,anchor:.25,targetId:'jordami01'};
     await p.addInitScript(s=>localStorage.setItem('true-goat-v03',JSON.stringify(s)),legacy);
     await p.goto(base);await ready(p);const s=await state(p);assert.equal(s.priorCoefficient,2.5);

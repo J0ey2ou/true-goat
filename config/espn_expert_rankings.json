@@ -1,7 +1,7 @@
 {
-  "version": "0.3",
-  "researched_at": "2026-10-03",
-  "selection_note": "ESPN节目语境中的不同历史观点样本，不代表ESPN官方立场；并非总体球迷的随机样本。",
+  "version": "0.5",
+  "researched_at": "2026-10-04",
+  "selection_note": "ESPN、FOX 等节目语境中的六位评论员历史观点样本；身份按观点发表时注明，不代表媒体官方立场，也不是总体球迷的随机样本。仅拟合明确记录的顺序，不把未入榜者视为更差；不同日期与榜单范围不可混作同一次投票。",
   "experts": [
     {
       "id": "stephen-a-2023",
@@ -85,6 +85,109 @@
         {
           "title": "Sporting News / Yahoo：完整榜单转录",
           "url": "https://sports.yahoo.com/articles/eight-players-skip-bayless-over-172125645.html"
+        }
+      ]
+    },
+    {
+      "id": "nick-wright-2022",
+      "name": "Nick Wright",
+      "role": "FOX Sports · What's Wright? 主持人（发表时）",
+      "date": "2022-08-07",
+      "source": {
+        "title": "What's Wright?：2022 年近 50 年榜单第 1 名揭晓",
+        "url": "https://www.youtube.com/watch?v=p80wDcZ4P5E"
+      },
+      "ranking": [
+        "jamesle01",
+        "abdulka01",
+        "jordami01",
+        "johnsma02",
+        "duncati01"
+      ],
+      "ranking_scope": "2022 年近 50 年 NBA 球员榜单；本预设仅录入前五",
+      "note": "取 2022 年系列榜单已核实的前五，不是不限年代的完整历史榜，也不把 Russell、Chamberlain 等未录入球员置于第五之后。日期是第 1 名原始视频发布日；FOX 文字页后来的更新日期不表示重新公布榜单。",
+      "evidence": "原始节目官方频道确认第 1 名与发布日期，FOX 官方逐名页面确认 1—5 名。此次读取的是官方页面可检索正文和视频元数据，未声称观看了完整节目。",
+      "supporting_sources": [
+        {
+          "title": "FOX：LeBron 第 1 名",
+          "url": "https://www.foxsports.com/stories/nba/top-50-nba-players-from-last-50-years-lebron-james-ranks-no-1"
+        },
+        {
+          "title": "FOX：Kareem 第 2 名",
+          "url": "https://www.foxsports.com/stories/nba/top-50-nba-players-from-last-50-years-kareem-abdul-jabbar-ranks-no-2"
+        },
+        {
+          "title": "FOX：Jordan 第 3 名",
+          "url": "https://www.foxsports.com/stories/nba/top-50-nba-players-from-last-50-years-michael-jordan-ranks-no-3"
+        },
+        {
+          "title": "FOX：Magic 第 4 名",
+          "url": "https://www.foxsports.com/stories/nba/top-50-nba-players-from-last-50-years-magic-johnson-ranks-no-4"
+        },
+        {
+          "title": "FOX：Duncan 第 5 名",
+          "url": "https://www.foxsports.com/watch/play-5c57f54da000f36"
+        }
+      ]
+    },
+    {
+      "id": "broussard-2022",
+      "name": "Chris Broussard",
+      "role": "FOX Sports · First Things First 评论员（发表时）",
+      "date": "2022-06-17",
+      "source": {
+        "title": "FOX：Broussard 的 2022 年历史前十",
+        "url": "https://www.foxsports.com/stories/nba/steph-curry-is-eighth-greatest-player-ever-broussard-claims"
+      },
+      "ranking": [
+        "jordami01",
+        "jamesle01",
+        "abdulka01",
+        "johnsma02",
+        "duncati01",
+        "bryanko01",
+        "birdla01",
+        "curryst01",
+        "onealsh01",
+        "russebi01"
+      ],
+      "ranking_scope": "2022-06-17 节目历史 Top 10",
+      "note": "采用 2022 年总决赛后的这一次前十，未混入其后版本；只拟合十位明确列出的球员之间的顺序。模型拟合误差会保留，不强制复刻榜单。",
+      "evidence": "FOX Sports 官方报道可检索正文明确逐名列出完整顺序；不是把文章中的其他评论员观点归给 Broussard。",
+      "supporting_sources": []
+    },
+    {
+      "id": "sharpe-2022",
+      "name": "Shannon Sharpe",
+      "role": "FOX Sports · UNDISPUTED 主持人（发表时）",
+      "date": "2022-06-20",
+      "source": {
+        "title": "UNDISPUTED：2022 年 Curry 与历史前十讨论",
+        "url": "https://www.youtube.com/watch?v=v3gJ5DHYb7g"
+      },
+      "ranking": [
+        "jamesle01",
+        "jordami01",
+        "abdulka01",
+        "johnsma02",
+        "chambwi01",
+        "birdla01",
+        "duncati01",
+        "russebi01",
+        "bryanko01",
+        "curryst01"
+      ],
+      "ranking_scope": "2022-06-20 节目历史 Top 10",
+      "note": "这是 Sharpe 在 FOX 节目中的 2022 年榜单，非 ESPN 官方榜或其最新观点。原始节目链接与日期已核对，完整顺序依据同期文字转录，未声称本次逐帧复核原视频。仅拟合榜内十人，不推断未入榜者名次。",
+      "evidence": "FOX 官方原始视频及节目页面确认主题与日期；The SportsRush 同期逐名转录确认完整前十。",
+      "supporting_sources": [
+        {
+          "title": "FOX：原始节目页面",
+          "url": "https://www.foxsports.com/watch/play-5bb84e1ce000a15"
+        },
+        {
+          "title": "The SportsRush：同期前十完整转录",
+          "url": "https://thesportsrush.com/nba-news-to-add-stephen-curry-i-bumped-out-shaquille-oneal-shannon-sharpe-explains-his-shocking-removal-of-the-lakers-star-from-his-top-10-after-the-gsw-stars-recent-succe/"
         }
       ]
     }

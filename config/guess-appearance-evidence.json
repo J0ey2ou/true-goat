@@ -1,0 +1,2154 @@
+{
+  "version": "1.0",
+  "retrievedAt": "2026-10-04",
+  "note": "仅收录明确赛季、球队和实际出场证据；不把注册、加盟、连续履历区间或页面标题推断为出场。CBA 历史统计不宣称覆盖至当前赛季；欧洲手动核实片段并非完整生涯。",
+  "sources": [
+    {
+      "id": "euro-howard-2024-games",
+      "title": "EuroLeague官方：霍华德2023–24得分王，巴斯克尼亚38场",
+      "url": "https://mediacentre.euroleague.net/en/app/2/communication/communication/preview/19350",
+      "asOf": "2026-10-04",
+      "note": "官方新闻明确2023–24巴斯克尼亚、38场与实际总得分；仅作实际出场证据，不当作完整生涯统计。"
+    },
+    {
+      "id": "euro-2025-playoff-statistics",
+      "title": "EuroLeague官方：2024–25季后赛OLY–RMB赛前统计",
+      "url": "https://mediacentre.euroleague.net/uploads/EuroleagueCore/pastmatchups/game18299.pdf",
+      "asOf": "2025-04-25",
+      "note": "第7页奥林匹亚科斯当季场均、投篮表现与第11页当季已完成比赛实际表现；只取赛季明确的正统计，不用注册名单或可能延续自受伤前的跨季连续表现。"
+    },
+    {
+      "id": "fiba-yao-2002-played",
+      "title": "FIBA：姚明上海最后一季的实际场均表现与2002年转入NBA",
+      "url": "https://www.fiba.basketball/en/news/china-yao-ming",
+      "asOf": "2026-10-04",
+      "note": "官方回顾明确上海最后一季场均表现及同年2002转入NBA，仅证明2001–02上海实际出场；不据1997–2002履历区间补齐其他赛季。"
+    },
+    {
+      "id": "euro-official-dated-performances",
+      "title": "EuroLeague 官方：2025-26首轮BKN–OLY资料第11页历史比赛表现",
+      "url": "https://mediacentre.euroleague.net/uploads/EuroleagueCore/pastmatchups/game18691.pdf",
+      "asOf": "2025-09-30",
+      "note": "只取有年份、所属球队及球员实际得分/篮板/投篮表现的已发生比赛；另以第9页2024–25霍尔场均盖帽与第11页明确上季巴斯克尼亚归属交叉核实。第3–4页注册名单不作为出场证据。"
+    },
+    {
+      "id": "cba-sina-7047-played-seasons",
+      "title": "新浪CBA历史出场表：徐杰",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7047/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-6971-played-seasons",
+      "title": "新浪CBA历史出场表：胡明轩",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/6971/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-310-played-seasons",
+      "title": "新浪CBA历史出场表：周鹏",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/310/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7110-played-seasons",
+      "title": "新浪CBA历史出场表：张镇麟",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7110/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-1818-played-seasons",
+      "title": "新浪CBA历史出场表：王哲林",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/1818/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7405-played-seasons",
+      "title": "新浪CBA历史出场表：李弘权",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7405/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-6996-played-seasons",
+      "title": "新浪CBA历史出场表：程帅澎",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/6996/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4046-played-seasons",
+      "title": "新浪CBA历史出场表：吴前",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4046/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4623-played-seasons",
+      "title": "新浪CBA历史出场表：贺希宁",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4623/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4373-played-seasons",
+      "title": "新浪CBA历史出场表：付豪",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4373/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4017-played-seasons",
+      "title": "新浪CBA历史出场表：赵继伟",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4017/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4510-played-seasons",
+      "title": "新浪CBA历史出场表：姜宇星",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4510/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-1813-played-seasons",
+      "title": "新浪CBA历史出场表：翟晓川",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/1813/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4229-played-seasons",
+      "title": "新浪CBA历史出场表：赵睿",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4229/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-6986-played-seasons",
+      "title": "新浪CBA历史出场表：陈盈骏",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/6986/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4619-played-seasons",
+      "title": "新浪CBA历史出场表：范子铭",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4619/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4026-played-seasons",
+      "title": "新浪CBA历史出场表：周琦",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4026/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7343-played-seasons",
+      "title": "新浪CBA历史出场表：曾凡博",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7343/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7041-played-seasons",
+      "title": "新浪CBA历史出场表：姜伟泽",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7041/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7324-played-seasons",
+      "title": "新浪CBA历史出场表：徐昕",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7324/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-6830-played-seasons",
+      "title": "新浪CBA历史出场表：高诗岩",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/6830/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-1411-played-seasons",
+      "title": "新浪CBA历史出场表：陶汉林",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/1411/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4365-played-seasons",
+      "title": "新浪CBA历史出场表：胡金秋",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4365/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4630-played-seasons",
+      "title": "新浪CBA历史出场表：孙铭徽",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4630/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-5562-played-seasons",
+      "title": "新浪CBA历史出场表：王睿泽",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/5562/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4626-played-seasons",
+      "title": "新浪CBA历史出场表：邹雨宸",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4626/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-7374-played-seasons",
+      "title": "新浪CBA历史出场表：廖三宁",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/7374/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-4369-played-seasons",
+      "title": "新浪CBA历史出场表：沈梓捷",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/4369/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    },
+    {
+      "id": "cba-sina-3-played-seasons",
+      "title": "新浪CBA历史出场表：易建联",
+      "url": "https://cba.sports.sina.com.cn/cba/player/show/3/",
+      "asOf": "2026-10-04",
+      "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"
+    }
+  ],
+  "players": {
+    "euro-markus-howard": [
+      {"season":2024,"teamId":"EURO:Baskonia","league":"EuroLeague","sourceId":"euro-howard-2024-games","games":38,"evidence":"season-games"}
+    ],
+    "euro-alec-peters": [
+      {"season":2025,"teamId":"EURO:Olympiacos","league":"EuroLeague","sourceId":"euro-2025-playoff-statistics","evidence":"dated-performance"}
+    ],
+    "euro-shaquielle-mckissic": [
+      {"season":2025,"teamId":"EURO:Olympiacos","league":"EuroLeague","sourceId":"euro-2025-playoff-statistics","evidence":"dated-performance"}
+    ],
+    "mingya01": [
+      {
+        "season": 2002,
+        "teamId": "CBA:上海",
+        "league": "CBA",
+        "sourceId": "fiba-yao-2002-played",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-evan-fournier": [
+      {
+        "season": 2025,
+        "teamId": "EURO:Olympiacos",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-sasha-vezenkov": [
+      {
+        "season": 2023,
+        "teamId": "EURO:Olympiacos",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-donta-hall": [
+      {
+        "season": 2025,
+        "teamId": "EURO:Baskonia",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-tadas-sedekerskis": [
+      {
+        "season": 2024,
+        "teamId": "EURO:Baskonia",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-nikola-milutinov": [
+      {
+        "season": 2019,
+        "teamId": "EURO:Olympiacos",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "euro-kostas-papanikolaou": [
+      {
+        "season": 2018,
+        "teamId": "EURO:Olympiacos",
+        "league": "EuroLeague",
+        "sourceId": "euro-official-dated-performances",
+        "evidence": "dated-performance"
+      }
+    ],
+    "cba-sina-7047": [
+      {
+        "season": 2019,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 51,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7047-played-seasons",
+        "games": 60,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-6971": [
+      {
+        "season": 2018,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 56,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 57,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6971-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-310": [
+      {
+        "season": 2007,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2008,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2009,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 59,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2010,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 35,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2011,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2012,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2013,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 29,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 39,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 23,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 54,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-310-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7110": [
+      {
+        "season": 2021,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-7110-played-seasons",
+        "games": 59,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-7110-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-7110-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-7110-played-seasons",
+        "games": 59,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-1818": [
+      {
+        "season": 2013,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 32,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 34,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 9,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 32,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 27,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:福建",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:上海",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:上海",
+        "league": "CBA",
+        "sourceId": "cba-sina-1818-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7405": [
+      {
+        "season": 2023,
+        "teamId": "CBA:上海",
+        "league": "CBA",
+        "sourceId": "cba-sina-7405-played-seasons",
+        "games": 29,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-6996": [
+      {
+        "season": 2018,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-6996-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4046": [
+      {
+        "season": 2013,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 19,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 28,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:浙江",
+        "league": "CBA",
+        "sourceId": "cba-sina-4046-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4623": [
+      {
+        "season": 2016,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 30,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 39,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4623-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4373": [
+      {
+        "season": 2016,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 35,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 21,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4373-played-seasons",
+        "games": 61,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4017": [
+      {
+        "season": 2014,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 32,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 34,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 3,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 18,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 51,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 57,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-4017-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4510": [
+      {
+        "season": 2019,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-4510-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-1813": [
+      {
+        "season": 2012,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2013,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 51,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 28,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 32,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-1813-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4229": [
+      {
+        "season": 2017,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 30,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 51,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 57,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 26,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4229-played-seasons",
+        "games": 14,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-6986": [
+      {
+        "season": 2018,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 23,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 55,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-6986-played-seasons",
+        "games": 57,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4619": [
+      {
+        "season": 2017,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 35,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广州",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-4619-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4026": [
+      {
+        "season": 2015,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 31,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:新疆",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-4026-played-seasons",
+        "games": 34,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7343": [
+      {
+        "season": 2023,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-7343-played-seasons",
+        "games": 34,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:北京",
+        "league": "CBA",
+        "sourceId": "cba-sina-7343-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7041": [
+      {
+        "season": 2019,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 55,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-7041-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7324": [
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7324-played-seasons",
+        "games": 6,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7324-played-seasons",
+        "games": 14,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-7324-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-6830": [
+      {
+        "season": 2016,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 24,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 25,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:吉林",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 38,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 52,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:辽宁",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 52,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 54,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 35,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-6830-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-1411": [
+      {
+        "season": 2010,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 17,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2011,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 31,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2012,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 31,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2013,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 32,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 29,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 48,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 57,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:山东",
+        "league": "CBA",
+        "sourceId": "cba-sina-1411-played-seasons",
+        "games": 52,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4365": [
+      {
+        "season": 2016,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 54,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4365-played-seasons",
+        "games": 34,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4630": [
+      {
+        "season": 2016,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 5,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 50,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广厦",
+        "league": "CBA",
+        "sourceId": "cba-sina-4630-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-5562": [
+      {
+        "season": 2020,
+        "teamId": "CBA:青岛",
+        "league": "CBA",
+        "sourceId": "cba-sina-5562-played-seasons",
+        "games": 12,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:青岛",
+        "league": "CBA",
+        "sourceId": "cba-sina-5562-played-seasons",
+        "games": 9,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:青岛",
+        "league": "CBA",
+        "sourceId": "cba-sina-5562-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:青岛",
+        "league": "CBA",
+        "sourceId": "cba-sina-5562-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4626": [
+      {
+        "season": 2015,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 18,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 33,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:八一",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 14,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 14,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 27,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-4626-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-7374": [
+      {
+        "season": 2022,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-7374-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-7374-played-seasons",
+        "games": 39,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:北控",
+        "league": "CBA",
+        "sourceId": "cba-sina-7374-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-4369": [
+      {
+        "season": 2017,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 53,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2021,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 36,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 43,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2024,
+        "teamId": "CBA:深圳",
+        "league": "CBA",
+        "sourceId": "cba-sina-4369-played-seasons",
+        "games": 52,
+        "evidence": "season-games"
+      }
+    ],
+    "cba-sina-3": [
+      {
+        "season": 2006,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 51,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2007,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 39,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2012,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 3,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2013,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 40,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2014,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 42,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2015,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 46,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2016,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 45,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2017,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 41,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2018,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 47,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2019,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 49,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2020,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 44,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2022,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 37,
+        "evidence": "season-games"
+      },
+      {
+        "season": 2023,
+        "teamId": "CBA:广东",
+        "league": "CBA",
+        "sourceId": "cba-sina-3-played-seasons",
+        "games": 35,
+        "evidence": "season-games"
+      }
+    ]
+  }
+}

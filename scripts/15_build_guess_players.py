@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 APP_DATA = ROOT / "app" / "data"
 AS_OF = "2026-10-03"
 CBA_CACHE = APP_DATA / "guess-source-cba.json"
+APPEARANCE_CACHE = ROOT / "config" / "guess-appearance-evidence.json"
 PROCESSED = ROOT / "data" / "processed"
 RAW_CSV = ROOT / "data" / "raw" / "kaggle_nba_aba_baa" / "csv"
 ALL_TIME = ROOT / "data" / "raw" / "kaggle_nba_all_time" / "csv"
@@ -72,6 +73,77 @@ def rows(path):
 def end_year(label):
     start, end = label.split("-")
     return int(end) if len(end) == 4 else int(start[:2] + end) + (100 if int(end) < int(start[-2:]) else 0)
+
+
+def parse_cba_appearances(page, source_id):
+    """Read only season/team rows with a positive games count, never the profile header.
+
+    Some Sina headers show 2025-26 even for retired players. Their historical
+    statistics table carries the actual paired season, team and played games.
+    """
+    appearances = {}
+    section = re.search(r"CBA个人历史数据.*?<tbody>(.*?)</tbody>", page, flags=re.S)
+    if not section:
+        return []
+    for row in re.findall(r"<tr\b[^>]*>(.*?)</tr>", section.group(1), flags=re.S):
+        cells = [html.unescape(re.sub(r"<[^>]+>", "", cell)).strip()
+                 for cell in re.findall(r"<td\b[^>]*>(.*?)</td>", row, flags=re.S)]
+        if len(cells) < 3:
+            continue
+        season_match = re.fullmatch(r"CBA联赛(\d{2})-(\d{2})", cells[0])
+        if not season_match or not re.fullmatch(r"\d+", cells[2]) or int(cells[2]) <= 0:
+            continue
+        start = int(season_match.group(1))
+        year = end_year(("19" if start >= 95 else "20") + "-".join(season_match.groups()))
+        if not cells[1] or not 1996 <= year <= 2026:
+            continue
+        appearance = {"season": year, "teamId": "CBA:" + cells[1], "league": "CBA",
+                      "sourceId": source_id, "games": int(cells[2]), "evidence": "season-games"}
+        appearances[(year, appearance["teamId"])] = appearance
+    return sorted(appearances.values(), key=lambda item: (item["season"], item["teamId"]))
+
+
+def refresh_cba_appearances():
+    """Refresh only factual played-season evidence; retain manual official evidence."""
+    cache = json.loads(APPEARANCE_CACHE.read_text(encoding="utf-8"))
+    records = json.loads(CBA_CACHE.read_text(encoding="utf-8"))["records"]
+
+    def get_record(record):
+        page = fetch(record["sourceUrl"])
+        title = re.search(r"<title>([^_<]+)", page)
+        if not title or title.group(1) != record["name"]:
+            raise ValueError(f"CBA identity mismatch: {record['name']}")
+        source_id = record["id"] + "-played-seasons"
+        return record, source_id, parse_cba_appearances(page, source_id)
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
+        refreshed = list(executor.map(get_record, records))
+    source_ids = {source_id for _, source_id, _ in refreshed}
+    cache["sources"] = [source for source in cache["sources"] if source["id"] not in source_ids]
+    for record, source_id, appearances in refreshed:
+        if not appearances:
+            raise ValueError(f"No actual historical games found for {record['name']}; old cache preserved")
+        cache["sources"].append({"id": source_id, "title": f"新浪CBA历史出场表：{record['name']}",
+            "url": record["sourceUrl"], "asOf": "2026-10-04",
+            "note": "非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。"})
+        cache["players"][record["id"]] = appearances
+    cache["retrievedAt"] = "2026-10-04"
+    APPEARANCE_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def load_nba_appearances(player_ids):
+    """A season and its team must come from the SAME actual-appearance row."""
+    result = {player_id: {} for player_id in player_ids}
+    for row in rows(RAW_CSV / "Player Totals.csv"):
+        if row["player_id"] not in result or row["lg"] not in ("NBA", "BAA"):
+            continue
+        if float(row["g"] or 0) <= 0 or re.fullmatch(r"TOT|\d+TM", row["team"], flags=re.I):
+            continue
+        appearance = {"season": int(row["season"]), "teamId": "NBA:" + row["team"],
+            "league": row["lg"], "sourceId": "nba-career-games", "games": int(float(row["g"])), "evidence": "season-games"}
+        result[row["player_id"]][(appearance["season"], appearance["teamId"])] = appearance
+    return {player_id: sorted(items.values(), key=lambda item: (item["season"], item["teamId"]))
+            for player_id, items in result.items()}
 
 
 def field_coverage(scope=None, through=None, complete=False, career_complete=False, note="未取得完整可比生涯资料，未知不是 0。"):
@@ -258,6 +330,8 @@ def build():
     alias_data = json.loads(alias_path.read_text(encoding="utf-8"))
     aliases = alias_data["players"]
     career_metrics = load_career_metrics(directory)
+    nba_appearances = load_nba_appearances({player["id"] for player in directory["players"]})
+    appearance_cache = json.loads(APPEARANCE_CACHE.read_text(encoding="utf-8"))
     sources = [{"id": "nba-snapshot", "title": "NBA/BAA 背景快照（原球员库）",
                 "url": "https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats", "asOf": "2026-08-15",
                 "note": "Basketball-Reference 派生公开数据；原始档案与队伍赛季表，非实时。"},
@@ -341,7 +415,6 @@ def build():
                         "country": None, "firstSeasonYear": None, "firstSeasonScope": None, "sourceIds": ["euro-2025-round1"], "asOf": "2025-09-30",
                         "fieldSources": {key: ["euro-2025-round1"] for key in ["birthYear", "heightCm", "positions", "teams"]},
                         "notes": ["EuroLeague 官方比赛资料中的两队精选；出生年、身高、位置及球队按 2025-09-30 登记。", "不是完整履历；首个职业赛季、国家/地区未收录。部分球员曾打 NBA，但不在原 GOAT 300 人目录中。"]})
-    cba_by_id = {record["id"]: record for record in cba}
     for record in players:
         if record["id"] in aliases:
             record["chineseName"] = aliases[record["id"]].get("chineseName") or record["chineseName"]
@@ -354,23 +427,43 @@ def build():
         record["metricScope"] = {key: None for key in METRICS}
         record["seasonYears"] = []
         record["careerStartYear"] = record["careerEndYear"] = None
-        if record["id"] in cba_by_id:
-            label = cba_by_id[record["id"]].get("profileSeason")
-            if label and re.fullmatch(r"\d{2}-\d{2}", label):
-                record["seasonYears"] = [end_year("20" + label)]
-            scope = "CBA"
-            note = "只收录新浪档案所标注的单一赛季（结束年），不是完整生涯或实际逐场出场证明；无法用来推断生涯起止年。"
-        else:
-            record["seasonYears"] = [2026]
-            scope = "EuroLeague"
-            note = "只核实2025–26赛季官方首轮登记名单；不等于实际出场，亦非完整生涯；起止年未知。"
-        record["metricCoverage"]["seasonYears"] = field_coverage(scope, max(record["seasonYears"]) if record["seasonYears"] else None, False, False, note)
+        scope = "CBA" if "cba" in record["pools"] else "EuroLeague"
+        record["metricCoverage"]["seasonYears"] = field_coverage(scope, note="赛季只由下方经核实的实际出场证据填充。")
         record["metricScope"]["seasonYears"] = scope
         record["fieldSources"].update({key: [] for key in METRICS})
         record["fieldSources"]["seasonYears"] = record["sourceIds"].copy()
         record["fieldSources"]["careerStartYear"] = record["fieldSources"]["careerEndYear"] = []
         record["notes"].append("球队数、季后赛/总决赛次数、常规赛场均分及MVP缺少同联赛完整生涯记录，均保留未知；单队档案不能当作只效力过一队。")
     ids = {record["id"] for record in players}
+    sources.extend(appearance_cache["sources"])
+    for record in players:
+        record["appearances"] = sorted(nba_appearances.get(record["id"], []) + appearance_cache["players"].get(record["id"], []),
+                                       key=lambda item: (item["season"], item["league"], item["teamId"]))
+        known_teams = {team["id"] for team in record["teams"]}
+        for appearance in record["appearances"]:
+            if appearance["teamId"] not in known_teams:
+                record["teams"].append({"id": appearance["teamId"], "name": appearance["teamId"].split(":", 1)[1]})
+                known_teams.add(appearance["teamId"])
+        appearance_sources = sorted({item["sourceId"] for item in record["appearances"]})
+        record["sourceIds"] = sorted(set(record["sourceIds"] + appearance_sources))
+        record["fieldSources"]["appearances"] = appearance_sources
+        record["fieldSources"]["teams"] = sorted(set(record["fieldSources"]["teams"] + appearance_sources))
+        is_nba = record["directoryId"] is not None
+        record["appearanceCoverage"] = {
+            "verifiedOnly": True, "complete": is_nba and "cba" not in record["pools"],
+            "scope": "NBA/BAA常规赛" if is_nba and "cba" not in record["pools"] else "已核实的跨联赛部分实际出场",
+            "throughSeason": max((item["season"] for item in record["appearances"]), default=None),
+            "note": ("NBA/BAA实际常规赛赛季与原始球队同行连接，g>0且排除合计行；不以生涯年份补齐中断。" if is_nba else
+                     "仅有明确赛季、球队及正出场数/比赛表现的记录才能筛选；登记名单和档案年份不算出场。资料为部分历史记录，未收录不等于未效力。")}
+        if "cba" in record["pools"] and is_nba:
+            record["appearanceCoverage"]["note"] += " 姚明CBA目前只逐条核实2001–02上海赛季，其他CBA年份不推断。"
+        if not is_nba:
+            record["seasonYears"] = sorted({item["season"] for item in record["appearances"]})
+            scope = "CBA" if "cba" in record["pools"] else "EuroLeague"
+            record["metricCoverage"]["seasonYears"] = field_coverage(scope,
+                max(record["seasonYears"], default=None), False, False, record["appearanceCoverage"]["note"])
+            record["fieldSources"]["seasonYears"] = appearance_sources
+        record["notes"].append(record["appearanceCoverage"]["note"])
     assert len(ids) == len(players)
     # Exact normalized name + birth year provides a second duplicate guard.
     identity_keys = [(slug(record["name"]) or record["name"], record["birthYear"]) for record in players]
@@ -387,12 +480,15 @@ def build():
              {"id": "global", "name": "全球男子精选", "description": "NBA 与 CBA 精选的去重并集，另加 EuroLeague 两队 18 人；并非全球全部球员或所有联赛。"}]
     for pool in pools:
         pool["count"] = sum(pool["id"] in record["pools"] for record in players)
-    return {"version": "1.1", "dataAsOf": AS_OF, "meta": {"snapshotDate": AS_OF,
-            "note": "单人离线游戏资料包；NBA 快照 2026-08-15，CBA 档案读取 2026-10-03（各页历史赛季可能不同），EuroLeague 登记 2025-09-30。未知字段中性提示，不推断为错误。",
+    return {"version": "1.2", "dataAsOf": "2026-10-04", "meta": {"snapshotDate": "2026-10-04",
+            "note": "单人离线游戏资料包；NBA 快照 2026-08-15，CBA档案读取2026-10-03、实际历史出场表读取2026-10-04（各页历史赛季可能不同）；EuroLeague登记2025-09-30并另核实有日期的比赛事实。未知字段中性提示，不推断为错误。",
             "internationalSelectionCount": len(EURO_RECORDS), "sourceCaveat": "CBA官方接口加密响应未作提取；使用可公开读取的新浪档案并明确为非官方。",
             "metricCoverage": {key: sum(record[key] is not None for record in players) for key in METRICS},
             "metricNote": "NBA/BAA球队数按franchise沿革去重；常规赛与NBA常规赛MVP截至2025–26，季后赛/总决赛实际出场赛季截至2023–24。不同联赛或快照不直接比较。CBA/国际未知不当作0。",
-            "yearFilterNote": "年份为赛季结束年；NBA仅真实出场赛季，CBA/Euro仅来源可确认档案赛季且履历不完整。"},
+            "yearFilterNote": "年份为赛季结束年；年份和球队必须命中同一条实际出场证据。NBA/BAA仅常规赛实际出场；CBA采用历史正出场数表，EuroLeague采用明确日期比赛表现，不使用档案标题或注册名单。历史球队改名按当季名称分别显示。",
+            "appearanceCoverage": {"version": "1.0", "verifiedPlayers": sum(bool(record["appearances"]) for record in players),
+                "records": sum(len(record["appearances"]) for record in players),
+                "note": "NBA/BAA常规赛截至2025–26。CBA历史出场表与EuroLeague比赛事实为不完整历史证据，缺少证据的球员不能进入限定题库，未限定题库仍保留全部精选球员。"}},
             "pools": pools, "sources": sources, "players": players}
 
 
@@ -410,7 +506,25 @@ def validate_metrics(players, aliases, source_ids):
     assert by_id["mingya01"]["teamCount"] == 1 and by_id["mingya01"]["finalsAppearances"] == by_id["mingya01"]["mvpCount"] == 0
     assert jordan["careerStartYear"] == 1985 and jordan["careerEndYear"] == 2003 and 1994 not in jordan["seasonYears"]
     assert jordan["firstSeasonYear"] == 1984  # Real debut calendar year differs from season ending year.
+    fixture = """<h2>25-26赛季</h2><h2>CBA个人历史数据</h2><table><tbody>
+      <tr><td>CBA联赛99-00</td><td>上海</td><td>22</td></tr>
+      <tr><td>CBA联赛00-01</td><td>上海</td><td>0</td></tr>
+      <tr><td>CBA联赛01-02</td><td>上海</td><td>NA</td></tr>
+      <tr><td>CBA联赛95-96</td><td>上海</td><td>3</td></tr>
+      </tbody></table>"""
+    assert [(item["season"], item["games"]) for item in parse_cba_appearances(fixture, "fixture")] == [(1996, 3), (2000, 22)]
     for record in players:
+        appearance_keys = [(item["season"], item["league"], item["teamId"]) for item in record["appearances"]]
+        assert len(appearance_keys) == len(set(appearance_keys)), f"duplicate appearance: {record['id']}"
+        for appearance in record["appearances"]:
+            assert appearance["sourceId"] in source_ids
+            assert appearance["teamId"] in {team["id"] for team in record["teams"]}
+            assert appearance["league"] in ("NBA", "BAA", "CBA", "EuroLeague")
+            assert 1947 <= appearance["season"] <= 2026
+            assert appearance["evidence"] in ("season-games", "dated-performance")
+            assert appearance.get("games", 1) > 0
+        if record["directoryId"]:
+            assert {item["season"] for item in record["appearances"] if item["league"] in ("NBA", "BAA")} == set(record["seasonYears"])
         assert record["seasonYears"] == sorted(set(record["seasonYears"]))
         for key in METRICS:
             coverage = record["metricCoverage"][key]
@@ -437,10 +551,13 @@ def validate_metrics(players, aliases, source_ids):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--refresh-cba", action="store_true")
+    parser.add_argument("--refresh-cba-appearances", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
     if args.refresh_cba:
         refresh_cba()
+    if args.refresh_cba_appearances:
+        refresh_cba_appearances()
     result = build()
     payload = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
     if not args.self_test:

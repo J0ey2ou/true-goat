@@ -7,7 +7,7 @@ const screenshotPath = name => fileURLToPath(new URL(name, import.meta.url));
 import assert from 'node:assert/strict';
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1100}});
-await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
+await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page = await context.newPage();
 const errors=[]; const passed=[];
 page.on('pageerror',error=>errors.push(error.message));

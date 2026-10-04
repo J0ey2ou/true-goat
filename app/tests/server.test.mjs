@@ -11,7 +11,7 @@ test('local app serves only explicit routes and returns useful data', async () =
   const players = await (await fetch(base+'/data/players.json')).json();
   const models = await (await fetch(base+'/data/experts.json')).json();
   assert.equal(players.players.length,300);
-  assert.equal(models.experts.length,3);
+  assert.ok(models.experts.length>=6);
   for (const path of ['/README.md','/data/raw','/../config/espn_expert_rankings.json','/constructor','/__proto__']) {
     assert.equal((await fetch(base+path)).status,404,path);
   }

@@ -1,0 +1,86 @@
+/* Six deliberately vivid, static palettes. Game feedback colors remain semantic. */
+html[data-theme]{--accent-ink:#091927;--glow-a:#5d2ca3;--glow-b:#075e78;--shadow:#0004;color-scheme:dark}
+html[data-theme=aurora]{--bg:#111b49;--panel:#1a2752;--panel2:#263765;--text:#f7f9ff;--muted:#bac9e9;--line:#496295;--lime:#78f3e7;--orange:#ffb78f;--red:#ff9cae;--glow-a:#752abe;--glow-b:#006c87}
+html[data-theme=court]{--bg:#351827;--panel:#472435;--panel2:#603146;--text:#fff5e7;--muted:#ebc1b6;--line:#995b65;--lime:#ffcb70;--orange:#ffba93;--red:#ffb3bd;--accent-ink:#3b1715;--glow-a:#b95022;--glow-b:#941d62}
+html[data-theme=ocean]{--bg:#072c45;--panel:#103c53;--panel2:#164d63;--text:#edfcff;--muted:#b0d6e6;--line:#427c92;--lime:#65f1ed;--orange:#ffce98;--red:#ffb4b4;--accent-ink:#063135;--glow-a:#0b77ae;--glow-b:#037a72}
+html[data-theme=rose]{--bg:#381534;--panel:#4b2047;--panel2:#622d58;--text:#fff4fc;--muted:#e4b9d7;--line:#99658c;--lime:#ffa9df;--orange:#ffce9b;--red:#ffb2b2;--accent-ink:#401232;--glow-a:#b12380;--glow-b:#6728b6}
+html[data-theme=ivory]{--bg:#f5efe4;--panel:#fffdf8;--panel2:#edf1fc;--text:#18244b;--muted:#53617e;--line:#adb8d1;--lime:#2455c5;--orange:#a44c10;--red:#a22b45;--accent-ink:#fff;--glow-a:#ffca78;--glow-b:#91d6ff;--shadow:#27375920;color-scheme:light}
+html[data-theme=forest]{--bg:#111411;--panel:#1b201b;--panel2:#232a23;--text:#f1f1e6;--muted:#b0baab;--line:#526148;--lime:#d7f879;--orange:#edac77;--red:#ef9687;--accent-ink:#20281a;--glow-a:#25351e;--glow-b:#12372e}
+html[data-theme] body{min-height:100dvh;background-color:var(--bg);background-image:radial-gradient(ellipse 90vw 75vh at 0 0,var(--glow-a),transparent 80%),radial-gradient(ellipse 90vw 80vh at 100% 22vh,var(--glow-b),transparent 75%);background-repeat:no-repeat;background-attachment:fixed}
+html[data-theme] .topbar{background:var(--bg);border-color:var(--line)}
+html[data-theme] :is(.panel,dialog,.guess-options){background:var(--panel);border-color:var(--line);color:var(--text)}
+html[data-theme] dialog{box-shadow:0 25px 100px var(--shadow)}
+html[data-theme] :is(select,.coef-number,.dir-filters input,.dir-filters select,.guess-year-filter input,.guess-year-filter select,#guess-search,.guess-share-text){background:var(--panel2);border-color:var(--line);color:var(--text)}
+html[data-theme] :is(.primary,.welcome-actions button:last-child,.guess-mode button[aria-pressed=true],#guess-filter-apply,.brand-mark,.toast){background:var(--lime);border-color:var(--lime);color:var(--accent-ink)}
+html[data-theme] :is(.outline,.close-button,.welcome-actions button,.welcome-icon,.dir-pool-letter,.guess-filter-actions button){border-color:var(--line)}
+html[data-theme] :is(.step,.anchor-box,.podium-card,.suggestion,.dir-pool-card,.dir-list-head,.dir-tag,.dir-fact,.dir-coverage-card,.guess-row,.guess-result,.guess-result-metrics>div,.guess-mode,.mobile-live,.formula,.formula-band){background:var(--panel2);border-color:var(--line)}
+html[data-theme] .podium-card:first-child{background:var(--lime);color:var(--accent-ink);border-color:var(--lime)}
+html[data-theme] .podium-card:first-child :is(.score-trigger,.podium-score){color:var(--accent-ink)}
+html[data-theme] .welcome-strip{background:linear-gradient(110deg,var(--panel2),var(--panel));border-color:var(--line)}
+html[data-theme] :is(.dir-nav,.guess-nav) a[aria-current]{background:var(--panel2);color:var(--lime)}
+html[data-theme] :is(th,.dir-player-row:hover,.guess-option[aria-selected=true],tbody tr:hover,tbody tr.selected,.quick-targets button.active){background:var(--panel2)}
+html[data-theme] :is(td,.lab-page .slider-row,.dir-player-row,.guess-option,.dir-tag,.quick-targets button,.guess-empty){border-color:var(--line)}
+html[data-theme] .quick-targets button.active{border-color:var(--lime)}
+html[data-theme] :is(#dialog-body,.dir-player-meta,.dir-tag,.dir-fact dd,.dir-facts dd,.guess-empty strong,.guess-rules strong,.guess-metric-notes summary,.guess-result-coverage strong){color:var(--text)}
+html[data-theme] :is(.slider-desc,.flat,footer,.dir-caveat,.dir-detail-note,.dir-list-note,.dir-value-missing,.dir-stats td:first-child,.dir-reason p,.dir-notes,.guess-input-hint,.guess-history-note,.guess-result p,.guess-empty p span,.guess-option>span:last-child,#guess-year-status,.guess-result-metrics span,.guess-result-coverage){color:var(--muted)}
+html[data-theme] .dir-detail-caption{color:var(--muted)!important}
+html[data-theme] .dir-team{background:var(--panel2);color:var(--text)}
+html[data-theme] #guess-year-status.invalid{color:var(--orange)}
+html[data-theme] input::placeholder{color:var(--muted);opacity:1}
+html[data-theme] :is(#guess-search,.dir-filters input,.search-field input)::placeholder{color:var(--muted);opacity:1}
+/* Apply foreground/background together so light/dark switches never flash low contrast. */
+html[data-theme] button{transition:transform .16s}
+html[data-theme] .profile-track{background:var(--line)}
+html[data-theme] .profile-track span{background:var(--lime)}
+html[data-theme] :is(.slider-row,.anchor-box) input[type=range]{background:linear-gradient(to right,var(--lime) var(--fill,20%),var(--line) var(--fill,20%))}
+html[data-theme] input[type=range]{accent-color:var(--lime)}
+/* The existing green/yellow/gray clue backgrounds deliberately do not switch. */
+html[data-theme] .guess-cell{color:#f1f1e6}
+html[data-theme] .guess-cell.unknown{color:#c0cbb8}
+
+/* Guide chrome follows the theme; its instructional clue colors stay fixed. */
+html[data-theme] dialog.tg-guide{background:var(--panel);color:var(--text);border-color:var(--line)}
+html[data-theme] :is(.tg-guide-close,.tg-guide-demo,.tg-guide-file-grid>div,.tg-guide-tour-card,.tg-guide-button){background:var(--panel2);color:var(--text);border-color:var(--line)}
+html[data-theme] :is(.tg-guide-brand,.tg-guide-sum b,.tg-guide-dossier-arrow,.tg-guide-tour-card b,.tg-guide-tour-card>div>span,.tg-guide-takeaway>span){color:var(--lime)}
+html[data-theme] :is(.tg-guide-heading>p,.tg-guide-brand i,.tg-guide-kicker,.tg-guide-demo-label,.tg-guide-equation span,.tg-guide-equation>i,.tg-guide-demo-bars,.tg-guide-demo>p,.tg-guide-dossier span,.tg-guide-file-grid span,.tg-guide-file-grid small,.tg-guide-takeaway,.tg-guide-count,.tg-guide-foot>button,.tg-guide-foot>span,.tg-guide-tour-card>p){color:var(--muted)}
+html[data-theme] :is(.tg-guide-equation b,.tg-guide-file-grid strong){color:var(--text)}
+html[data-theme] .tg-guide-equation .tg-guide-sum b{color:var(--lime)}
+html[data-theme] :is(.tg-guide-dossier,.tg-guide-foot){border-color:var(--line)}
+html[data-theme] :is(.tg-guide-start,.tg-guide-next,.tg-guide-avatar){background:var(--lime);color:var(--accent-ink);border-color:var(--lime)}
+html[data-theme] .tg-guide[data-guide-mode=tour] .tg-guide-next{background:transparent;color:var(--text);border-color:var(--line)}
+html[data-theme] :is(.tg-guide-demo-bars>i b,.tg-guide-demo-bars>i b:after,.tg-guide-progress>button[aria-current=step]>span){background:var(--lime)}
+html[data-theme] .tg-guide-demo-bars>i{background:var(--line)}
+html[data-theme] .tg-guide-highlight{outline-color:var(--lime)!important}
+
+.theme-trigger.button{display:inline-flex;justify-content:center;flex:0 0 auto;align-items:center;gap:8px;padding:10px 13px;min-height:42px;white-space:nowrap}
+.theme-trigger.button>span{font-size:12px;line-height:1.5}
+.theme-trigger>i{display:block;width:16px;height:16px;flex:0 0 16px;border-radius:50%;border:1px solid var(--lime);background:conic-gradient(#67e8ef,#b582ff,#ff8ba7,#ffd075,#67e8ef)}
+dialog.theme-dialog{width:min(640px,calc(100% - 28px));max-width:640px;max-height:calc(100dvh - 28px);padding:26px;overflow-x:hidden}
+.theme-dialog-head{display:flex;justify-content:space-between;align-items:start;gap:18px}
+.theme-dialog-head h2{font-size:25px;font-weight:650;letter-spacing:-.6px;margin:8px 0 0;line-height:1.4}
+.theme-dialog-head .close-button{flex-shrink:0}
+#theme-dialog-description{font-size:12px;line-height:1.9;color:var(--muted);margin:14px 0 20px}
+.theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.theme-option{display:block;min-width:0;background:var(--panel2);border:2px solid var(--line);border-radius:11px;padding:5px;text-align:left;color:var(--text);overflow:hidden;transition:border-color .15s}
+.theme-option:hover{filter:none;border-color:var(--lime)}
+.theme-option[aria-pressed=true]{border-color:var(--lime);box-shadow:0 0 0 1px var(--lime)}
+.theme-preview{--preview-panel:#22325d;--preview-accent:#78f3e7;display:block;height:79px;position:relative;overflow:hidden;border-radius:6px;background:linear-gradient(130deg,#752abe,#192957 57%,#006c87)}
+.theme-preview[data-preview=court]{--preview-panel:#5b2b3e;--preview-accent:#ffcb70;background:linear-gradient(125deg,#b95022,#351827 60%,#a42b75)}
+.theme-preview[data-preview=ocean]{--preview-panel:#164d63;--preview-accent:#65f1ed;background:linear-gradient(125deg,#169edf,#072c45 63%,#00ad9a)}
+.theme-preview[data-preview=rose]{--preview-panel:#622d58;--preview-accent:#ffa9df;background:linear-gradient(125deg,#e733a4,#381534 62%,#8141e1)}
+.theme-preview[data-preview=ivory]{--preview-panel:#fffaf0;--preview-accent:#2455c5;background:linear-gradient(125deg,#ffca78,#fffdf8 60%,#91d6ff)}
+.theme-preview[data-preview=forest]{--preview-panel:#263122;--preview-accent:#d7f879;background:linear-gradient(125deg,#344629,#111411 70%,#244337)}
+.theme-preview:before{content:'';position:absolute;left:12%;right:12%;bottom:-9px;height:63px;background:var(--preview-panel);border:1px solid #ffffff40;border-radius:7px;transform:rotate(-4deg)}
+.theme-preview>i,.theme-preview>b,.theme-preview>em{position:absolute;display:block;background:var(--preview-accent);border-radius:6px;transform:rotate(-4deg)}
+.theme-preview>i{height:6px;left:20%;width:33%;top:29px}.theme-preview>b{height:4px;left:20%;width:51%;top:44px;opacity:.45}.theme-preview>em{height:17px;left:20%;width:22%;top:56px}
+.theme-option-info{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px 8px;padding:9px 7px 7px}
+.theme-option-info strong{font-size:13px;font-weight:600}.theme-option-info small{grid-column:1/-1;color:var(--muted);font-size:10px;line-height:1.6}
+.theme-check{font-size:15px;line-height:1;color:var(--lime);visibility:hidden}.theme-option[aria-pressed=true] .theme-check{visibility:visible}
+.theme-status{margin:18px 0 4px;color:var(--lime);font-size:11px;line-height:1.8;min-height:20px}.theme-footnote{color:var(--muted);font-size:10px;line-height:1.8;margin:4px 0 0}.theme-done{margin-top:16px}
+.topbar.has-theme-picker{height:auto;min-height:82px;gap:20px;flex-wrap:wrap;padding-block:15px}
+.topbar.has-theme-picker>.brand{flex-shrink:0}.topbar.has-theme-picker>.top-actions{margin-left:auto;flex-shrink:0}
+.topbar.has-theme-picker :is(.page-nav,.dir-nav,.guess-nav){margin-left:auto;margin-right:0;min-width:0}
+@media(max-width:1190px){.topbar.has-theme-picker{gap:12px}.topbar.has-theme-picker :is(.brand-cn,.brand-divider){display:none}.topbar.has-theme-picker .page-nav{gap:18px}}
+@media(max-width:820px){.topbar.has-theme-picker{display:grid;grid-template-columns:minmax(0,1fr) auto;padding:13px 5% 0;gap:9px 12px}.topbar.has-theme-picker>.top-actions{grid-row:1;grid-column:2;margin:0}.topbar.has-theme-picker :is(.page-nav,.dir-nav,.guess-nav){grid-row:2;grid-column:1/-1;justify-content:flex-start;align-self:stretch;gap:18px;margin:0;min-height:41px;flex-wrap:wrap}.topbar.has-theme-picker :is(.page-nav,.dir-nav,.guess-nav) a{font-size:12px;padding:8px 0}.topbar.has-theme-picker .brand{font-size:13px;gap:7px}.topbar.has-theme-picker .brand-mark{width:29px;height:29px;font-size:23px}.theme-trigger.button{padding:8px 10px;min-height:36px}.lab-page .topbar.has-theme-picker .top-actions{gap:6px}.lab-page .topbar.has-theme-picker #open-model{font-size:10px;padding:8px;gap:5px;min-height:36px}}
+@media(max-width:440px){.lab-page .topbar.has-theme-picker{grid-template-columns:1fr;padding-bottom:0;gap:8px}.lab-page .topbar.has-theme-picker>.top-actions{grid-row:2;grid-column:1;justify-content:flex-start}.lab-page .topbar.has-theme-picker>.page-nav{grid-row:3;grid-column:1;min-height:37px}.lab-page .topbar.has-theme-picker #open-model{font-size:11px;padding:8px 10px}.lab-page .topbar.has-theme-picker .theme-trigger.button{min-height:36px}.theme-dialog-head h2{font-size:21px}.theme-options{gap:10px}.theme-preview{height:65px}.theme-option-info{padding:8px 5px 5px}.theme-option-info strong{font-size:12px}.theme-option-info small{font-size:9px}dialog.theme-dialog{padding:19px 16px}.theme-status{font-size:10px}.theme-dialog .theme-done{padding:11px 14px}}
+@media(prefers-reduced-motion:reduce){.theme-option,.theme-trigger{transition:none}}

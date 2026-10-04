@@ -1,6 +1,8 @@
 /* All modal styles are scoped so the model and player dialogs keep their layout. */
 dialog.tg-guide{width:min(650px,calc(100% - 28px));max-width:650px;max-height:min(90dvh,850px);padding:26px 30px 20px;overflow-x:hidden;border:1px solid #526440;border-radius:22px;background:radial-gradient(ellipse at 100% 0,#35452a66,transparent 52%),#192019;color:#f1f1e6;box-shadow:0 28px 100px #000a}
 dialog.tg-guide::backdrop{background:#050a07b8;backdrop-filter:blur(9px)}
+.tg-guide [hidden]{display:none!important}
+.tg-guide[data-guide-mode=overview] .tg-guide-bottom{justify-content:flex-end}
 .tg-guide-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
 .tg-guide-brand{font-size:11px;font-weight:750;letter-spacing:1.7px;color:#d7f879}
 .tg-guide-brand i{font-style:normal;letter-spacing:1px;font-weight:400;color:#9fae99;margin-left:7px}

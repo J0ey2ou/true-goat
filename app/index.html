@@ -10,8 +10,11 @@
   <link rel="stylesheet" href="/layout.css">
   <link rel="stylesheet" href="/onboarding.css">
   <link rel="stylesheet" href="/welcome.css">
+  <link rel="stylesheet" href="/modules.css">
+  <link rel="stylesheet" href="/themes.css">
   <script type="module" src="/ui.mjs"></script>
   <script type="module" src="/onboarding.mjs"></script>
+  <script type="module" src="/themes.mjs"></script>
 </head>
 <body class="lab-page">
   <header class="topbar">
@@ -37,13 +40,17 @@
         <div class="rule"></div>
         <div class="section-heading"><span class="step">02</span><h2>调出你的价值观</h2><button id="reset" class="text-button reset">重置</button></div>
         <p class="hint">每项系数独立，调整它不会改变其他项。系数 1 表示该维度每高出基准 10 分，总分加 1 分。</p>
+        <div class="advanced-switch"><label for="advanced-enabled"><input id="advanced-enabled" type="checkbox">高级模式 · 自选评价模块</label><p class="hint">保留基础加性模型，也可以自由组合原始统计、荣誉积分与协同项。默认关闭。</p></div>
         <div id="sliders"></div>
+        <section id="module-builder" hidden aria-label="自定义评价模块"><p class="module-intro">勾选要放进模型的模块，再调整独立系数。模块不互相挤占权重；取消七维模块只在高级模式生效，退出后恢复原基础系数。</p><p class="module-intro">以下基准和步长是透明的产品约定，不是联盟官方标准、样本均值或拟合结论。原始统计不含时代校正。MVP 始于 1955–56、FMVP 始于 1969、DPOY 始于 1982–83；早期球员没有同等奖项机会，零次数不表示同等竞争下能力为零。</p><div id="module-count" class="module-count" aria-live="polite"></div><div id="module-cards"></div><div id="module-warnings" class="module-warnings" hidden></div></section>
         <div class="anchor-box"><div class="prior-label"><label for="prior-coef"><span class="coef-symbol">γ</span> 大众参考系数</label><input id="prior-number" class="coef-number" type="number" min="0" max="10" step="0.001" value="0" aria-label="大众参考系数数值"></div><input id="prior-coef" type="range" min="0" max="10" step="0.01" value="0"><p>独立加上 γ ×（大众指数 − 50）÷ 10。设为 0 则不启用；未入榜者中性处理。</p></div>
+        <p class="hint">交锋数据可行性：同场对手双方的技术统计可以单独构建；当前档案不支持“谁直接防守谁”的真实攻防对位，因此尚未作为评分模块开放。</p>
         <div class="control-footer"><span id="model-state">评论员拟合起点</span><button id="share" class="text-button">复制模型链接 ↗</button></div>
       </aside>
       <section class="ranking panel" aria-labelledby="ranking-title">
         <div class="ranking-head"><div><div class="eyebrow">YOUR ALL-TIME LIST</div><h2 id="ranking-title">你的历史排名</h2></div><span class="live-badge"><i></i> 实时计算</span></div>
         <div id="podium" class="podium"></div>
+        <p id="baseline-note" class="model-baseline-note">“较起点”始终对比评论员 / 均衡基础七维模型。点击分数查看多维图与实际贡献。</p>
         <div class="list-toolbar"><label class="search-field"><span>⌕</span><input id="search" type="search" placeholder="搜索球员 / 中文名" aria-label="搜索排行榜"></label><span id="result-count">前 20 位</span></div>
         <div class="table-wrap"><table class="ranking-table"><colgroup><col class="rank-col"><col class="name-col"><col class="score-col"><col class="change-col"></colgroup><thead><tr><th scope="col">排名</th><th scope="col">球员</th><th scope="col">模型分</th><th scope="col">较起点</th></tr></thead><tbody id="rank-rows"></tbody></table></div>
         <button id="show-all" class="show-all">展开全部 300 位球员 ↓</button>
