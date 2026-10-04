@@ -1,6 +1,8 @@
 import { DIMENSIONS, sanitizeCoefficients, setCoefficient, scorePlayer, rankPlayers, advisePlayer, searchImprovement } from './model.mjs';
 import { MODULES, MODULE_VERSION, sanitizeAdvanced, scoreWithModules, rankWithModules, overlapWarnings } from './modules.mjs';
 import { radarMarkup, contributionMarkup } from './score-charts.mjs';
+import { createPlayerLibrary, mergeSelectedPlayers } from './player-library.mjs';
+import { searchPlayers } from './player-search.mjs';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -12,15 +14,27 @@ const chinese = {
   malonmo01:'摩西·马龙',garneke01:'凯文·加内特',antetgi01:'扬尼斯·阿德托昆博',nowitdi01:'德克·诺维茨基',
   malonka01:'卡尔·马龙',stockjo01:'约翰·斯托克顿',wadedw01:'德维恩·韦德',robinda01:'大卫·罗宾逊'
 };
-const name = p => chinese[p.player_id] || p.player_name;
-const shortName = p => (chinese[p.player_id] || p.player_name).replace('迈克尔·','').replace('卡里姆·','').replace('勒布朗·','').replace('魔术师约翰逊','魔术师');
+const name = p => chinese[p.player_id] || p.chineseName || p.player_name;
+const shortName = p => name(p).replace('迈克尔·','').replace('卡里姆·','').replace('勒布朗·','').replace('魔术师约翰逊','魔术师');
 const fmt = n => Number.isFinite(n) ? n.toFixed(2) : '—';
 const coef = n => Number.isFinite(n) ? n.toFixed(3) : '—';
 const signed = n => Number.isFinite(n) ? (n > 0 ? '+' : '') + n.toFixed(2) : '—';
 const STORAGE = 'true-goat-v04';
 let data, experts, players, coefficients, priorCoefficient = 0, preset, targetId = 'jordami01', baseline, ranking, dirty = false, all = false, result = null, suggestions = [], toastTimer;
 let advanced=sanitizeAdvanced(),directory=new Map(),directoryAvailable=false;
+let basePlayers=[],baseDirectory=new Map(),library,uiReady=false,pendingTarget=null;
 const activeDetails=p=>scoreWithModules(p,coefficients,priorCoefficient,advanced,directory.get(p.player_id));
+function rebuildPlayerChoices() {
+  $('target-select').innerHTML=[...players].sort((a,b)=>(a.rankings?.posterior_rank||999)-(b.rankings?.posterior_rank||999)).map(p=>'<option value="'+esc(p.player_id)+'">'+esc(name(p))+' · '+esc(p.player_name)+(p.customPlayer?' · 自选':'')+'</option>').join('');
+  document.querySelector('.hero-number').textContent=players.length;
+  const navCount=document.querySelector('.page-nav a[href*="players"] span');if(navCount)navCount.textContent=players.length;
+}
+function updateCustomPlayers({profiles,models}) {
+  players=mergeSelectedPlayers(basePlayers,models,'player_id');directory=new Map([...baseDirectory,...profiles.map(p=>[p.id,p])]);
+  if(pendingTarget&&players.some(p=>p.player_id===pendingTarget)){targetId=pendingTarget;pendingTarget=null;}
+  if(!players.some(p=>p.player_id===targetId))targetId='jordami01';
+  if(uiReady){baselineRanking();rebuildPlayerChoices();renderAll();persist();}
+}
 
 function toast(message) { $('toast').textContent = message; $('toast').hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').hidden = true, 4000); }
 function expert() { return experts.find(e => e.id === preset); }
@@ -30,19 +44,20 @@ function reset(id = preset) {
   preset=id; coefficients=sanitizeCoefficients(presetCoefficients()); priorCoefficient=0; advanced=sanitizeAdvanced(); dirty=false; result=null;
   baselineRanking(); $('expert-select').value=preset; renderAll(); persist();
 }
-function stateObject() { return {v:4,preset,coefficients,priorCoefficient,intercept:50,targetId,advanced}; }
+function stateObject() { return {v:4,preset,coefficients,priorCoefficient,intercept:50,targetId,advanced,customPlayerIds:library?.ids() || []}; }
 function persist() {
   const serialized=JSON.stringify(stateObject());
   try { localStorage.setItem(STORAGE,serialized); } catch {}
   if(location.hash.startsWith('#model=')) try { history.replaceState(null,'','#model='+encodeURIComponent(serialized)); } catch {}
 }
-function restore() {
+async function restore() {
   try {
     const hash=location.hash.startsWith('#model=')?JSON.parse(decodeURIComponent(location.hash.slice(7))):null;
     const saved=hash || JSON.parse(localStorage.getItem(STORAGE)||localStorage.getItem('true-goat-v03')||'null');
     if(!saved || ![3,4].includes(saved.v) || !experts.some(e=>e.id===saved.preset) && saved.preset!=='balanced') return;
     const incoming=saved.v===4?saved.coefficients:saved.weights;
     if(!DIMENSIONS.every(d=>typeof incoming?.[d.key]==='number' && Number.isFinite(incoming[d.key]) && incoming[d.key]>=0))return;
+    if(hash&&Array.isArray(saved.customPlayerIds))await library.replaceIds(saved.customPlayerIds);
     preset=saved.preset;
     if(saved.v===3){
       const a=Math.max(0,Math.min(1,Number(saved.anchor)||0));
@@ -114,13 +129,14 @@ function renderRanking() {
 }
 function renderRows() {
   const q = $('search').value.trim().toLowerCase();
-  const filtered = ranking.filter(p => !q || [p.player_name,name(p),p.player_id].some(s=>s.toLowerCase().includes(q)));
+  const matches=q?new Set(searchPlayers(ranking.map(p=>({...p,id:p.player_id,name:p.player_name,chineseName:name(p)})),q).map(p=>p.id)):null;
+  const filtered = ranking.filter(p => !matches || matches.has(p.player_id));
   const visible = q || all ? filtered : filtered.slice(0,20);
   $('result-count').textContent = q ? filtered.length+' 位匹配' : all ? '全部 '+players.length+' 位' : '前 20 位 / '+players.length;
   $('rank-rows').innerHTML = visible.map(p => {
     const baseRank = baseline.get(p.player_id);
     const delta = Number.isFinite(baseRank) && Number.isFinite(p.rank) ? baseRank-p.rank : null;
-    return '<tr data-player="'+esc(p.player_id)+'" class="'+(p.player_id===targetId?'selected':'')+'"><td class="rank-number">'+(p.rank ?? '—')+'</td><td><button class="text-button player-main" data-player="'+esc(p.player_id)+'" style="color:inherit">'+esc(name(p))+'</button><div class="player-sub">'+esc(chinese[p.player_id] ? p.player_name : p.era+' · '+p.position)+'</div></td><td class="numeric"><button type="button" class="score-trigger" data-score-player="'+esc(p.player_id)+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+fmt(p.score)+'</button></td><td class="delta '+(delta>0?'up':delta<0?'down':'flat')+'">'+(Number.isFinite(delta) && delta !== 0 ? (delta>0?'↑ ':'↓ ')+Math.abs(delta) : '—')+'</td></tr>';
+    return '<tr data-player="'+esc(p.player_id)+'" class="'+(p.player_id===targetId?'selected':'')+'"><td class="rank-number">'+(p.rank ?? '—')+'</td><td><button class="text-button player-main" data-player="'+esc(p.player_id)+'" style="color:inherit">'+esc(name(p))+'</button><div class="player-sub">'+esc((chinese[p.player_id] || p.chineseName ? p.player_name : p.era+' · '+p.position)+(p.customPlayer?' · 用户添加':''))+'</div></td><td class="numeric"><button type="button" class="score-trigger" data-score-player="'+esc(p.player_id)+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+fmt(p.score)+'</button></td><td class="delta '+(delta>0?'up':delta<0?'down':'flat')+'">'+(Number.isFinite(delta) && delta !== 0 ? (delta>0?'↑ ':'↓ ')+Math.abs(delta) : '—')+'</td></tr>';
   }).join('') || '<tr><td colspan="4">没有找到球员，试试英文姓名。</td></tr>';
   $('show-all').hidden = !!q;
   $('show-all').textContent = all ? '收起为前 20 位 ↑' : '展开全部 '+players.length+' 位球员 ↓';
@@ -145,10 +161,11 @@ function renderTarget() {
   $('target-summary').innerHTML = '<div class="target-stats"><div class="target-rank">'+(m.unavailable?'<span style="font-size:24px">未评分</span>':'<small>#</small>'+p.rank)+'</div><button type="button" class="target-score score-trigger" data-score-player="'+esc(p.player_id)+'" title="'+(Number.isFinite(p.score)?p.score.toFixed(8):'缺失')+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+fmt(p.score)+' 分 ↗</button></div><div class="target-gap">'+comparison+'</div>';
   $('profile').innerHTML = DIMENSIONS.map(d => {const v=p.components[d.key+'_score'];return '<div class="profile-row"><span>'+esc(d.short||d.label)+'</span><div class="profile-track"><span style="width:'+(Number.isFinite(v)?Math.max(0,Math.min(100,v)):0)+'%"></span></div><b>'+(Number.isFinite(v)?v.toFixed(1):'缺失')+'</b></div>';}).join('');
   const missing=activeDetails(p).missingModules||[];
-  $('target-data-note').textContent=missing.length?'本次计算有 '+missing.length+' 项使用中性填补，建议结合背景数据解读。':'已启用的数据维度均有观测值。';
+  $('target-data-note').textContent=(p.customPlayer?'用户添加档案：部分指数可能未计算；可在高级模式使用有记录的原始统计。 ':'')+(missing.length?'本次计算有 '+missing.length+' 项使用中性填补，建议结合背景数据解读。':'已启用的数据维度均有观测值。');
   renderAdvice();
 }
 function renderAdvice() {
+  if(!Number.isFinite(currentTarget()?.score)){$('find-weights').disabled=true;suggestions=[];$('suggestions').innerHTML='<p class="hint">当前启用项都没有可评分数据，不为缺失值生成优化建议。可查看原始档案，并在高级模式启用有记录的统计模块。</p>';return;}
   $('find-weights').disabled=advanced.enabled;
   if(advanced.enabled){suggestions=[];$('suggestions').innerHTML='<p class="hint">高级模式已启用：排名、分数与图表使用当前模块组合实时重算。基础七维的自动建议 / 联合搜索在此模式暂停，避免用另一套公式给出建议；请手动调节模块，或关闭高级模式恢复。</p>';return;}
   suggestions=advisePlayer(players,targetId,coefficients,priorCoefficient).filter(s=>s.rankGain>0 || s.rankGain===0 && s.gapGain>0.00001).sort((a,b)=>b.rankGain-a.rankGain || b.gapGain-a.gapGain).slice(0,3);
@@ -192,10 +209,10 @@ function showSources() {
   showDialog(e.name+' · 加性拟合依据','<p>'+esc(e.role)+' · '+esc(e.date)+'</p><p>'+esc(e.note)+'</p><p class="model-summary">使用 '+e.ranking.length+' 人的 '+pairs+' 项已知成对顺序，模型复现 '+correct+' 项。这是样本内一致情况，不是置信度；短榜内的成对约束并不独立。</p><table class="source-table"><thead><tr><th>公开名次</th><th>球员</th><th>样本内名次</th><th>全池名次</th></tr></thead><tbody>'+rows+'</tbody></table><h3>新模型怎么拟合</h3><p>S = 50 + Σ β×(指数−50)/10；β 在 0–10 内独立拟合，没有总和约束。目标是减小已知排序的间隔误差，并通过正则项避免系数无意义放大。固定截距无法由排序数据识别，所以约定为 50。未入榜者不被当作输家，也不强制某位球员第一。</p><p>拟合使用现有数据近似历史观点，不是历史时点回测，不代表任何媒体或评论员本人的真实公式。高级模式新增的模块也不属于这次基础拟合。<a href="/players">查看数据覆盖与入选范围 ↗</a></p><h3>证据与出处</h3><p>'+esc(e.evidence)+'</p><p>'+sourceLinks(e)+'</p>');
 }
 function showNotes() {
-  showDialog('数据边界与方法说明','<p>300 人池与七维指数沿用 v0.2，采集标记为 <strong>'+esc(data.data_access_date)+'</strong>。本次新增的是独立加性系数和可核查的球员背景页面，不是更新全部赛季。<a href="/players">打开球员库 ↗</a></p><h3>模型变化</h3><ul><li>原来是系数合计 1 的加权平均；现在每个系数独立，改变某项不会压低别项。</li><li>每项使用 z=(指数−50)/10，贡献直接相加。固定起点为 50；分数不是百分制。</li><li>缺失维度中性填补 50（z=0），不再按剩余项重归一。这是显式假设，不消除时代偏差。</li><li>大众排名现在是一项独立系数，不再混合成百分比。未入榜中性处理，不把数据分冒充公众先验。</li><li>单杆建议测试 ±0.5 系数；联合搜索仅检验有限候选，不能证明全局最优。系数整体放大也会扩大分差，不等于提高预测信心。</li></ul><h3>数据边界</h3><p>完整季后赛逐场基础数据覆盖至 2024；其他来源覆盖年份不同。早期防守统计与高级指标存在缺失；当前现役状态、生涯总量可能已改变。七维存在相关性，荣誉与冠军可能重复反映相似信息。</p><h3>旧设置与本地保存</h3><p>旧 v0.3 设置迁移为 β=10×(1−旧参考比例)×旧权重、γ=10×旧参考比例；数据完整且有先验时分数等价，缺失情况因新策略可能改变。旧设置保留。所有计算在本机进行，分享链接包含系数，不上传数据。</p>');
+  showDialog('数据边界与方法说明','<p>默认 300 人与七维指数沿用 v0.2，采集标记为 <strong>'+esc(data.data_access_date)+'</strong>。现在可从扩展目录添加球员；新增球员使用固定的原 300 人参考标准，不会改变原有球员分数。<a href="/players">打开球员库 ↗</a></p><h3>独立加性模型</h3><ul><li>每项使用 z=(指数−50)/10，独立系数乘以 z 后逐项相加。固定起点为 50；不是百分比分配，也不是百分制。</li><li>缺失维度贡献为 0，不放大其他项；全部启用项缺失则未评分。这是明确的处理约定，不消除时代或覆盖偏差。</li><li>大众排名是独立加性项。未入榜贡献中性，不把数据分冒充公众先验。</li><li>高级模式可自行选择统计、荣誉与协同模块；内部定义固定可查，系数由用户决定。评论员预设只拟合基础七维，不代表本人公布的真实公式。</li><li>单杆建议测试 ±0.5 系数；联合搜索只检验有限候选，不能证明全局最优。放大系数会扩大分差，不等于提高预测信心。</li></ul><h3>覆盖范围</h3><p>默认名单的完整季后赛逐场基础数据覆盖至 2024；新增历史球员当前仅扩展六个基础维度，季后赛指数保持未知。其他字段以各来源截止期为准，当前阵容不是实际出场证据。早期防守和高级统计存在缺失；荣誉与冠军等模块可能重复强调同一信息。</p><h3>本地保存与分享</h3><p>名单、模型及偏好只保存在本机浏览器，未接入账号或云同步。分享链接包含系数、模块和自选球员 ID，不包含游戏进度。旧 v0.3 设置按 β=10×(1−旧参考比例)×旧权重、γ=10×旧参考比例迁移，缺失情况可能因新策略改变。</p>');
 }
 function exportModel() {
-  const payload={...stateObject(),app_version:'0.7.0',data_version:data.model_version,data_access_date:data.data_access_date,method:advanced.enabled?'S=50+sum(selected independent terms); see module_definitions and target_details for exact transforms; no percentage normalization; all active observations missing => null':'S=50+sum(beta[k]*(X[k]-50)/10)+gamma*(P-50)/10; independent coefficients; missing values use neutral 50; all active observations missing => null',module_registry_version:MODULE_VERSION,module_definitions:MODULES,target_details:activeDetails(currentTarget()),starting_expert:expert()||null,baseline_note:'Basic seven-dimension preset; additional modules are user rules, not fitted commentator claims.',dimensions:DIMENSIONS,top20:ranking.slice(0,20).map(p=>({player_id:p.player_id,player_name:p.player_name,rank:p.rank,score:p.score})),created_at:new Date().toISOString()};
+  const payload={...stateObject(),app_version:'0.8.0',data_version:data.model_version,data_access_date:data.data_access_date,method:advanced.enabled?'S=50+sum(selected independent terms); see module_definitions and target_details for exact transforms; no percentage normalization; all active observations missing => null':'S=50+sum(beta[k]*(X[k]-50)/10)+gamma*(P-50)/10; independent coefficients; missing values use neutral 50; all active observations missing => null',module_registry_version:MODULE_VERSION,module_definitions:MODULES,target_details:activeDetails(currentTarget()),starting_expert:expert()||null,baseline_note:'Basic seven-dimension preset; additional modules are user rules, not fitted commentator claims.',dimensions:DIMENSIONS,top20:ranking.slice(0,20).map(p=>({player_id:p.player_id,player_name:p.player_name,rank:p.rank,score:p.score})),created_at:new Date().toISOString()};
   const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='true-goat-additive-model.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出加性系数、公式与来源。');
 }
 async function share() {
@@ -227,15 +244,19 @@ async function explore() {
 async function init() {
   const responses=await Promise.all([fetch('/data/players.json'),fetch('/data/experts.json')]);
   if(responses.some(r=>!r.ok))throw new Error('模型文件未准备好，请先运行拟合脚本。');
-  [data,{experts}]=await Promise.all(responses.map(r=>r.json()));players=data.players;
+  [data,{experts}]=await Promise.all(responses.map(r=>r.json()));basePlayers=data.players;players=[...basePlayers];
   try {const response=await fetch('/data/player-directory.json');if(!response.ok)throw new Error('球员库未准备好');const payload=await response.json();directory=new Map((payload.players||[]).map(p=>[p.id,p]));directoryAvailable=directory.size>0;}catch{toast('球员库暂不可用：基础模型仍可用，原始统计模块将明确显示缺失。');}
   if(!experts.length || !experts[0].coefficients)throw new Error('请先运行 scripts/13_build_expert_presets.py 生成 v0.4 加性预设。');
-  preset=experts[0].id;coefficients=sanitizeCoefficients(presetCoefficients());restore();
+  baseDirectory=new Map(directory);
+  library=createPlayerLibrary({baseIds:basePlayers.map(p=>p.player_id),onChange:updateCustomPlayers});
+  try{await library.initialize();}catch{toast('自选球员档案暂不可用；保留已保存的选择，先显示默认球员。');}
+  preset=experts[0].id;coefficients=sanitizeCoefficients(presetCoefficients());await restore();
   const requested=new URLSearchParams(location.search).get('player');
   if(players.some(p=>p.player_id===requested))targetId=requested;
+  else if(requested)pendingTarget=requested;
   baselineRanking();
   $('expert-select').innerHTML=experts.map(e=>'<option value="'+esc(e.id)+'">'+esc(e.name)+'</option>').join('')+'<option value="balanced">均衡起点 · 自由探索</option>';$('expert-select').value=preset;
-  $('target-select').innerHTML=[...players].sort((a,b)=>(a.rankings.posterior_rank||999)-(b.rankings.posterior_rank||999)).map(p=>'<option value="'+p.player_id+'">'+esc(name(p))+' · '+esc(p.player_name)+'</option>').join('');
+  rebuildPlayerChoices();
   $('quick-targets').innerHTML=[['jordami01','乔丹'],['jamesle01','詹姆斯'],['curryst01','库里'],['bryanko01','科比']].map(([id,label])=>'<button data-quick="'+id+'">'+label+'</button>').join('');
   $('sliders').innerHTML=DIMENSIONS.map((d,i)=>'<div class="slider-row"><label class="base-module-toggle" hidden><input type="checkbox" id="base-enabled-'+d.key+'" data-base-toggle="'+d.key+'" checked>将「'+esc(d.label)+'」放入高级模型</label><label class="slider-label" for="coef-'+d.key+'"><span class="coef-symbol">β'+(i+1)+'</span><span>'+esc(d.label)+'</span></label><input id="coef-number-'+d.key+'" class="coef-number" type="number" min="0" max="10" step="0.001" aria-label="'+esc(d.label)+'系数数值"><input id="coef-'+d.key+'" type="range" min="0" max="10" step="0.01" data-coefficient="'+d.key+'" aria-describedby="desc-'+d.key+'"><div class="slider-desc" id="desc-'+d.key+'">'+esc(d.description)+'</div></div>').join('');
   buildModuleCards();
@@ -261,7 +282,8 @@ async function init() {
   $('model-dialog').onclick=e=>{if(e.target===$('model-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}};
   $('share').onclick=share;$('find-weights').onclick=explore;
   $('jump-ranking').onclick=()=>document.querySelector('.ranking').scrollIntoView({behavior:'smooth'});
-  window.addEventListener('hashchange',()=>{if(!location.hash.startsWith('#model='))return;restore();baselineRanking();result=null;$('expert-select').value=preset;renderAll();persist();});
-  renderAll();persist();$('loading').hidden=true;$('workspace').hidden=false;$('open-model').disabled=false;$('mobile-live').hidden=false;
+  window.addEventListener('hashchange',async()=>{if(!location.hash.startsWith('#model='))return;await restore();baselineRanking();rebuildPlayerChoices();result=null;$('expert-select').value=preset;renderAll();persist();});
+  uiReady=true;renderAll();persist();$('loading').hidden=true;$('workspace').hidden=false;$('open-model').disabled=false;$('mobile-live').hidden=false;
+  if(pendingTarget)await library.open({playerId:pendingTarget});
 }
 init().catch(error=>{$('loading').textContent='载入失败：'+error.message;console.error(error);});

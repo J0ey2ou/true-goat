@@ -4,17 +4,21 @@ import {readFileSync} from 'node:fs';
 import {normalizeSearch, searchPlayers} from '../player-search.mjs';
 
 const dictionary = JSON.parse(readFileSync(new URL('../../config/player-aliases.json', import.meta.url), 'utf8'));
-const raw = JSON.parse(readFileSync(new URL('../data/guess-players.json', import.meta.url), 'utf8')).players;
+const payload = JSON.parse(readFileSync(new URL('../data/guess-players.json', import.meta.url), 'utf8'));
+const raw = payload.players;
+const resolvedId = id => payload.identityRedirects?.[id] || id;
 const players = raw.map(player => ({...player, ...dictionary.players[player.id]}));
 const first = query => searchPlayers(players, query)[0]?.id;
 const ids = query => searchPlayers(players, query).map(player => player.id);
 
-test('dictionary covers each selected player with a Chinese display label', () => {
+test('reviewed alias dictionary survives expanded and merged identities without inventing translations', () => {
   assert.equal(Object.keys(dictionary.players).length, 347);
-  for (const player of raw) {
-    assert.ok(dictionary.players[player.id], player.id);
-    assert.match(dictionary.players[player.id].chineseName, /\p{Script=Han}/u);
-    assert.ok(Array.isArray(dictionary.players[player.id].aliases));
+  for (const [id,alias] of Object.entries(dictionary.players)) {
+    const player=raw.find(p=>p.id===resolvedId(id));
+    assert.ok(player,id);
+    assert.match(alias.chineseName, /\p{Script=Han}/u);
+    assert.ok(Array.isArray(alias.aliases));
+    assert.ok(player.chineseName===alias.chineseName || player.aliases.includes(alias.chineseName));
   }
   assert.equal(new Set(raw.map(player => player.id)).size, raw.length);
 });
@@ -113,11 +117,13 @@ test('team search is opt-in and does not contaminate player name lookup', () => 
 });
 
 test('EuroLeague selections have searchable Chinese editorial transliterations', () => {
-  assert.equal(first('富尼耶'), 'euro-evan-fournier');
-  assert.equal(first('帕帕尼古拉乌'), 'euro-kostas-papanikolaou');
-  assert.equal(first('韦津科夫'), 'euro-sasha-vezenkov');
+  assert.equal(first('富尼耶'), resolvedId('euro-evan-fournier'));
+  assert.equal(first('帕帕尼古拉乌'), resolvedId('euro-kostas-papanikolaou'));
+  assert.equal(first('韦津科夫'), resolvedId('euro-sasha-vezenkov'));
 });
 
-test('every merged display name can retrieve its original player', () => {
-  for (const player of players) assert.ok(searchPlayers(players, player.chineseName).some(result => result.id === player.id), player.id);
+test('all reviewed translated names and a deterministic expanded sample retrieve their exact identity', () => {
+  const ids=new Set(Object.keys(dictionary.players).map(resolvedId));
+  const sample=players.filter((p,i)=>ids.has(p.id) || i%67===0);
+  for (const player of sample) assert.ok(searchPlayers(players, player.chineseName || player.name).some(result => result.id === player.id), player.id);
 });

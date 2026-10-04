@@ -64,8 +64,13 @@ export function filterKey(filters = {}) {
   return normalized.valid ? `years:${normalized.from ?? '*'}:${normalized.to ?? '*'}|team:${encodeURIComponent(normalized.teamId)}` : 'invalid';
 }
 
-const leagueInPool = (league,pool) => pool === 'nba' ? ['NBA','BAA'].includes(league)
-  : pool === 'cba' ? league === 'CBA' : pool === 'global' && ['NBA','BAA','CBA','EuroLeague'].includes(league);
+export function poolFamily(pool) {
+  if (['nba','nba-active','nba-history','nba-easy'].includes(pool)) return 'nba';
+  if (['cba','cba-active','cba-history','cba-easy'].includes(pool)) return 'cba';
+  return pool === 'global' ? 'global' : null;
+}
+const leagueInPool = (league,pool) => poolFamily(pool) === 'nba' ? ['NBA','BAA'].includes(league)
+  : poolFamily(pool) === 'cba' ? league === 'CBA' : pool === 'global' && ['NBA','BAA','CBA','EuroLeague'].includes(league);
 
 const hasPlayedEvidence = row => row.evidence === 'season-games' ? finite(row.games) && row.games > 0
   : row.evidence === 'dated-performance' && (row.games === undefined || finite(row.games) && row.games > 0);

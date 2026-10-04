@@ -1,0 +1,2486 @@
+{
+  "version": "1.0",
+  "asOf": "2026-10-04",
+  "season": "2026-27",
+  "scope": "国内球员注册公示，不含外援；只纳入已注册完成、非预注册记录。",
+  "indexUrl": "https://www.cbaleague.com/#/news-register/detail/6a72fc344a",
+  "teams": [
+    {
+      "team": "北京控股",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f381ca",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（北京控股，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "白啸桐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "顾晋维",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "葛志鹏",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "丁柏瑜",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "廖三宁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杜伯超",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至吉林东北虎",
+          "loanTo": "吉林东北虎"
+        },
+        {
+          "name": "朱松玮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘晓宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "张帆",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "金鑫",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张益炅",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为2年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "王少杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "罗汉琛",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "范汇鎏",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "宋文浩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "沈梓捷",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "邹雨宸",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵嘉义",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "北京首钢",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a9407fa2c",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（北京首钢，8月30日）",
+      "updated": "2026年8月30日17:00",
+      "players": [
+        {
+          "name": "吕天富",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王凯",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张鹏珲",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李永瀚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙亚辉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张知垚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "曾凡博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张才仁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵睿",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "雷蒙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "范依铭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "塔瑞克·加尼尤",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈盈骏",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "范子铭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "周琦",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "翟晓川",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "福建浔兴",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a8ebb7cf1",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（福建浔兴，8月26日）",
+      "updated": "2026年8月26日17:00",
+      "players": [
+        {
+          "name": "刘李",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "黄毅超",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蒙毅",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘金雨",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王海东",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张卿瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "史家郡",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杨曦皓",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "邹阳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "曾凌铉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李江淮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "冯洺臻",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杨阿力",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "苏若禹",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "黎伊扬",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "广东宏远",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f54d19",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（广东宏远，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "赵保乐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张家睿",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "黄明依",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "徐昕",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至广州龙狮",
+          "loanTo": "广州龙狮"
+        },
+        {
+          "name": "崔永熙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "焦泊乔",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "周鹏",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "胡明轩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张文逸",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杨溢",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈家政",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王洪泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张皓嘉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张昊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "徐杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "广州龙狮",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a94086cdc",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（广州龙狮，8月30日）",
+      "updated": "2026年8月30日17:00",
+      "players": [
+        {
+          "name": "夏振峰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王乐羊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "宋昕澔",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "齐朔",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙雍皓",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘文科",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至四川锦城",
+          "loanTo": "四川锦城"
+        },
+        {
+          "name": "杜智博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张新宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "林绍阳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "管子煜",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "彰华非",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "万孟霏",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "高宇坤",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "逄砚钧",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吕加晖",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘颜诚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈国豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "袁照耀",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "吉林东北虎",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6ab3a4d1ce",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（吉林东北虎，9月23日）",
+      "updated": "2026年9月23日17:00",
+      "players": [
+        {
+          "name": "高闻泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张航源",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杨腾飞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至广东宏远",
+          "loanTo": "广东宏远"
+        },
+        {
+          "name": "万孟霖",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "王子瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "许熙桐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵嘉浩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "俞泽辰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "姜伟泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蔡林翰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙思尧",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "贾昊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "崔晋铭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "赵率舟",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘雁宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为2年，俱乐部选项",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "江苏肯帝亚",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a9696c019",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（江苏肯帝亚，9月1日）",
+      "updated": "2026年9月1日17:00",
+      "players": [
+        {
+          "name": "王昱翔",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王玺铭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蔡宇航",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "曹芷豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "庞峥麟",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "肖恺",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴超",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李承耀",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘泽希",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李禄曈",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蒋浩然",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "倪永康",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "闫实",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "曾繁日",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "刘正清",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "郑祺龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴羽佳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "辽宁沈阳三生",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a9695f321",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（辽宁沈阳三生，9月1日）",
+      "updated": "2026年9月1日17:00",
+      "players": [
+        {
+          "name": "刘子扬",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "于善元",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "付远旭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙福恒",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "代彦龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "邢维皓",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵森",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张陈治锋",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李虎翼",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴昌泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "姜宇星",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "付豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵继伟",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "鄢手骐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "段睿骐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "南京同曦",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6ab3a490bb",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（南京同曦，9月23日）",
+      "updated": "2026年9月23日17:00",
+      "players": [
+        {
+          "name": "林葳",
+          "completed": true,
+          "preRegistered": true,
+          "note": "预注册（境外联赛效力）",
+          "loanTo": null
+        },
+        {
+          "name": "郭昊文",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杜润旺",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "祝子轩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵刘其政",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘奕杭",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李斌卓",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "郑博轩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "姜贺",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "尹椿文",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "阿卜杜赛麦提·买提阿布拉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李玮颢",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李云开",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "田宇恒",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘野",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马鑫鑫",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "宁波富邦",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a96956ab6",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（宁波富邦，9月1日）",
+      "updated": "2026年9月1日17:00",
+      "players": [
+        {
+          "name": "赵建树",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵岩昊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "栾利程",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赖克",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "邵炜昀",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "郑博文",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "丁超",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "胡俊杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李苑鑫",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王凡懿",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "罗凯文",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "宁鸿宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "许裕茁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "鲁吐布拉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "俞长栋",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "青岛国信海天",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f61ed5",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（青岛国信海天，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "杨瀚森",
+          "completed": true,
+          "preRegistered": true,
+          "note": "预注册（境外联赛效力）",
+          "loanTo": null
+        },
+        {
+          "name": "李俊贤",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "丛睿言",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张嘉琳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张浩博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "林韦恺",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "纪卓",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张扬",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "段昂君",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "郭奇芳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王睿泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吕俊虎",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "胡小龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王奕博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "山东山高",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f4a5cd",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（山东山高，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "彭泓森",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "于正鑫",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "米建瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李政乐",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "姚柯宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马延东",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至南京同曦",
+          "loanTo": "南京同曦"
+        },
+        {
+          "name": "谢文政",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王岚嵚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王证",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵浩然",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "谢智杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至山西汾酒",
+          "loanTo": "山西汾酒"
+        },
+        {
+          "name": "杨文学",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陶汉林",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈培东",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "祝铭震",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "郭凯",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "常浩然",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "许梦君",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈林坚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "高诗岩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "山西汾酒",
+      "url": "https://www.cbaleague.com/#/news-register/detail/f6d30dfac2",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（山西汾酒，9月20日）",
+      "updated": "2026年9月20日8:00",
+      "players": [
+        {
+          "name": "魏莨哲",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "淡厚然",
+          "completed": true,
+          "preRegistered": true,
+          "note": "预注册（境外联赛效力）",
+          "loanTo": null
+        },
+        {
+          "name": "许唯实",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张文杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至广州龙狮",
+          "loanTo": "广州龙狮"
+        },
+        {
+          "name": "刘翔龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "于米提·赛达克",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘传兴",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "秦子龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "韩霈瑜",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈彭宇迪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "焦海龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "贾明儒",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "葛昭宝",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "原帅",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张宁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王俊杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵嘉仁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "上海久事",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6aa123cdd7",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（上海久事，9月9日）",
+      "updated": "2026年9月9日",
+      "players": [
+        {
+          "name": "刘铮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "郭丰玮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王青山",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李翔宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "丁嘉瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "偰李永炜",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘礼嘉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马典成",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李弘权",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "袁堂文",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "闫鹏飞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "戴昊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项；\n租借至宁波富邦",
+          "loanTo": "宁波富邦"
+        },
+        {
+          "name": "李添荣",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "崔晓龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张镇麟",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王哲林",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "深圳新世纪",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f5e97c",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（深圳新世纪，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "耿鹏酌",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "陈潇毅",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴铠博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蓝逸朗",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马浩森",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "冯熙瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "傅文昊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "余秋阳",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "单泽宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王浩然",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马明坤",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙浩钦",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "武子涵",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "卢鹏羽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李慕豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "容子峰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "白昊天",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "贺希宁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "四川锦城",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6ab7215243",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（四川锦城，9月26日）",
+      "updated": "2026年9月26日9:00",
+      "players": [
+        {
+          "name": "邹昀轩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "黄荣奇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张桂川",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "姚雨鑫",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "袁士博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马港燊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "洪辛",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "景浩扬",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "骆金州",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "冯小宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "何驰宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张恒硕",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "任天祥",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张力升",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "于枭永",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "肖傈仁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孟天艺",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "景菡一",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "天津荣钢",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a8ebbccd3",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（天津荣钢，8月26日）",
+      "updated": "2026年8月26日17:00",
+      "players": [
+        {
+          "name": "何佳轩",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙承信",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "计岩松",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蒋祺禹",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王禹丁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "马如一",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "岳鸿博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘东",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张云梦",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李宗霖",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "郑昊燃",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赖俊豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "吕安宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "田雨",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "时德帅",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "何思雨",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "谷泽浴",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "新疆广汇",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a97f58926",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（新疆广汇，9月2日）",
+      "updated": "2026年9月2日17:00",
+      "players": [
+        {
+          "name": "李俊杰",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张译珑",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张庆泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "葛浩然",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "杨芮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "冯傲",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张俊生",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "殷召航",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "曲笑宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "艾孜麦提·吐逊",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "西尔扎提·赛买提",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "伊力福拉提·莫合坦尔",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李炎哲",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴冠希",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "齐麟",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "阿不都沙拉木·阿不都热西提",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "浙江稠州",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a9696862c",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（浙江稠州，9月1日）",
+      "updated": "2026年9月1日17:00",
+      "players": [
+        {
+          "name": "林逸锋",
+          "completed": true,
+          "preRegistered": false,
+          "note": "伤病特例",
+          "loanTo": null
+        },
+        {
+          "name": "欧懿远",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "段皓天",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "唐榕泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "沈无敌",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "李悦洲",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "余嘉豪",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘双语",
+          "completed": true,
+          "preRegistered": false,
+          "note": "租借至南京同曦",
+          "loanTo": "南京同曦"
+        },
+        {
+          "name": "周怡杉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张洪硕",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王奕霖",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孟子凯",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王仔路",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为1年，俱乐部选项",
+          "loanTo": null
+        },
+        {
+          "name": "陆文博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘泽一",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "程帅澎",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴前",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    },
+    {
+      "team": "浙江广厦",
+      "url": "https://www.cbaleague.com/#/news-register/detail/6a9939a34b",
+      "title": "2026-2027赛季CBA联赛国内球员注册信息（浙江广厦，9月3日）",
+      "updated": "2026年9月3日",
+      "players": [
+        {
+          "name": "李均铸",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙进宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "刘洋",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "冯俞博",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "蔡束林森",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "张家诚",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "王欣瑞",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "胡金秋",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "孙铭徽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "连宇",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "侯孟泽",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "周可梵",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "崔新泉",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "赵佳一",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "续峻玮",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "朱俊龙",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        },
+        {
+          "name": "吴骁",
+          "completed": true,
+          "preRegistered": false,
+          "note": "M2为2年，球员选项",
+          "loanTo": null
+        },
+        {
+          "name": "李金效",
+          "completed": true,
+          "preRegistered": false,
+          "note": "",
+          "loanTo": null
+        }
+      ]
+    }
+  ]
+}

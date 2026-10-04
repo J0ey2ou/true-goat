@@ -26,11 +26,12 @@ https://github.com/fivethirtyeight/nba-player-advanced-metrics
 许可全文：licenses/FIVETHIRTYEIGHT_CC_BY_4.0.txt
 本项目进行了球员筛选、合并核验、单位转换、缺失标记、归一化、汇总统计和派生评分；这些修改和结论不代表原作者观点。数据及许可材料按原许可 AS IS 提供，不附带保证。
 
-5. NBA 官方历史页、新浪 CBA 公开档案、EuroLeague 公开登记资料、公开媒体排名
+5. NBA 官方历史页与球员阵容、CBA 官方注册公示、新浪 CBA 公开档案、EuroLeague 公开登记资料、公开媒体排名
 逐项来源、日期与链接见各数据包 sources、config/player-aliases.json 和页面来源说明。
 仅保存所用有限事实、简短来源标题和本项目自己的统计或摘要；不再分发完整文章、照片、PDF 或原始网页。
 未找到上述页面的统一开放数据许可，不将其宣称为 CC0/MIT，不授予超出来源的权利。
 中文译名、绰号与拼音是人工检索标签，不声称是唯一官方译名。
+阵容与注册事实只用于注明日期的现役池，不等于实际比赛出场证明；历史池不以生涯年份插补出场。
 
 6. 弗一把
 https://shnlfriberg.online/

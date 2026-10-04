@@ -9,10 +9,11 @@ const metrics = ['teamCount','playoffAppearances','finalsAppearances','pointsPer
 const byId = id => data.players.find(player => player.id === id);
 
 test('expanded game data preserves unique identities and stated pool sizes',() => {
-  assert.equal(data.version,'1.2');
+  assert.equal(data.version,'2.0');
   assert.equal(new Set(data.players.map(player => player.id)).size,data.players.length);
   for (const pool of data.pools) assert.equal(pool.count,data.players.filter(player => player.pools.includes(pool.id)).length);
-  assert.equal(data.players.filter(player => player.pools.includes('nba')).length,300);
+  assert.ok(data.players.filter(player => player.pools.includes('nba-history')).length>=5000);
+  assert.equal(data.pools.length,7);
   assert.equal(data.players.filter(player => player.id === 'mingya01').length,1);
 });
 
@@ -57,10 +58,12 @@ test('zero MVP differs from missing data; foreign unverified metrics never gener
   const west = byId('westje01');
   assert.equal(west.mvpCount,0);
   assert.equal(comparePlayers(west,west).find(cell => cell.key === 'mvpCount').status,'correct');
-  for (const player of data.players.filter(player => !player.pools.includes('nba'))) {
-    for (const key of metrics) assert.equal(player[key],null,`${player.id} ${key}`);
+  for (const player of data.players.filter(player => !player.pools.includes('nba-history'))) {
     for (const cell of comparePlayers(player,byId('jordami01')).filter(cell => cell.group === 'career')) {
-      assert.equal(cell.status,'unknown'); assert.equal(cell.direction,null);
+      const coverage=player.metricCoverage[cell.key];
+      if(!coverage.complete || !['NBA','NBA/BAA'].includes(coverage.scope)) {
+        assert.equal(cell.status,'unknown'); assert.equal(cell.direction,null);
+      }
     }
   }
 });

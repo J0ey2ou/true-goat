@@ -177,3 +177,4 @@
   .guess-page .guess-result { padding:17px; }
   .guess-page .guess-result-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
+.guess-pool-help{font-size:12px;line-height:1.8;color:var(--muted);margin:12px 2px 20px;overflow-wrap:anywhere}.guess-pool-label{min-width:0}.guess-pool-label select{width:min(100%,340px);max-width:100%}

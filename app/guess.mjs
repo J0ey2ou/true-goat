@@ -1,4 +1,4 @@
-import { MAX_GUESSES, ATTRIBUTES, playersInPool, normalizeFilters, filterKey, eligiblePlayers, teamsForPool, matchingAppearances, shanghaiDate, comparePlayers, newRound, restoreRound, submitGuess, shareText } from './guess-engine.mjs';
+import { MAX_GUESSES, ATTRIBUTES, playersInPool, poolFamily, normalizeFilters, filterKey, eligiblePlayers, teamsForPool, matchingAppearances, shanghaiDate, comparePlayers, newRound, restoreRound, submitGuess, shareText } from './guess-engine.mjs';
 import { normalizeSearch, searchPlayers } from './player-search.mjs';
 
 const $ = id => document.getElementById(id);
@@ -10,7 +10,7 @@ const numeric = value => typeof value === 'number' && Number.isFinite(value) ? v
 const statusNames = {correct:'一致',close:'接近 / 重合',wrong:'不同',unknown:'未知'};
 const stateCache = new Map();
 const PREF_KEY = 'true-goat-guess:preferences:v2';
-let data,players = [],mode = 'daily',pool = 'nba',round,matches = [],activeIndex = 0,storageWarning = false,isComposing = false;
+let data,players = [],mode = 'daily',pool = 'nba-easy',round,matches = [],activeIndex = 0,storageWarning = false,isComposing = false;
 let filters = {from:null,to:null,teamId:''}, filtersByPool = {};
 
 function storageKey() { return `true-goat-guess:v2:${data.version}:${mode}:${pool}:${encodeURIComponent(filterKey(filters))}`; }
@@ -107,7 +107,7 @@ function render() {
   document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.mode === mode)));
   $('guess-pool-count').textContent = `${currentPool.name} · 收录 ${count} 位 / 本局范围 ${eligibleCount} 位`;
   const dates = [...new Set(playersInPool(players,pool).map(player => player.asOf).filter(Boolean))].sort();
-  $('guess-snapshot').textContent = dates.length === 1 ? `快照 ${dates[0]}` : `多期快照 · 数据包 ${data.meta.snapshotDate || data.meta.dataAsOf || '见数据说明'}`;
+  $('guess-snapshot').textContent = currentPool.asOf ? `名单核实 ${currentPool.asOf}` : dates.length === 1 ? `快照 ${dates[0]}` : `多期快照 · 数据包 ${data.meta.snapshotDate || data.meta.dataAsOf || '见数据说明'}`;
   $('guess-round-label').textContent = mode === 'daily' ? `DAILY / ${round.date} / UTC+8` : 'PRACTICE / YOUR OWN PACE';
   $('guess-board-title').textContent = round.status === 'empty' ? '这个范围，暂时没有题目。' : round.status === 'won' ? '漂亮，你找到了。' : round.status === 'lost' ? '八次用完，看看答案。' : mode === 'daily' ? '今天，你能几次猜中？' : '选一位球员，开始推理。';
   $('guess-attempts').textContent = round.guesses.length;
@@ -157,7 +157,7 @@ function renderResult() {
   const answer = players.find(player => player.id === round.answerId);
   const sourceIds = new Set(list(answer.sourceIds));
   const sources = list(data.sources).filter(source => sourceIds.has(source.id));
-  const directoryId = answer.directoryId || (answer.pools.includes('nba') ? answer.id : null);
+  const directoryId = answer.directoryId || null;
   const careerAttributes = ATTRIBUTES.filter(item => item.group === 'career');
   const metrics = careerAttributes.map(item => `<div data-result-key="${item.key}" title="${esc(metricDescription(answer,item.key))}"><dt>${esc(item.label.replace('*',''))}</dt><dd>${numeric(answer[item.key])}</dd></div>`).join('');
   const coverage = careerAttributes.map(item => `<li><strong>${esc(item.label.replace('*',''))}</strong>：${esc(metricDescription(answer,item.key))}</li>`).join('');
@@ -263,12 +263,22 @@ async function init() {
     if (!data.version || !Array.isArray(data.players) || !data.players.length || !Array.isArray(data.pools)) throw new Error('游戏数据尚未准备好');
     data.meta ||= {};
     players = [...data.players].sort((a,b) => String(a.name).localeCompare(String(b.name),'en'));
-    data.pools = data.pools.filter(item => playersInPool(players,item.id).length);
+    data.pools = data.pools.filter(item => item && typeof item.id === 'string' && poolFamily(item.id));
     if (!data.pools.length) throw new Error('没有可用球员池');
     if (!data.pools.some(item => item.id === pool)) pool = data.pools[0].id;
-    try { const pref = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if (['daily','practice'].includes(pref?.mode)) mode = pref.mode; if (data.pools.some(item => item.id === pref?.pool)) pool = pref.pool; for (const item of data.pools) { const saved = pref?.filtersByPool?.[item.id]; if (normalizeFilters(saved || {}).valid) filtersByPool[item.id] = canonical(saved || {}); } } catch {}
+    try {
+      const pref = JSON.parse(localStorage.getItem(PREF_KEY) || 'null');
+      const migratedPool = ({nba:'nba-history',cba:'cba-history'})[pref?.pool] || pref?.pool;
+      if (['daily','practice'].includes(pref?.mode)) mode = pref.mode;
+      if (data.pools.some(item => item.id === migratedPool)) pool = migratedPool;
+      for (const item of data.pools) {
+        const legacy = item.id === 'nba-history' ? 'nba' : item.id === 'cba-history' ? 'cba' : item.id;
+        const saved = pref?.filtersByPool?.[item.id] ?? pref?.filtersByPool?.[legacy];
+        if (normalizeFilters(saved || {}).valid) filtersByPool[item.id] = canonical(saved || {});
+      }
+    } catch {}
     filters = canonical(filtersByPool[pool] || {}); filtersByPool[pool] = {...filters};
-    $('guess-pool').innerHTML = data.pools.map(item => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join('');
+    $('guess-pool').innerHTML = [['nba','NBA · 按难度与范围选择'],['cba','CBA · 按难度与范围选择'],['global','跨联赛']].map(([family,label]) => `<optgroup label="${esc(label)}">${data.pools.filter(item => poolFamily(item.id) === family).map(item => `<option value="${esc(item.id)}">${esc(item.name)} · ${playersInPool(players,item.id).length} 人</option>`).join('')}</optgroup>`).join('');
     $('guess-data-note').textContent = data.meta.note || '缺少可靠来源的字段保留未知；不会推测国籍、球队或职业首年。';
     resetDraft(); bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
   } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`; $('guess-loading').setAttribute('role','alert'); }

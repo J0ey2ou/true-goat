@@ -1,104 +1,211 @@
-# True GOAT / 真正的山羊 — 模块化排名实验台与猜球员 v0.7
+# True GOAT / 真正的山羊
 
-> Facts are data. Greatness is a weighting problem.
+> 同一份篮球事实，不同的伟大定义。<br>
+> Same basketball facts. Different definitions of greatness.
 
-## 本地运行
+[打开网站 / Open the site](https://j0ey2ou.github.io/true-goat/) · [中文介绍](#中文介绍) · [English](#english) · [开发与方法 / Development & methods](#development)
 
-在本项目目录运行 `node app/server.mjs`，打开 http://127.0.0.1:8765 。也可双击 `app/start.cmd`。服务只监听本机，不公开原始数据目录。
+## 中文介绍
 
-## 静态网站与 GitHub Pages
+### 这是什么网站？
 
-本应用没有线上后端要求，三页的评分、检索与游戏均在浏览器计算。运行 `node scripts/16_build_static_site.mjs` 生成 `dist/`：首页 `index.html`、球员库 `players.html`、猜球员 `guess.html`。构建器只复制明确白名单中的资源和4份必要展示数据，并改写站内地址，支持 GitHub Pages 的仓库子路径。不要直接上传原始 `app/` 目录或整个本地工作区作为网站。
+True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资料库和猜球员小游戏。
 
-仓库的 `.github/workflows/pages.yml` 会在 `main` 更新时测试、构建并发布 `dist/`。首次需在 GitHub 仓库 `Settings → Pages → Build and deployment → Source` 选择 `GitHub Actions`。部署成功后，以 Actions 返回的实际网址为准；本文不预先声明网站已经上线。
+它不替你宣布唯一正确的“历史第一人”，而是让你看清自己的判断：你更重视巅峰、长期稳定、季后赛，还是荣誉？改变一项偏好，哪些球员会上升？这个变化具体来自哪些数据？
 
-`.gitignore` 使用发布白名单：保留源码、配置、测试及必要展示快照，排除原始下载、文章全文缓存、`node_modules`、Excel/PDF输出、截图、密钥和环境文件。数据更新脚本需要另外按来源说明取得原始快照；公开仓库本身不包含这些大体积输入。数据出处与第三方许可见 `THIRD_PARTY_NOTICES.txt`，不将所有混合数据或原创代码擅自声明为 MIT。
+网站把两件事分开：**球员做过什么是数据；这些表现有多重要是你的评价选择。** 评论员榜单提供讨论起点，不是最终答案，也没有强制某位球员第一的规则。
 
-单元测试与静态构建不需安装 npm 依赖。浏览器测试另在 `app/` 执行 `npm install`；Windows默认使用已安装的Edge，其他系统可先 `npx playwright install chromium`。可通过 `GOAT_PLAYWRIGHT_MODULE`、`GOAT_BROWSER_EXECUTABLE` 指定本机运行时，不提交个人电脑路径。
+### 从一个小实验开始
 
-## 新手导览
+1. 在[排名实验室](https://j0ey2ou.github.io/true-goat/)选一位评论员的历史观点，或选择均衡起点。
+2. 调整一个独立系数，观察排名变化。系数不用凑成 100%，增加一项不会挤压另一项。
+3. 打开高级模式，自选场均得分、荣誉次数、荣誉积分、协同项等评价模块；每项都有定义、来源与缺失说明。
+4. 点击球员分数，看七维画像和当前模型每项实际加分、扣分。打开“查看我的模型”可阅读公式、解释并导出。
+5. 复制模型链接，把你的系数、模块和自选球员分享给别人讨论。
 
-三个页面各自只展示对应的动画：实验室讲加性评分，球员库讲档案，猜球员页讲玩法。每页都保留「动画导览」重看入口和当前页面的操作引导，带用户定位到真实控件。示意动画不是球员真实评分，不修改系数、筛选或游戏进度。
+目前提供 Stephen A. Smith、Kendrick Perkins、Skip Bayless、Nick Wright、Chris Broussard、Shannon Sharpe 六个有出处的历史观点。日期与适用范围单独展示；Nick Wright 的样本只是“近 50 年”榜单前五。模型近似这些已知排序，不声称还原评论员心中的真实公式。
 
-关闭、跳过或完成后，分别在 `true-goat-onboarding-v2:lab`、`:directory`、`:guess` 记录已看状态，不上传行为记录。旧 v1 全站标记不会抑制新版按页导览。带 `#model` 或 `?player` 的分享链接不自动弹出导览；尊重系统减少动态效果设置，支持键盘与手机。浏览器禁止存储时仍可正常关闭和使用网站，但下次访问可能再次显示。
+### 300 人是默认名单，不是上限
 
-引导验收：`npm run test:onboarding`（在 `app/` 目录、先启动测试服务）；现有功能测试以已看过引导的用户为基准，独立引导测试覆盖首次访问。
+[球员库](https://j0ey2ou.github.io/true-goat/players.html)展示入选理由、背景、球队经历、统计、荣誉和来源。默认 300 人来自荣誉、数据表现与外部讨论等候选入口的去重并集，并非预先指定的历史前 300 名。
 
-账号注册尚未接入：GitHub Pages 仅托管静态网页，不能安全地充当账号数据库。真正注册需要另行配置云端认证服务；不会以本机昵称或本地密码存储伪装成在线账号。评分、球员库和游戏仍无需登录。
+实验室和球员库都有“添加球员”入口，可以从扩展 NBA 目录加入自己关心的人，两页共用你的自选名单。默认球员保留；自选球员可以移除。添加操作只影响自己的浏览器，不修改公共数据库。
 
-## 独立加性模型
+新增球员沿用固定参考标准，不会因你加人而重新计算原有 300 人的指数。资料不足的维度会明确缺失；尚无实际比赛记录的新人不会获得虚构的生涯评级。当前新增历史球员可计算六个基础维度，季后赛维度尚未扩展，不能把部分覆盖当成完整七维评价。
 
-公式：`S = 50 + Σ β[k] × (X[k]−50)/10 + γ × (P−50)/10`。例如巅峰指数80、系数2，贡献为 +6 分。各系数独立取值0–10，没有合计100%的约束；固定截距50不影响排名。分数不是百分制，可超过100或低于0。
+### 猜球员：按熟悉程度选择范围
 
-- 六个公开历史观点拟合起点：Stephen A. Smith（2023）、Kendrick Perkins（2021）、Skip Bayless（2026）、Nick Wright（2022）、Chris Broussard（2022）、Shannon Sharpe（2022）。后面三位来自 FOX 节目语境，不冒充 ESPN 评论员或当前最新意见。Nick 的样本仅为“近 50 年榜单”前五；界面保留范围、原始出处、转录核实方式和拟合误差。
-- 改变一个系数不会挤压其他项。排名、建议、有限搜索、模型解释、分享和导出使用同一公式。
-- 模型弹窗展示完整公式、各维度中心化数值和逐项加分/扣分。显示数字舍入，排序按完整精度；并列明确标示。
-- 大众榜单P作为独立加性项，不再是百分比混合，也不是重新估计的贝叶斯后验。
+[猜球员](https://j0ey2ou.github.io/true-goat/guess.html)与 GOAT 评级名单独立，不限制在 300 人。八次机会、逐项属性反馈；支持每日挑战和自由练习，暂不做对战。
 
-重建预设：`python scripts/13_build_expert_presets.py`。原排序配置为 `config/espn_expert_rankings.json`。采用短榜内成对约束、0.75分目标间隔、0.1倍系数正则和九个确定性起点；取消系数总和约束。未入榜不自动判为输家。样本内一致率不是置信度或样本外评测。
+2026-10-04 快照：NBA 现役 **620**、历史 **5,105**、简单 **152**；CBA 现役 **328**、历史已收录 **1,487**、简单 **47**。按已核实身份映射合并后共有 **6,717** 份档案，各池有重合，不能直接相加。仍有 63 项跨源身份候选待核实，不凭同名强行合并。前两页的扩展 NBA 目录有 **5,217** 人。
 
-缺失项以中性基准50填补（中心化贡献0），不再放大其他项；这是明确的假设，不是观测事实。所有启用项均无数据时显示未评分；全部系数为0时所有人并列50分。旧v0.3设置保留并迁移：完整数据且有先验时等价，缺失情况下结果可能改变。
+- NBA 现役：NBA.com 当日 30 队阵容快照，包含训练营、双向和可能尚未出场的新人；不是仅凭最近赛季推断现役。
+- NBA 全历史：1946–47 至 2025–26 数据快照内所有 NBA/BAA 常规赛实际出场者，不含仅 ABA 或仅季前赛球员。
+- NBA 简单球星：常规赛 MVP 至少一次，或至少五届 NBA 全明星入选；历史和现役均可入选。
+- CBA 现役：2026–27 赛季官方国内球员已完成注册快照；不包含尚未核实的外援，不把预注册当作完成注册。
+- CBA 全部已收录：不再局限于原 30 人精选，使用全部已核实的历史出场档案；来源存在空缺，不冒充 CBA 全史完备名单。
+- CBA 简单球星：有来源的历史与现役名将编辑精选，不是官方知名度或实力榜。
+- 全球跨联赛池：上述球员与已收录欧洲球员的去重并集，并非全球所有运动员。
 
-## 可选高级模式：模块定义先于评分
+可以再限制赛季和球队：答案与搜索候选必须同时满足条件，年份和球队要出现在**同一条实际出场记录**里。注册、当前阵容和档案页年份不算出场证据；零候选时不从范围外出题。NBA/CBA/跨联赛的球队选项随池变化。
 
-基础模式保留原有七维算法。高级模式可以移除基础维度、添加独立模块并调整各自系数：常规赛场均得分/助攻/篮板、真实命中率、季后赛场均得分、MVP/FMVP/DPOY/最佳阵容/冠军次数、透明荣誉积分，以及巅峰×季后赛、常规赛×防守两项协同。所有贡献直接相加，不是百分比。
+输入中文、英文或已收录绰号都可检索，例如“哈登”“大胡子”“James Harden”。新扩展球员尚无核实中文译名时保留英文。提示中的未知不是零，不同联赛或截止期的统计不直接比较。筛选决定谁能入题，不将生涯线索截断为所选年份。
 
-每个模块在 `app/modules.mjs` 封装定义、原始字段、单位、基准/步长、计算公式、来源与截止、缺失处理、重叠提示。固定基准和荣誉配方属于产品约定，不是官方标准或拟合真理；荣誉设立年代、球队成就非个人因果、TS 未时代校正等限制应结合定义阅读。组合项只使用双方高于基准的非负部分，避免负负得正。缺失中性贡献不等于真实统计为零。
+每日题按北京时间 00:00 更新，同版本、日期、球员池和范围保持一致。各范围进度分别保存在浏览器；题目答案可从客户端数据读取，因此它是休闲练习，不是防作弊竞技服务。玩法参考[弗一把](https://shnlfriberg.online/)，篮球规则、代码和界面独立实现。
 
-点击领奖台、排行榜或目标球员的得分，可以打开固定七维雷达图与当前模型的正负贡献图、数值表。雷达图不是得分占比，缺失项不画成零；高级模式下的排行榜、解释、分享与 JSON 导出使用相同模型。高级模式不运行仅适用于基础七维的自动系数搜索。
+### 看得懂，也玩得舒服
 
-## 全站皮肤
+每个页面只展示自己的动画导览，支持重看、键盘操作与减少动态效果设置。六套皮肤包含鲜艳深色、奶油浅色与经典森林，跨页同步，不改变分数或猜测颜色的含义。
 
-顶部「皮肤」可即时切换极光赛场、日落球场、碧海之上、玫瑰霓虹、奶油晴空和经典森林六套配色。默认使用紫蓝极光；浅色与深色方案覆盖三个页面、评分图表与弹窗，猜球员的反馈颜色语义保持不变。
+无需登录即可使用。账号注册和云端同步尚未接入；模型、自选名单、皮肤及游戏进度保存在本机浏览器，不是在线账户。模型分享链接包含所分享的设置和球员 ID，不包含猜球员进度。
 
-偏好只保存在当前浏览器的 `true-goat-theme:v1`，跨页、刷新和同源多标签同步；不修改模型、筛选或游戏进度。浏览器限制存储时仍可在当前页预览。验收：`npm run test:themes`。
+### 数据诚实比“什么都有”更重要
 
-## 两两球员数据：可行性边界
+- 数据有快照日期。常规赛主要截至 2025–26；已核实季后赛/总决赛实际出场统计截至 2023–24，其他字段以来源标记为准。
+- 早期防守、奖项机会和跨联赛背景覆盖不同；缺失与结构性时代差异不会因为画成图就消失。
+- “同场对手交锋”有逐场数据基础，但当前没有逐回合防守者信息。直接防守对位分尚未开放，也不把同场得分冒充对另一人的单独进攻表现。
+- 网站不是 NBA、CBA、EuroLeague 或任何评论员的官方产品。来源和许可边界见 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。
 
-本次已审计原有逐场缓存，尚未把交锋加入评分。现有 `schedule.csv` 与年度 `boxscores_by_year` 覆盖 1946–47 至 2023–24，可通过比赛 ID、球员 ID、不同球队、实际出场状态联结“同场对手交锋”，区分常规赛/季后赛并显示场次与年份。早期篮板、助攻、分钟等覆盖不完整，抢断/盖帽更晚才有，不可将缺失当零。
+## English
 
-现有字段没有逐回合防守者、匹配回合或实际防守对位关系，因此不能声称某球员的得分都是在另一人防守下取得。下一步若实现，应命名为“同场交锋”，构建精简且按需加载的索引，展示小样本与覆盖范围；原始约 657 MB 文件不直接发布，也不把交锋胜负当成因果评级。本版不提供虚构的“直接对位分”。
+### What is True GOAT?
 
-## 球员库
+True GOAT is a hands-on basketball ranking lab, a player directory, and a player-guessing game.
 
-打开 `/players` 查看300人背景与入选情况。三池A203/B219/C162重叠去重并集为300，不是先指定好的历史前300名。支持中英文/球队检索、位置/年代/池筛选、25人分页和详情。
+It does not declare one objectively correct greatest player. Instead, it makes your preferences visible: do you value peak dominance, sustained excellence, the playoffs, or honors? Which players rise when you change a preference, and which facts explain that change?
 
-背景包含300人的生日、身高体重、真实首赛日期、赛季范围与球队记录；271人院校、281人选秀、298人季后赛资料。附原始生涯统计、荣誉、逐项入选原因、缺失与部分覆盖说明、来源。国家资料未确认则保留缺失，不猜测。
+The project separates **what a player did** from **how much you value it**. Published commentator rankings are starting points for discussion, not ground truth. No rule forces a particular player to finish first.
 
-重建：`python scripts/14_build_player_directory.py`。使用既有原始履历和多源缓存，不修改原数据。快照标记2026-08-15；常规赛至2025–26、完整季后赛至2023–24。身高体重为档案值，快照生涯状态不代表当前退役核实。
+### Start with one experiment
 
-## 验证
+1. Open the [ranking lab](https://j0ey2ou.github.io/true-goat/) and choose a historical commentator preset or a balanced starting point.
+2. Move one independent coefficient and watch the rankings change. Coefficients do not have to total 100%; increasing one does not reduce another.
+3. Enable advanced mode to choose statistical, award, honors-composite and interaction modules. Each exposes its definition, source and missing-data policy.
+4. Click a player's score for a seven-dimensional profile and the actual signed contributions to your model. “My model” explains the formula and supports export.
+5. Share a model link containing your coefficients, modules and custom player selections.
 
-在 `app` 目录运行 `npm test` 检查评分、猜球员、检索和真实题库数据；`npm run test:server` 检查服务（需先启动服务）。三个构建脚本均支持 `--self-test`。
+Six sourced historical viewpoints are available: Stephen A. Smith, Kendrick Perkins, Skip Bayless, Nick Wright, Chris Broussard and Shannon Sharpe. Dates and scope are explicit; Nick Wright's sample is only the top five of a “last 50 years” list. The fitted models approximate known ordering constraints, not the commentators' undisclosed personal formulas.
 
-浏览器验收：`node app/tests/browser-smoke.mjs` 和 `node app/tests/player-directory-smoke.mjs`，使用已安装的Playwright与Edge；不额外下载浏览器。主界面检查360/390/768/1024/1440宽度的溢出、卡片分数基线和表格列边界。
+### 300 is the default, not a limit
 
-## 猜球员（单人）
+The [player directory](https://j0ey2ou.github.io/true-goat/players.html) explains selection, biographies, teams, statistics, honors and sources. The default 300 are the deduplicated union of honors, statistical and public-discussion candidate pools—not a predetermined all-time top 300.
 
-打开 `/guess`。参考[弗一把](https://shnlfriberg.online/)的8次猜测与逐属性反馈机制；篮球规则独立实现，没有复制原作代码或视觉素材，也不声称完整复刻。
+Both the lab and directory let you add players from an expanded NBA catalog. They share your custom roster; the default players remain, and custom additions can be removed. Your selection changes only your browser, not the public database.
 
-- 每日挑战：北京时间00:00更新，同一题库版本、同日同池同范围的答案固定；不同年份/球队组合的进度分别保存在本机。
-- 自由练习：可换新目标，八次机会；猜中本人获胜，属性全绿不能替代身份判断。重复或无效猜测不消耗次数。
-- 姓名词典覆盖当前347人：中文名、英文名、常见绰号与CBA英文拼音。输入“哈登”“大胡子”“James Harden”或“jame harden”均可匹配；大小写、空格、重音与分隔标点统一处理。中文不做模糊猜字，英文长词允许有限拼写容错；同姓/同绰号可保留多位候选，不视为同一个人。词典在 `config/player-aliases.json`，人工音译不声称是官方唯一译名。
-- 题目范围限制赛季结束年与球队，例如2020代表2019–20；点击「应用范围」后，答案与搜索候选同时被限制。年份和球队必须命中同一条实际出场证据，不可拼接球员不同年代的球队经历，不插补退役空档。NBA/CBA/全球池分别给出对应联赛已核实球队，全球为所收录联赛并集。范围修改未应用时暂停猜测；其他范围进度保留，切回可恢复。零候选时明确无题，不自动放宽范围；练习换题同样受约束。
-- 十项线索分两组：基本资料（效力球队、位置、出生年、身高、首次出场年）；生涯指标（效力球队数、季后赛次数、总决赛次数、生涯常规赛场均得分、常规赛MVP次数）。手机分行排列。数字箭头指向答案更大/更小；缺失或口径不同提示未知。
-- 球队数按NBA/BAA实际效力的球队沿革去重，同队改名、迁址和回归不增加；季后赛/总决赛次数按球员实际出场赛季计，总决赛排除DNP、仅名单成员和分区决赛；PPG为常规赛总得分除以出场数，保留一位小数；MVP不含FMVP或其他联赛奖项。
-- 新增五项指标已覆盖300位NBA候选。常规赛、球队数、MVP截至2025–26；季后赛/总决赛截至2023–24，不冒充实时全生涯。同一指标只有统计口径和截止期一致才比较。球队/季后赛/总决赛/MVP相差1以内为接近，场均得分相差2.0以内为接近；相等为一致。
-- 池规模：NBA历史精选300；CBA精选30；全球男子精选347（去重并集，另含18位EuroLeague球员）。CBA/国际球员仅用于游戏，不加入NBA GOAT评分。
-- NBA档案沿用2026-08-15快照；身份资料包含CBA29份新浪公开档案（非官方）加姚明及EuroLeague两队登记表。v1.2新增338人的4,397条实际出场证据：NBA300人用正出场数的赛季球队行；CBA29人用历史比赛场次表、姚明另核实2002上海；欧洲9人使用官方明确日期的比赛表现，另外9人因未核实而不参与限定题目。登记名单、档案页当前年份不算出场证据，不代表实时完整覆盖。
-- 首次出场年份用可核实的NBA/BAA实际日期；13位ABA首秀不可与NBA首秀混同，已标未知。球队履历不完整时不会把无交集武断判错。
-- 战绩可复制不含答案的色块；答案仍可从客户端查看，因此这不是防作弊竞技服务。按用户选择暂不实现对战。
+New players use frozen reference standards. Adding someone never recalculates the original 300 players' indices. Missing dimensions stay explicit, and newcomers without verified playing records do not receive invented career ratings. Six base dimensions are currently available for newly added historical players; their playoff dimension is not yet extended, so partial coverage must not be mistaken for a complete seven-dimensional assessment.
 
-生成数据：`python scripts/15_build_guess_players.py`，默认只使用离线数据；`--self-test`检查字段、唯一性、跨池、来源、球队沿革、历年总决赛覆盖与基准球员。实际出场补充证据在 `config/guess-appearance-evidence.json`。共享搜索模块为 `app/player-search.mjs`。题库1.2配合游戏 schema 2，使用 `true-goat-guess:v2:<版本>:<模式>:<池>:<规范化范围>` 隔离进度；旧版进度不删除、不误恢复。额外验收 `npm run test:filters` 检查真实答案而不只是搜索候选。
+### Guess players at your own level
 
-## 历史 v0.2 数据与离线管道
+The [guessing game](https://j0ey2ou.github.io/true-goat/guess.html) has an independent player universe, not a 300-player cap. You get eight attempts and attribute feedback, with daily challenges and free practice. Multiplayer is not implemented.
 
+The 2026-10-04 snapshot has **620** active, **5,105** historical and **152** easy NBA players; **328** active, **1,487** recorded historical and **47** easy CBA players. The cross-league union contains **6,717** records after verified identity merges. Pools overlap, so their counts are not additive. There are still 63 unresolved cross-source identity candidates; a shared name is not enough to merge people. The first two pages offer an expanded NBA catalog of **5,217** people.
 
-This repository contains a 300-player NBA historical pool, multi-source fact reconciliation, a source-weighted public-ranking prior, three alternative score views, an empirical-Bayes-style posterior, post-posterior sensitivity analysis and a Web-ready JSON payload.
+- Active NBA: a dated NBA.com roster snapshot across all 30 teams, including camp, two-way and potentially unplayed newcomers—not an inference from a recent season.
+- All historical NBA: every recorded NBA/BAA regular-season player in the 1946–47 through 2025–26 snapshot; ABA-only and preseason-only players are excluded.
+- Easy NBA stars: at least one regular-season MVP or five NBA All-Star selections, including historical and active players.
+- Active CBA: completed domestic registrations in the official 2026–27 snapshot; unverified foreign players and preliminary registrations are excluded.
+- All recorded CBA: expanded beyond the old 30-player selection using verified historical appearances. Source gaps remain; this is not a claim of a complete all-time CBA census.
+- Easy CBA stars: a sourced editorial selection of familiar historical and active players, not an official popularity or performance ranking.
+- Cross-league: the deduplicated union plus the collected European sample—not every basketball player worldwide.
 
-## Reproduce
+Season and team filters constrain both the answer and search results. The year and team must match **the same actual appearance record**. Registration, a current roster, or a profile-page heading does not prove that a player played. Empty ranges never silently fall back to unrelated answers, and available teams change with the league pool.
 
-```powershell
+Search accepts English names, verified Chinese labels and collected nicknames, such as “哈登”, “大胡子” and “James Harden”. Newly added players without reviewed translations remain searchable in English. Unknown is not zero; incompatible statistical scopes or cutoffs are not directly compared. Filtering selects eligible people rather than truncating the career statistics used as clues.
+
+Daily answers change at midnight in Beijing (UTC+8), remaining deterministic for the same data version, date, pool and filters. Each range has separate browser progress. Answers are available in client-side data: this is a casual game, not an anti-cheat competition. [Friberg](https://shnlfriberg.online/) inspired the limited-attempt feedback mechanic; the basketball rules, implementation and interface are independent.
+
+### Clear explanations and comfortable interaction
+
+Each page has its own replayable animated introduction, keyboard support and reduced-motion behavior. Six themes include vivid dark palettes, a light cream palette and the classic forest theme. Themes synchronize across pages without changing scores or clue semantics.
+
+No login is required. Registration and cloud synchronization are not connected yet. Models, custom rosters, themes and game progress are browser-local, not online accounts. Shared model URLs contain the selected settings and player IDs, but not guessing-game progress.
+
+### Honest boundaries
+
+- Data is a snapshot, not a live feed. Regular-season data generally reaches 2025–26; verified playoff/Finals appearance counts reach 2023–24. Other fields carry their own cutoffs.
+- Early defensive coverage, award availability and cross-league biographies differ. Visualizations do not remove those limitations.
+- Existing box scores can support a future same-game opponent comparison, but do not identify possession-level defenders. Direct defensive-matchup scoring is not available.
+- This is not an official NBA, CBA, EuroLeague or commentator product. See [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt) for attribution and licensing boundaries.
+
+<a id="development"></a>
+## 开发与方法 / Development & methods
+
+### 评分概要 / Scoring summary
+
+基础模型 / Base model:
+
+`S = 50 + Σ β[k] × (X[k] − 50) / 10 + γ × (P − 50) / 10`
+
+七项为常规赛、巅峰、生涯长度、季后赛、荣誉、防守和团队成就。系数独立取 0–10；指数 80、系数 2 的贡献是 +6。总分不是百分制，可以超过 100 或低于 0。大众排名 P 是独立加性项，不是贝叶斯后验。
+
+The seven dimensions are regular season, peak, longevity, playoffs, awards, defense and team success. Independent coefficients range from 0 to 10; an index of 80 with coefficient 2 adds 6 points. Scores are not percentages and may exceed 100 or fall below zero. Public consensus P is another additive term, not a Bayesian posterior.
+
+高级模式可移除基础项，并添加 13 个原始统计、荣誉及协同模块。标准见 [app/modules.mjs](app/modules.mjs)；荣誉综合积分的内部配方固定，产品约定不是官方标准。协同只乘两项高于中性基准的非负部分。重叠信息会提示重复强调。
+
+Advanced mode can remove base dimensions and add 13 statistical, honors and interaction modules. Definitions live in [app/modules.mjs](app/modules.mjs). The honors composite uses fixed inner weights: product conventions, not official standards. Interactions multiply only positive excesses above neutral baselines. Overlapping information is flagged.
+
+缺失项贡献为 0，不重新放大其他项；全部启用项均缺失则未评分，全部系数为 0 则所有人并列 50。七维雷达图展示固定指数，不是当前模型的得分占比；有符号贡献图才解释当前加分扣分。
+
+Missing terms contribute zero without rescaling other terms. A player with no observed active terms is unscored; an all-zero model intentionally ties everyone at 50. The radar shows fixed indices, not score percentages; signed contribution bars explain the active model.
+
+### 运行与发布 / Run and deploy
+
+在仓库根目录运行 / From the repository root:
+
+```sh
+node app/server.mjs
+# Local preview: http://127.0.0.1:8765
+node scripts/16_build_static_site.mjs
+# Public-only static output: dist/
+```
+
+三个页面均在浏览器运行，不需自建服务器。静态输出支持 GitHub Pages 仓库子路径；只发布 `dist/`，不要上传整个工作区。现有 [Pages workflow](.github/workflows/pages.yml) 在推送 main 后测试、构建并部署。其他静态托管可以使用同一输出；此仓库不宣称已部署 Cloudflare。
+
+All three pages run in the browser without a self-managed backend. The static output supports GitHub Pages repository subpaths. Publish only `dist/`, not the workspace. The existing [Pages workflow](.github/workflows/pages.yml) tests, builds and deploys pushes to main. Other static hosts can use the same output; this repository does not claim a Cloudflare deployment exists.
+
+### 测试 / Tests
+
+```sh
+cd app
+npm test
+npm run test:static
+# Start the local server before browser/server tests:
+npm run test:server
+npm run test:browser
+npm run test:onboarding
+npm run test:filters
+npm run test:modules
+npm run test:themes
+npm run test:library
+```
+
+单元与静态构建无需 npm 依赖。浏览器测试需 Playwright；运行 `npm install`，使用已安装 Edge，或在其他系统安装 Playwright Chromium。可用 `GOAT_PLAYWRIGHT_MODULE`、`GOAT_BROWSER_EXECUTABLE` 和测试脚本支持的 URL 环境变量指定运行时。
+
+Unit tests and static builds need no npm dependencies. Browser tests require Playwright: run `npm install`, use installed Edge, or install Playwright Chromium on other platforms. Runtime paths can be supplied through `GOAT_PLAYWRIGHT_MODULE` and `GOAT_BROWSER_EXECUTABLE`; test scripts also support configurable base URLs.
+
+### 数据重建 / Rebuild data
+
+```sh
+python scripts/13_build_expert_presets.py
+python scripts/14_build_player_directory.py
+python scripts/15_build_guess_players.py
+python scripts/17_build_guess_pool_variants.py --catalog
+python scripts/18_build_cba_pool_variants.py
+python scripts/19_integrate_player_library.py
+```
+
+数据构建需要来源说明中列出的原始快照；公开仓库不包含大体积原始数据或完整网页缓存。17/18 使用有出处的事实快照，网络刷新仅在明确请求时运行。19 合并核实过的跨联赛身份、输出扩展题库和添加球员目录；不要只运行旧的 15 后就发布，以免覆盖扩展题库。生成结果与源数据均不应包含个人路径或凭据。
+
+Builders require the original snapshots documented by their sources; large raw datasets and full-page caches are not published. Scripts 17/18 use sourced factual snapshots, with network refreshes only when explicitly requested. Script 19 merges reviewed cross-league identities and exports the expanded game and player catalog. Do not publish after running only legacy script 15, which replaces the expanded game data. Published files must not contain personal paths or credentials.
+
+<details>
+<summary>历史 v0.2 离线研究流水线 / Historical v0.2 research pipeline</summary>
+
+早期离线版本研究了候选池、多源核验、大众先验、拟合与敏感度；它不等于当前交互式加性模型。旧版特定配置产生的名次不是网站强制规则。
+
+The earlier offline study explored candidate selection, reconciliation, public priors, fitting and sensitivity. It is distinct from the current interactive additive model; its configured ordering is not a forced website rule.
+
+```sh
 python scripts/00_download_sources.py
 python scripts/05_collect_external_rankings.py
 python scripts/01_build_candidate_pool.py
@@ -112,15 +219,8 @@ node scripts/09_build_workbooks.mjs
 python scripts/12_final_audit.py
 ```
 
-Raw downloads are immutable caches with atomic `.part` writes. New full-history boxes are frozen under `data/raw/kaggle_nba_all_time/`; cross-source differences are kept in diagnostics.
+历史报告见 `docs/`；原始数据、研究导出与本地诊断不随静态网站发布。
 
-## Main outputs
+Historical reports live in `docs/`; raw data, research exports and local diagnostics are not part of the public website.
 
-- `outputs/01a00459-396c-7300-99ff-9d81d32d3b8e/` — final Excel workbooks.
-- `docs/` — candidate, indicator, source, completeness, overlap, model and results reports.
-- `data/processed/goat_model_v0_2_web.json` — Web-product payload.
-- `output/diagnostics/` — source reconciliation, hashes, CV, bootstrap, source sensitivity and validation.
-
-## Result and caveat
-
-The configured posterior ranks Michael Jordan #1, LeBron James #2 and Kareem Abdul-Jabbar #3. The transparent Human and Pure Data views remain separate. This is a reproducible value model, not proof that one GOAT definition is uniquely correct.
+</details>

@@ -1,5 +1,22 @@
 # Changelog
 
+## Website v0.8 — 2026-10-04
+
+- 猜球员与默认 300 人评级池分离：NBA/CBA 各提供现役、历史已收录、简单球星池，保留跨联赛池；跨联赛身份显式去重。
+- 出题与搜索共同使用实际赛季/球队出场证据，当前注册不当作已出场；CBA 历史覆盖和国内现役注册范围明确标注。
+- 排名实验室与球员库支持按需搜索、添加/移除扩展 NBA 球员，名单跨页同步并可随模型分享。
+- 新增球员使用原 300 人固定参考标准，原分数不变；缺失维度保持未知，全缺失显示未评分。
+- 双语 README 改为产品逻辑优先；补充七池、目录、子路径部署及数据覆盖测试。
+
+The game now has seven source-scoped pools beyond the default 300. Both ranking and directory pages support a shared custom NBA roster, frozen-reference scores and explicit missing data. The bilingual README introduces the product before the calculations.
+
+## Website v0.7 — 2026-10-04
+
+- 可选高级加性模型、13 个统计/荣誉/协同模块、六个有出处的评论员起点。
+- 点击分数查看雷达画像与实际加减分；六套跨页同步皮肤，按页面独立导览。
+
+Optional advanced additive modules, six sourced commentator presets, score visualizations, themes and page-specific introductions.
+
 ## GOAT Model v0.2 — 2026-08-15
 
 - 新增 MIT 许可的 Gonzalo Gigena 全历史数据集与 Brescou 常规赛文件；常规赛/季后赛共完成 8,898 条球员赛季级跨源核验。

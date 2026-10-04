@@ -28,8 +28,25 @@ async function checkAnswer(label){
   return round;
 }
 try{
-  await page.goto(base+'/guess');await page.locator('#guess-app').waitFor();
-  data=await page.evaluate(async()=>await(await fetch('/data/guess-players.json')).json());
+  await page.goto(base+(new URL(base).pathname === '/' ? '/guess' : '/guess.html'));await page.locator('#guess-app').waitFor();await page.locator('#guess-pool').selectOption('nba-history');
+  data=await page.evaluate(async()=>await(await fetch('./data/guess-players.json')).json());
+  for(const pool of data.pools){
+    await page.locator('#guess-pool').selectOption(pool.id);
+    const selected=await currentRound();
+    check(`${pool.id} selects a member and independent storage`,selected.pool===pool.id && data.players.some(p=>p.id===selected.answerId&&p.pools.includes(pool.id)) && selected.guesses.length===0);
+    check(`${pool.id} shows actual count`,(await page.locator('#guess-pool-count').textContent()).includes(String(pool.count)));
+  }
+  await page.locator('#guess-pool').selectOption('cba-active');
+  const registrationOnly=await setFilters(2027,2027);
+  check('current CBA registration alone cannot create a 2027 question',registrationOnly.status==='empty' && registrationOnly.answerId===null);
+  await setFilters();
+  await page.locator('#guess-pool').selectOption('nba-active');
+  await setFilters(2026,2026);
+  await checkAnswer('current NBA pool still requires actual play when a year is applied');
+  const rookie=data.players.find(p=>p.pools.includes('nba-active')&&!p.pools.includes('nba-history'));
+  check('unplayed current newcomer is excluded by season range',!eligiblePlayers(data.players,'nba-active',{from:2026,to:2026}).some(p=>p.id===rookie.id));
+  await setFilters();
+  await page.locator('#guess-pool').selectOption('nba-history');
   const original=await currentRound();
   check('NBA options only include verified NBA/BAA teams',(await page.locator('#guess-team option').evaluateAll(es=>es.map(e=>e.value))).filter(Boolean).every(id=>id.startsWith('NBA:')));
   await setFilters(2000,2000);
@@ -43,7 +60,7 @@ try{
   const lakers=await checkAnswer('joint year and team actually constrain answer');
   await page.locator('#guess-search').fill('LeBron James');
   check('LeBron later Lakers stint cannot qualify for 2010 Lakers',await page.locator('#guess-options').isHidden() && lakers.answerId!=='jamesle01');
-  const eligible=eligiblePlayers(data.players,'nba',lakers.filters), wrong=eligible.find(p=>p.id!==lakers.answerId);
+  const eligible=eligiblePlayers(data.players,'nba-history',lakers.filters), wrong=eligible.find(p=>p.id!==lakers.answerId);
   await page.locator('#guess-search').fill(wrong.name);await page.locator(`.guess-option[data-id="${wrong.id}"]`).click();
   check('filtered round accepts eligible guess',(await currentRound()).guesses.length===1);
   await setFilters(2000,2000);
@@ -60,17 +77,17 @@ try{
   check('empty state explains evidence limitation',(await page.locator('#guess-history').innerText()).includes('已核实'));
   await setFilters();
   check('unrestricted range restores original daily question',(await currentRound()).answerId===original.answerId);
-  await page.locator('#guess-pool').selectOption('cba');
+  await page.locator('#guess-pool').selectOption('cba-history');
   const cbaOptions=await page.locator('#guess-team option').evaluateAll(es=>es.map(e=>e.value).filter(Boolean));
   check('CBA options exclude all NBA and Euro teams',cbaOptions.length>0 && cbaOptions.every(id=>id.startsWith('CBA:')));
   const yao=data.players.find(p=>p.id==='mingya01'),cbaYao=yao.appearances.find(row=>row.league==='CBA');
   await setFilters(cbaYao.season,cbaYao.season,cbaYao.teamId);
   const yaoRound=await checkAnswer('CBA scoped evidence qualifies Yao at Shanghai');
-  check('Shanghai evidence is not inferred from Houston seasons',yaoRound.answerId==='mingya01');
-  await page.locator('#guess-search').fill('姚明');await page.locator('.guess-option').first().click();
+  check('Shanghai evidence is not inferred from Houston seasons',eligiblePlayers(data.players,'cba-history',yaoRound.filters).some(p=>p.id==='mingya01'));
+  const revealed=data.players.find(p=>p.id===yaoRound.answerId);await page.locator('#guess-search').fill(revealed.name);await page.locator(`.guess-option[data-id="${revealed.id}"]`).click();
   check('revealed answer shows exact eligibility proof',(await currentRound()).status==='won' && await page.locator('.guess-proof li').count()>0);
   await page.locator('[data-mode="practice"]').click();
-  check('single-candidate practice disables reroll',await page.locator('#guess-new').isDisabled() && (await currentRound()).answerId==='mingya01');
+  check('practice reroll availability reflects actual range size',await page.locator('#guess-new').isDisabled()===(eligiblePlayers(data.players,'cba-history',yaoRound.filters).length<2));
   await setFilters(2003,2003,cbaYao.teamId);
   check('Yao NBA seasons cannot count as CBA seasons',(await currentRound()).answerId!=='mingya01');
   await page.locator('#guess-pool').selectOption('global');

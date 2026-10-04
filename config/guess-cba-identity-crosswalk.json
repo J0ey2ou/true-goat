@@ -1,0 +1,2101 @@
+{
+  "version": "1.0",
+  "asOf": "2026-10-04",
+  "method": "显式逐人核对，不使用同姓模糊匹配。NBA ID、英文全名与出生日期来自本地 Player Career Info.csv；新浪完整生日另行读取公开个人档案。生日缺失或冲突时必须有独特姓名、球队履历与独立来源支持；冲突保留在说明中，不覆盖背景字段。",
+  "nbaSource": {
+    "id": "cba-identity-nba-career",
+    "title": "NBA identity: Player Career Info.csv (Basketball Reference / Kaggle archive)",
+    "url": "https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats",
+    "localFile": "data/raw/kaggle_nba_aba_baa/csv/Player Career Info.csv"
+  },
+  "players": [
+    {
+      "sinaId": "3",
+      "nbaId": "jianlyi01",
+      "englishName": "Yi Jianlian",
+      "chineseName": "易建联",
+      "sinaBirthDate": "1987-10-27",
+      "nbaBirthDate": "1987-10-27",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "251",
+      "nbaId": "zhizhwa01",
+      "englishName": "Wang Zhizhi",
+      "chineseName": "王治郅",
+      "sinaBirthDate": "1977-07-08",
+      "nbaBirthDate": "1977-07-08",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "153",
+      "nbaId": "bateeme01",
+      "englishName": "Mengke Bateer",
+      "chineseName": "巴特尔",
+      "sinaBirthDate": "1975-11-20",
+      "nbaBirthDate": "1975-11-20",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "49",
+      "nbaId": "yuesu01",
+      "englishName": "Sun Yue",
+      "chineseName": "孙悦",
+      "sinaBirthDate": "1985-12-06",
+      "nbaBirthDate": "1985-11-06",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.nba.com/lakers/news/08085sunyuesigned.html",
+      "note": "新浪生日月份与NBA档案冲突；中国国家队、北京奥神与湖人履历交叉确认同一孙悦，不因月份冲突拆成两个人，不覆盖生日。"
+    },
+    {
+      "sinaId": "4026",
+      "nbaId": "qizh01",
+      "englishName": "Zhou Qi",
+      "chineseName": "周琦",
+      "sinaBirthDate": "1996-01-16",
+      "nbaBirthDate": "1996-01-16",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "1452",
+      "nbaId": "marbust01",
+      "englishName": "Stephon Marbury",
+      "chineseName": "斯蒂芬·马布里",
+      "sinaBirthDate": "1977-02-20",
+      "nbaBirthDate": "1977-02-20",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "4093",
+      "nbaId": "mcgratr01",
+      "englishName": "Tracy McGrady",
+      "chineseName": "特雷西·麦克格雷迪",
+      "aliases": [
+        "麦迪",
+        "麦蒂",
+        "T-Mac"
+      ],
+      "sinaBirthDate": "1979-05-24",
+      "nbaBirthDate": "1979-05-24",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "6849",
+      "nbaId": "brookma01",
+      "englishName": "MarShon Brooks",
+      "chineseName": "马尚·布鲁克斯",
+      "sinaBirthDate": "1989-01-26",
+      "nbaBirthDate": "1989-01-26",
+      "basis": "full-name-and-complete-birth-date",
+      "note": "与1985年出生的Aaron Brooks是不同球员。"
+    },
+    {
+      "sinaId": "4870",
+      "nbaId": "beaslmi01",
+      "englishName": "Michael Beasley",
+      "chineseName": "迈克尔·比斯利",
+      "sinaBirthDate": "1989-01-09",
+      "nbaBirthDate": "1989-01-09",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "7002",
+      "nbaId": "weemsso01",
+      "englishName": "Sonny Weems",
+      "chineseName": "索尼·威姆斯",
+      "aliases": [
+        "Clarence Weems",
+        "克拉伦斯·威姆斯"
+      ],
+      "sinaBirthDate": "1986-07-08",
+      "nbaBirthDate": "1986-07-08",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "7610",
+      "nbaId": "weemsso01",
+      "englishName": "Sonny Weems",
+      "chineseName": "索尼·威姆斯",
+      "aliases": [
+        "Clarence Weems",
+        "克拉伦斯·威姆斯"
+      ],
+      "sinaBirthDate": "1986-07-07",
+      "nbaBirthDate": "1986-07-08",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.prnewswire.com/news-releases/sonny-weems-bringing-it-on-and-off-the-court-300693709.html",
+      "note": "新浪新档案将生日记为7月7日，旧档案7002与NBA均为7月8日；完整姓名别名、1986出生年、198cm及广东履历对应同人，保留冲突，不覆盖生日。"
+    },
+    {
+      "sinaId": "7196",
+      "nbaId": "linje01",
+      "englishName": "Jeremy Lin",
+      "chineseName": "林书豪",
+      "aliases": [
+        "林書豪"
+      ],
+      "sinaBirthDate": "1988",
+      "nbaBirthDate": "1988-08-23",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.nba.com/news/jeremy-lin-signs-cba-beijing-shougang-ducks",
+      "note": "新浪仅有出生年；NBA官方报道明确Jeremy Lin加盟北京首钢，与中文姓名及北京出场档案交叉核验。"
+    },
+    {
+      "sinaId": "1801",
+      "nbaId": "hudsole01",
+      "englishName": "Lester Hudson",
+      "chineseName": "莱斯特·哈德森",
+      "sinaBirthDate": "1984",
+      "nbaBirthDate": "1984-08-07",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.nba.com/clippers/clippers-sign-lester-hudson",
+      "note": "新浪仅有出生年；快船官方签约公告确认Lester Hudson的辽宁CBA履历。"
+    },
+    {
+      "sinaId": "6932",
+      "nbaId": "fredeji01",
+      "englishName": "Jimmer Fredette",
+      "chineseName": "吉默·弗雷戴特",
+      "sinaBirthDate": "1989",
+      "nbaBirthDate": "1989-02-25",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.nba.com/suns/gallery/welcome-jimmer-fredette",
+      "note": "新浪仅有出生年；太阳官方签约公告明确Jimmer Fredette曾效力上海，与上海个人档案对应。"
+    },
+    {
+      "sinaId": "1981",
+      "nbaId": "chandwi01",
+      "englishName": "Wilson Chandler",
+      "chineseName": "威尔逊·钱德勒",
+      "sinaBirthDate": null,
+      "nbaBirthDate": "1987-05-10",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "sourceURL": "https://www.nba.com/nuggets/news/chandler_injury_04_18_2012.html",
+      "note": "新浪生日缺失；掘金官方报道的2011–12广厦履历与新浪档案对应，不与Tyson Chandler合并。"
+    },
+    {
+      "sinaId": "2002",
+      "nbaId": "randosh01",
+      "englishName": "Shavlik Randolph",
+      "chineseName": "沙夫里克·兰多夫",
+      "sinaBirthDate": "1983-11-24",
+      "nbaBirthDate": "1983-11-24",
+      "basis": "full-name-and-complete-birth-date",
+      "note": "此人为Shavlik Randolph，不是Zach Randolph或Randolph Morris。"
+    },
+    {
+      "sinaId": "4787",
+      "nbaId": "blatcan01",
+      "englishName": "Andray Blatche",
+      "chineseName": "安德雷·布拉切",
+      "aliases": [
+        "布莱切",
+        "布拉切"
+      ],
+      "sinaBirthDate": "1986-08-22",
+      "nbaBirthDate": "1986-08-22",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "2015",
+      "nbaId": "brookaa01",
+      "englishName": "Aaron Brooks",
+      "chineseName": "阿隆·布鲁克斯",
+      "sinaBirthDate": "1985-01-14",
+      "nbaBirthDate": "1985-01-14",
+      "basis": "full-name-and-complete-birth-date",
+      "note": "与1989年出生的MarShon Brooks是不同球员。"
+    },
+    {
+      "sinaId": "1796",
+      "nbaId": "francst01",
+      "englishName": "Steve Francis",
+      "chineseName": "史蒂夫·弗朗西斯",
+      "sinaBirthDate": "1977-02-21",
+      "nbaBirthDate": "1977-02-21",
+      "basis": "full-name-and-complete-birth-date"
+    },
+    {
+      "sinaId": "6929",
+      "nbaId": "boozeca01",
+      "englishName": "Carlos Boozer",
+      "chineseName": "布泽尔",
+      "sinaBirthDate": "1981",
+      "nbaBirthDate": "1981-11-20",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "ESPN确认Carlos Boozer加盟广东，匹配新浪广东出场、1981出生年和206cm；新浪未提供完整生日。",
+      "sourceURL": "https://www.espn.com.au/nba/story/_/id/17681576/how-nba-players-seldom-know-retire"
+    },
+    {
+      "sinaId": "6949",
+      "nbaId": "smithjo03",
+      "englishName": "Josh Smith",
+      "chineseName": "约什-史密斯",
+      "sinaBirthDate": "1985",
+      "nbaBirthDate": "1985-12-05",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "鹈鹕官方签约公告确认Josh Smith的四川履历，匹配新浪完整译名、1985出生年和206cm。",
+      "sourceURL": "https://www.nba.com/pelicans/news/pelicans-sign-josh-smith"
+    },
+    {
+      "sinaId": "7069",
+      "nbaId": "jeffeal01",
+      "englishName": "Al Jefferson",
+      "chineseName": "艾尔-杰弗森",
+      "sinaBirthDate": "1985",
+      "nbaBirthDate": "1985-01-04",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "公开报道确认Al Jefferson效力新疆，匹配新浪完整译名、1985出生年和208cm，不与Cory Jefferson合并。",
+      "sourceURL": "https://www.si.com/nba/cavaliers/nba/cavaliers/nba-amico/big-man-jefferson-to-play-in-china"
+    },
+    {
+      "sinaId": "6975",
+      "nbaId": "lawsoty01",
+      "englishName": "Ty Lawson",
+      "chineseName": "泰-劳森",
+      "sinaBirthDate": "1987",
+      "nbaBirthDate": "1987-11-03",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "奇才官方公告确认Ty Lawson山东履历，匹配新浪完整译名、1987出生年及山东出场。",
+      "sourceURL": "https://www.nba.com/wizards/wizards-sign-ty-lawson"
+    },
+    {
+      "sinaId": "7254",
+      "nbaId": "mayooj01",
+      "englishName": "O.J. Mayo",
+      "chineseName": "梅奥",
+      "sinaBirthDate": "1987",
+      "nbaBirthDate": "1987-11-05",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "FIBA明确OJ Mayo效力辽宁，匹配新浪辽宁出场及1987出生年，不根据Mayo姓氏单独推断。",
+      "sourceURL": "https://www.fiba.basketball/en/news/what-we-should-know-about-the-cbas-return-to-action"
+    },
+    {
+      "sinaId": "6867",
+      "nbaId": "dalemsa01",
+      "englishName": "Samuel Dalembert",
+      "chineseName": "戴勒姆波特",
+      "sinaBirthDate": "1981-05-10",
+      "nbaBirthDate": "1981-05-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6867/"
+    },
+    {
+      "sinaId": "7238",
+      "nbaId": "martija01",
+      "englishName": "Jarell Martin",
+      "chineseName": "贾雷尔-马丁",
+      "sinaBirthDate": "1994-05-24",
+      "nbaBirthDate": "1994-05-24",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7238/"
+    },
+    {
+      "sinaId": "7321",
+      "nbaId": "ndourma01",
+      "englishName": "Maurice Ndour",
+      "chineseName": "莫里斯-恩多",
+      "sinaBirthDate": "1992-06-18",
+      "nbaBirthDate": "1992-06-18",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7321/"
+    },
+    {
+      "sinaId": "7226",
+      "nbaId": "blakean01",
+      "englishName": "Antonio Blakeney",
+      "chineseName": "安东尼奥·布莱克尼",
+      "sinaBirthDate": "1996-10-04",
+      "nbaBirthDate": "1996-10-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7226/"
+    },
+    {
+      "sinaId": "7575",
+      "nbaId": "powelmy01",
+      "englishName": "Myles Powell",
+      "chineseName": "迈尔斯·鲍威尔",
+      "sinaBirthDate": "1997-07-07",
+      "nbaBirthDate": "1997-07-07",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7575/"
+    },
+    {
+      "sinaId": "7021",
+      "nbaId": "sullija01",
+      "englishName": "Jared Sullinger",
+      "chineseName": "贾里德·萨林杰",
+      "sinaBirthDate": "1992-03-04",
+      "nbaBirthDate": "1992-03-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7021/"
+    },
+    {
+      "sinaId": "7533",
+      "nbaId": "watertr01",
+      "englishName": "Tremont Waters",
+      "chineseName": "特里蒙特·沃特斯",
+      "sinaBirthDate": "1998-01-10",
+      "nbaBirthDate": "1998-01-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7533/"
+    },
+    {
+      "sinaId": "7517",
+      "nbaId": "shayoma01",
+      "englishName": "Marial Shayok",
+      "chineseName": "马里亚尔·沙约克",
+      "sinaBirthDate": "1995-07-26",
+      "nbaBirthDate": "1995-07-26",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7517/"
+    },
+    {
+      "sinaId": "7592",
+      "nbaId": "dotsoda01",
+      "englishName": "Damyean Dotson",
+      "chineseName": "达米扬·多森",
+      "sinaBirthDate": "1994-05-06",
+      "nbaBirthDate": "1994-05-06",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7592/"
+    },
+    {
+      "sinaId": "7505",
+      "nbaId": "maconda01",
+      "englishName": "Daryl Macon",
+      "chineseName": "达里尔·梅肯",
+      "sinaBirthDate": "1995-11-29",
+      "nbaBirthDate": "1995-11-29",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7505/"
+    },
+    {
+      "sinaId": "7109",
+      "nbaId": "feldeka01",
+      "englishName": "Kay Felder",
+      "chineseName": "凯·费尔德",
+      "sinaBirthDate": "1995-03-29",
+      "nbaBirthDate": "1995-03-29",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7109/"
+    },
+    {
+      "sinaId": "7606",
+      "nbaId": "bledser01",
+      "englishName": "Eric Bledsoe",
+      "chineseName": "埃里克·布莱德索",
+      "sinaBirthDate": "1989-12-09",
+      "nbaBirthDate": "1989-12-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7606/"
+    },
+    {
+      "sinaId": "7597",
+      "nbaId": "jonesca03",
+      "englishName": "Carlik Jones",
+      "chineseName": "卡里克·琼斯",
+      "sinaBirthDate": "1997-12-23",
+      "nbaBirthDate": "1997-12-23",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7597/"
+    },
+    {
+      "sinaId": "7623",
+      "nbaId": "wiggili01",
+      "englishName": "Lindell Wigginton",
+      "chineseName": "林德尔·威金顿",
+      "sinaBirthDate": "1998-03-28",
+      "nbaBirthDate": "1998-03-28",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7623/"
+    },
+    {
+      "sinaId": "7598",
+      "nbaId": "shvedal01",
+      "englishName": "Alexey Shved",
+      "chineseName": "阿列克谢·施韦德",
+      "sinaBirthDate": "1988-12-16",
+      "nbaBirthDate": "1988-12-16",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7598/"
+    },
+    {
+      "sinaId": "7563",
+      "nbaId": "rillegr01",
+      "englishName": "Grant Riller",
+      "chineseName": "格兰特·里勒",
+      "sinaBirthDate": "1997-02-08",
+      "nbaBirthDate": "1997-02-08",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7563/"
+    },
+    {
+      "sinaId": "7595",
+      "nbaId": "wrighmo01",
+      "englishName": "Moses Wright",
+      "chineseName": "摩西·赖特",
+      "sinaBirthDate": "1970-01-01",
+      "nbaBirthDate": "1998-12-23",
+      "basis": "explicit-duplicate-profile-linked-to-verified-full-name",
+      "note": "摩西·赖特与已核实7470为同一完整译名；新档案生日1970-01-01是明显占位值，身高206cm与NBA对应，不把占位日期写入背景字段。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7470/"
+    },
+    {
+      "sinaId": "7393",
+      "nbaId": "leaftj01",
+      "englishName": "T.J. Leaf",
+      "chineseName": "TJ·利夫",
+      "sinaBirthDate": "1997-04-30",
+      "nbaBirthDate": "1997-04-30",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7393/"
+    },
+    {
+      "sinaId": "7545",
+      "nbaId": "youngjo01",
+      "englishName": "Joe Young",
+      "chineseName": "约瑟夫·杨",
+      "sinaBirthDate": "1992-06-27",
+      "nbaBirthDate": "1992-06-27",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7545/"
+    },
+    {
+      "sinaId": "7629",
+      "nbaId": "weathqu01",
+      "englishName": "Quinndary Weatherspoon",
+      "chineseName": "奎因达里·韦瑟斯庞",
+      "sinaBirthDate": "1996-09-10",
+      "nbaBirthDate": "1996-09-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7629/"
+    },
+    {
+      "sinaId": "7479",
+      "nbaId": "makerth01",
+      "englishName": "Thon Maker",
+      "chineseName": "索恩·梅克",
+      "sinaBirthDate": "1997-02-25",
+      "nbaBirthDate": "1997-02-25",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7479/"
+    },
+    {
+      "sinaId": "7588",
+      "nbaId": "ferreyo01",
+      "englishName": "Yogi Ferrell",
+      "chineseName": "约吉·费雷尔",
+      "sinaBirthDate": "1993-05-09",
+      "nbaBirthDate": "1993-05-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7588/"
+    },
+    {
+      "sinaId": "7589",
+      "nbaId": "perryre01",
+      "englishName": "Reggie Perry",
+      "chineseName": "雷吉·佩里",
+      "sinaBirthDate": "2000-03-21",
+      "nbaBirthDate": "2000-03-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7589/"
+    },
+    {
+      "sinaId": "7515",
+      "nbaId": "oliveca01",
+      "englishName": "Cameron Oliver",
+      "chineseName": "卡梅隆·奥利弗",
+      "sinaBirthDate": "1996-07-11",
+      "nbaBirthDate": "1996-07-11",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7515/"
+    },
+    {
+      "sinaId": "7609",
+      "nbaId": "okafoja01",
+      "englishName": "Jahlil Okafor",
+      "chineseName": "贾利尔·奥卡福",
+      "sinaBirthDate": "1995-12-15",
+      "nbaBirthDate": "1995-12-15",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7609/"
+    },
+    {
+      "sinaId": "7502",
+      "nbaId": "taylois01",
+      "englishName": "Isaiah Taylor",
+      "chineseName": "以赛亚·泰勒",
+      "sinaBirthDate": "1994-07-11",
+      "nbaBirthDate": "1994-07-11",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7502/"
+    },
+    {
+      "sinaId": "7514",
+      "nbaId": "waltode01",
+      "englishName": "Derrick Walton",
+      "chineseName": "德瑞克·沃顿",
+      "sinaBirthDate": "1995-04-03",
+      "nbaBirthDate": "1995-04-03",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7514/"
+    },
+    {
+      "sinaId": "7637",
+      "nbaId": "coopesh01",
+      "englishName": "Sharife Cooper",
+      "chineseName": "沙里非·库珀",
+      "sinaBirthDate": "2001-06-11",
+      "nbaBirthDate": "2001-06-11",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7637/"
+    },
+    {
+      "sinaId": "7389",
+      "nbaId": "vonleno01",
+      "englishName": "Noah Vonleh",
+      "chineseName": "诺阿·冯莱",
+      "sinaBirthDate": "1995-08-24",
+      "nbaBirthDate": "1995-08-24",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7389/"
+    },
+    {
+      "sinaId": "7602",
+      "nbaId": "jacksfr01",
+      "englishName": "Frank Jackson",
+      "chineseName": "富兰克林·杰克逊",
+      "sinaBirthDate": "1998-05-04",
+      "nbaBirthDate": "1998-05-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7602/"
+    },
+    {
+      "sinaId": "7599",
+      "nbaId": "monrogr01",
+      "englishName": "Greg Monroe",
+      "chineseName": "格雷格·门罗",
+      "sinaBirthDate": "1990-06-03",
+      "nbaBirthDate": "1990-06-04",
+      "basis": "explicit-duplicate-profile-linked-to-verified-full-name",
+      "note": "格雷格·门罗与旧档案7487完整译名、出生年及208cm一致；新档案生日为6月3日，旧档案与NBA为6月4日。显式合并同人但保留生日冲突。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7487/"
+    },
+    {
+      "sinaId": "7235",
+      "nbaId": "moreler01",
+      "englishName": "Eric Moreland",
+      "chineseName": "埃里克·莫兰德",
+      "sinaBirthDate": "1991-12-24",
+      "nbaBirthDate": "1991-12-24",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7235/"
+    },
+    {
+      "sinaId": "7628",
+      "nbaId": "goodwar01",
+      "englishName": "Archie Goodwin",
+      "chineseName": "阿奇·古德温",
+      "sinaBirthDate": "1994-08-17",
+      "nbaBirthDate": "1994-08-17",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7628/"
+    },
+    {
+      "sinaId": "7593",
+      "nbaId": "oquinky01",
+      "englishName": "Kyle O'Quinn",
+      "chineseName": "凯尔·奥奎因",
+      "sinaBirthDate": "1990-03-26",
+      "nbaBirthDate": "1990-03-26",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7593/"
+    },
+    {
+      "sinaId": "7468",
+      "nbaId": "fallta01",
+      "englishName": "Tacko Fall",
+      "chineseName": "塔克·法尔",
+      "sinaBirthDate": "1995-12-10",
+      "nbaBirthDate": "1995-12-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7468/"
+    },
+    {
+      "sinaId": "7103",
+      "nbaId": "sampsja02",
+      "englishName": "JaKarr Sampson",
+      "chineseName": "贾卡尔·桑普森",
+      "sinaBirthDate": "1993-03-20",
+      "nbaBirthDate": "1993-03-20",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7103/"
+    },
+    {
+      "sinaId": "7477",
+      "nbaId": "belljo01",
+      "englishName": "Jordan Bell",
+      "chineseName": "乔丹·贝尔",
+      "sinaBirthDate": "1995-01-07",
+      "nbaBirthDate": "1995-01-07",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7477/"
+    },
+    {
+      "sinaId": "7501",
+      "nbaId": "pattoju01",
+      "englishName": "Justin Patton",
+      "chineseName": "贾斯汀·帕顿",
+      "sinaBirthDate": "1997-06-14",
+      "nbaBirthDate": "1997-06-14",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7501/"
+    },
+    {
+      "sinaId": "5052",
+      "nbaId": "moultar01",
+      "englishName": "Arnett Moultrie",
+      "chineseName": "阿奈特·摩尔特里",
+      "sinaBirthDate": "1990-11-18",
+      "nbaBirthDate": "1990-11-18",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/5052/"
+    },
+    {
+      "sinaId": "7608",
+      "nbaId": "johnsda04",
+      "englishName": "Dakari Johnson",
+      "chineseName": "达卡里·约翰逊",
+      "sinaBirthDate": "1995-09-22",
+      "nbaBirthDate": "1995-09-22",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7608/"
+    },
+    {
+      "sinaId": "7585",
+      "nbaId": "newmama01",
+      "englishName": "Malik Newman",
+      "chineseName": "马利克·纽曼",
+      "sinaBirthDate": "1997-02-21",
+      "nbaBirthDate": "1997-02-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7585/"
+    },
+    {
+      "sinaId": "7473",
+      "nbaId": "reathdu01",
+      "englishName": "Duop Reath",
+      "chineseName": "杜普·里斯",
+      "sinaBirthDate": "1996-06-26",
+      "nbaBirthDate": "1996-06-26",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7473/"
+    },
+    {
+      "sinaId": "7485",
+      "nbaId": "clemoch01",
+      "englishName": "Chris Clemons",
+      "chineseName": "克里斯-克莱蒙斯",
+      "sinaBirthDate": "1997-07-23",
+      "nbaBirthDate": "1997-07-23",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7485/"
+    },
+    {
+      "sinaId": "7488",
+      "nbaId": "bledser01",
+      "englishName": "Eric Bledsoe",
+      "chineseName": "布莱德索",
+      "sinaBirthDate": "1989-12-09",
+      "nbaBirthDate": "1989-12-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7488/"
+    },
+    {
+      "sinaId": "7492",
+      "nbaId": "weathqu01",
+      "englishName": "Quinndary Weatherspoon",
+      "chineseName": "韦瑟斯庞",
+      "sinaBirthDate": "1996-09-10",
+      "nbaBirthDate": "1996-09-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7492/"
+    },
+    {
+      "sinaId": "7312",
+      "nbaId": "simmojo02",
+      "englishName": "Jonathon Simmons",
+      "chineseName": "乔纳森-西蒙斯",
+      "sinaBirthDate": "1989-09-14",
+      "nbaBirthDate": "1989-09-14",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7312/"
+    },
+    {
+      "sinaId": "7487",
+      "nbaId": "monrogr01",
+      "englishName": "Greg Monroe",
+      "chineseName": "格雷格-门罗",
+      "sinaBirthDate": "1990-06-04",
+      "nbaBirthDate": "1990-06-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7487/"
+    },
+    {
+      "sinaId": "7470",
+      "nbaId": "wrighmo01",
+      "englishName": "Moses Wright",
+      "chineseName": "摩西-赖特",
+      "sinaBirthDate": "1998-12-23",
+      "nbaBirthDate": "1998-12-23",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7470/"
+    },
+    {
+      "sinaId": "7093",
+      "nbaId": "jackspi01",
+      "englishName": "Pierre Jackson",
+      "chineseName": "皮埃尔-杰克逊",
+      "sinaBirthDate": "1991-08-29",
+      "nbaBirthDate": "1991-08-29",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7093/"
+    },
+    {
+      "sinaId": "7496",
+      "nbaId": "hernade01",
+      "englishName": "Dewan Hernandez",
+      "chineseName": "迪威-赫南德兹",
+      "sinaBirthDate": "1996-12-09",
+      "nbaBirthDate": "1996-12-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7496/"
+    },
+    {
+      "sinaId": "7482",
+      "nbaId": "johnsni01",
+      "englishName": "Nick Johnson",
+      "chineseName": "尼克-约翰逊",
+      "sinaBirthDate": "1992-12-22",
+      "nbaBirthDate": "1992-12-22",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7482/"
+    },
+    {
+      "sinaId": "7497",
+      "nbaId": "mclembe01",
+      "englishName": "Ben McLemore",
+      "chineseName": "本·麦克勒摩",
+      "sinaBirthDate": "1993-02-11",
+      "nbaBirthDate": "1993-02-11",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7497/"
+    },
+    {
+      "sinaId": "7489",
+      "nbaId": "obryajo01",
+      "englishName": "Johnny O'Bryant",
+      "chineseName": "奥布莱恩特",
+      "sinaBirthDate": "1993-06-01",
+      "nbaBirthDate": "1993-06-01",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7489/"
+    },
+    {
+      "sinaId": "7484",
+      "nbaId": "kilpase01",
+      "englishName": "Sean Kilpatrick",
+      "chineseName": "肖恩-基尔帕特里克",
+      "sinaBirthDate": "1990-01-06",
+      "nbaBirthDate": "1990-01-06",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7484/"
+    },
+    {
+      "sinaId": "7090",
+      "nbaId": "muhamsh01",
+      "englishName": "Shabazz Muhammad",
+      "chineseName": "穆罕默德",
+      "sinaBirthDate": "1992-11-13",
+      "nbaBirthDate": "1992-11-13",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7090/"
+    },
+    {
+      "sinaId": "7247",
+      "nbaId": "moultar01",
+      "englishName": "Arnett Moultrie",
+      "chineseName": "摩尔特里",
+      "sinaBirthDate": "1990-11-18",
+      "nbaBirthDate": "1990-11-18",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7247/"
+    },
+    {
+      "sinaId": "7107",
+      "nbaId": "ledori01",
+      "englishName": "Ricky Ledo",
+      "chineseName": "里卡多-雷多",
+      "sinaBirthDate": "1992-09-10",
+      "nbaBirthDate": "1992-09-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7107/"
+    },
+    {
+      "sinaId": "7397",
+      "nbaId": "okafoja01",
+      "englishName": "Jahlil Okafor",
+      "chineseName": "贾利尔-奥卡福",
+      "sinaBirthDate": "1995-12-15",
+      "nbaBirthDate": "1995-12-15",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7397/"
+    },
+    {
+      "sinaId": "7075",
+      "nbaId": "youngjo01",
+      "englishName": "Joe Young",
+      "chineseName": "约瑟夫-杨",
+      "sinaBirthDate": "1992-06-27",
+      "nbaBirthDate": "1992-06-27",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7075/"
+    },
+    {
+      "sinaId": "7251",
+      "nbaId": "harrima01",
+      "englishName": "Manny Harris",
+      "chineseName": "曼尼-哈里斯",
+      "sinaBirthDate": "1989-09-21",
+      "nbaBirthDate": "1989-09-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7251/"
+    },
+    {
+      "sinaId": "7320",
+      "nbaId": "mcraejo01",
+      "englishName": "Jordan McRae",
+      "chineseName": "乔丹-麦克瑞",
+      "sinaBirthDate": "1991-03-28",
+      "nbaBirthDate": "1991-03-28",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7320/"
+    },
+    {
+      "sinaId": "7313",
+      "nbaId": "harrian01",
+      "englishName": "Andrew Harrison",
+      "chineseName": "安德鲁-哈里森",
+      "sinaBirthDate": "1994-10-28",
+      "nbaBirthDate": "1994-10-28",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7313/"
+    },
+    {
+      "sinaId": "6987",
+      "nbaId": "hansbty01",
+      "englishName": "Tyler Hansbrough",
+      "chineseName": "汉斯布鲁",
+      "sinaBirthDate": "1985-11-03",
+      "nbaBirthDate": "1985-11-03",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6987/"
+    },
+    {
+      "sinaId": "7190",
+      "nbaId": "stephla01",
+      "englishName": "Lance Stephenson",
+      "chineseName": "史蒂芬森",
+      "sinaBirthDate": "1990-09-05",
+      "nbaBirthDate": "1990-09-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7190/"
+    },
+    {
+      "sinaId": "7188",
+      "nbaId": "randlch01",
+      "englishName": "Chasson Randle",
+      "chineseName": "查森-兰德尔",
+      "sinaBirthDate": "1993-02-05",
+      "nbaBirthDate": "1993-02-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7188/"
+    },
+    {
+      "sinaId": "7001",
+      "nbaId": "stokeja01",
+      "englishName": "Jarnell Stokes",
+      "chineseName": "斯托克斯",
+      "sinaBirthDate": "1994-01-07",
+      "nbaBirthDate": "1994-01-07",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7001/"
+    },
+    {
+      "sinaId": "7245",
+      "nbaId": "payneca01",
+      "englishName": "Cameron Payne",
+      "chineseName": "卡梅伦-佩恩",
+      "sinaBirthDate": "1994-08-08",
+      "nbaBirthDate": "1994-08-08",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7245/"
+    },
+    {
+      "sinaId": "7237",
+      "nbaId": "mccalra01",
+      "englishName": "Ray McCallum",
+      "chineseName": "雷-麦卡勒姆",
+      "sinaBirthDate": "1991-06-12",
+      "nbaBirthDate": "1991-06-12",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7237/"
+    },
+    {
+      "sinaId": "7239",
+      "nbaId": "mikaer01",
+      "englishName": "Eric Mika",
+      "chineseName": "埃里克-米卡",
+      "sinaBirthDate": "1995-01-05",
+      "nbaBirthDate": "1995-01-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7239/"
+    },
+    {
+      "sinaId": "6931",
+      "nbaId": "yabusgu01",
+      "englishName": "Guerschon Yabusele",
+      "chineseName": "亚布塞莱",
+      "sinaBirthDate": "1995",
+      "nbaBirthDate": "1995-12-17",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "凯尔特人官方公告确认Guerschon Yabusele上海履历，匹配新浪亚布塞莱身份和出生年。",
+      "sourceURL": "https://www.nba.com/celtics/news/pressrelease/boston-celtics-sign-guerschon-yabusele"
+    },
+    {
+      "sinaId": "7101",
+      "nbaId": "robinth01",
+      "englishName": "Thomas Robinson",
+      "chineseName": "托马斯-罗宾逊",
+      "sinaBirthDate": "1991-03-17",
+      "nbaBirthDate": "1991-03-17",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7101/"
+    },
+    {
+      "sinaId": "7240",
+      "nbaId": "cunnida01",
+      "englishName": "Dante Cunningham",
+      "chineseName": "康宁汉姆",
+      "sinaBirthDate": "1987-04-22",
+      "nbaBirthDate": "1987-04-22",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7240/"
+    },
+    {
+      "sinaId": "7241",
+      "nbaId": "plumlmi01",
+      "englishName": "Miles Plumlee",
+      "chineseName": "普拉姆利",
+      "sinaBirthDate": "1988-09-01",
+      "nbaBirthDate": "1988-09-01",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7241/"
+    },
+    {
+      "sinaId": "6953",
+      "nbaId": "brownlo01",
+      "englishName": "Lorenzo Brown",
+      "chineseName": "洛伦佐-布朗",
+      "sinaBirthDate": "1990-08-26",
+      "nbaBirthDate": "1990-08-26",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6953/"
+    },
+    {
+      "sinaId": "7097",
+      "nbaId": "aldrico01",
+      "englishName": "Cole Aldrich",
+      "chineseName": "阿尔德里奇",
+      "sinaBirthDate": "1988-10-31",
+      "nbaBirthDate": "1988-10-31",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7097/"
+    },
+    {
+      "sinaId": "7108",
+      "nbaId": "acyqu01",
+      "englishName": "Quincy Acy",
+      "chineseName": "昆西-阿希",
+      "sinaBirthDate": "1990-10-06",
+      "nbaBirthDate": "1990-10-06",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7108/"
+    },
+    {
+      "sinaId": "7102",
+      "nbaId": "goodwar01",
+      "englishName": "Archie Goodwin",
+      "chineseName": "阿奇-古德温",
+      "sinaBirthDate": null,
+      "nbaBirthDate": "1994-08-17",
+      "basis": "explicit-duplicate-profile-linked-to-verified-full-name",
+      "note": "阿奇-古德温旧档案缺生日；与新档案7628完整译名对应，后者经完整生日确认NBA Archie Goodwin。没有基于Goodwin姓氏泛化合并。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7628/"
+    },
+    {
+      "sinaId": "6866",
+      "nbaId": "brownja01",
+      "englishName": "Jabari Brown",
+      "chineseName": "贾巴里-布朗",
+      "sinaBirthDate": "1992-12-18",
+      "nbaBirthDate": "1992-12-18",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6866/"
+    },
+    {
+      "sinaId": "7003",
+      "nbaId": "joneste01",
+      "englishName": "Terrence Jones",
+      "chineseName": "泰伦斯-琼斯",
+      "sinaBirthDate": "1992-01-09",
+      "nbaBirthDate": "1992-01-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7003/"
+    },
+    {
+      "sinaId": "7034",
+      "nbaId": "thornma01",
+      "englishName": "Marcus Thornton",
+      "chineseName": "马库斯-索顿",
+      "sinaBirthDate": "1987-06-05",
+      "nbaBirthDate": "1987-06-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7034/"
+    },
+    {
+      "sinaId": "6834",
+      "nbaId": "benimje01",
+      "englishName": "Jerrelle Benimon",
+      "chineseName": "贝尼蒙-卡尔顿",
+      "sinaBirthDate": "1991-08-01",
+      "nbaBirthDate": "1991-08-01",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6834/"
+    },
+    {
+      "sinaId": "6861",
+      "nbaId": "maxieja01",
+      "englishName": "Jason Maxiell",
+      "chineseName": "马克希尔",
+      "sinaBirthDate": "1983-02-18",
+      "nbaBirthDate": "1983-02-18",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/6861/"
+    },
+    {
+      "sinaId": "6848",
+      "nbaId": "odengr01",
+      "englishName": "Greg Oden",
+      "chineseName": "格里格-奥登",
+      "sinaBirthDate": "1988-01",
+      "nbaBirthDate": "1988-01-22",
+      "basis": "unique-name-and-verified-cross-league-career",
+      "note": "NBA官方报道确认Greg Oden在中国打球；新浪完整译名、1988年1月出生与NBA身份对应。",
+      "sourceURL": "https://www.nba.com/news/greg-oden-working-student-coach-ohio-state-portland-trail-blazers"
+    },
+    {
+      "sinaId": "4128",
+      "nbaId": "arenagi01",
+      "englishName": "Gilbert Arenas",
+      "chineseName": "阿里纳斯",
+      "sinaBirthDate": "1982-01-06",
+      "nbaBirthDate": "1982-01-06",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4128/"
+    },
+    {
+      "sinaId": "1926",
+      "nbaId": "smithjr01",
+      "englishName": "J.R. Smith",
+      "chineseName": "JR史密斯",
+      "sinaBirthDate": "1985-11-09",
+      "nbaBirthDate": "1985-09-09",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "独立签约报道确认掘金后卫J.R. Smith在2011–12赛季加盟浙江；与该档案32场浙江出场记录相符。新浪生日1985-11-09与NBA档案1985-09-09冲突，身份核验依靠明确全名和球队履历，不将新浪日期当作生日证据。",
+      "sourceURL": "https://ca.sports.yahoo.com/news/smith-signs-deal-play-china-021300067--nba.html"
+    },
+    {
+      "sinaId": "1924",
+      "nbaId": "martike01",
+      "englishName": "Kenyon Martin",
+      "chineseName": "肯扬-马丁",
+      "sinaBirthDate": "1977-12-30",
+      "nbaBirthDate": "1977-12-30",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1924/"
+    },
+    {
+      "sinaId": "1802",
+      "nbaId": "alstora01",
+      "englishName": "Rafer Alston",
+      "chineseName": "阿尔斯通",
+      "sinaBirthDate": "1976-07-24",
+      "nbaBirthDate": "1976-07-24",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1802/"
+    },
+    {
+      "sinaId": "1797",
+      "nbaId": "boonejo01",
+      "englishName": "Josh Boone",
+      "chineseName": "约什-布恩",
+      "sinaBirthDate": "1984-11-18",
+      "nbaBirthDate": "1984-11-21",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "杭州日报采访浙江俱乐部总经理确认前篮网中锋约什·布恩2010年签约，报道1984年出生、208cm和2006年第23顺位，与NBA身份及新浪浙江2011–13出场履历吻合。新浪生日1984-11-18与NBA1984-11-21冲突，未采用新浪生日。",
+      "sourceURL": "https://sports.sohu.com/20101014/n275633534.shtml"
+    },
+    {
+      "sinaId": "1794",
+      "nbaId": "morrira01",
+      "englishName": "Randolph Morris",
+      "chineseName": "兰多夫-莫里斯",
+      "sinaBirthDate": "1986-01-02",
+      "nbaBirthDate": "1986-01-02",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。 新浪身高211cm与NBA档案208cm存在差异，未平均或据此另造身份。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1794/"
+    },
+    {
+      "sinaId": "1789",
+      "nbaId": "akognjo01",
+      "englishName": "Josh Akognon",
+      "chineseName": "约什",
+      "sinaBirthDate": "1986-02-10",
+      "nbaBirthDate": "1986-02-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。 CNTV2011东莞报道在同场称约什与阿克格农，补足档案简称；完整DOB1986-02-10吻合。 新浪身高183cm与NBA档案180cm存在差异，未平均或据此另造身份。",
+      "sourceURL": "https://sports.cntv.cn/20110121/109451.shtml"
+    },
+    {
+      "sinaId": "2489",
+      "nbaId": "landrma01",
+      "englishName": "Marcus Landry",
+      "chineseName": "马库斯-兰德里",
+      "sinaBirthDate": "1985-11-01",
+      "nbaBirthDate": "1985-11-01",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/2489/"
+    },
+    {
+      "sinaId": "4126",
+      "nbaId": "wafervo01",
+      "englishName": "Von Wafer",
+      "chineseName": "韦弗",
+      "sinaBirthDate": "1985-07-21",
+      "nbaBirthDate": "1985-07-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4126/"
+    },
+    {
+      "sinaId": "4413",
+      "nbaId": "telfase01",
+      "englishName": "Sebastian Telfair",
+      "chineseName": "特尔费尔",
+      "sinaBirthDate": "1985-06-09",
+      "nbaBirthDate": "1985-06-09",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4413/"
+    },
+    {
+      "sinaId": "4854",
+      "nbaId": "mudiaem01",
+      "englishName": "Emmanuel Mudiay",
+      "chineseName": "穆迪埃",
+      "sinaBirthDate": null,
+      "nbaBirthDate": "1996-03-05",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "湖人官方选秀介绍确认Emmanuel Mudiay在广东出战12场，匹配新浪穆迪埃2014–15广东12场记录。新浪生日缺失，保持缺失；NBA生日采用本地身份档案。新浪196cm与NBA档案190cm有差异，不将身高作为决定性证据。",
+      "sourceURL": "https://www.nba.com/lakers/150428_mudiaydraft"
+    },
+    {
+      "sinaId": "4392",
+      "nbaId": "jonesdo02",
+      "englishName": "Dominique Jones",
+      "chineseName": "多米尼克·琼斯",
+      "sinaBirthDate": "1988-10-15",
+      "nbaBirthDate": "1988-10-15",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4392/"
+    },
+    {
+      "sinaId": "4838",
+      "nbaId": "crawfjo02",
+      "englishName": "Jordan Crawford",
+      "chineseName": "乔丹·克劳福德",
+      "sinaBirthDate": "1988-10-23",
+      "nbaBirthDate": "1988-10-23",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4838/"
+    },
+    {
+      "sinaId": "845",
+      "nbaId": "haddaha01",
+      "englishName": "Hamed Haddadi",
+      "chineseName": "哈马德·哈达迪",
+      "sinaBirthDate": "1985-05-19",
+      "nbaBirthDate": "1985-05-19",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/845/"
+    },
+    {
+      "sinaId": "4878",
+      "nbaId": "frankja01",
+      "englishName": "Jamaal Franklin",
+      "chineseName": "富兰克林",
+      "sinaBirthDate": "1991-07-21",
+      "nbaBirthDate": "1991-07-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4878/"
+    },
+    {
+      "sinaId": "4892",
+      "nbaId": "radulmi01",
+      "englishName": "Miroslav Raduljica",
+      "chineseName": "拉杜利察",
+      "sinaBirthDate": "1988-01-05",
+      "nbaBirthDate": "1988-01-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4892/"
+    },
+    {
+      "sinaId": "856",
+      "nbaId": "stoudam01",
+      "englishName": "Amar'e Stoudemire",
+      "chineseName": "阿玛尔-斯塔德迈尔",
+      "sinaBirthDate": null,
+      "nbaBirthDate": "1982-11-16",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "中新网报道确认2002年NBA第9顺位斯塔德迈尔在2019年11月为福建完成CBA首秀，与档案完整中文姓名及2019–20赛季索引福建记录对应。新浪生日缺失，不补造源字段；NBA身份档案生日1982-11-16。",
+      "sourceURL": "https://news.sina.cn/2019-11-14/detail-iihnzhfy9112381.d.html"
+    },
+    {
+      "sinaId": "4384",
+      "nbaId": "brownbo02",
+      "englishName": "Bobby Brown",
+      "chineseName": "鲍比-布朗",
+      "sinaBirthDate": "1984-09-24",
+      "nbaBirthDate": "1984-09-24",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4384/"
+    },
+    {
+      "sinaId": "4147",
+      "nbaId": "sloando01",
+      "englishName": "Donald Sloan",
+      "chineseName": "唐纳德-斯隆",
+      "sinaBirthDate": "1988-01-15",
+      "nbaBirthDate": "1988-01-15",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4147/"
+    },
+    {
+      "sinaId": "775",
+      "nbaId": "scolalu01",
+      "englishName": "Luis Scola",
+      "chineseName": "路易斯-斯科拉",
+      "sinaBirthDate": "1980-04-30",
+      "nbaBirthDate": "1980-04-30",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/775/"
+    },
+    {
+      "sinaId": "4914",
+      "nbaId": "warrewi01",
+      "englishName": "Willie Warren",
+      "chineseName": "威利-沃伦",
+      "sinaBirthDate": "1989-10-22",
+      "nbaBirthDate": "1989-10-22",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4914/"
+    },
+    {
+      "sinaId": "1402",
+      "nbaId": "willima04",
+      "englishName": "Marcus Williams",
+      "chineseName": "威廉姆斯",
+      "sinaBirthDate": "1986-11-18",
+      "nbaBirthDate": "1986-11-18",
+      "basis": "corrected-full-name-complete-date-and-team-biography",
+      "note": "原候选Terrence Williams错误，已明确纠正为Marcus Williams。新浪别名含马库斯，完整生日1986-11-18匹配NBA willima04，且报道确认其2009–10浙江及2010年重返浙江履历。排除1985年出生的同名后卫willima03。新浪198cm与NBA201cm有差异。",
+      "sourceURL": "https://www.chinanews.com/ty/2010/12-31/2761308.shtml"
+    },
+    {
+      "sinaId": "1755",
+      "nbaId": "doubyqu01",
+      "englishName": "Quincy Douby",
+      "chineseName": "昆西杜比",
+      "sinaBirthDate": "1984-05-16",
+      "nbaBirthDate": "1984-05-16",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1755/"
+    },
+    {
+      "sinaId": "4904",
+      "nbaId": "douglto01",
+      "englishName": "Toney Douglas",
+      "chineseName": "道格拉斯",
+      "sinaBirthDate": "1986-03-16",
+      "nbaBirthDate": "1986-03-16",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4904/"
+    },
+    {
+      "sinaId": "4414",
+      "nbaId": "willish02",
+      "englishName": "Shelden Williams",
+      "chineseName": "威廉姆斯",
+      "sinaBirthDate": "1983-10-21",
+      "nbaBirthDate": "1983-10-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。 独立转会报道明确前NBA五号秀谢尔顿·威廉姆斯加盟天津，补足档案仅姓氏的歧义。",
+      "sourceURL": "https://sports.sina.com.cn/cba/2013-10-07/23066818856.shtml"
+    },
+    {
+      "sinaId": "4124",
+      "nbaId": "whitedj01",
+      "englishName": "D.J. White",
+      "chineseName": "DJ.怀特",
+      "sinaBirthDate": "1986-08-31",
+      "nbaBirthDate": "1986-08-31",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4124/"
+    },
+    {
+      "sinaId": "4395",
+      "nbaId": "mitchto03",
+      "englishName": "Tony Mitchell",
+      "chineseName": "托尼-米歇尔",
+      "sinaBirthDate": "1989-08-07",
+      "nbaBirthDate": "1989-08-07",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4395/"
+    },
+    {
+      "sinaId": "2013",
+      "nbaId": "johnsiv01",
+      "englishName": "Ivan Johnson",
+      "chineseName": "伊万约翰逊",
+      "sinaBirthDate": "1984-04-10",
+      "nbaBirthDate": "1984-04-10",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/2013/"
+    },
+    {
+      "sinaId": "1800",
+      "nbaId": "haislma01",
+      "englishName": "Marcus Haislip",
+      "chineseName": "海斯利普",
+      "sinaBirthDate": "1980-12-22",
+      "nbaBirthDate": "1980-12-22",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1800/"
+    },
+    {
+      "sinaId": "4144",
+      "nbaId": "jacksda01",
+      "englishName": "Darnell Jackson",
+      "chineseName": "达内尔-杰克逊",
+      "sinaBirthDate": "1985-11-07",
+      "nbaBirthDate": "1985-11-07",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。 新浪身高203cm与NBA档案206cm存在差异，未平均或据此另造身份。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4144/"
+    },
+    {
+      "sinaId": "4383",
+      "nbaId": "greendo01",
+      "englishName": "Donté Greene",
+      "chineseName": "丹特-格林",
+      "sinaBirthDate": "1988-02-21",
+      "nbaBirthDate": "1988-02-21",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4383/"
+    },
+    {
+      "sinaId": "1754",
+      "nbaId": "singlja01",
+      "englishName": "James Singleton",
+      "chineseName": "辛格尔顿",
+      "sinaBirthDate": "1981-07-20",
+      "nbaBirthDate": "1981-07-20",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1754/"
+    },
+    {
+      "sinaId": "4387",
+      "nbaId": "fitchge01",
+      "englishName": "Gerald Fitch",
+      "chineseName": "杰拉德-费奇",
+      "sinaBirthDate": "1982-08-12",
+      "nbaBirthDate": "1982-08-12",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4387/"
+    },
+    {
+      "sinaId": "4132",
+      "nbaId": "curryed01",
+      "englishName": "Eddy Curry",
+      "chineseName": "埃迪库里",
+      "sinaBirthDate": "1982-12-05",
+      "nbaBirthDate": "1982-12-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4132/"
+    },
+    {
+      "sinaId": "4135",
+      "nbaId": "ahearbl01",
+      "englishName": "Blake Ahearn",
+      "chineseName": "布雷克-阿赫恩",
+      "sinaBirthDate": "1984-05-27",
+      "nbaBirthDate": "1984-05-27",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4135/"
+    },
+    {
+      "sinaId": "4119",
+      "nbaId": "willite01",
+      "englishName": "Terrence Williams",
+      "chineseName": "T威廉姆斯",
+      "sinaBirthDate": "1987-06-28",
+      "nbaBirthDate": "1987-06-28",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4119/"
+    },
+    {
+      "sinaId": "4143",
+      "nbaId": "jonesso01",
+      "englishName": "Solomon Jones",
+      "chineseName": "所罗门-琼斯",
+      "sinaBirthDate": "1984-07-16",
+      "nbaBirthDate": "1984-07-16",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4143/"
+    },
+    {
+      "sinaId": "1393",
+      "nbaId": "johnsal01",
+      "englishName": "Alexander Johnson",
+      "chineseName": "亚历山大",
+      "sinaBirthDate": "1983-02",
+      "nbaBirthDate": "1983-02-08",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "原候选Joe Alexander错误，已纠正为Alexander Johnson。辽宁日报报道明确亚历山大·约翰逊2012年加盟辽宁、身高206cm，匹配新浪1983-02和辽宁2012–13履历；另有2009年加盟东莞报道对应其东莞首段记录。新浪具体生日缺失保持不补造。",
+      "sourceURL": "https://www.chinanews.com/ty/2012/10-17/4254358.shtml"
+    },
+    {
+      "sinaId": "4129",
+      "nbaId": "ndiayha01",
+      "englishName": "Hamady N'Diaye",
+      "chineseName": "恩迪亚耶",
+      "sinaBirthDate": "1987-01-12",
+      "nbaBirthDate": "1987-01-12",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/4129/"
+    },
+    {
+      "sinaId": "1927",
+      "nbaId": "greenge01",
+      "englishName": "Gerald Green",
+      "chineseName": "杰拉德-格林",
+      "sinaBirthDate": "1986-01-26",
+      "nbaBirthDate": "1986-01-26",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。 新浪身高203cm与NBA档案198cm存在差异，未平均或据此另造身份。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1927/"
+    },
+    {
+      "sinaId": "1771",
+      "nbaId": "brownde03",
+      "englishName": "Dee Brown",
+      "chineseName": "迪-布朗",
+      "sinaBirthDate": "1984-08-17",
+      "nbaBirthDate": "1984-08-17",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1771/"
+    },
+    {
+      "sinaId": "1093",
+      "nbaId": "edwarco01",
+      "englishName": "Corsley Edwards",
+      "chineseName": "爱德华兹",
+      "sinaBirthDate": "1979-03-05",
+      "nbaBirthDate": "1979-03-05",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/1093/"
+    },
+    {
+      "sinaId": "1453",
+      "nbaId": "willise01",
+      "englishName": "Sean Williams",
+      "chineseName": "威廉姆斯",
+      "sinaBirthDate": "1986-09",
+      "nbaBirthDate": "1986-09-13",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "原候选Shawne Williams错误，已纠正为Sean Williams。海峡都市报报道确认前篮网球员肖恩·威廉姆斯2010年加盟福建；新浪1986-09及福建2010出场记录匹配该身份，不是同姓直接合并。新浪缺具体日保持不补造。",
+      "sourceURL": "https://sports.sohu.com/20100205/n270076175.shtml"
+    },
+    {
+      "sinaId": "1059",
+      "nbaId": "wellsbo01",
+      "englishName": "Bonzi Wells",
+      "chineseName": "邦奇-威尔斯",
+      "sinaBirthDate": "1976-09-20",
+      "nbaBirthDate": "1976-09-28",
+      "basis": "independent-explicit-full-name-and-cross-league-biography",
+      "note": "新华社现场报道明确邦奇·威尔斯为前NBA火箭球员并在山西队，匹配新浪2008–09山西履历和完整中文姓名。NBA官方球员档案确认1976-09-28；新浪1976-09-20有冲突，未以该日期证明身份。",
+      "sourceURL": "https://sports.sina.com.cn/cba/p/2008-12-19/22324132724.shtml"
+    },
+    {
+      "sinaId": "969",
+      "nbaId": "mccasam01",
+      "englishName": "Amal McCaskill",
+      "chineseName": "艾玛尔-麦克卡斯基尔",
+      "sinaBirthDate": "1973-10-28",
+      "nbaBirthDate": "1973-10-28",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/969/"
+    },
+    {
+      "sinaId": "7493",
+      "nbaId": "adamsja01",
+      "englishName": "Jaylen Adams",
+      "chineseName": "杰伦-亚当斯",
+      "sinaBirthDate": "1996-05-04",
+      "nbaBirthDate": "1996-05-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7493/"
+    },
+    {
+      "sinaId": "7632",
+      "nbaId": "adamsja01",
+      "englishName": "Jaylen Adams",
+      "chineseName": "杰伦·亚当斯",
+      "sinaBirthDate": "1996-05-04",
+      "nbaBirthDate": "1996-05-04",
+      "basis": "manually-reviewed-name-and-complete-birth-date",
+      "note": "逐名人工审查译名候选，公开新浪档案完整出生日期与精确NBA全名的出生日期一致；不是同姓模糊匹配。",
+      "sourceURL": "https://cba.sports.sina.com.cn/cba/player/show/7632/"
+    }
+  ],
+  "resolutionSummary": {
+    "asOf": "2026-10-04",
+    "reviewedCandidates": 203,
+    "verifiedNbaMappings": 154,
+    "unresolvedCount": 63,
+    "unresolved": [
+      {
+        "sinaId": "7016",
+        "name": "兰德里",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7029",
+        "name": "达柳斯-莫里斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7106",
+        "name": "科里-杰弗森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7524",
+        "name": "艾德·戴维斯",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7105",
+        "name": "布兰登-保罗",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6977",
+        "name": "汉密尔顿",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7231",
+        "name": "埃里克-格林",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7023",
+        "name": "尼克尔森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6976",
+        "name": "莫泰尤纳斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7024",
+        "name": "拉什-史密斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6939",
+        "name": "贾森-汤普森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "5024",
+        "name": "杰里米-泰勒",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7200",
+        "name": "凯弗-赛克斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6945",
+        "name": "贾里德-康宁汉姆",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "5050",
+        "name": "德怀特-拜克斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6978",
+        "name": "艾伦-杰克逊",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6941",
+        "name": "马齐-兰佩",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6842",
+        "name": "古德洛克",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7072",
+        "name": "杰罗姆-戴森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7104",
+        "name": "泽维尔-孟福德",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7100",
+        "name": "克里斯-麦卡洛",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6940",
+        "name": "J.J-希克森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7025",
+        "name": "克里斯顿",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6821",
+        "name": "杰里米-帕戈",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7027",
+        "name": "德里克-威廉姆斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6979",
+        "name": "肖恩-朗",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "7033",
+        "name": "欧努阿库",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6827",
+        "name": "AJ-普莱斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6951",
+        "name": "大卫-肯尼迪",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6957",
+        "name": "亨利-西姆斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6943",
+        "name": "萨缪尔斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6938",
+        "name": "诺里斯-科尔",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6857",
+        "name": "巴蒂斯塔",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6950",
+        "name": "史蒂芬森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6858",
+        "name": "多雷尔赖特",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6846",
+        "name": "阿兰威廉姆斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "5040",
+        "name": "威尔-拜纳姆",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "5038",
+        "name": "伯纳德-詹姆斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "6850",
+        "name": "麦克奎尔",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "5056",
+        "name": "阿德里恩",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1985",
+        "name": "卡蒂尔马丁",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4123",
+        "name": "普-杰特",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4820",
+        "name": "克拉夫索夫",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4916",
+        "name": "哈雷尔森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4472",
+        "name": "威尔金斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4121",
+        "name": "艾尔-索顿",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4146",
+        "name": "杰梅因-泰勒",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "4125",
+        "name": "DJ.姆本加",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1980",
+        "name": "马蒂·科林斯",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1979",
+        "name": "加祖里奇",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "652",
+        "name": "奥卢米德-奥德杰",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1791",
+        "name": "克里坦顿",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1777",
+        "name": "德文-格林",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1455",
+        "name": "克劳福德",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "752",
+        "name": "贾马尔-桑普森",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1413",
+        "name": "斯威夫特",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1037",
+        "name": "凯斯比-鲍威尔",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "1046",
+        "name": "塞龙-史密斯",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "694",
+        "name": "海勒姆-富勒",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "691",
+        "name": "拉蒙德-穆雷",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "695",
+        "name": "安东尼-米勒",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "753",
+        "name": "沙龙-莱特",
+        "status": "conflicting-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      },
+      {
+        "sinaId": "276",
+        "name": "肯-约翰逊",
+        "status": "incomplete-date",
+        "note": "跨联赛身份线索不足或档案有冲突，保留独立来源身份，未作为已验证映射。"
+      }
+    ],
+    "rejectedCandidateIds": [
+      "1027",
+      "1044",
+      "140",
+      "2487",
+      "5036",
+      "7030",
+      "7612"
+    ],
+    "complete": false,
+    "note": "仅合并逐人核实的跨联赛身份；剩余候选因资料缺失或冲突暂保留，不承诺全部跨联赛身份彻底去重。未经核验的候选英文身份不公开为事实。"
+  }
+}

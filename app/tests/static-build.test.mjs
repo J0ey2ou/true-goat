@@ -36,9 +36,9 @@ async function fileList(directory, prefix = '') {
   return files.sort();
 }
 
-test('strict public manifest includes guide assets and excludes all raw data, caches and tests', async () => {
+test('strict public manifest includes guides and player-library assets, excludes all raw data, caches and tests', async () => {
   assert.equal(result.fileCount, STATIC_FILES.length + 1);
-  for (const asset of ['onboarding.mjs', 'onboarding.css', 'welcome.css']) assert.ok(result.files.includes(asset));
+  for (const asset of ['onboarding.mjs', 'onboarding.css', 'welcome.css', 'player-library.mjs', 'player-library.css', 'data/player-catalog.json']) assert.ok(result.files.includes(asset));
   assert.deepEqual(await fileList(result.output), [...STATIC_FILES.map(([, target]) => target), '.nojekyll'].sort());
   assert.ok(result.bytes > 1_000_000);
   assert.ok(!result.files.some(file => /(?:raw|cache|test|\.png|\.xlsx|\.csv)/.test(file)));
@@ -70,6 +70,11 @@ test('navigation, fetch calls and dynamic profile links become portable relative
   assert.match(directory, /href="\.\/index\.html\?player=/);
   const guessing = await readFile(path.join(result.output, 'guess.mjs'), 'utf8');
   assert.match(guessing, /href="\.\/players\.html\?player=/);
+  const library = await readFile(path.join(result.output, 'player-library.mjs'), 'utf8');
+  assertPortable(library,'player-library.mjs');
+  assert.match(library, /fetch\('\.\/data\/player-catalog\.json'\)/);
+  assert.match(library, /location\.href='\.\/players\.html\?player='/);
+  assert.match(index, /href="\.\/player-library\.css"/);
 });
 
 test('external links, data SVG, relative imports, query strings and hash fragments survive unchanged', () => {
@@ -176,10 +181,50 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     assert.equal(await page.locator('#guess-attempts').textContent(), '1');
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    // Add only after the unchanged default-300 checks above. Exercise actual
+    // emitted URLs, the lazy catalog, explicit deep-link preview and shared IDs.
+    await page.setViewportSize({width:1440,height:1000});
+    await page.goto(base);
+    await page.locator('#workspace').waitFor({state:'visible'});
+    assert.equal(await page.locator('#target-select option').count(),300);
+    const originalLeaderScore=await page.locator('#rank-rows .numeric').first().innerText();
+    assert.ok(!requests.includes(prefix+'data/player-catalog.json'),'catalog must remain lazy before picker use');
+    await page.click('#open-player-library');
+    await page.fill('#player-library-search','Alaa Abdelnaby');
+    await page.locator('[data-library-profile="abdelal01"]').click();
+    await page.locator('#player-dialog[open]').waitFor();
+    assert.ok(page.url().includes(prefix+'players.html?player=abdelal01'));
+    assert.equal(await page.locator('#directory-total').innerText(),'300');
+    assert.match(await page.locator('#player-dialog-body').innerText(),/尚未加入/);
+    await page.click('#add-profile-player');
+    assert.equal(await page.locator('#directory-total').innerText(),'301');
+    await page.locator('#player-dialog a.button').click();
+    await page.locator('#workspace').waitFor({state:'visible'});
+    assert.equal(await page.locator('#target-select').inputValue(),'abdelal01');
+    assert.equal(await page.locator('#target-select option').count(),301);
+    assert.equal(await page.locator('#rank-rows .numeric').first().innerText(),originalLeaderScore);
+    assert.match(await page.locator('#target-data-note').innerText(),/用户添加/);
+    const sharedState=await page.evaluate(()=>JSON.parse(localStorage.getItem('true-goat-v04')));
+    assert.deepEqual(sharedState.customPlayerIds,['abdelal01']);
+    await page.goto(base+'#model='+encodeURIComponent(JSON.stringify(sharedState)));
+    await page.locator('#workspace').waitFor({state:'visible'});
+    assert.equal(await page.locator('#target-select').inputValue(),'abdelal01');
+    await page.setViewportSize({width:390,height:844});
+    await page.click('#open-player-library');
+    await page.fill('#player-library-search','Alaa Abdelnaby');
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    assert.ok(await page.locator('#player-library-dialog').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    await page.click('[data-library-toggle="abdelal01"]');
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('#target-select option').count(),300);
+    assert.equal(await page.locator('#target-select').inputValue(),'jordami01');
     assert.ok(requests.every(request => request.startsWith(prefix)), JSON.stringify(requests));
     assert.ok(requests.includes(prefix + 'data/players.json'));
     assert.ok(requests.includes(prefix + 'data/player-directory.json'));
     assert.ok(requests.includes(prefix + 'data/guess-players.json'));
+    assert.ok(requests.includes(prefix + 'player-library.mjs'));
+    assert.ok(requests.includes(prefix + 'player-library.css'));
+    assert.ok(requests.includes(prefix + 'data/player-catalog.json'));
     assert.deepEqual(errors, []);
   } finally {
     await browser.close();

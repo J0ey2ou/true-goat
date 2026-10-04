@@ -1,6 +1,6 @@
 {
   "name": "true-goat-lab",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,7 +11,8 @@
     "test:filters": "node tests/guess-filter-browser-smoke.mjs",
     "test:modules": "node tests/modules-browser-smoke.mjs",
     "test:themes": "node tests/themes-browser-smoke.mjs",
-    "test": "node --test tests/model.test.mjs tests/guess.test.mjs tests/player-search.test.mjs tests/guess-data.test.mjs tests/guess-eligibility-data.test.mjs tests/onboarding.test.mjs tests/modules.test.mjs tests/themes.test.mjs",
+    "test:library": "node tests/player-library-browser-smoke.mjs",
+    "test": "node --test tests/model.test.mjs tests/guess.test.mjs tests/player-search.test.mjs tests/guess-data.test.mjs tests/guess-eligibility-data.test.mjs tests/onboarding.test.mjs tests/modules.test.mjs tests/themes.test.mjs tests/player-library.test.mjs tests/pool-variants.test.mjs",
     "test:server": "node --test tests/server.test.mjs",
     "test:browser": "node tests/browser-smoke.mjs && node tests/player-directory-smoke.mjs && node tests/guess-browser-smoke.mjs"
   },

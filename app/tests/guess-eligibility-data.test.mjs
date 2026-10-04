@@ -4,12 +4,13 @@ import {readFile} from 'node:fs/promises';
 
 const data = JSON.parse(await readFile(new URL('../data/guess-players.json',import.meta.url),'utf8'));
 const evidence = JSON.parse(await readFile(new URL('../../config/guess-appearance-evidence.json',import.meta.url),'utf8'));
-const player = id => data.players.find(item => item.id === id);
+const resolvedId = id => data.identityRedirects?.[id] || id;
+const player = id => data.players.find(item => item.id === resolvedId(id));
 const played = (id,season,teamId) => player(id).appearances.some(item => item.season === season && item.teamId === teamId);
 
 test('every eligibility record pairs an actual season and team with cited positive evidence',() => {
   const sources = new Set(data.sources.map(item => item.id));
-  assert.equal(data.version,'1.2');
+  assert.equal(data.version,'2.0');
   for (const item of data.players) {
     assert.ok(Array.isArray(item.appearances),item.id);
     assert.equal(item.appearanceCoverage.verifiedOnly,true,item.id);
@@ -31,7 +32,7 @@ test('every eligibility record pairs an actual season and team with cited positi
 });
 
 test('NBA playing seasons have actual team evidence, including retirement gaps and traded stints',() => {
-  for (const item of data.players.filter(item => item.directoryId)) {
+  for (const item of data.players.filter(item => item.pools.includes('nba-history'))) {
     assert.deepEqual([...new Set(item.appearances.filter(row => ['NBA','BAA'].includes(row.league)).map(row => row.season))].sort((a,b) => a-b),item.seasonYears,item.id);
   }
   assert.equal(played('jordami01',1994,'NBA:CHI'),false);
@@ -52,12 +53,14 @@ test('CBA evidence comes from positive historical games, not the misleading curr
   assert.equal(played('cba-sina-7110',2024,'CBA:上海'),false);
   assert.equal(played('cba-sina-310',2023,'CBA:深圳'),true);
   assert.equal(played('cba-sina-310',2023,'CBA:广东'),false);
-  for (const item of data.players.filter(item => item.id.startsWith('cba-'))) {
+  for (const id of Object.keys(evidence.players).filter(id => id.startsWith('cba-'))) {
+    const item=player(id);
     assert.ok(item.appearances.length > 0,item.id);
     assert.equal(item.appearanceCoverage.complete,false);
-    assert.ok(item.appearances.every(row => row.league === 'CBA' && row.games > 0));
-    assert.deepEqual(item.appearances,evidence.players[item.id]);
-    assert.deepEqual(item.seasonYears,[...new Set(item.appearances.map(row => row.season))].sort((a,b) => a-b));
+    assert.ok(item.appearances.filter(row => row.league === 'CBA').every(row => row.games > 0));
+    for(const prior of evidence.players[id]) assert.ok(item.appearances.some(row=>row.season===prior.season && row.teamId===prior.teamId && row.league===prior.league));
+    const scope=item.pools.includes('nba-history') ? item.appearances.filter(row => ['NBA','BAA'].includes(row.league)) : item.appearances;
+    assert.deepEqual(item.seasonYears,[...new Set(scope.map(row => row.season))].sort((a,b) => a-b));
   }
 });
 
@@ -65,20 +68,20 @@ test('Yao has a separately sourced CBA season and is not eligible there from NBA
   assert.equal(played('mingya01',2002,'CBA:上海'),true);
   assert.equal(played('mingya01',2005,'CBA:上海'),false);
   assert.equal(played('mingya01',2005,'NBA:HOU'),true);
-  assert.deepEqual(player('mingya01').appearances.filter(row => row.league === 'CBA'),evidence.players.mingya01);
+  for(const prior of evidence.players.mingya01) assert.ok(player('mingya01').appearances.some(row=>row.season===prior.season && row.teamId===prior.teamId));
 });
 
 test('EuroLeague roster dates never stand in for played seasons, including an injured player',() => {
   assert.equal(played('euro-donta-hall',2025,'EURO:Baskonia'),true);
   assert.equal(played('euro-donta-hall',2025,'EURO:Olympiacos'),false);
   assert.equal(played('euro-markus-howard',2024,'EURO:Baskonia'),true);
-  assert.deepEqual(player('euro-keenan-evans').appearances,[]);
-  assert.deepEqual(player('euro-keenan-evans').seasonYears,[]);
-  for (const item of data.players.filter(item => item.id.startsWith('euro-'))) {
+  assert.deepEqual(player('euro-keenan-evans').appearances.filter(row=>row.league==='EuroLeague'),[]);
+  for (const id of Object.keys(evidence.players).filter(id=>id.startsWith('euro-'))) {
+    const item=player(id), european=item.appearances.filter(row=>row.league==='EuroLeague');
     assert.equal(item.appearanceCoverage.complete,false);
-    assert.deepEqual(item.appearances,evidence.players[item.id] || []);
-    assert.ok(item.appearances.every(row => row.sourceId !== 'euro-2025-round1'));
-    assert.ok(!item.seasonYears.includes(2026),'2025-26 roster does not prove a 2026 appearance');
+    assert.deepEqual(european,evidence.players[id] || []);
+    assert.ok(european.every(row => row.sourceId !== 'euro-2025-round1'));
+    assert.ok(!european.some(row=>row.season===2026),'2025-26 roster does not prove a 2026 appearance');
   }
 });
 

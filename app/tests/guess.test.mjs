@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { MAX_GUESSES, ATTRIBUTES, shanghaiDate, playersInPool, parseYearFilter, matchesYearFilter, normalizeFilters, filterKey, matchingAppearances, eligiblePlayers, teamsForPool, dailyAnswerId, compareNumber, compareSets, comparePlayers, newRound, restoreRound, submitGuess, shareText } from '../guess-engine.mjs';
+import { MAX_GUESSES, ATTRIBUTES, shanghaiDate, playersInPool, poolFamily, parseYearFilter, matchesYearFilter, normalizeFilters, filterKey, matchingAppearances, eligiblePlayers, teamsForPool, dailyAnswerId, compareNumber, compareSets, comparePlayers, newRound, restoreRound, submitGuess, shareText } from '../guess-engine.mjs';
 
 const players = Array.from({length:12},(_,index) => ({
   id:`fixture-player-${index}`,name:`Test Player ${index}`,pools:['nba','global'],
@@ -14,6 +14,34 @@ const players = Array.from({length:12},(_,index) => ({
 players.push({id:'fixture-cba-only',name:'CBA Sample',pools:['cba','global'],teams:[{id:'CBA:T0',name:'Team 0'}],teamsComplete:false,positions:['C'],birthYear:null,heightCm:null,firstSeasonYear:null});
 const opts = (changes = {}) => ({mode:'daily',pool:'nba',date:'2026-10-03',version:'fixture-v1',players,fallbackAnswerId:players[0].id,...changes});
 const practice = (answerId = players[0].id,pool = 'nba') => newRound({mode:'practice',pool,date:'2026-10-03',version:'fixture-v1',answerId});
+
+test('league variants keep separate membership and same-row league evidence',() => {
+  const star={...players[0],pools:['nba-active','nba-history','nba-easy','cba-history','global'],appearances:[
+    {season:2026,teamId:'NBA:T0',league:'NBA',sourceId:'stats',games:15,evidence:'season-games'},
+    {season:2002,teamId:'CBA:T0',league:'CBA',sourceId:'cba-stats',games:5,evidence:'season-games'}]};
+  const rookie={...players[1],pools:['nba-active','global'],appearances:[]};
+  for(const variant of ['nba-active','nba-history','nba-easy']) {
+    assert.equal(poolFamily(variant),'nba');
+    assert.deepEqual(eligiblePlayers([star,rookie],variant,{from:2026,to:2026}).map(p=>p.id),[star.id]);
+    assert.deepEqual(eligiblePlayers([star,rookie],variant,{from:2002,to:2002}),[]);
+    assert.equal(teamsForPool([star,rookie],variant)[0].id,'NBA:T0');
+  }
+  assert.equal(playersInPool([star,rookie],'nba-active').length,2,'roster newcomer is allowed only in unfiltered active game');
+  assert.equal(playersInPool([star,rookie],'nba-history').length,1,'roster alone is not historical play');
+  assert.equal(eligiblePlayers([star,rookie],'cba-history',{from:2026,to:2026}).length,0);
+  assert.equal(eligiblePlayers([star,rookie],'cba-history',{from:2002,to:2002}).length,1);
+  assert.equal(poolFamily('nba-unknown'),null);
+});
+
+test('daily and practice progress never crosses active/history/easy variants',() => {
+  const selected=players.slice(0,4).map(p=>({...p,pools:['nba-active','nba-history','nba-easy']}));
+  const initial=newRound({...opts(),players:selected,pool:'nba-easy'});
+  const guessed=submitGuess(initial,selected.find(p=>p.id!==initial.answerId).id,selected).round;
+  for(const pool of ['nba-active','nba-history']){
+    const restored=restoreRound(guessed,{...opts(),players:selected,pool});
+    assert.equal(restored.round.pool,pool);assert.equal(restored.round.guesses.length,0);
+  }
+});
 
 test('Shanghai daily boundary is UTC+8 midnight, independent of host timezone',() => {
   assert.equal(shanghaiDate('2026-10-02T15:59:59.999Z'),'2026-10-02');
