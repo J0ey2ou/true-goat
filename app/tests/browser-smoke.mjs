@@ -7,6 +7,8 @@ import { DIMENSIONS, scorePlayer, rankPlayers } from '../model.mjs';
 const browser=await chromium.launch(browserOptions);
 const base=process.env.GOAT_TEST_URL||'http://127.0.0.1:8765';
 const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
+// Dedicated onboarding tests exercise first visits; this suite exercises returning users.
+await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
 const page=await context.newPage(),errors=[],results=[];
 const track=p=>{p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text());});};
 track(page);
@@ -97,6 +99,7 @@ try {
   });
   await test('legacy percentage state migrates explicitly without deleting the original',async()=>{
     const c=await browser.newContext();const p=await c.newPage();track(p);
+    await p.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
     const legacy={v:3,preset:'balanced',weights:payload.default_user_weights,anchor:.25,targetId:'jordami01'};
     await p.addInitScript(s=>localStorage.setItem('true-goat-v03',JSON.stringify(s)),legacy);
     await p.goto(base);await ready(p);const s=await state(p);assert.equal(s.priorCoefficient,2.5);

@@ -8,7 +8,10 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d7f879'/%3E%3Ctext x='7' y='24' font-size='24' font-family='sans-serif' font-weight='bold' fill='%23111411'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/guess.css">
+  <link rel="stylesheet" href="/onboarding.css">
+  <link rel="stylesheet" href="/welcome.css">
   <script type="module" src="/guess.mjs"></script>
+  <script type="module" src="/onboarding.mjs"></script>
 </head>
 <body class="guess-page">
   <header class="topbar">
@@ -17,6 +20,7 @@
   </header>
   <main class="guess-main">
     <section class="guess-hero"><div><div class="eyebrow">A DIFFERENT KIND OF BASKETBALL IQ</div><h1>八次机会，找到答案<span>。</span></h1><p>从一位你熟悉的球员开始。读懂线索，一步步缩小范围。</p></div><div class="guess-hero-number" aria-hidden="true">08<span>GUESSES / ONE PLAYER</span></div></section>
+    <section class="welcome-strip" aria-label="猜球员入门"><div class="welcome-copy"><span class="welcome-icon" aria-hidden="true">?</span><div><strong>从你熟悉的名字或绰号开始。</strong><p>选中候选后提交。绿色相同，黄色接近，箭头指向答案。</p></div></div><div class="welcome-actions"><button type="button" data-open-guide>动画导览 <span aria-hidden="true">▷</span></button><button type="button" data-open-tour>教我猜一局 <span aria-hidden="true">→</span></button></div></section>
     <div id="guess-loading" class="guess-loading" role="status">正在准备球员与线索…</div>
     <div id="guess-app" hidden>
       <section class="guess-settings panel" aria-label="挑战设置">

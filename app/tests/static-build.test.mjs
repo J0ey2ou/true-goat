@@ -36,8 +36,9 @@ async function fileList(directory, prefix = '') {
   return files.sort();
 }
 
-test('strict public manifest produces 22 files and excludes all raw data, caches and tests', async () => {
-  assert.equal(result.fileCount, 22);
+test('strict public manifest includes guide assets and excludes all raw data, caches and tests', async () => {
+  assert.equal(result.fileCount, STATIC_FILES.length + 1);
+  for (const asset of ['onboarding.mjs', 'onboarding.css', 'welcome.css']) assert.ok(result.files.includes(asset));
   assert.deepEqual(await fileList(result.output), [...STATIC_FILES.map(([, target]) => target), '.nojekyll'].sort());
   assert.ok(result.bytes > 1_000_000);
   assert.ok(!result.files.some(file => /(?:raw|cache|test|\.png|\.xlsx|\.csv)/.test(file)));
@@ -152,6 +153,7 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     page.on('console', message => {if (message.type() === 'error') errors.push(message.text());});
     await page.goto(base);
     await page.locator('#workspace').waitFor({state:'visible'});
+    await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
     assert.equal(await page.locator('[data-coefficient]').count(), 7);
     await page.locator('#target-select').selectOption('jordami01');
     assert.equal(await page.locator('#target-profile-link').getAttribute('href'), './players.html?player=jordami01');

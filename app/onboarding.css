@@ -1,0 +1,77 @@
+/* All modal styles are scoped so the model and player dialogs keep their layout. */
+dialog.tg-guide{width:min(650px,calc(100% - 28px));max-width:650px;max-height:min(90dvh,850px);padding:26px 30px 20px;overflow-x:hidden;border:1px solid #526440;border-radius:22px;background:radial-gradient(ellipse at 100% 0,#35452a66,transparent 52%),#192019;color:#f1f1e6;box-shadow:0 28px 100px #000a}
+dialog.tg-guide::backdrop{background:#050a07b8;backdrop-filter:blur(9px)}
+.tg-guide-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:26px}
+.tg-guide-brand{font-size:11px;font-weight:750;letter-spacing:1.7px;color:#d7f879}
+.tg-guide-brand i{font-style:normal;letter-spacing:1px;font-weight:400;color:#9fae99;margin-left:7px}
+.tg-guide-close{flex:none;width:34px;height:34px;display:grid;place-items:center;border-radius:50%;border:1px solid #4b5944;background:#212a20;color:#e4ebde;font-size:24px;line-height:1;padding:0}
+.tg-guide-kicker{display:block;color:#a4b299;font-size:10px;letter-spacing:1.2px;margin-bottom:10px}
+.tg-guide-heading h2{font-size:clamp(23px,3.8vw,30px);font-weight:650;letter-spacing:-.8px;line-height:1.4;margin:0 0 12px;outline:none;text-wrap:balance}
+.tg-guide-heading>p{font-size:13px;line-height:1.9;color:#b7c3af;margin:0;min-height:49px}
+.tg-guide-demo{margin-top:22px;padding:19px 20px 17px;border:1px solid #3a4a33;border-radius:14px;background:#111a11;overflow:hidden}
+.tg-guide-demo-label{display:block;font-size:10px;color:#96a58d;letter-spacing:.8px;margin:0 0 17px}
+.tg-guide-equation{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:9px}
+.tg-guide-equation>div{min-width:0;text-align:center;display:flex;flex-direction:column;gap:5px}
+.tg-guide-equation b{font:500 35px/1.2 ui-monospace,monospace;letter-spacing:-2px;color:#ecf1e4}
+.tg-guide-equation span{font-size:10px;color:#a0ae96;white-space:nowrap}
+.tg-guide-equation>i{font-style:normal;font-size:19px;color:#788b6b;margin-bottom:18px}
+.tg-guide-equation .tg-guide-sum b{color:#d7f879}
+.tg-guide-term{animation:tg-guide-reveal 1s ease both}
+.tg-guide-term-later{animation-delay:.18s}
+.tg-guide-demo-bars{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:11px 13px;font-size:10px;color:#a6b19e;margin:21px 4px 0}
+.tg-guide-demo-bars>i{height:5px;position:relative;border-radius:8px;background:#34402e}
+.tg-guide-demo-bars>i b{display:block;width:62%;height:100%;border-radius:8px;background:#d7f879}
+.tg-guide-demo-bars>i b::after{content:'';display:block;float:right;width:9px;height:9px;border-radius:50%;background:#d7f879;margin-top:-2px}
+.tg-guide-demo-bars>i:first-of-type b{animation:tg-guide-coefficient 4s ease-in-out 1}
+.tg-guide-demo-bars>i:last-of-type b{width:38%;background:#91a67d}
+.tg-guide-demo-bars>i:last-of-type b::after{background:#91a67d}
+.tg-guide-demo>p{color:#8f9e85;font-size:10px;line-height:1.7;margin:18px 0 0}
+.tg-guide-dossier{display:flex;align-items:center;gap:12px;padding-bottom:19px;border-bottom:1px solid #30402b}
+.tg-guide-avatar{flex:none;width:45px;height:45px;display:grid;place-items:center;border-radius:50%;background:#d7f879;color:#202d17;font-size:25px;font-weight:850}
+.tg-guide-dossier>div:nth-child(2){display:flex;flex-direction:column;gap:4px;min-width:0}
+.tg-guide-dossier strong{font-size:15px;font-weight:600}
+.tg-guide-dossier span{font-size:10px;color:#a0ae96}
+.tg-guide-dossier .tg-guide-dossier-arrow{font-size:22px;margin-left:auto;color:#d7f879}
+.tg-guide-file-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:15px}
+.tg-guide-file-grid>div{display:flex;flex-direction:column;gap:5px;border:1px solid #37492e;background:#1c2819;padding:11px 10px;border-radius:8px;animation:tg-guide-reveal .7s ease both}
+.tg-guide-file-grid>div:nth-child(2){animation-delay:.13s}.tg-guide-file-grid>div:nth-child(3){animation-delay:.26s}
+.tg-guide-file-grid span{font:10px ui-monospace,monospace;color:#92a77d}
+.tg-guide-file-grid strong{font-size:12px;font-weight:500;color:#e3edda}
+.tg-guide-file-grid small{font-size:9px;line-height:1.7;color:#a0ae96}
+.tg-guide-clues{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tg-guide-clues>div{border-radius:9px;min-width:0;padding:15px 8px;text-align:center;display:flex;flex-direction:column;gap:9px;border:1px solid;animation:tg-guide-flip .7s ease both}
+.tg-guide-clues>div:nth-child(2){animation-delay:.14s}.tg-guide-clues>div:nth-child(3){animation-delay:.28s}
+.tg-guide-clues span,.tg-guide-clues small{font-size:10px}
+.tg-guide-clues b{font:600 25px ui-monospace,monospace;letter-spacing:-1px}
+.tg-guide-clue-match{color:#d7f879;background:#30432a;border-color:#607c43!important}
+.tg-guide-clue-near{color:#f1d681;background:#453d24;border-color:#7b6c37!important}
+.tg-guide-clue-unknown{color:#b5c0c3;background:#263035;border-color:#4c5c63!important}
+.tg-guide-takeaway{display:flex;align-items:flex-start;gap:10px;font-size:11px;line-height:1.8;color:#b4c1a9;margin:18px 1px 25px;min-height:40px}
+.tg-guide-takeaway>span{flex:none;color:#d7f879;font-size:17px;line-height:1.5}
+.tg-guide-bottom{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.tg-guide-progress{display:flex;align-items:center;gap:2px;flex:none}
+.tg-guide-progress>button{display:grid;place-items:center;width:22px;height:34px;padding:0;background:none;border:0;border-radius:4px}
+.tg-guide-progress>button>span{width:6px;height:6px;border-radius:9px;background:#526049;transition:width .2s,background .2s}
+.tg-guide-progress>button[aria-current=step]>span{width:18px;background:#d7f879}
+.tg-guide-count{font:10px ui-monospace,monospace;color:#96a48d;margin-left:7px;white-space:nowrap}
+.tg-guide-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;min-width:0}
+.tg-guide-button{min-height:42px;padding:10px 15px;border:1px solid #4e5c44;background:#242e20;color:#dce7d3;border-radius:8px;font-size:12px;white-space:nowrap}
+.tg-guide-button:disabled{cursor:default;opacity:.36}
+.tg-guide-start,.tg-guide-next{background:#d7f879;border-color:#d7f879;color:#1d2b13;font-weight:600}
+.tg-guide[data-guide-mode=tour] .tg-guide-next{background:transparent;border-color:#4e5c44;color:#dce7d3}
+.tg-guide-foot{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px;padding-top:15px;border-top:1px solid #35412e}
+.tg-guide-foot>button{border:0;background:none;padding:4px 0;color:#b9c6ae;font-size:10px;white-space:nowrap}
+.tg-guide-foot>span{font-size:9px;line-height:1.6;color:#889880;text-align:right}
+.tg-guide-tour-card{margin-top:22px;border:1px solid #43573a;background:linear-gradient(125deg,#263820,#182216);border-radius:14px;padding:19px 20px}
+.tg-guide-tour-card>div{display:flex;align-items:center;gap:17px}
+.tg-guide-tour-card b{font:300 47px/1 ui-monospace,monospace;letter-spacing:-4px;color:#d7f879}
+.tg-guide-tour-card strong{font-size:16px;font-weight:500;flex:1}
+.tg-guide-tour-card>div>span{color:#d7f879;font-size:23px}
+.tg-guide-tour-card>p{font-size:11px;line-height:1.8;color:#aabd9b;margin:20px 0 0}
+.tg-guide-highlight{outline:3px solid #d7f879!important;outline-offset:6px!important;scroll-margin:135px 16px;animation:tg-guide-highlight-pulse 1.2s ease-in-out 4}
+@keyframes tg-guide-reveal{from{opacity:.25;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tg-guide-coefficient{0%,20%,100%{width:40%}50%,75%{width:73%}}
+@keyframes tg-guide-flip{from{opacity:.25;transform:rotateX(55deg)}to{opacity:1;transform:rotateX(0)}}
+@keyframes tg-guide-highlight-pulse{50%{outline-color:#87a747;outline-offset:9px}}
+@media(max-width:560px){dialog.tg-guide{padding:20px 18px 16px;border-radius:17px;max-height:calc(100dvh - 24px)}.tg-guide-top{margin-bottom:20px}.tg-guide-brand{font-size:10px;letter-spacing:1.2px}.tg-guide-brand i{font-size:9px;margin-left:4px}.tg-guide-heading h2{font-size:25px}.tg-guide-heading>p{font-size:12px;min-height:0}.tg-guide-demo{padding:16px 13px}.tg-guide-equation{gap:5px}.tg-guide-equation b{font-size:28px}.tg-guide-equation span{font-size:8px}.tg-guide-equation>i{font-size:16px}.tg-guide-demo-bars{font-size:9px;gap:10px}.tg-guide-file-grid{gap:6px}.tg-guide-file-grid>div{padding:10px 7px}.tg-guide-file-grid small{font-size:8px}.tg-guide-file-grid strong{font-size:11px}.tg-guide-clues{gap:7px}.tg-guide-clues b{font-size:22px}.tg-guide-takeaway{margin-bottom:18px;min-height:0}.tg-guide-bottom{align-items:stretch;flex-direction:column;gap:10px}.tg-guide-progress{justify-content:center}.tg-guide-actions{display:flex;justify-content:stretch;width:100%}.tg-guide-button{flex:1;min-width:0;padding:10px 8px;font-size:11px}.tg-guide-foot{margin-top:17px;gap:10px}.tg-guide-tour-card{padding:17px 15px}.tg-guide-tour-card strong{font-size:14px}.tg-guide-tour-card b{font-size:42px}}
+@media(prefers-reduced-motion:reduce){.tg-guide *,.tg-guide-highlight{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

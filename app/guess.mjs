@@ -216,7 +216,7 @@ async function init() {
     $('guess-pool').innerHTML = data.pools.map(item => `<option value="${esc(item.id)}">${esc(item.name)}</option>`).join('');
     $('guess-data-note').textContent = data.meta.note || '缺少可靠来源的字段保留未知；不会推测国籍、球队或职业首年。';
     bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
-  } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请确认本地服务和游戏数据已准备好，再刷新重试。`; $('guess-loading').setAttribute('role','alert'); }
+  } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`; $('guess-loading').setAttribute('role','alert'); }
 }
 
 init();

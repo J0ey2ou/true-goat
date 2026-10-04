@@ -5,6 +5,7 @@ import { chromium, browserOptions } from './browser-runtime.mjs';
 const BASE = (process.env.GOAT_BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/,'');
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1120}});
+await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v1',JSON.stringify({seen:true})));
 const page = await context.newPage();
 const errors = [],passed = [];
 page.on('pageerror',error => errors.push(error.message));

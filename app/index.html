@@ -8,7 +8,10 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d7f879'/%3E%3Ctext x='7' y='24' font-size='24' font-family='sans-serif' font-weight='bold' fill='%23111411'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/layout.css">
+  <link rel="stylesheet" href="/onboarding.css">
+  <link rel="stylesheet" href="/welcome.css">
   <script type="module" src="/ui.mjs"></script>
+  <script type="module" src="/onboarding.mjs"></script>
 </head>
 <body class="lab-page">
   <header class="topbar">
@@ -21,6 +24,7 @@
       <div><div class="eyebrow">THE GREATEST IS A MATTER OF VALUES</div><h1>GOAT，由你定义<span>。</span></h1><p>同一份数据，不同的篮球价值观。独立调整每项系数，看看历史如何重新排序。</p></div>
       <div class="hero-aside"><span class="hero-number">300</span><span>位球员 · 7 个维度<br>没有预设的正确答案</span></div>
     </section>
+    <section class="welcome-strip" aria-label="新手入门"><div class="welcome-copy"><span class="welcome-icon" aria-hidden="true">↗</span><div><strong>第一次来？从一个小实验开始。</strong><p>选一种观点 → 拉动一个系数 → 看看谁的排名变了。</p></div></div><div class="welcome-actions"><button type="button" data-open-guide>动画导览 <span aria-hidden="true">▷</span></button><button type="button" data-open-tour>带我上手 <span aria-hidden="true">→</span></button></div></section>
     <section class="formula-band" aria-label="加性模型速览"><span class="formula-tag">加性模型 04</span><div><strong>50 + 常规赛贡献 + 巅峰贡献 + … + 大众参考贡献</strong><p>系数独立，不合计为 100%；每一分都可以逐项追溯。</p></div><button id="formula-help" class="text-button">怎么计算？ ↗</button></section>
     <div id="loading" role="status">正在载入球员数据与评论员模型…</div>
     <div class="workspace" id="workspace" hidden>

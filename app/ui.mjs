@@ -159,8 +159,10 @@ function exportModel() {
 }
 async function share() {
   const url=location.origin+location.pathname+'#model='+encodeURIComponent(JSON.stringify(stateObject()));
-  try {await navigator.clipboard.writeText(url);toast('已复制。本机链接需运行本地服务才能打开。');}
-  catch {showDialog('复制模型链接','<p>复制下方链接。同一台电脑运行本地服务后可还原权重；其他电脑请使用导出的模型参数。</p><textarea readonly style="width:100%;height:140px">'+esc(url)+'</textarea>');}
+  const local=['localhost','127.0.0.1','[::1]'].includes(location.hostname);
+  const note=local?'这是本地预览链接，需运行本地服务；对外分享请使用线上网站生成链接。':'分享此链接，对方即可还原这组系数；不包含你的猜球员进度。';
+  try {await navigator.clipboard.writeText(url);toast('已复制。'+note);}
+  catch {showDialog('复制模型链接','<p>'+esc(note)+'</p><textarea readonly style="width:100%;height:140px">'+esc(url)+'</textarea>');}
 }
 async function explore() {
   $('find-weights').disabled=true;$('search-result').textContent='正在检验候选系数…';

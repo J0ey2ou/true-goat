@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '24'
       - name: Check scoring, game and source data
-        run: node --test app/tests/model.test.mjs app/tests/guess.test.mjs app/tests/player-search.test.mjs app/tests/guess-data.test.mjs app/tests/static-build.test.mjs
+        run: node --test app/tests/model.test.mjs app/tests/guess.test.mjs app/tests/player-search.test.mjs app/tests/guess-data.test.mjs app/tests/onboarding.test.mjs app/tests/static-build.test.mjs
       - name: Build static site from the explicit file allowlist
         run: node scripts/16_build_static_site.mjs
       - name: Upload website only

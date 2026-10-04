@@ -8,7 +8,10 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d7f879'/%3E%3Ctext x='7' y='24' font-size='24' font-family='sans-serif' font-weight='bold' fill='%23111411'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/players.css">
+  <link rel="stylesheet" href="/onboarding.css">
+  <link rel="stylesheet" href="/welcome.css">
   <script type="module" src="/players.mjs"></script>
+  <script type="module" src="/onboarding.mjs"></script>
 </head>
 <body class="player-directory">
   <header class="topbar">
@@ -20,6 +23,7 @@
       <div><div class="eyebrow">THE PLAYER UNIVERSE</div><h1>先认识球员，再定义伟大<span>。</span></h1><p>每一份排名，从谁有资格进入讨论开始。查看入选依据、球员履历，以及模型背后的数据。</p></div>
       <div class="dir-total"><strong id="directory-total">—</strong><span>位球员 · 同一个比较池</span></div>
     </section>
+    <section class="welcome-strip" aria-label="球员库入门"><div class="welcome-copy"><span class="welcome-icon" aria-hidden="true">⌕</span><div><strong>排名背后，先看证据。</strong><p>搜索你熟悉的名字，打开履历，再把这位球员带入实验室。</p></div></div><div class="welcome-actions"><button type="button" data-open-guide>动画导览 <span aria-hidden="true">▷</span></button><button type="button" data-open-tour>球员库怎么用 <span aria-hidden="true">→</span></button></div></section>
     <section class="dir-method panel" aria-labelledby="pool-heading">
       <div class="dir-section-head"><div><div class="eyebrow">WHY THESE PLAYERS?</div><h2 id="pool-heading">为什么是这 300 位？</h2></div><span class="dir-overlap-note">三个入口 · 去重合并</span></div>
       <p id="directory-method">依据荣誉、数据表现、外部共识与讨论价值筛选；并不是先选定一个排名，再反推球员名单。</p>

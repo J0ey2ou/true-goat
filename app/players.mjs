@@ -207,7 +207,7 @@ async function init() {
     const selected = new URL(location.href).searchParams.get('player');
     if (selected) showPlayer(selected);
   } catch (error) {
-    $('directory-loading').textContent = `球员档案暂时无法载入（${error.message}）。请确认本地服务已启动，再刷新重试。`;
+    $('directory-loading').textContent = `球员档案暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`;
     $('directory-loading').setAttribute('role','alert');
   }
 }
