@@ -61,7 +61,7 @@
           <div id="guess-message" class="guess-message" role="status" aria-live="polite"></div>
           <div class="guess-legend" aria-label="提示颜色"><span><i class="correct"></i>一致</span><span><i class="close"></i>接近 / 重合</span><span><i class="wrong"></i>不同</span><span><i class="unknown"></i>未知</span><span>↑ ↓ 答案更大 / 更小</span></div>
           <div class="guess-history-head"><span>你的猜测</span><span>基本资料 + 5 项生涯指标</span></div>
-          <p class="guess-history-note">生涯统计：NBA/BAA 常规赛及 MVP 至 2025–26；季后赛与总决赛至 2023–24。未核实数据为未知。</p>
+          <p class="guess-history-note">点击「效力球队」卡片，可展开全部球队与已核实赛季。生涯统计：NBA/BAA 常规赛及 MVP 至 2025–26；季后赛与总决赛至 2023–24。未核实数据为未知。</p>
           <div id="guess-history" class="guess-history" aria-label="猜测记录"></div>
           <section id="guess-result" class="guess-result" aria-live="polite" hidden></section>
           <div class="guess-board-actions"><button id="guess-share" class="button outline" type="button" disabled>复制色块战绩 ↗</button><button id="guess-new" class="button outline" type="button" hidden>换一位，再来一局 ↻</button><span id="guess-next-day"></span></div>
@@ -80,5 +80,10 @@
     </div>
     <footer class="guess-footer"><span>TRUE GOAT · GUESS THE PLAYER</span><a href="/THIRD_PARTY_NOTICES.txt">数据出处与许可 ↗</a><a href="/players">认识更多球员 ↗</a></footer>
   </main>
+  <dialog id="guess-team-dialog" class="guess-team-dialog" aria-labelledby="guess-team-dialog-title" aria-describedby="guess-team-dialog-description">
+    <div class="guess-team-dialog-head"><div><div class="eyebrow">YOUR GUESS · TEAM HISTORY</div><h2 id="guess-team-dialog-title">球队经历</h2><p id="guess-team-dialog-player"></p></div><button id="guess-team-dialog-close" class="close-button" type="button" aria-label="关闭球队经历" autofocus>×</button></div>
+    <p id="guess-team-dialog-description" class="sr-only">显示已提交球员的全部已收录球队名称与实际出场证据。按 Escape 或关闭按钮返回猜测记录。</p>
+    <div id="guess-team-dialog-body"></div>
+  </dialog>
 </body>
 </html>

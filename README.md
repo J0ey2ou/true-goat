@@ -53,6 +53,8 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 输入中文、英文或已收录绰号都可检索，例如“哈登”“大胡子”“James Harden”。新扩展球员尚无核实中文译名时保留英文。提示中的未知不是零，不同联赛或截止期的统计不直接比较。筛选决定谁能入题，不将生涯线索截断为所选年份。
 
+点击猜测记录中的“效力球队”卡片，可以展开该次已猜球员的完整已收录队名、逐项核实赛季与来源；不会泄露尚未猜中的答案。历史队名可能分列，名称条数不一定等于按球队沿革去重后的“效力球队数”。页面采用更大的说明字号与响应式线索卡布局，手机上也能点击查看完整信息。
+
 每日题按北京时间 00:00 更新，同版本、日期、球员池和范围保持一致。各范围进度分别保存在浏览器；题目答案可从客户端数据读取，因此它是休闲练习，不是防作弊竞技服务。玩法参考[弗一把](https://shnlfriberg.online/)，篮球规则、代码和界面独立实现。
 
 ### 看得懂，也玩得舒服
@@ -115,6 +117,8 @@ All seven pools appear as clickable cards with counts from the loaded dataset, a
 Season and team filters constrain both the answer and search results. The year and team must match **the same actual appearance record**. Registration, a current roster, or a profile-page heading does not prove that a player played. Empty ranges never silently fall back to unrelated answers, and available teams change with the league pool.
 
 Search accepts English names, verified Chinese labels and collected nicknames, such as “哈登”, “大胡子” and “James Harden”. Newly added players without reviewed translations remain searchable in English. Unknown is not zero; incompatible statistical scopes or cutoffs are not directly compared. Filtering selects eligible people rather than truncating the career statistics used as clues.
+
+Click a submitted player's team clue to open the full recorded team names, individually verified seasons and sources; the hidden answer is not exposed. Historical names may be listed separately, so name entries can differ from the franchise-deduplicated career team count. Larger explanatory text and responsive clue cards make these details easier to read and tap on phones.
 
 Daily answers change at midnight in Beijing (UTC+8), remaining deterministic for the same data version, date, pool and filters. Each range has separate browser progress. Answers are available in client-side data: this is a casual game, not an anti-cheat competition. [Friberg](https://shnlfriberg.online/) inspired the limited-attempt feedback mechanic; the basketball rules, implementation and interface are independent.
 

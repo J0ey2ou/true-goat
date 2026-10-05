@@ -191,3 +191,128 @@
   .guess-page .guess-result-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 .guess-pool-help{font-size:12px;line-height:1.8;color:var(--muted);margin:12px 2px 20px;overflow-wrap:anywhere}.guess-pool-label{min-width:0}.guess-pool-label select{width:min(100%,340px);max-width:100%}
+
+/* Readable clue cards and complete, keyboard-accessible team records. */
+.guess-page { line-height:1.65; }
+.guess-page .eyebrow { font-size:11px; line-height:1.7; }
+.guess-page .guess-hero p { font-size:15px; }
+.guess-page .guess-hero-number span { font-size:11px; }
+.guess-page .guess-settings { flex-wrap:wrap; gap:18px 24px; }
+.guess-page .guess-mode button { font-size:14px; min-height:44px; }
+.guess-page .guess-pool-label { flex:1 1 330px; flex-wrap:wrap; font-size:13px; }
+.guess-page .guess-pool-label select { width:min(100%,340px); min-height:44px; font-size:14px; }
+.guess-page .guess-pool-meta { max-width:100%; text-align:left; }
+.guess-page .guess-pool-meta strong { font-size:14px; overflow-wrap:anywhere; }
+.guess-page .guess-pool-meta span,.guess-page #guess-release { font-size:12px; }
+.guess-page #guess-library-summary,.guess-page .guess-pools-note,.guess-page .guess-pool-help { font-size:13px; }
+.guess-page .guess-pool-cards button span { font-size:14px; }
+.guess-page .guess-pool-cards button small { font-size:12px; }
+.guess-page .guess-round-note { font-size:14px; margin:16px 0; }
+.guess-page .guess-filter-title strong { font-size:16px; }
+.guess-page .guess-filter-title span,.guess-page .guess-year-filter label { font-size:12px; }
+.guess-page .guess-year-filter label { gap:7px; }
+.guess-page .guess-year-filter input,.guess-page .guess-year-filter select { font-size:16px; height:46px; }
+.guess-page .guess-filter-actions button { font-size:14px; min-height:44px; }
+.guess-page .guess-year-filter p { font-size:12px; line-height:1.85; }
+.guess-page .guess-active-filter,.guess-page .guess-proof { font-size:13px; }
+.guess-page #guess-search { font-size:16px; height:52px; }
+.guess-page #guess-submit { font-size:15px; min-height:52px; }
+.guess-page .guess-option { font-size:15px; padding:14px; align-items:center; }
+.guess-page .guess-option small,.guess-page .guess-option>span:last-child { font-size:12px; }
+.guess-page .guess-input-hint,.guess-page .guess-message { font-size:13px; line-height:1.8; }
+.guess-page .guess-legend { font-size:13px; gap:12px 18px; margin:22px 0; }
+.guess-page .guess-legend i { width:13px; height:13px; }
+.guess-page .guess-history-head { font-size:14px; flex-wrap:wrap; }
+.guess-page .guess-history-head>span:last-child,.guess-page .guess-history-note { font-size:12px; }
+.guess-page .guess-history-note { line-height:1.85; margin-bottom:18px; }
+.guess-page .guess-row { padding:18px; margin-bottom:18px; border-radius:12px; }
+.guess-page .guess-player { padding-bottom:16px; }
+.guess-page .guess-player strong { font-size:18px; font-weight:600; }
+.guess-page .guess-player small { font-size:13px; }
+.guess-page .guess-order { font-size:13px; }
+.guess-page .guess-clue-group + .guess-clue-group { margin-top:18px; }
+.guess-page .guess-clue-group h3 { font-size:12px; line-height:1.6; margin-bottom:9px; }
+.guess-page .guess-clue-grid { gap:9px; }
+.guess-page .guess-cell { min-height:138px; padding:12px 8px; border-radius:8px; grid-template-rows:minmax(18px,auto) minmax(38px,1fr) minmax(18px,auto); row-gap:8px; color:var(--text); }
+.guess-page .cell-label { font-size:12px; line-height:1.5; white-space:normal; }
+.guess-page .guess-cell .cell-value { font-size:19px; font-weight:600; line-height:1.55; }
+.guess-page .guess-cell small { font-size:12px; line-height:1.5; }
+.guess-page .guess-cell[data-key=teams] { grid-template-rows:auto minmax(38px,1fr) auto auto; }
+.guess-page .guess-cell[data-key=teams] .cell-value { font-size:12px; font-weight:400; }
+.guess-page .guess-team-cell { width:100%; font-family:inherit; cursor:pointer; }
+.guess-page .guess-team-cell:focus-visible { outline:3px solid var(--lime); outline-offset:3px; }
+.guess-page .guess-team-cell:hover { box-shadow:inset 0 0 0 1px currentColor; }
+.guess-page .guess-cell-action { font-size:12px; line-height:1.5; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+.guess-page .guess-empty strong { font-size:17px; }
+.guess-page .guess-empty p { font-size:14px; max-width:420px; }
+.guess-page .guess-result p,.guess-page .guess-result-links a { font-size:14px; }
+.guess-page .guess-result-metrics dt { font-size:12px; }
+.guess-page .guess-result-metrics dd { font-size:22px; }
+.guess-page .guess-result-coverage { font-size:13px; }
+.guess-page .guess-board-actions button { font-size:14px; min-height:44px; }
+.guess-page #guess-next-day,.guess-page .guess-footer { font-size:12px; }
+.guess-page .guess-share-text { font-size:14px; }
+.guess-page .guess-rules ol,.guess-page .guess-small,.guess-page .guess-about p,.guess-page .guess-metric-notes,.guess-page .guess-source-link,.guess-page .guess-about details { font-size:14px; line-height:1.9; }
+.guess-page .welcome-copy p,.guess-page .welcome-actions button { font-size:13px; }
+.guess-page .guess-team-dialog { width:min(760px,calc(100% - 32px)); max-width:760px; max-height:calc(100dvh - 40px); padding:28px; overscroll-behavior:contain; background:var(--panel); border-color:var(--line); }
+.guess-page .guess-team-dialog-head { display:flex; align-items:start; gap:18px; justify-content:space-between; }
+.guess-page .guess-team-dialog-head>div { min-width:0; }
+.guess-page .guess-team-dialog-head h2 { margin:8px 0 4px; font-size:25px; line-height:1.45; overflow-wrap:anywhere; }
+.guess-page .guess-team-dialog-head p { margin:0 0 20px; font-size:14px; color:var(--muted); overflow-wrap:anywhere; }
+.guess-page .guess-team-dialog-head button { flex:0 0 44px; width:44px; height:44px; }
+.guess-page #guess-team-dialog-body { font-size:14px; line-height:1.9; overflow-wrap:anywhere; }
+.guess-page .guess-team-coverage { padding:16px 18px; border:1px solid var(--line); border-radius:10px; background:var(--panel2); }
+.guess-page .guess-team-coverage strong { font-size:16px; }
+.guess-page .guess-team-coverage p { margin:7px 0 0; color:var(--muted); }
+.guess-page .guess-team-explainer,.guess-page .guess-team-footnote { color:var(--muted); margin:18px 0; }
+.guess-page .guess-team-records { list-style:none; margin:20px 0; padding:0; display:grid; gap:14px; }
+.guess-page .guess-team-record { padding:17px 18px; border:1px solid var(--line); border-radius:10px; }
+.guess-page .guess-team-record h3 { font-size:18px; margin:0 0 10px; line-height:1.5; }
+.guess-page .guess-team-record p { margin:0; color:var(--muted); }
+.guess-page .guess-team-seasons { margin-top:10px; }
+.guess-page .guess-team-seasons>span { color:var(--muted); font-size:13px; }
+.guess-page .guess-team-seasons ul { display:flex; flex-wrap:wrap; gap:7px; margin:8px 0 0; padding:0; list-style:none; }
+.guess-page .guess-team-seasons li { padding:3px 8px; border-radius:5px; background:var(--panel2); font-size:13px; }
+.guess-page .guess-team-sources { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:12px; }
+.guess-page .guess-team-sources a { font-size:13px; color:var(--lime); }
+.guess-page .guess-team-footnote { margin-bottom:0; font-size:13px; }
+@media(max-width:900px) {
+  .guess-page .guess-year-filter { grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr); }
+  .guess-page .guess-filter-title,.guess-page .guess-team-label { grid-column:1/-1; }
+}
+@media(max-width:700px) {
+  .guess-page .guess-nav a { font-size:13px; min-height:44px; }
+  .guess-page .guess-hero p { font-size:14px; max-width:none; }
+  .guess-page .guess-settings { grid-template-columns:minmax(0,1fr); gap:16px; }
+  .guess-page .guess-pool-label { display:grid; grid-template-columns:minmax(0,1fr); }
+  .guess-page .guess-pool-label select { width:100%; font-size:16px; }
+  .guess-page .guess-pool-meta { margin:0; gap:5px; }
+  .guess-page .guess-pool-meta strong { font-size:14px; }
+  .guess-page .guess-pool-meta span { max-width:none; font-size:12px; }
+  .guess-page .guess-board { padding:16px; }
+  .guess-page .guess-board-head { align-items:start; }
+  .guess-page .guess-board-head h2 { font-size:23px; }
+  .guess-page .guess-counter span { font-size:13px; }
+  .guess-page .guess-filter-title { flex-wrap:wrap; }
+  .guess-page .guess-row { padding:13px; }
+  .guess-page .guess-player strong { font-size:17px; }
+  .guess-page .guess-player small { font-size:13px; }
+  .guess-page .guess-clue-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+  .guess-page .guess-cell { min-height:116px; padding:12px 6px; }
+  .guess-page .guess-cell .cell-value { font-size:19px; }
+  .guess-page .guess-cell[data-key=teams] { grid-column:span 2; }
+  .guess-page .guess-cell[data-key=teams] .cell-value { font-size:13px; }
+  .guess-page .guess-result-metrics { gap:8px; }
+  .guess-page .guess-team-dialog { padding:20px; }
+  .guess-page .guess-team-dialog-head h2 { font-size:22px; }
+}
+@media(max-width:480px) {
+  .guess-page .guess-form { grid-template-columns:minmax(0,1fr); gap:9px; }
+  .guess-page #guess-submit { min-height:46px; }
+  .guess-page .guess-clue-grid,.guess-page .guess-result-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .guess-page .guess-clue-group[aria-label="NBA/BAA 生涯指标"] .guess-cell:last-child,.guess-page .guess-result-metrics>div:last-child { grid-column:1/-1; }
+  .guess-page .guess-history-head { gap:4px; }
+  .guess-page .guess-legend { gap:10px 13px; }
+  .guess-page .guess-team-dialog { padding:18px 15px; width:calc(100% - 20px); max-height:calc(100dvh - 24px); }
+  .guess-page .guess-team-record,.guess-page .guess-team-coverage { padding:14px; }
+}
