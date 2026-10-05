@@ -6,7 +6,7 @@ import {readFile, writeFile, mkdir, mkdtemp, cp, rm, readdir, symlink, lstat} fr
 import path from 'node:path';
 import os from 'node:os';
 import http from 'node:http';
-import {PROJECT_ROOT, STATIC_FILES, buildStaticSite, transformAsset, assertPortable, auditPublicJson, resolveOutput} from '../../scripts/16_build_static_site.mjs';
+import {PROJECT_ROOT, STATIC_FILES, buildStaticSite, transformAsset, versionAssetUrls, assertPortable, auditPublicJson, resolveOutput} from '../../scripts/16_build_static_site.mjs';
 
 let fixture, result;
 before(async () => {
@@ -57,7 +57,7 @@ test('navigation, fetch calls and dynamic profile links become portable relative
   assert.match(index, /href="\.\/index\.html"/);
   assert.match(index, /href="\.\/players\.html"/);
   assert.match(index, /href="\.\/guess\.html"/);
-  assert.match(index, /src="\.\/ui\.mjs"/);
+  assert.match(index, /src="\.\/ui\.mjs\?v=[a-f0-9]{12}"/);
   for (const filename of ['ui.mjs', 'players.mjs', 'guess.mjs']) {
     const content = await readFile(path.join(result.output, filename), 'utf8');
     assertPortable(content, filename);
@@ -72,9 +72,31 @@ test('navigation, fetch calls and dynamic profile links become portable relative
   assert.match(guessing, /href="\.\/players\.html\?player=/);
   const library = await readFile(path.join(result.output, 'player-library.mjs'), 'utf8');
   assertPortable(library,'player-library.mjs');
-  assert.match(library, /fetch\('\.\/data\/player-catalog\.json'\)/);
+  assert.match(library, /fetch\('\.\/data\/player-catalog\.json\?v=[a-f0-9]{12}'\)/);
   assert.match(library, /location\.href='\.\/players\.html\?player='/);
-  assert.match(index, /href="\.\/player-library\.css"/);
+  assert.match(index, /href="\.\/player-library\.css\?v=[a-f0-9]{12}"/);
+});
+
+test('release key versions nested imports, data and styles without changing navigation or external URLs', async () => {
+  const source = `import './model.mjs'; fetch('./data/players.json?x=1#note'); <a href="./guess.html"> <script src="https://example.com/ui.mjs">`;
+  assert.equal(versionAssetUrls(source,'abc123'), `import './model.mjs?v=abc123'; fetch('./data/players.json?x=1&v=abc123#note'); <a href="./guess.html"> <script src="https://example.com/ui.mjs">`);
+  const html = await readFile(path.join(result.output,'guess.html'),'utf8');
+  const script = await readFile(path.join(result.output,'guess.mjs'),'utf8');
+  assert.ok(html.includes(`name="true-goat-release" content="${result.release}"`));
+  for (const asset of ['guess-engine.mjs','player-search.mjs','data/guess-players.json']) assert.ok(script.includes(`./${asset}?v=${result.release}`));
+});
+
+test('changing only a dataset invalidates the entry scripts and all their dependencies', async () => {
+  const target = path.join(fixture,'app/data/experts.json');
+  const original = await readFile(target,'utf8');
+  try {
+    await writeFile(target,original + '\n');
+    const changed = await buildStaticSite({projectRoot:fixture,out:'dist-version-test'});
+    assert.notEqual(changed.release,result.release);
+    const html = await readFile(path.join(changed.output,'guess.html'),'utf8');
+    assert.ok(html.includes(`./guess.mjs?v=${changed.release}`));
+    assert.ok(!html.includes(`?v=${result.release}`));
+  } finally { await writeFile(target,original); }
 });
 
 test('external links, data SVG, relative imports, query strings and hash fragments survive unchanged', () => {
@@ -144,6 +166,11 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
   const types = {'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.txt':'text/plain; charset=utf-8'};
   const server = http.createServer(async (request, response) => {
     const pathname = new URL(request.url, 'http://localhost').pathname;
+    // Simulate a host with obsolete unversioned assets: only this release's
+    // scripts, styles and data may load. This includes nested module imports.
+    if (/\.(mjs|css|json)$/.test(pathname) && new URL(request.url,'http://localhost').searchParams.get('v') !== result.release) {
+      response.writeHead(409); response.end('Unversioned or stale asset'); return;
+    }
     requests.push(pathname);
     const file = pathname.startsWith(prefix) ? pathname.slice(prefix.length) || 'index.html' : '';
     if (!allowed.has(file)) {response.writeHead(404);response.end();return;}
@@ -174,6 +201,16 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     await page.locator('.page-nav a[href="./guess.html"]').click();
     await page.locator('#guess-app').waitFor({state:'visible'});
     await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
+    assert.equal(await page.locator('[data-pool-card]').count(),7);
+    assert.match(await page.locator('#guess-library-summary').innerText(),/6,717/);
+    for (const [pool,count] of Object.entries({'nba-easy':152,'nba-active':620,'nba-history':5105,'cba-easy':47,'cba-active':328,'cba-history':1487,global:6717})) {
+      await page.locator(`[data-pool-card="${pool}"]`).click();
+      assert.equal(await page.locator('#guess-pool').inputValue(),pool);
+      assert.equal(await page.locator('[data-pool-card][aria-pressed="true"]').count(),1);
+      assert.ok((await page.locator('#guess-pool-count').innerText()).includes(String(count)));
+    }
+    await page.locator('#guess-pool').selectOption('nba-active');
+    assert.equal(await page.locator('[data-pool-card="nba-active"]').getAttribute('aria-pressed'),'true');
     await page.locator('#guess-search').fill('哈登');
     const candidate = page.locator('.guess-option').first();
     assert.match(await candidate.innerText(), /Harden/);
@@ -181,6 +218,9 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     assert.equal(await page.locator('#guess-attempts').textContent(), '1');
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
+    await page.goto(base+'guess.html?pool=nba-history');
+    await page.locator('#guess-app').waitFor({state:'visible'});
+    assert.equal(await page.locator('#guess-pool').inputValue(),'nba-history');
     // Add only after the unchanged default-300 checks above. Exercise actual
     // emitted URLs, the lazy catalog, explicit deep-link preview and shared IDs.
     await page.setViewportSize({width:1440,height:1000});

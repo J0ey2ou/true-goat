@@ -3,6 +3,7 @@
 import { readFile, writeFile, mkdir, readdir, lstat, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const STATIC_FILES = Object.freeze([
@@ -61,6 +62,18 @@ export function transformAsset(source, filename) {
   const result = source.replace(rootUrlContext, (_, context, quote, value) => context + quote + relativeRoute(value, filename));
   assertPortable(result, filename);
   return result;
+}
+
+// One content-derived release key for the entire dependency graph: changing a
+// dataset also invalidates cached HTML entry scripts and their nested imports.
+export function versionAssetUrls(source, release) {
+  const assets = new Set(STATIC_FILES.map(([, target]) => target).filter(target => /\.(mjs|css|json)$/.test(target)));
+  return source.replace(/(["'`])\.\/([^"'`\s<>]+)\1/g, (match, quote, value) => {
+    const url = new URL(value, 'https://static.invalid/');
+    if (!assets.has(url.pathname.slice(1))) return match;
+    url.searchParams.set('v', release);
+    return `${quote}.${url.pathname}${url.search}${url.hash}${quote}`;
+  });
 }
 
 export function assertPortable(source, filename = 'asset') {
@@ -141,6 +154,14 @@ export async function buildStaticSite({projectRoot = PROJECT_ROOT, out = 'dist'}
       : /\.(?:html|mjs|css)$/.test(destination) ? transformAsset(original, source) : original;
     files.push({destination, content});
   }
+  const hash = createHash('sha256');
+  hash.update(versionAssetUrls.toString());
+  for (const file of files) hash.update(file.destination).update('\0').update(file.content).update('\0');
+  const release = hash.digest('hex').slice(0, 12);
+  for (const file of files) {
+    if (/\.(html|mjs|css)$/.test(file.destination)) file.content = versionAssetUrls(file.content, release);
+    if (file.destination.endsWith('.html')) file.content = file.content.replace('</head>', `  <meta name="true-goat-release" content="${release}">\n</head>`);
+  }
   files.push({destination: '.nojekyll', content: ''});
   for (const file of files) {
     await mkdir(path.dirname(path.join(output, file.destination)), {recursive: true});
@@ -148,6 +169,7 @@ export async function buildStaticSite({projectRoot = PROJECT_ROOT, out = 'dist'}
   }
   return {
     output,
+    release,
     fileCount: files.length,
     bytes: files.reduce((total, file) => total + Buffer.byteLength(file.content), 0),
     files: files.map(file => file.destination),

@@ -104,6 +104,7 @@ function switchGame(nextMode,nextPool) {
 function render() {
   const currentPool = poolInfo(), count = playersInPool(players,pool).length, eligibleCount = currentCandidates().length;
   $('guess-pool').value = pool;
+  document.querySelectorAll('[data-pool-card]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.poolCard === pool)));
   document.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.mode === mode)));
   $('guess-pool-count').textContent = `${currentPool.name} · 收录 ${count} 位 / 本局范围 ${eligibleCount} 位`;
   const dates = [...new Set(playersInPool(players,pool).map(player => player.asOf).filter(Boolean))].sort();
@@ -277,9 +278,20 @@ async function init() {
         if (normalizeFilters(saved || {}).valid) filtersByPool[item.id] = canonical(saved || {});
       }
     } catch {}
+    const linkedPool = new URLSearchParams(location.search).get('pool');
+    if (data.pools.some(item => item.id === linkedPool)) pool = linkedPool;
     filters = canonical(filtersByPool[pool] || {}); filtersByPool[pool] = {...filters};
     $('guess-pool').innerHTML = [['nba','NBA · 按难度与范围选择'],['cba','CBA · 按难度与范围选择'],['global','跨联赛']].map(([family,label]) => `<optgroup label="${esc(label)}">${data.pools.filter(item => poolFamily(item.id) === family).map(item => `<option value="${esc(item.id)}">${esc(item.name)} · ${playersInPool(players,item.id).length} 人</option>`).join('')}</optgroup>`).join('');
     $('guess-data-note').textContent = data.meta.note || '缺少可靠来源的字段保留未知；不会推测国籍、球队或职业首年。';
+    $('guess-pools-title').textContent = `${data.pools.length} 个球员池 · 点击切换`;
+    $('guess-library-summary').textContent = `猜球员题库共 ${players.length.toLocaleString('zh-CN')} 份球员档案，独立于评级页面的默认 300 人名单。`;
+    const release = document.querySelector('meta[name="true-goat-release"]')?.content;
+    $('guess-release').textContent = `题库 v${data.version}${release ? ` · 网站 ${release}` : ' · 本地预览'}`;
+    $('guess-pool-cards').innerHTML = data.pools.map(item => `<button type="button" data-pool-card="${esc(item.id)}" aria-pressed="false"><span>${esc(item.name)}</span><strong>${playersInPool(players,item.id).length.toLocaleString('zh-CN')} <small>人</small></strong></button>`).join('');
+    $('guess-pool-cards').addEventListener('click',event => {
+      const button = event.target.closest('[data-pool-card]');
+      if (button) switchGame(mode,button.dataset.poolCard);
+    });
     resetDraft(); bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
   } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`; $('guess-loading').setAttribute('role','alert'); }
 }

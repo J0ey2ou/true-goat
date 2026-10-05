@@ -37,6 +37,8 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 [猜球员](https://j0ey2ou.github.io/true-goat/guess.html)与 GOAT 评级名单独立，不限制在 300 人。八次机会、逐项属性反馈；支持每日挑战和自由练习，暂不做对战。
 
+七个池以可点击卡片直接展示，人数取自实际加载的题库；也保留下拉切换。可[直接进入 NBA 现役池](https://j0ey2ou.github.io/true-goat/guess.html?pool=nba-active)。页面显示题库与网站版本，发布时自动为脚本、样式及数据附加内容版本号，避免沿用旧资源缓存；这不会清除本机进度。
+
 2026-10-04 快照：NBA 现役 **620**、历史 **5,105**、简单 **152**；CBA 现役 **328**、历史已收录 **1,487**、简单 **47**。按已核实身份映射合并后共有 **6,717** 份档案，各池有重合，不能直接相加。仍有 63 项跨源身份候选待核实，不凭同名强行合并。前两页的扩展 NBA 目录有 **5,217** 人。
 
 - NBA 现役：NBA.com 当日 30 队阵容快照，包含训练营、双向和可能尚未出场的新人；不是仅凭最近赛季推断现役。
@@ -99,6 +101,8 @@ New players use frozen reference standards. Adding someone never recalculates th
 The [guessing game](https://j0ey2ou.github.io/true-goat/guess.html) has an independent player universe, not a 300-player cap. You get eight attempts and attribute feedback, with daily challenges and free practice. Multiplayer is not implemented.
 
 The 2026-10-04 snapshot has **620** active, **5,105** historical and **152** easy NBA players; **328** active, **1,487** recorded historical and **47** easy CBA players. The cross-league union contains **6,717** records after verified identity merges. Pools overlap, so their counts are not additive. There are still 63 unresolved cross-source identity candidates; a shared name is not enough to merge people. The first two pages offer an expanded NBA catalog of **5,217** people.
+
+All seven pools appear as clickable cards with counts from the loaded dataset, alongside the dropdown. [Open the active NBA pool directly](https://j0ey2ou.github.io/true-goat/guess.html?pool=nba-active). The page shows dataset and website versions. Published scripts, styles and datasets receive content-derived version URLs to avoid reusing old cached resources, without clearing local progress.
 
 - Active NBA: a dated NBA.com roster snapshot across all 30 teams, including camp, two-way and potentially unplayed newcomers—not an inference from a recent season.
 - All historical NBA: every recorded NBA/BAA regular-season player in the 1946–47 through 2025–26 snapshot; ABA-only and preseason-only players are excluded.

@@ -19,6 +19,19 @@
 .guess-page .guess-pool-meta { margin-left:auto; display:grid; text-align:right; gap:3px; }
 .guess-page .guess-pool-meta strong { font-size:13px; font-weight:500; }
 .guess-page .guess-pool-meta span { font-size:10px; color:var(--muted); }
+.guess-page .guess-pool-browser { padding:20px 22px; margin-bottom:20px; }
+.guess-page .guess-pools-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; }
+.guess-page .guess-pools-heading h2 { margin:0; font-size:18px; }
+.guess-page #guess-release { color:var(--muted); font-size:10px; overflow-wrap:anywhere; }
+.guess-page #guess-library-summary,.guess-page .guess-pools-note { color:var(--muted); font-size:12px; line-height:1.8; }
+.guess-page .guess-pool-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:10px; }
+.guess-page .guess-pool-cards button { display:flex; flex-direction:column; justify-content:space-between; gap:14px; min-width:0; text-align:left; padding:15px; border:1px solid var(--line); border-radius:10px; color:var(--text); background:var(--panel2); }
+.guess-page .guess-pool-cards button span { font-size:12px; line-height:1.6; }
+.guess-page .guess-pool-cards button strong { font-size:25px; font-variant-numeric:tabular-nums; }
+.guess-page .guess-pool-cards button small { font-size:11px; font-weight:400; color:var(--muted); }
+.guess-page .guess-pool-cards button[aria-pressed=true] { border-color:var(--lime); box-shadow:inset 0 0 0 1px var(--lime); background:color-mix(in srgb,var(--lime) 12%,var(--panel2)); }
+.guess-page .guess-pool-cards button:focus-visible { outline:3px solid var(--lime); outline-offset:3px; }
+@media(max-width:480px) { .guess-page .guess-pool-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } .guess-page .guess-pool-browser { padding:16px; } }
 .guess-page .guess-layout { display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:20px; align-items:start; }
 .guess-page .guess-board { min-width:0; padding:24px; }
 .guess-page .guess-board-head { display:flex; justify-content:space-between; align-items:center; gap:20px; }
