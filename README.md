@@ -5,6 +5,8 @@
 
 [打开网站 / Open the site](https://j0ey2ou.github.io/true-goat/) · [中文介绍](#中文介绍) · [English](#english) · [开发与方法 / Development & methods](#development)
 
+[玩法灵感与特别致谢](#inspiration-zh) · [Inspiration & acknowledgements](#inspiration-en)
+
 ## 中文介绍
 
 ### 这是什么网站？
@@ -55,7 +57,19 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 点击猜测记录中的“效力球队”卡片，可以展开该次已猜球员的完整已收录队名、逐项核实赛季与来源；不会泄露尚未猜中的答案。历史队名可能分列，名称条数不一定等于按球队沿革去重后的“效力球队数”。页面采用更大的说明字号与响应式线索卡布局，手机上也能点击查看完整信息。
 
-每日题按北京时间 00:00 更新，同版本、日期、球员池和范围保持一致。各范围进度分别保存在浏览器；题目答案可从客户端数据读取，因此它是休闲练习，不是防作弊竞技服务。玩法参考[弗一把](https://shnlfriberg.online/)，篮球规则、代码和界面独立实现。
+每日题按北京时间 00:00 更新，同版本、日期、球员池和范围保持一致。各范围进度分别保存在浏览器；题目答案可从客户端数据读取，因此它是休闲练习，不是防作弊竞技服务。猜球员玩法受到 CS 猜选手游戏与社区的启发，完整引用见下方[玩法灵感与特别致谢](#inspiration-zh)。
+
+<a id="inspiration-zh"></a>
+### 玩法灵感与特别致谢
+
+True GOAT 的猜球员并不是凭空诞生的。感谢 CS 社区把选手知识、逐项线索推理和一起猜答案的乐趣结合起来，让我们看到了把这种体验带到篮球领域的可能。以下分别说明玩法、社区与开源参考，避免把灵感来源藏在一句笼统的“参考”里：
+
+- **[BLAST Counter-Strikle · 猜选手游戏](https://blast.tv/counter-strikle)**：感谢其将职业选手辨认做成易于上手的每日猜谜体验。它为“先猜一个人，再逐步缩小范围”的互动方向提供了启发。这里明确标注为 BLAST 的游戏，不将其误写为 HLTV 官方游戏。
+- **[HLTV](https://www.hltv.org/) / [选手统计资料库](https://www.hltv.org/stats/players)**：感谢其长期整理职业 CS 选手资料、赛事与统计，为围绕选手履历和数据展开讨论的社区文化作出贡献。这里致谢的是资料平台与数据文化，不表示 True GOAT 使用了 HLTV 的篮球数据，也不将其他平台的猜选手游戏归于 HLTV。
+- **[玩机器丶Machine · 斗鱼直播间 6657](https://www.douyu.com/6657)**：特别感谢玩机器与直播间观众共同营造的猜选手、聊选手的互动氛围。这种主播和观众一起调动记忆、分析线索、享受猜测过程的乐趣，是本项目希望在篮球场景中延续的体验；这是一份创作与社区层面的致谢，不意味着主播参与了本项目开发或为其背书。
+- **[弗一把 · 在线体验](https://shnlfriberg.online/) / [GitHub：shnlfriberg/csgofriberg](https://github.com/shnlfriberg/csgofriberg)**：特别感谢原作者、维护者与贡献者公开项目和玩法说明。八次机会、属性逐项反馈、颜色提示与数值方向提示，为本项目的篮球版猜测规则提供了直接参考。也欢迎大家体验原作、关注仓库，并支持原项目的持续维护。
+
+以上是对玩法启发、社区影响与开源分享的肯定，不是联合出品、官方授权或代码依赖声明。True GOAT 的篮球规则、代码与界面独立实现；未复制上述项目的代码或视觉素材，CS 选手数据也未混入篮球题库。实际使用的篮球数据来源及许可另见 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。感谢这些创作者和社区先把好玩的想法做出来、分享出来。
 
 ### 看得懂，也玩得舒服
 
@@ -120,7 +134,19 @@ Search accepts English names, verified Chinese labels and collected nicknames, s
 
 Click a submitted player's team clue to open the full recorded team names, individually verified seasons and sources; the hidden answer is not exposed. Historical names may be listed separately, so name entries can differ from the franchise-deduplicated career team count. Larger explanatory text and responsive clue cards make these details easier to read and tap on phones.
 
-Daily answers change at midnight in Beijing (UTC+8), remaining deterministic for the same data version, date, pool and filters. Each range has separate browser progress. Answers are available in client-side data: this is a casual game, not an anti-cheat competition. [Friberg](https://shnlfriberg.online/) inspired the limited-attempt feedback mechanic; the basketball rules, implementation and interface are independent.
+Daily answers change at midnight in Beijing (UTC+8), remaining deterministic for the same data version, date, pool and filters. Each range has separate browser progress. Answers are available in client-side data: this is a casual game, not an anti-cheat competition. The guessing experience draws inspiration from CS player-guessing games and their communities; see the explicit [credits below](#inspiration-en).
+
+<a id="inspiration-en"></a>
+### Inspiration & acknowledgements
+
+True GOAT's guessing game did not emerge in isolation. We thank the CS community for turning player knowledge, attribute-based deduction and shared guessing into an engaging experience worth exploring in basketball. We distinguish game inspiration, community influence and open-source references below:
+
+- **[BLAST Counter-Strikle](https://blast.tv/counter-strikle)**: Thank you for making professional-player identification an approachable daily guessing experience, inspiring the interaction of naming a player and progressively narrowing the possibilities. This is credited to BLAST, not described as an official HLTV game.
+- **[HLTV](https://www.hltv.org/) / [player statistics database](https://www.hltv.org/stats/players)**: We appreciate its longstanding work documenting professional CS players, events and statistics, and its contribution to a community that discusses players through their careers and data. This credits the information platform and data culture; it does not imply HLTV supplies basketball data to True GOAT or owns other platforms' guessing games.
+- **[玩机器 / Machine — Douyu channel 6657](https://www.douyu.com/6657)**: Special thanks to Machine and the viewers for the interactive atmosphere around guessing and discussing players. The enjoyment of a streamer and audience recalling careers and reasoning through clues together is an experience we hope to carry into basketball. This is a creative and community acknowledgement, not a claim of development involvement or endorsement.
+- **[弗一把 / Friberg — play online](https://shnlfriberg.online/) / [GitHub: shnlfriberg/csgofriberg](https://github.com/shnlfriberg/csgofriberg)**: Special thanks to the original author, maintainers and contributors for publishing the project and its gameplay documentation. Its eight-attempt format, attribute feedback, color cues and numerical direction hints directly informed our basketball guessing rules. Please also try the original, explore the repository and support its continued maintenance.
+
+These credits recognize inspiration, community influence and open-source sharing, not a partnership, official authorization or code dependency. True GOAT's basketball rules, code and interface are independently implemented; no code or visual assets from the projects above were copied, and CS player data is not included in the basketball pools. The basketball data actually used and its licensing notices are documented separately in [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt). Thank you to the creators and communities who built and shared these ideas first.
 
 ### Clear explanations and comfortable interaction
 
