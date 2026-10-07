@@ -1,5 +1,16 @@
 # Changelog
 
+## Website v0.13 — 2026-10-07
+
+- 定制数据分为两个明确入口：「为球员找第一」选择球员、表现维度及第一类型；「为条件找球员」不需先选人，按定语或生涯荣誉反查全部已收录符合者，分页展示而非只保留前十。
+- 新增仅此页面的三步动画演示，首次访问展示，可跳过、回退、重播；支持三语、手机布局和减少动态效果设置。
+- 查询完成自动弹出完整自然语言结论，包含比较范围、所有条件、第一类型、证据和缺失说明；支持复制完整结论与来源。并列、未第一、空结果与单人样本分别表达，不把孤例包装成有竞争性的第一。
+- 自动探索轮流覆盖所选表现维度，可选最早、最高及逐场连续类型；每次最多验证 128 组去重候选，展示全部已验证结果，可筛选有比较对象的第一。不声称穷尽无限定语；保留用户指定范围和筛选约束。
+- 增加 NBA MVP、DPOY、FMVP 与已核实冠军球队赛季数筛选，使用截至 2025–26 的生涯快照，不表示当场或当年已经获奖；冠军球队赛季数不等于戒指名单。CBA 未开放荣誉条件，未知值不补零。
+- 无数据库迁移，不更改既有账号、对战或球员数据；README 保持不变。
+
+Customized Player now has two clear paths: find a player's firsts, or find all recorded players matching custom conditions. A replayable three-step animated tour explains the workflow. Results open as complete, evidence-backed claims with accurate ties, non-first outcomes and single-player caveats. Exploration checks up to 128 deduplicated combinations across selected dimensions and exposes every checked result, without claiming exhaustive coverage. NBA career-honors snapshot filters support MVP, DPOY, Finals MVP and verified champion-team seasons; missing is never zero. No database migration or README changes.
+
 ## Website v0.12 — 2026-10-07
 
 - 新增「定制数据 / Customized Player」，四个 NBA/CBA 现役及历史已收录池；支持最早达成、最高表现、NBA 连续已收录出场，及年龄、效率、高阶指标、身高体重、院校、出生地、球队与同场对手条件。

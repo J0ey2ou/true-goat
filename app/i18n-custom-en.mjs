@@ -128,4 +128,66 @@ NBA 赛季：1946–47 至 2025–26 常规赛场均。转队用合计行，不�
 在线人数暂不可用|Online count unavailable
 实时在线约|Online now, approximately
 人|people
+每一句“第一”，|Every “first”
+都要经得起|must stand up to
+比较。|comparison.
+从球员出发找纪录，或从条件出发找球员。把篮球定语变成有证据的一句话。|Start with a player to find records, or with conditions to find players. Turn qualifiers into a claim you can verify.
+▶ 看动画，了解怎么玩|▶ Watch the quick tour
+探索方向|Exploration direction
+为球员找第一|Find a player's firsts
+为条件找球员|Find players by conditions
+选一位球员，探索他在哪些条件下领先。|Choose a player and explore where they lead.
+设置定语或荣誉，查看符合者和领先者。|Set qualifiers or honors to find matches and leaders.
+自动探索维度|Dimensions to explore
+全部表现维度|All performance dimensions
+自动探索的第一类型|Types of first to explore
+全部可用类型|All available types
+仅下方选定的类型|Only the selected type below
+自动探索最多核验 128 组候选，列出全部已验证结果；不是穷尽无限定语。手动验证严格使用下方条件。|Explore up to 128 candidate combinations and list every verified result, not every possible qualifier. Manual verification uses the exact conditions below.
+添加限定条件|Add qualifiers
+生涯荣誉条件 · NBA 快照|Career honors · NBA snapshot
+按截至 2025–26 的生涯荣誉筛选，不代表表现发生时已获奖。CBA 暂无可比荣誉数据；缺失值不当作零。|Filter career honors through 2025–26, not awards held at the time of a performance. Comparable CBA honors are unavailable; missing is not zero.
+＋ 添加荣誉条件|＋ Add an honors condition
+荣誉指标|Honors metric
+荣誉次数|Honors count
+NBA MVP 次数|NBA MVP awards
+NBA 荣誉来源 ↗|NBA honors source ↗
+NBA DPOY 次数|NBA DPOY awards
+NBA FMVP 次数|NBA Finals MVP awards
+NBA/BAA 冠军球队赛季数|NBA/BAA champion-team seasons
+有依据的一句话|A claim backed by evidence
+复制完整结论与依据|Copy the full claim and evidence
+查看比较与其他结果|View comparisons and other results
+查看完整结论|View the full claim
+已验证候选|Verified candidates
+有比较对象的第一|Firsts with comparable peers
+只看有比较对象的第一|Only firsts with comparable peers
+展示全部已验证组合，可继续修改条件探索；不保证覆盖所有可能。|All verified combinations are available. Adjust conditions to explore further; this is not an exhaustive search of every possibility.
+本次范围内未找到有比较对象的第一；可取消筛选查看其他结果。|No firsts with comparable peers were found in this search. Clear this filter to see other results.
+加载更多结果|Load more results
+符合条件的球员|Matching players
+先看谁符合，再看谁领先|See who qualifies, then who leads
+按所选第一类型排序；并列共享名次，名单没有截断为前十。|Sorted by the selected definition of first. Ties share a rank; the list is not limited to the top ten.
+哪些球员符合这些条件？|Who meets these conditions?
+按条件寻找球员 →|Find matching players →
+条件 → 全部符合者 → 排序与证据。不需要预先选择球员。|Conditions → all matching players → rankings and evidence. No player selection required.
+球员 → 选择维度 → 一键找定语。也可手动设置条件验证一句第一。|Player → choose dimensions → explore qualifiers. You can also set conditions manually to verify a claim.
+跳过演示|Skip tour
+动画为虚构示意，不代表真实球员纪录。|This animation is an illustrative example, not a real player record.
+先选一位球员，为他找第一|Start with a player, find their firsts
+想知道喜欢的球员有什么独特纪录？选球员，再选得分、助攻等维度，系统验证一组候选定语。|Curious about your favorite player's unique records? Choose the player and dimensions such as points or assists. The system verifies candidate qualifiers.
+球员 A|Player A
+得分 / 助攻|Points / Assists
+他的候选第一|Their candidate firsts
+先写条件，反过来找球员|Start with conditions, find players
+不知道选谁？组合年龄、表现、球队或生涯荣誉。系统列出已收录范围内所有符合者，再按最高、最早或最长连续排序。|Not sure who to choose? Combine age, performance, team or career honors. List all recorded matches, ranked by highest, earliest or longest streak.
+年龄 < 25 · 得分 ≥ 30|Age < 25 · Points ≥ 30
+核验已收录记录|Verify recorded data
+球员 A / 球员 B|Player A / Player B
+结论是一句话，下面有依据|One complete claim, with evidence
+点击结果，查看带完整定语的结论、比较人数与数据来源。并列、单人样本和缺失数据都会明示。|Open a result for the full claim, comparison count and source. Ties, one-player samples and missing data are disclosed.
+完整的一句话|A complete claim
+对照比较名单|Compare the matching players
+复制结论 + 来源|Copy claim + source
+开始探索|Start exploring
 `.trim().split('\n').map(line=>{const i=line.indexOf('|');return [line.slice(0,i),line.slice(i+1)];})));

@@ -9,7 +9,7 @@ const routes = {
   '/i18n-custom-en.mjs':['i18n-custom-en.mjs','text/javascript; charset=utf-8'],
   '/custom':['custom.html','text/html; charset=utf-8'],
   '/custom/':['custom.html','text/html; charset=utf-8'],
-  ...Object.fromEntries(['custom.html','custom.css','custom.mjs','custom-engine.mjs','custom-worker.mjs','feedback.mjs','feedback.css','presence.mjs'].map(file=>['/'+file,[file,file.endsWith('.mjs')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8']])),
+  ...Object.fromEntries(['custom.html','custom.css','custom.mjs','custom-engine.mjs','custom-worker.mjs','custom-claim.mjs','custom-ui.mjs','feedback.mjs','feedback.css','presence.mjs'].map(file=>['/'+file,[file,file.endsWith('.mjs')?'text/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8']])),
   ...Object.fromEntries(['custom-manifest.json','custom-nba-seasons.json','custom-cba-seasons.json',...Array.from({length:78},(_,i)=>`custom-nba-games-${1947+i}.json.gz`)].map(file=>['/data/'+file,['data/'+file,file.endsWith('.gz')?'application/gzip':'application/json; charset=utf-8']])),
   '/i18n.mjs': ['i18n.mjs', 'text/javascript; charset=utf-8'],
   '/i18n-en.mjs': ['i18n-en.mjs', 'text/javascript; charset=utf-8'],
