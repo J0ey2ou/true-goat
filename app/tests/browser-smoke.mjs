@@ -7,6 +7,7 @@ import { DIMENSIONS, scorePlayer, rankPlayers } from '../model.mjs';
 const browser=await chromium.launch(browserOptions);
 const base=process.env.GOAT_TEST_URL||'http://127.0.0.1:8765';
 const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
+await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
 // Dedicated onboarding tests exercise first visits; this suite exercises returning users.
 await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page=await context.newPage(),errors=[],results=[];

@@ -4,6 +4,7 @@ import {eligiblePlayers,matchingAppearances,teamsForPool,filterKey} from '../gue
 const base=(process.env.GOAT_TEST_URL || 'http://127.0.0.1:8766').replace(/\/$/,'');
 const browser=await chromium.launch(browserOptions), errors=[],checks=[];
 const context=await browser.newContext({viewport:{width:1440,height:1000}});
+await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
 await context.route('https://qtfmrczwxinizmqgkebh.supabase.co/**',route=>route.fulfill({status:200,contentType:'application/json',body:route.request().url().includes('/settings')?'{"mailer_autoconfirm":true}':route.request().url().includes('goat_arena_info')?'{"maxPlayers":5}':'[]'}));
 await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v2:guess',JSON.stringify({version:2,page:'guess',seen:true})));
 const page=await context.newPage(); page.setDefaultTimeout(15000);

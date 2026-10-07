@@ -17,6 +17,7 @@ const chinese = {
   malonka01:'卡尔·马龙',stockjo01:'约翰·斯托克顿',wadedw01:'德维恩·韦德',robinda01:'大卫·罗宾逊'
 };
 const knownAliases = {johnsma02:['魔术师'],antetgi01:['字母哥'],onealsh01:['大鲨鱼'],chambwi01:['张大帅'],olajuha01:['大梦']};
+import { registerNames } from './i18n.mjs';
 const displayName = player => player.chineseName || chinese[player.id] || player.name;
 const seasonRange = player => [player.firstSeason,player.lastSeason].filter(has).filter((value,index,all) => all.indexOf(value) === index).join(' — ') || '赛季未收录';
 const poolIds = player => ['A','B','C'].filter(id => player.eligibility?.pools?.[id]);
@@ -192,6 +193,7 @@ function renderCoverage(player) {
 }
 
 function showPlayer(id) {
+  if(document.getElementById('language-dialog')?.open){document.addEventListener('goat:language-ready',()=>showPlayer(id),{once:true});return;}
   const player = players.find(item => item.id === id) || library?.get(id);
   if (!player) return;
   $('player-dialog-title').textContent = displayName(player);
@@ -223,6 +225,7 @@ async function init() {
     directory = await response.json();
     if (!Array.isArray(directory.players) || !directory.players.length) throw new Error('球员数据为空');
     basePlayers = directory.players.map(decoratePlayer).sort((a,b) => String(a.name).localeCompare(String(b.name),'en'));players=[...basePlayers];
+    registerNames(players);
     library=createPlayerLibrary({baseIds:basePlayers.map(p=>p.id),onChange:applySelection,onPreview:p=>showPlayer(p.id)});
     try{await library.initialize();}catch{$('custom-player-summary').textContent='自选档案暂不可用，已保存选择不删除；先显示默认球员，可打开添加窗口重试。';}
     renderMethod(); setupFilters(); setupDialog(); renderList();directoryReady=true;

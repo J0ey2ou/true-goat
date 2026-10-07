@@ -189,6 +189,7 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {if (message.type() === 'error') errors.push(message.text());});
     await page.goto(base);
+    await page.locator('[data-language="zh-CN"]').click();
     await page.locator('#workspace').waitFor({state:'visible'});
     await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
     assert.equal(await page.locator('[data-coefficient]').count(), 7);

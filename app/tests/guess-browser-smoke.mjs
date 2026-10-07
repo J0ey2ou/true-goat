@@ -6,6 +6,7 @@ import { filterKey } from '../guess-engine.mjs';
 const BASE = (process.env.GOAT_BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/,'');
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1120}});
+await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
 await context.route('https://qtfmrczwxinizmqgkebh.supabase.co/**',route=>route.fulfill({status:200,contentType:'application/json',body:route.request().url().includes('/settings')?'{"mailer_autoconfirm":true}':route.request().url().includes('goat_arena_info')?'{"maxPlayers":5}':'[]'}));
 await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page = await context.newPage();

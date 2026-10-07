@@ -1,6 +1,8 @@
 import {ONLINE_CONFIG} from './online-config.mjs';
 import {ATTRIBUTES,playersInPool} from './guess-engine.mjs';
 import {searchPlayers} from './player-search.mjs';
+import {t} from './i18n.mjs';
+import {coachMarkup} from './guess-coach.mjs';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SESSION='true-goat-online:session:v1';
 const statusNames={correct:'一致',close:'接近',wrong:'不同',unknown:'未知'};
@@ -34,6 +36,9 @@ export function initOnline({players,pools,dataVersion}) {
   resultDialog.innerHTML='<header class="guess-dialog-head"><div><div class="eyebrow">MATCH COMPLETE</div><h2 id="online-completion-title">对局结束</h2></div><button type="button" id="online-completion-close" class="close-button" aria-label="关闭对局结果">×</button></header><p id="online-completion-summary"></p><p id="online-completion-note"></p><div class="guess-result-actions"><button type="button" id="online-completion-next" class="button primary">下一局 · 刷新页面 ↻</button><button type="button" id="online-completion-review" class="button outline">查看对局记录</button></div>';
   document.body.append(resultDialog);
   const resultTrigger=document.createElement('button');resultTrigger.id='online-show-result';resultTrigger.textContent='查看对局结果';resultTrigger.hidden=true;$('online-match').append(resultTrigger);
+  const notebook=document.createElement('details');notebook.id='online-coach';notebook.className='online-notebook';
+  notebook.innerHTML='<summary>小抄辅导 · 我的已猜线索</summary><p>只根据自己的已提交反馈推导，不使用对手猜测或隐藏答案。</p><div id="online-coach-body"></div>';
+  $('online-history').before(notebook);
   $('online-completion-close').onclick=$('online-completion-review').onclick=()=>resultDialog.close();
   resultTrigger.onclick=()=>resultDialog.showModal();
   $('online-completion-next').onclick=()=>{
@@ -52,7 +57,7 @@ export function initOnline({players,pools,dataVersion}) {
     if($('guess-settings-dialog'))document.dispatchEvent(new CustomEvent('goat:open-settings',{detail:{tab:'online'}}));
     else $('online-panel').scrollIntoView({block:'start'});
   }
-  function openOnlineLink(){if(location.hash==='#online-panel')openOnlineSettings();}
+  function openOnlineLink(){if(location.hash==='#online-panel'){if(document.getElementById('language-dialog')?.open)document.addEventListener('goat:language-ready',openOnlineSettings,{once:true});else openOnlineSettings();}}
   openOnlineLink();window.addEventListener('hashchange',openOnlineLink);
   function saveSession(value){session=value;try{if(value)localStorage.setItem(SESSION,JSON.stringify(value));else localStorage.removeItem(SESSION);}catch{}}
   async function request(endpoint,body,method='POST',retry=true){
@@ -88,7 +93,7 @@ export function initOnline({players,pools,dataVersion}) {
   }
   function accountView(){
     const signed=!!session?.access_token;$('online-auth').hidden=signed;$('online-account').hidden=!signed;$('online-lobby').hidden=!signed||!!match;
-    $('online-profile').textContent=profile?`${profile.display_name} · ${tier(profile.rating)} ${profile.rating} 分 · ${profile.played} 场`:'已登录';
+    $('online-profile').innerHTML=profile?`<span translate="no">${esc(profile.display_name)}</span> · ${tier(profile.rating)} ${profile.rating} 分 · ${profile.played} 场`:'已登录';
     if(profile)$('online-edit-name').value=profile.display_name;
     for(const id of ['online-ranked','online-create'])$(id).disabled=!ready;
     $('online-join-form').querySelector('button').disabled=!ready;
@@ -99,10 +104,12 @@ export function initOnline({players,pools,dataVersion}) {
     accountView();$('online-match').hidden=!match;if(arena)arena.hidden=!match;if(!match)return;
     const members=matchParticipants(match),mine=members.find(p=>p.id===session?.user?.id)||{},myState=mine.state;
     $('online-match-title').textContent=(match.ranked?'天梯':'好友房')+' · '+members.length+'/'+(match.capacity||2)+' 人 · '+(pools.find(p=>p.id===match.pool)?.name||match.pool)+(match.state==='waiting'?' · 房间码 '+match.room_code:'');
-    $('online-progress').innerHTML=members.map(member=>`<div data-online-member="${esc(member.id)}"><strong>${member.id===session?.user?.id?'你 · ':''}${esc(member.name||'玩家')} · ${member.attempts}/8</strong><span>${member.state==='left'?'已退出':member.state==='exhausted'?'次数已用完':member.state==='won'?'已猜中':match.state==='waiting'?'等待凑齐人数':'推理中'}</span>${member.id===session?.user?.id?'':(member.tiles||[]).map(row=>`<div class="online-tiles">${row.map((status,i)=>`<i class="${esc(status)}" title="${esc(ATTRIBUTES[i]?.label)}：${esc(statusNames[status])}"></i>`).join('')}</div>`).join('')}</div>`).join('');
+    $('online-progress').innerHTML=members.map(member=>`<div data-online-member="${esc(member.id)}"><strong>${member.id===session?.user?.id?'你 · ':''}<span translate="no">${esc(member.name||'Player')}</span> · ${member.attempts}/8</strong><span>${member.state==='left'?'已退出':member.state==='exhausted'?'次数已用完':member.state==='won'?'已猜中':match.state==='waiting'?'等待凑齐人数':'推理中'}</span>${member.id===session?.user?.id?'':(member.tiles||[]).map(row=>`<div class="online-tiles">${row.map((status,i)=>`<i class="${esc(status)}" title="${esc(ATTRIBUTES[i]?.label)}：${esc(statusNames[status])}"></i>`).join('')}</div>`).join('')}</div>`).join('');
     $('online-search-area').hidden=match.state!=='playing'||myState!=='playing'||match.data_version!==dataVersion;
     if(match.data_version!==dataVersion)say('网页与对战题库版本不同，请刷新网页；仍不一致时请等待题库更新。');
-    $('online-history').innerHTML=(match.guesses||[]).map(row=>{const player=players.find(p=>p.id===row.id);return `<article class="online-guess"><strong>${esc(player?.chineseName||player?.name||row.id)}</strong><div class="online-feedback">${row.feedback.map((cell,i)=>{const attr=ATTRIBUTES.find(a=>a.key===cell.key);const value=attr?.key==='teams'?player?.teams?.map(t=>t.name).join(' / '):attr?.key==='positions'?player?.positions?.join(' / '):player?.[cell.key];return `<div class="${esc(cell.status)}"><small>${esc(attr?.label||cell.key)}</small><span>${esc(value??'未知')}${cell.direction==='up'?' ↑':cell.direction==='down'?' ↓':''}</span></div>`;}).join('')}</div></article>`;}).join('');
+    $('online-history').innerHTML=[...(match.guesses||[])].reverse().map(row=>{const player=players.find(p=>p.id===row.id);return `<article class="online-guess"><strong>${esc(player?.chineseName||player?.name||row.id)}</strong><div class="online-feedback">${row.feedback.map((cell,i)=>{const attr=ATTRIBUTES.find(a=>a.key===cell.key);const value=attr?.key==='teams'?player?.teams?.map(t=>t.name).join(' / '):attr?.key==='positions'?player?.positions?.join(' / '):player?.[cell.key];return `<div class="${esc(cell.status)}"><small>${esc(attr?.label||cell.key)}</small><span>${esc(value??'未知')}${cell.direction==='up'?' ↑':cell.direction==='down'?' ↓':''}</span></div>`;}).join('')}</div></article>`;}).join('');
+    const teamNames={};const coachRows=(match.guesses||[]).map(row=>{const p=players.find(p=>p.id===row.id)||{};for(const team of p.teams||[])teamNames[team.id]=team.name||team.id;return {values:{...p,teams:(p.teams||[]).map(team=>team.id)},feedback:row.feedback};});
+    $('online-coach-body').innerHTML=coachMarkup(coachRows,ATTRIBUTES,teamNames);
     $('online-dismiss').hidden=!['finished','cancelled'].includes(match.state);$('online-leave').hidden=['finished','cancelled'].includes(match.state);
     $('online-leave').textContent=match.state==='waiting'?'取消等待':'退出本局';$('online-leave').hidden||=myState==='left';
     $('online-result').textContent=match.state==='finished'?`${match.winner_id===null?'平局':match.winner_id===session?.user?.id?'你赢了！':'对手获胜'} · ${match.ranked?'积分变化 '+(mine.delta||0):'好友房不计积分'} · 答案：${match.answer?.chineseName||match.answer?.name||'—'}`:match.state==='cancelled'?'等待已取消。':match.state==='waiting'?`等待凑齐 ${match.capacity||2} 人，同一账号可刷新恢复等待。`:'先猜中获胜；八次用完需等待其他玩家或倒计时结束；刷新可恢复本局。';
@@ -111,13 +118,13 @@ export function initOnline({players,pools,dataVersion}) {
       $('online-completion-title').textContent=match.winner_id===null?'本局平局':match.winner_id===session?.user?.id?'你赢了！':'本局结束';
       $('online-completion-summary').textContent=$('online-result').textContent;
       $('online-completion-note').textContent=match.ranked?'下一局将刷新页面，并按相同球员池和人数选择重新匹配。':'下一局将刷新页面并创建同人数好友房，需要重新分享房间码。';
-      if(finishedId!==match.id){finishedId=match.id;if($('guess-settings-dialog')?.open)$('guess-settings-dialog').close();resultDialog.showModal();}
+      if(finishedId!==match.id){finishedId=match.id;if($('guess-settings-dialog')?.open)$('guess-settings-dialog').close();if(document.getElementById('language-dialog')?.open)document.addEventListener('goat:language-ready',()=>{if(match?.state==='finished')resultDialog.showModal();},{once:true});else resultDialog.showModal();}
     }
     if(match.state==='finished'&&profile)rpc('goat_profile').then(p=>{profile=p;accountView();}).catch(()=>{});
     clock();
   }
   function clock(){if(!match)return;const seconds=match.deadline_at?Math.max(0,Math.ceil((Date.parse(match.deadline_at)-Date.now()-serverOffset)/1000)):null;$('online-clock').textContent=match.state==='playing'?`${seconds} 秒`:'默认 10 项线索';}
-  async function leaderboard(){const rows=await rpc('goat_leaderboard');$('online-leaderboard').innerHTML=rows.length?`<table><thead><tr><th>名次</th><th>玩家</th><th>积分</th><th>胜 / 负 / 平</th></tr></thead><tbody>${rows.map((row,i)=>`<tr><td>${i+1}</td><td>${esc(row.display_name)}</td><td>${row.rating}</td><td>${row.wins} / ${row.losses} / ${row.draws}</td></tr>`).join('')}</tbody></table>`:'<p>还没有已结算的天梯战绩。</p>';}
+  async function leaderboard(){const rows=await rpc('goat_leaderboard');$('online-leaderboard').innerHTML=rows.length?`<table><thead><tr><th>名次</th><th>玩家</th><th>积分</th><th>胜 / 负 / 平</th></tr></thead><tbody>${rows.map((row,i)=>`<tr><td>${i+1}</td><td translate="no">${esc(row.display_name)}</td><td>${row.rating}</td><td>${row.wins} / ${row.losses} / ${row.draws}</td></tr>`).join('')}</tbody></table>`:'<p>还没有已结算的天梯战绩。</p>';}
   for(const id of ['online-login-tab','online-register-tab'])$(id).onclick=()=>{register=id==='online-register-tab';$('online-name-label').hidden=!register;$('online-name').required=register;$('online-password').autocomplete=register?'new-password':'current-password';$('online-auth-submit').textContent=register?'注册账号':'登录';$('online-login-tab').setAttribute('aria-pressed',String(!register));$('online-register-tab').setAttribute('aria-pressed',String(register));};
   $('online-auth-form').onsubmit=event=>{event.preventDefault();action(async()=>{
     const email=$('online-email').value.trim(),password=$('online-password').value;
@@ -125,7 +132,7 @@ export function initOnline({players,pools,dataVersion}) {
     else{saveSession(await request('/auth/v1/token?grant_type=password',{email,password}));$('online-password').value='';}
     profile=await rpc('goat_profile',{p_name:register?$('online-name').value.trim():null});accountView();say('已登录，可以匹配或创建好友房。');accept(await lobby('resume'));
   });};
-  $('online-logout').onclick=()=>action(async()=>{if(match?.state==='playing'){if(!confirm('退出后不能继续猜测，天梯仍按最终赛果结算，确定退出？'))return;await gameRpc('leave',{p_match:match.id});}else if(match?.state==='waiting')await gameRpc('leave',{p_match:match.id});await request('/auth/v1/logout',{});closeRealtime();saveSession(null);match=null;profile=null;render();say('已退出。');});
+  $('online-logout').onclick=()=>action(async()=>{if(match?.state==='playing'){if(!confirm(t('退出后不能继续猜测，天梯仍按最终赛果结算，确定退出？')))return;await gameRpc('leave',{p_match:match.id});}else if(match?.state==='waiting')await gameRpc('leave',{p_match:match.id});await request('/auth/v1/logout',{});closeRealtime();saveSession(null);match=null;profile=null;render();say('已退出。');});
   $('online-profile-form').onsubmit=event=>{event.preventDefault();action(async()=>{profile=await rpc('goat_profile',{p_name:$('online-edit-name').value.trim()});accountView();say('昵称已保存。');});};
   $('online-forgot').onclick=()=>action(async()=>{const email=$('online-email').value.trim();if(!$('online-email').checkValidity())throw Error('请先输入有效邮箱');await request('/auth/v1/recover?redirect_to='+encodeURIComponent(location.origin+location.pathname),{email});say('重置邮件已申请，请查看邮箱。');});
   $('online-recovery-form').onsubmit=event=>{event.preventDefault();action(async()=>{await request('/auth/v1/user',{password:$('online-new-password').value},'PUT');$('online-new-password').value='';$('online-recovery').hidden=true;say('密码已更新。');});};
@@ -134,7 +141,7 @@ export function initOnline({players,pools,dataVersion}) {
   $('online-search').oninput=()=>{selected=null;$('online-submit').disabled=true;const guessed=new Set(match?.guesses?.map(r=>r.id)||[]);const options=match?searchPlayers(playersInPool(players,match.pool),$('online-search').value).filter(p=>!guessed.has(p.id)).slice(0,8):[];$('online-candidates').innerHTML=options.map(p=>`<button type="button" data-online-player="${esc(p.id)}">${esc(p.chineseName||p.name)}${p.chineseName?' · '+esc(p.name):''}</button>`).join('');};
   $('online-candidates').onclick=event=>{const button=event.target.closest('[data-online-player]');if(button){selected=button.dataset.onlinePlayer;$('online-search').value=button.textContent;$('online-candidates').innerHTML='';$('online-submit').disabled=false;}};
   $('online-submit').onclick=()=>action(async()=>{if(!selected||!match||match.data_version!==dataVersion)return;accept(await gameRpc('guess',{p_match:match.id,p_player:selected}));selected=null;$('online-search').value='';$('online-candidates').innerHTML='';$('online-submit').disabled=true;say('');});
-  $('online-leave').onclick=()=>action(async()=>{if(match?.state==='playing'&&!confirm('退出后不能继续猜测；其他玩家可继续，天梯按最终赛果结算。确定退出？'))return;accept(await gameRpc('leave',{p_match:match.id}));});
+  $('online-leave').onclick=()=>action(async()=>{if(match?.state==='playing'&&!confirm(t('退出后不能继续猜测；其他玩家可继续，天梯按最终赛果结算。确定退出？')))return;accept(await gameRpc('leave',{p_match:match.id}));});
   $('online-dismiss').onclick=()=>{resultDialog.close();accept(null);say('');openOnlineSettings();};$('online-refresh-board').onclick=()=>action(leaderboard);
   $('online-ranking').ontoggle=()=>{if($('online-ranking').open&&ready)action(leaderboard);};
   setInterval(()=>{clock();if(match&&!['finished','cancelled'].includes(match.state)&&!document.hidden)sync();},1600);

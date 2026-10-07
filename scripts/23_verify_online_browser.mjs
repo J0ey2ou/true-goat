@@ -76,6 +76,7 @@ try {
     const page=await context.newPage();pages.push(page);
     page.on('pageerror',error=>errors.push(error.message));
     await page.goto(base);
+    await page.locator('[data-language="zh-CN"]').click();
     await page.locator('#guess-app').waitFor({state:'visible'});
     await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
     await page.locator('#guess-open-settings').click();
@@ -110,6 +111,10 @@ try {
   await guess(host,wrong);
   await host.locator('#online-history .online-guess').waitFor();
   assert.equal(await host.locator('#online-history .online-feedback>div').count(),10);
+  await host.locator('#online-coach>summary').click();
+  assert.equal(await host.locator('#online-coach-body [data-coach-key]').count(),10);
+  assert.equal(await guest.locator('#online-coach-body [data-coach-key]').count(),0,'opponent guesses never enter my notebook');
+  await host.locator('#online-coach>summary').click();
   await guest.locator('#online-progress .online-tiles').waitFor();
   assert.equal(await guest.locator('#online-history .online-guess').count(),0);
   assert.equal(await guest.locator('#online-progress .online-tiles i').count(),10);

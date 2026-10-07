@@ -3,6 +3,7 @@ import { MODULES, MODULE_VERSION, sanitizeAdvanced, scoreWithModules, rankWithMo
 import { radarMarkup, contributionMarkup } from './score-charts.mjs';
 import { createPlayerLibrary, mergeSelectedPlayers } from './player-library.mjs';
 import { searchPlayers } from './player-search.mjs';
+import { registerNames } from './i18n.mjs';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -245,6 +246,7 @@ async function init() {
   const responses=await Promise.all([fetch('/data/players.json'),fetch('/data/experts.json')]);
   if(responses.some(r=>!r.ok))throw new Error('模型文件未准备好，请先运行拟合脚本。');
   [data,{experts}]=await Promise.all(responses.map(r=>r.json()));basePlayers=data.players;players=[...basePlayers];
+  registerNames(players.map(p=>({...p,chineseName:chinese[p.player_id]||p.chineseName})));
   try {const response=await fetch('/data/player-directory.json');if(!response.ok)throw new Error('球员库未准备好');const payload=await response.json();directory=new Map((payload.players||[]).map(p=>[p.id,p]));directoryAvailable=directory.size>0;}catch{toast('球员库暂不可用：基础模型仍可用，原始统计模块将明确显示缺失。');}
   if(!experts.length || !experts[0].coefficients)throw new Error('请先运行 scripts/13_build_expert_presets.py 生成 v0.4 加性预设。');
   baseDirectory=new Map(directory);

@@ -2,8 +2,13 @@
  * Pure shared player-name search. Alias data is merged at build time.
  * Translations/nicknames are search labels, never unique player identities.
  */
+import { Converter } from './opencc-t2cn.mjs';
+const simplify = Converter({from:'tw',to:'cn'});
+const normalizedCache=new Map();
 export function normalizeSearch(value) {
-  return String(value ?? '')
+  const source=String(value ?? '');
+  if(normalizedCache.has(source))return normalizedCache.get(source);
+  const normalized = (/\p{Script=Han}/u.test(source)?simplify(source):source)
     .normalize('NFKD')
     .replace(/\p{M}/gu, '')
     .toLowerCase()
@@ -12,6 +17,9 @@ export function normalizeSearch(value) {
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim()
     .replace(/\s+/g, ' ');
+  if(normalizedCache.size>50000)normalizedCache.clear();
+  normalizedCache.set(source,normalized);
+  return normalized;
 }
 
 const compact = value => value.replace(/\s+/g, '');

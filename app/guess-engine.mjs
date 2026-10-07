@@ -184,6 +184,10 @@ export function newRound({mode,pool,date,version,answerId,filters = {}}) {
   return {schema:2,mode,pool,date,version,filters:canonicalFilters(normalized),answerId:selectedAnswer,guesses:[],status:selectedAnswer ? 'playing' : 'empty'};
 }
 
+export function giveUpRound(round) {
+  return round?.status === 'playing' && round.answerId ? {...round,status:'lost',abandoned:true} : round;
+}
+
 function validStoredFilters(filters) {
   return filters !== null && typeof filters === 'object' && !Array.isArray(filters)
     && ['from','to','teamId'].every(key => Object.hasOwn(filters,key))
@@ -211,7 +215,9 @@ export function restoreRound(saved,{mode,pool,date,version,players,fallbackAnswe
   const valid = envelope && saved.answerId === answerId && (candidates.has(answerId) || answerId === null && !candidates.size)
     && validGuesses(saved.guesses,candidates,answerId);
   if (!valid) return {round:fresh,recovered:true};
-  return {round:{...fresh,guesses:[...saved.guesses],status:roundStatus(saved.guesses,answerId)},recovered:false};
+  const status=roundStatus(saved.guesses,answerId);
+  const abandoned=saved.abandoned===true && status==='playing';
+  return {round:{...fresh,guesses:[...saved.guesses],status:abandoned?'lost':status,...(abandoned?{abandoned:true}:{})},recovered:false};
 }
 
 export function submitGuess(round,id,players) {
@@ -239,6 +245,6 @@ export function shareText(round,players,poolName,keys) {
     : filters.from === filters.to ? `赛季结束年 ${filters.from}`
       : `赛季结束年 ${filters.from ?? '不限'}–${filters.to ?? '不限'}`;
   const team = filters.teamId ? teamsForPool(players,round.pool).find(item => item.id === filters.teamId)?.name || '指定球队' : '全部球队';
-  const result = round.status === 'empty' ? '—' : round.status === 'lost' ? 'X' : round.guesses.length;
+  const result = round.status === 'empty' ? '—' : round.abandoned ? '已放弃' : round.status === 'lost' ? 'X' : round.guesses.length;
   return ['TRUE GOAT · 猜球员',poolName + ' · ' + (round.mode === 'daily' ? '每日 ' + round.date + ' (UTC+8)' : '自由练习'),`范围：${years} · ${team}`,...(keys ? ['自选线索：'+selectedAttributes(keys).map(item=>item.label.replace('*','')).join(' / ')] : []),result + '/' + MAX_GUESSES + (round.status === 'empty' ? ' · 暂无题目' : round.status === 'playing' ? ' · 进行中' : round.status === 'won' ? ' · 猜中了' : ' · 本局结束'),...lines,'🟩 一致  🟨 接近/重合  ⬛ 不同  ⬜ 未知'].join('\n');
 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## Website v0.11 — 2026-10-07
+
+- 三个页面支持 English、简体中文与繁體中文。首次访问选择语言，右上角随时切换；当前浏览器记住选择，切换不重置模型、筛选或游戏进度。
+- 翻译覆盖导航、页面导览、设置、账号对战、模型与得分图、球员档案、猜测反馈及结果弹窗。球员检索支持繁体姓名；保留来源中的专名，不臆造未核实译名；玩家昵称不参与翻译。
+- 单人和在线猜测记录均按最新在前展示，保留原始提交顺序和分享记录。
+- 新增小抄辅导，汇总自己已提交反馈中的数字上下界、精确集合、至少重合条件和已排除项；未知反馈不用于排除，不查询隐藏答案，也不读取对手猜测。
+- 单人新增确认后放弃并揭晓答案。刷新保留已放弃状态；每日题不重置，下一局进入同范围练习。在线退出沿用原结算规则，答案只在整场结束后公开。
+- 调整三语手机端导航布局。中文转换库随静态网站分发，不依赖外部翻译接口或 CDN；无需数据库升级。
+
+All three pages now support English, Simplified Chinese and Traditional Chinese, with a first-visit language choice and a persistent top-right switch. Language changes preserve model and game state; Traditional Chinese searches work alongside existing aliases. Guesses appear newest first. A clue notebook combines only the player's revealed feedback into numeric bounds and set constraints, without consulting the hidden answer. Single players can give up, reveal the answer and continue in practice; forfeited daily rounds remain closed after reload. Online answers remain private until the match finishes. Mobile navigation has been adjusted for longer translated labels. No database migration is required.
+
 ## Website v0.10 — 2026-10-07
 
 - 赛季/球队筛选、自选线索、账号/对战收进右上角设置抽屉，键盘和手机端均可使用；在线开局后回到主页面独立显示对局。

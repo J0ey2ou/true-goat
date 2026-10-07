@@ -1,0 +1,23 @@
+.language-control{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border,#6b6879);border-radius:10px;padding:0 10px;min-height:42px;color:inherit;flex-shrink:0}
+.language-control select{font:inherit;font-size:13px;color:inherit;background:transparent;border:0;padding:8px 2px;width:auto;min-width:94px;cursor:pointer}
+.language-control select option{color:#171b2c;background:#fff}
+.language-control:focus-within{outline:2px solid var(--accent,#d7f879);outline-offset:3px}
+.language-dialog{width:min(570px,calc(100vw - 32px));max-height:calc(100dvh - 32px);padding:36px;border:1px solid var(--border,#777);border-radius:24px;background:var(--panel,#171d35);color:var(--text,#fff);box-shadow:0 24px 100px #0008}
+.language-dialog::backdrop{background:#080d21bf;backdrop-filter:blur(10px)}
+.language-dialog h2{font-size:clamp(26px,5vw,36px);line-height:1.35;margin:20px 0 14px}.language-dialog h2 span{font-size:.75em;font-weight:500}
+.language-dialog p{line-height:1.8;opacity:.85}.language-choices{display:grid;gap:12px;margin:24px 0}
+.language-choices button{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;border-radius:12px;border:1px solid var(--border,#777);background:transparent;color:inherit;cursor:pointer;text-align:left;font:inherit}
+.language-choices button:hover,.language-choices button:focus-visible{background:var(--accent,#d7f879);color:#171b2c;outline:2px solid var(--accent,#d7f879);outline-offset:3px}.language-choices strong{font-size:19px}.language-choices span,.language-note{font-size:13px}
+html[lang="en"] .topbar{flex-wrap:wrap;gap:14px}html[lang="en"] .topbar nav{flex-wrap:wrap;gap:14px}html[lang="en"] .top-actions{flex-wrap:wrap}
+html[lang="en"] .guess-cell small,html[lang="en"] .guess-feedback small{overflow-wrap:anywhere}html[lang="en"] .guess-pool-card{min-height:115px}
+html[lang="en"] .hero h1,html[lang="en"] .dir-hero h1,html[lang="en"] .guess-hero h1{font-size:clamp(30px,4vw,58px);line-height:1.12}
+html[lang="en"] .slider-label,html[lang="en"] .field-label{line-height:1.45}html[lang="en"] .dir-list-head{font-size:12px}
+@media(max-width:640px){.language-dialog{padding:24px}.topbar .top-actions{flex-wrap:wrap;gap:8px}.language-control{min-height:40px}.language-control select{font-size:12px}.language-choices button{padding:16px}html[lang="en"] .guess-settings-tabs button{font-size:12px;padding:12px 8px}html[lang="en"] .guess-result-actions{flex-wrap:wrap}}
+@media(max-width:640px){
+  body .topbar.has-theme-picker{display:grid;grid-template-columns:minmax(0,1fr);height:auto;gap:10px;padding:14px 5% 8px}
+  body .topbar.has-theme-picker>.brand{grid-column:1;grid-row:1;white-space:nowrap}
+  body .topbar.has-theme-picker>.top-actions{grid-column:1;grid-row:2;justify-content:flex-start;gap:8px;min-width:0;flex-shrink:1;margin:0}
+  body .topbar.has-theme-picker :is(.page-nav,.dir-nav,.guess-nav){grid-column:1;grid-row:3;display:flex;height:auto;min-height:0;flex-wrap:wrap;gap:2px 16px;margin:0;padding:0}
+  body .topbar.has-theme-picker :is(.page-nav,.dir-nav,.guess-nav) a{padding:8px 0;white-space:nowrap}
+  .language-control{padding:0 6px;min-height:36px}.language-control select{min-width:80px;max-width:90px;padding:6px 1px}
+}

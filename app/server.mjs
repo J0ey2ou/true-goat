@@ -5,6 +5,14 @@ import path from 'node:path';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const routes = {
+  '/i18n.mjs': ['i18n.mjs', 'text/javascript; charset=utf-8'],
+  '/i18n-en.mjs': ['i18n-en.mjs', 'text/javascript; charset=utf-8'],
+  '/opencc-cn2t.mjs': ['opencc-cn2t.mjs', 'text/javascript; charset=utf-8'],
+  '/opencc-t2cn.mjs': ['opencc-t2cn.mjs', 'text/javascript; charset=utf-8'],
+  '/guess-coach.mjs': ['guess-coach.mjs', 'text/javascript; charset=utf-8'],
+  '/i18n.css': ['i18n.css', 'text/css; charset=utf-8'],
+  '/licenses/OPENCC_MIT.txt': ['../licenses/OPENCC_MIT.txt', 'text/plain; charset=utf-8'],
+  '/licenses/OPENCC_APACHE.txt': ['../licenses/OPENCC_APACHE.txt', 'text/plain; charset=utf-8'],
   '/THIRD_PARTY_NOTICES.txt': ['../THIRD_PARTY_NOTICES.txt', 'text/plain; charset=utf-8'],
   '/licenses/GONZALO_MIT.txt': ['../licenses/GONZALO_MIT.txt', 'text/plain; charset=utf-8'],
   '/licenses/BRESCOU_MIT.txt': ['../licenses/BRESCOU_MIT.txt', 'text/plain; charset=utf-8'],

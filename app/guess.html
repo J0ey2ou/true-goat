@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="/onboarding.css">
   <link rel="stylesheet" href="/welcome.css">
   <link rel="stylesheet" href="/themes.css">
+  <link rel="stylesheet" href="/i18n.css">
+  <script type="module" src="/i18n.mjs"></script>
   <script type="module" src="/guess.mjs"></script>
   <script type="module" src="/onboarding.mjs"></script>
   <script type="module" src="/themes.mjs"></script>
@@ -71,7 +73,8 @@
           <p id="guess-search-hint" class="guess-input-hint">↑ ↓ 切换候选，回车或点击候选提交；每次提交消耗一次机会。</p>
           <div id="guess-message" class="guess-message" role="status" aria-live="polite"></div>
           <div class="guess-legend" aria-label="提示颜色"><span><i class="correct"></i>一致</span><span><i class="close"></i>接近 / 重合</span><span><i class="wrong"></i>不同</span><span><i class="unknown"></i>未知</span><span>↑ ↓ 答案更大 / 更小</span></div>
-          <div class="guess-history-head"><span>你的猜测</span><span>基本资料 + 5 项生涯指标</span></div>
+          <div class="guess-round-tools"><button id="guess-coach-open" class="button outline" type="button" aria-haspopup="dialog">小抄辅导 ↗</button><button id="guess-give-up" class="text-button" type="button">放弃本局 · 揭晓答案</button></div>
+          <div class="guess-history-head"><span>你的猜测</span><span>最新猜测在最上方</span></div>
           <p class="guess-history-note" id="guess-metrics-cutoff">点击「效力球队」卡片可查看完整队名。各指标按已核实数据比较，截止日期见下方说明。</p>
           <div id="guess-history" class="guess-history" aria-label="猜测记录"></div>
           <div class="guess-board-actions"><button id="guess-show-result" class="button outline" type="button" hidden>查看本局结果 ↗</button><button id="guess-share" class="button outline" type="button" disabled>复制色块战绩 ↗</button><button id="guess-new" class="button outline" type="button" hidden>换一位，再来一局 ↻</button><span id="guess-next-day"></span></div>
@@ -103,6 +106,8 @@
     <p id="guess-result-next-note" class="guess-result-next-note"></p>
     <div class="guess-result-actions"><button id="guess-result-next" class="button primary" type="button">开启下一局 · 刷新页面 ↻</button><button id="guess-result-review" class="button outline" type="button">返回查看猜测</button></div>
   </dialog>
+  <dialog id="guess-coach-dialog" class="guess-team-dialog" aria-labelledby="guess-coach-title"><div class="guess-team-dialog-head"><div><div class="eyebrow">CONNECT THE CLUES</div><h2 id="guess-coach-title">小抄辅导</h2></div><button id="guess-coach-close" class="close-button" type="button" aria-label="关闭小抄">×</button></div><p>只汇总你已猜出的线索，不读取隐藏答案。未知数据不用于排除；黄色集合表示至少重合一项，不代表全部拥有。</p><div id="guess-coach-body"></div></dialog>
+  <dialog id="guess-give-up-dialog" class="language-dialog" aria-labelledby="guess-give-up-title"><h2 id="guess-give-up-title">放弃本局并揭晓答案？</h2><p>本局会记为已放弃，不能继续猜测。每日题目不会重置，你可以在揭晓后开始自由练习。</p><div class="guess-result-actions"><button id="guess-give-up-cancel" class="button outline" type="button" autofocus>继续猜测</button><button id="guess-give-up-confirm" class="button primary" type="button">确认放弃 · 查看答案</button></div></dialog>
   <dialog id="guess-team-dialog" class="guess-team-dialog" aria-labelledby="guess-team-dialog-title" aria-describedby="guess-team-dialog-description">
     <div class="guess-team-dialog-head"><div><div class="eyebrow">YOUR GUESS · TEAM HISTORY</div><h2 id="guess-team-dialog-title">球队经历</h2><p id="guess-team-dialog-player"></p></div><button id="guess-team-dialog-close" class="close-button" type="button" aria-label="关闭球队经历" autofocus>×</button></div>
     <p id="guess-team-dialog-description" class="sr-only">显示已提交球员的全部已收录球队名称。按 Escape 或关闭按钮返回猜测记录。</p>

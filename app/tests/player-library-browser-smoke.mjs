@@ -6,6 +6,7 @@ const first={id:'librarytest01',name:'Library Test Player',chineseName:'扩展�
 const fixture={players:[first,{id:'jordami01',name:'Michael Jordan'},...Array.from({length:70},(_,i)=>({id:'libraryfixture'+i,name:'Fixture Player '+i,model:{components:{}}}))],sources:[{id:'fixture-source',title:'测试来源',url:'https://www.nba.com/stats'}]};
 async function context({blocked=false,real=false}={}){
   const ctx=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});contexts.push(ctx);
+  await ctx.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
   await ctx.addInitScript(({blocked})=>{if(location.origin==='null')return;for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));if(blocked)Storage.prototype.setItem=function(){throw new DOMException('Test storage denial','SecurityError');};},{blocked});
   if(!real)await ctx.route('**/data/player-catalog.json',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(fixture)}));
   ctx.on('page',page=>page.on('pageerror',e=>errors.push(e.message)));

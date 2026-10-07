@@ -1,4 +1,5 @@
 /** A read-only introduction: demos never invoke the ranking or game engines. */
+import './i18n.mjs';
 export const STORAGE_KEY = 'true-goat-onboarding-v2';
 const PAGE_SCOPES = ['lab', 'directory', 'guess'];
 
@@ -93,6 +94,10 @@ function visible(element) {
 }
 
 export function initOnboarding(document = globalThis.document) {
+  if (document?.getElementById('language-dialog')?.open) {
+    document.addEventListener('goat:language-ready', () => queueMicrotask(()=>initOnboarding(document)), {once:true});
+    return;
+  }
   if (!document?.body || document.getElementById('onboarding-dialog')) return;
   const window = document.defaultView;
   const config = pageConfiguration(document);

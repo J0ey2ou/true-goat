@@ -28,7 +28,9 @@ export function readCustomIds(storage) {
   try { const stored = JSON.parse(storage.getItem(CUSTOM_PLAYERS_KEY) || 'null'); return sanitizeSelectedIds(Array.isArray(stored) ? stored : stored?.ids); }
   catch { return []; }
 }
+import { registerNames } from './i18n.mjs';
 export function mergeSelectedPlayers(basePlayers, selectedPlayers, idKey = 'id') {
+  registerNames(selectedPlayers);
   const existing = new Set(basePlayers.map(p=>p[idKey]));
   return [...basePlayers,...selectedPlayers.filter(p=>!existing.has(p[idKey]) && (existing.add(p[idKey]),true))];
 }
@@ -54,7 +56,7 @@ export function createPlayerLibrary({baseIds, onChange = ()=>{}, onPreview, moun
   function save() { try { if(!storage)throw new Error('unavailable');storage.setItem(CUSTOM_PLAYERS_KEY,JSON.stringify({v:1,ids:ids()}));temporary=false; }catch{temporary=true;} }
   async function ensureCatalog() {
     if(catalog)return catalog;
-    if(!loading)loading=(async()=>{const response=await fetch('/data/player-catalog.json');if(!response.ok)throw new Error('扩展球员档案载入失败，请稍后重试（HTTP '+response.status+'）。');catalog=normalizeCatalog(await response.json());if(!catalog.players.length)throw new Error('扩展档案没有可用球员。');catalogMap=new Map(catalog.players.map(p=>[p.id,p]));return catalog;})().catch(error=>{catalog=null;throw error;}).finally(()=>{loading=null;});
+    if(!loading)loading=(async()=>{const response=await fetch('/data/player-catalog.json');if(!response.ok)throw new Error('扩展球员档案载入失败，请稍后重试（HTTP '+response.status+'）。');catalog=normalizeCatalog(await response.json());if(!catalog.players.length)throw new Error('扩展档案没有可用球员。');registerNames(catalog.players);catalogMap=new Map(catalog.players.map(p=>[p.id,p]));return catalog;})().catch(error=>{catalog=null;throw error;}).finally(()=>{loading=null;});
     return loading;
   }
   function render() {

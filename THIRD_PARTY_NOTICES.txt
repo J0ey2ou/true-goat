@@ -46,3 +46,13 @@ https://www.espn.com/nba/scoreboard
 统计快照不是实时数据；猜球员的已核实季后赛/总决赛出场赛季数补齐至2025–26，旧GOAT评分和资料库季后赛数据仍单独标注2023–24。现役名单为2026-10-04快照，其余按各来源注明日期。
 原始大体积数据、文章全文缓存、私人路径、凭据和本地导出不包含在公开发布包内。
 权利人如需更正数据或提出来源、权利问题，请通过代码仓库 Issue 反馈。
+
+8. OpenCC JavaScript 1.4.2 — Chinese script conversion / 中文简繁转换
+https://github.com/nk2028/opencc-js
+https://www.npmjs.com/package/opencc-js/v/1.4.2
+Unmodified cn2t and t2cn ESM distribution bundles are served locally as
+app/opencc-cn2t.mjs and app/opencc-t2cn.mjs (filename extension changed only).
+Code: MIT; generated OpenCC dictionary data: Apache-2.0 (opencc-data).
+https://github.com/nk2028/opencc-data
+License texts: licenses/OPENCC_MIT.txt and licenses/OPENCC_APACHE.txt.
+用于繁体界面与简繁通用检索，感谢 OpenCC 社区与 nk2028 项目的贡献。

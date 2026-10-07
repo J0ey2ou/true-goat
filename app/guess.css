@@ -363,3 +363,4 @@
   .guess-page .guess-team-dialog { padding:18px 15px; width:calc(100% - 20px); max-height:calc(100dvh - 24px); }
   .guess-page .guess-team-record,.guess-page .guess-team-coverage { padding:14px; }
 }
+.guess-round-tools{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin:18px 0}.guess-round-tools .text-button{padding:12px;min-height:44px}.guess-coach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,235px),1fr));gap:12px}.guess-coach-grid article{border:1px solid var(--border,#777);border-radius:12px;padding:16px;min-width:0}.guess-coach-grid h3{margin:0 0 12px;font-size:17px}.guess-coach-grid p{font-size:16px;line-height:1.6;overflow-wrap:anywhere}.guess-coach-grid small{opacity:.7;font-size:13px}.guess-row:first-child{border-color:var(--accent,#d7f879)}

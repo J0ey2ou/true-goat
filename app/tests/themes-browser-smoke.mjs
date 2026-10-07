@@ -12,6 +12,7 @@ const pages = [
 ];
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440, height:1000}});
+await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
 await context.addInitScript(() => {
   for (const page of ['lab','directory','guess']) localStorage.setItem(`true-goat-onboarding-v2:${page}`, JSON.stringify({version:2, page, seen:true}));
 });
@@ -151,6 +152,7 @@ try {
     await restricted.addInitScript(() => Object.defineProperty(window,'localStorage',{get() {throw new Error('disabled for test');}}));
     const restrictedPage = await restricted.newPage();
     await restrictedPage.goto(base.href);
+    await restrictedPage.locator('[data-language="zh-CN"]').click();
     await restrictedPage.locator('#open-theme').waitFor();
     if (await restrictedPage.locator('#onboarding-dialog').isVisible()) await restrictedPage.keyboard.press('Escape');
     await restrictedPage.locator('#open-theme').click();

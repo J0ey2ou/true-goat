@@ -26,6 +26,7 @@ async function check(name, action) {
 
 async function withPage(action, options = {}, initialize) {
   const context = await browser.newContext({viewport:{width:1440, height:1000}, ...options});
+  await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
   if (initialize) await context.addInitScript(initialize);
   const page = await context.newPage();
   page.setDefaultTimeout(10000);
@@ -229,6 +230,7 @@ try {
       const model = await page.evaluate(() => JSON.parse(localStorage.getItem('true-goat-v04')));
       model.coefficients.peak = 3.21;
       const fresh = await browser.newContext();
+      await fresh.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
       try {
         const linked = await fresh.newPage();
         linked.on('pageerror', error => errors.push(error.message));
