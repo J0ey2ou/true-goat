@@ -9,6 +9,7 @@ export const CUSTOM_ENGLISH=Object.freeze(Object.fromEntries(`
 尚未找到非孤例的正向第一；可继续自由探索。|No non-isolated positive first found yet; keep exploring.
 当前统计快照缺少该球员的可用表现，不生成虚构第一。|This snapshot has no usable performance data for this player; no first is invented.
 预探索覆盖|Discovery coverage
+仅单人样本|One-player comparisons only
 有表现数据|With performance data
 已找到正向候选纪录|Positive record candidates found
 预探索会使用更多档案组合，载入后按相同引擎重新验证；不是全史认证。|Precomputed exploration uses more profile combinations. Loaded claims are rechecked by the same engine, not certified as all-time records.
@@ -59,9 +60,9 @@ export const CUSTOM_ENGLISH=Object.freeze(Object.fromEntries(`
 NBA 赛季年龄沿用来源口径，通常为赛季中 2 月 1 日年龄；单场为比赛日周岁。CBA 缺少可靠赛季年龄，不开放该条件。|NBA season age follows the source, generally age on February 1. Game age is completed years on game day. Reliable CBA season ages are unavailable, so that filter is disabled.
 身高、体重是档案快照，不是每场实测。院校代表就读而非毕业；出生地使用 Wikidata 明确身份匹配，未知不补齐。|Height and weight are profile snapshots, not game-day measurements. College means attended, not graduated. Birthplaces use exact Wikidata identity matches; missing values stay unknown.
 转队赛季采用合计行；指定球队会排除无法将合计表现归到单队的赛季。CBA 使用来源的全部赛段场均，不能当作纯常规赛。|Traded seasons use combined totals; team filters exclude seasons that cannot be attributed to one team. CBA averages include all phases as reported, not regular season only.
-命中率使用百分数；TS% = 得分 ÷ [2 × (出手 + 0.44 × 罚球出手)]。BPM、PER、USG 使用来源值，Game Score 按完整单场技术统计计算；缺字段不补零。|Percentages use a 0–100 scale. TS% = 100 × PTS / [2 × (FGA + 0.44 × FTA)]. BPM, PER and USG use source values. Game Score requires complete box-score inputs; missing is never zero.
+命中率使用百分数；TS% = 100 × 得分 ÷ [2 × (出手 + 0.44 × 罚球出手)]。BPM、PER、USG 使用来源值，Game Score 按完整单场技术统计计算；缺字段不补零。|Percentages use a 0–100 scale. TS% = 100 × PTS / [2 × (FGA + 0.44 × FTA)]. BPM, PER and USG use source values. Game Score requires complete box-score inputs; missing is never zero.
 自动探索优先正向表现，只在预设年龄档、5 cm / 5 kg 档及已知身份条件中寻找，最多验证 128 组；未找到不等于不存在。条件越多不代表成就越伟大。|Auto exploration prioritizes positive performance within preset age bands, 5 cm / 5 kg bands and known background groups, testing up to 128 combinations. No result does not prove impossibility. More qualifiers do not mean greater achievement.
-仅剩本人时标记孤例；未知项排除会缩小样本。不存在保证每个球员都是第一的诚实算法。|A one-player comparison is labeled an isolated case. Missing data reduce the sample. No honest algorithm can guarantee a first for every player.
+仅剩本人时标记孤例；未知项排除会缩小样本。单人样本不能当成具有竞争性的第一；未找到或缺资料时明确标注。|A one-player comparison is labeled an isolated case, not a competitive first. Missing data reduce the sample. Unavailable and undiscovered claims are explicitly marked.
 CBA：已收录 2005–06 至 2023–24 的全部赛段场均。逐场、年龄与高阶数据暂缺；不伪造连续纪录。|CBA: recorded season averages, all phases, 2005–06 to 2023–24. Game logs, ages and advanced metrics are unavailable; no streaks are invented.
 NBA 逐场：1946–47 至 2023–24；按选定年份下载。早期资料和高阶字段存在缺失，连续纪录只针对已收录出场。|NBA games: 1946–47 to 2023–24, downloaded by selected year. Early and advanced data have gaps; streaks refer only to recorded appearances.
 NBA 赛季：1946–47 至 2025–26 常规赛场均。转队用合计行，不重复统计。|NBA seasons: 1946–47 to 2025–26 regular-season averages. Traded seasons use one combined row, without double counting.

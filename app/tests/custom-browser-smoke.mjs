@@ -13,6 +13,9 @@ try{
   await page.locator('#custom-run').click();await page.locator('.custom-card').waitFor({timeout:60000});assert.match(await page.locator('.custom-card').innerText(),/目标名次/);
   await page.locator('#custom-explore').click();await page.locator('.custom-card').first().waitFor({timeout:60000});assert.ok(await page.locator('.custom-card').count()>1);
   await page.locator('#custom-discovery').click();await page.locator('.custom-card').waitFor();assert.equal(await page.locator('.custom-card').getAttribute('data-first'),'true');
+  const discoveries=JSON.parse(await readFile('app/data/custom-discoveries.json','utf8')),manifest=JSON.parse(await readFile('app/data/custom-manifest.json','utf8'));
+  const isolated=Number(Object.entries(discoveries.pools['nba-history'].records).find(([,r])=>r.status==='isolated')[0]);
+  await page.locator('#custom-search').fill(manifest.players[isolated].name);await page.locator(`#custom-options [data-player="${isolated}"]`).click();await page.locator('#custom-discovery').click();await page.locator('.custom-card').waitFor();assert.equal(await page.locator('.custom-card').getAttribute('data-first'),'false');assert.match(await page.locator('.custom-badge').innerText(),/孤例/);
   await page.locator('#custom-unit').selectOption('game');await page.locator('#custom-search').fill('詹姆斯');await page.locator('#custom-options button').filter({hasText:'LeBron James'}).click();
   await page.evaluate(()=>{const Original=window.Worker;window.Worker=class extends Original{constructor(...args){super(...args);this.addEventListener('message',e=>{if(e.data.type==='error')console.error('Worker:',e.data.message);});}};});page.on('console',m=>{if(m.type()==='error')console.log(m.text());});
   await page.locator('#custom-mode').selectOption('streak');await page.locator('#custom-run').click();await page.locator('.custom-card').waitFor({timeout:60000});assert.match(await page.locator('.custom-card').innerText(),/连续/);

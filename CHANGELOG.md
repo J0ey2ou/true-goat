@@ -4,12 +4,12 @@
 
 - 新增「定制数据 / Customized Player」，四个 NBA/CBA 现役及历史已收录池；支持最早达成、最高表现、NBA 连续已收录出场，及年龄、效率、高阶指标、身高体重、院校、出生地、球队与同场对手条件。
 - 以真实赛季和逐场事实计算，显示比较人数、未知排除数、并列与来源；不将孤例或覆盖不全包装成全史纪录。NBA 单场到 2023–24，赛季到 2025–26；CBA 为 2005–06 至 2023–24 全部赛段场均，缺失功能明确禁用。
-- 自动搜索正向纪录；全员预探索生成 6,394 个分池候选，全部由查询引擎复算。NBA 历史 4,709/5,105、现役 477/620；CBA 历史 1,067/1,487、现役 141/328。球员池有重合，不是去重人数；缺数据或尚未找到时明示，不保证人人第一。
+- 自动搜索正向纪录；全员预探索生成 6,486 个有比较对象的分池候选与 405 个明确标记的单人样本，全部由查询引擎复算。NBA 历史有比较对象 4,794/5,105、另有单人样本 300；现役 484/620、单人样本 24。CBA 历史 1,067/1,487、单人样本 63；现役 141/328、单人样本 18。球员池有重合，不是去重人数；缺数据或尚未找到时明示，不保证人人第一。
 - 四个页面右下角固定数据纠错入口，必填错误、建议更正和来源链接；生成 GitHub Issues 草稿，由用户登录并确认公开提交，不收集登录令牌。
 - 猜球员在线人数通过 Realtime Presence 实时更新，按浏览器去重、含游客；显示估计而非匹配队列人数，断连不显示虚假零值。无需 SQL 升级。
 - 新页面兼容三语与皮肤，按赛季加载压缩数据、后台线程计算，支持取消；修复静态打包保留二进制数据。
 
-Customized Player explores earliest achievements, statistical leaders and recorded NBA appearance streaks across four NBA/CBA pools. Filters include performance, age, efficiency, advanced metrics, profile height/weight, college attended, birthplace and verified opposing-team appearances. Every claim states its snapshot scope, peers, ties, missing data and evidence. Positive record candidates are precomputed and independently reproduced for 6,394 pool entries; missing records are not invented. A fixed correction form on every page prepares a public GitHub Issue with a required evidence link. Live Presence estimates connected guessing browsers, deduplicates tabs and handles disconnects. No database migration is required.
+Customized Player explores earliest achievements, statistical leaders and recorded NBA appearance streaks across four NBA/CBA pools. Filters include performance, age, efficiency, advanced metrics, profile height/weight, college attended, birthplace and verified opposing-team appearances. Every claim states its snapshot scope, peers, ties, missing data and evidence. All 6,486 positive candidate claims with peers and 405 explicitly isolated one-player cases are independently reproduced; missing records are not invented. A fixed correction form on every page prepares a public GitHub Issue with a required evidence link. Live Presence estimates connected guessing browsers, deduplicates tabs and handles disconnects. No database migration is required.
 
 ## Website v0.11 — 2026-10-07
 

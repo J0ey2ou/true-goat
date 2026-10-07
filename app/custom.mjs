@@ -11,7 +11,7 @@ const available=()=>data.players.filter(p=>p.pools.includes(pool()));
 const name=p=>p?`${t(p.chineseName||p.name)}${p.chineseName&&t(p.chineseName)!==p.name?' / '+p.name:''}`:'—';
 const option=(value,label)=>`<option value="${esc(value)}">${esc(label)}</option>`;
 function fill(id,entries){$(id).innerHTML=option('','不限')+entries.map(([value,label])=>option(value,label)).join('');}
-function selectedView(){const p=data.players[selected],record=discoveries?.pools[pool()]?.records[selected];$('custom-selected').innerHTML=p?`<strong>${esc(name(p))}</strong><p>${esc(p.id)} · ${p.heightCm??'—'} cm · ${p.weightKg??'—'} kg<br>${esc(p.college||t('院校未知'))} · ${esc(p.birthplace||t('出生地未知'))}</p>${record?.status==='candidate'?'<button class="button outline" type="button" id="custom-discovery">查看并验证预探索纪录</button>':'<p>'+esc(t(record?.status==='no-data'?'当前统计快照缺少该球员的可用表现，不生成虚构第一。':'尚未找到非孤例的正向第一；可继续自由探索。'))+'</p>'}`:'';
+function selectedView(){const p=data.players[selected],record=discoveries?.pools[pool()]?.records[selected];$('custom-selected').innerHTML=p?`<strong>${esc(name(p))}</strong><p>${esc(p.id)} · ${p.heightCm??'—'} cm · ${p.weightKg??'—'} kg<br>${esc(p.college||t('院校未知'))} · ${esc(p.birthplace||t('出生地未知'))}</p>${['candidate','isolated'].includes(record?.status)?'<button class="button outline" type="button" id="custom-discovery">查看并验证预探索纪录</button>':'<p>'+esc(t(record?.status==='no-data'?'当前统计快照缺少该球员的可用表现，不生成虚构第一。':'尚未找到非孤例的正向第一；可继续自由探索。'))+'</p>'}`:'';
   if($('custom-discovery'))$('custom-discovery').onclick=()=>{const q=record.query;$('custom-unit').value=q.unit;configure();for(const key of ['mode','from','to','phase','metric','team','college','birthplace','position'])$('custom-'+key).value=q[key]??'';$('custom-filters').innerHTML='';for(const f of q.filters)addFilter(f.key,f.op,f.value);run(false);};
 }
 function choose(index){stop();results=[];selected=index;$('custom-options').innerHTML='';$('custom-search').value='';selectedView();$('custom-results').innerHTML='';}
@@ -46,7 +46,7 @@ function configure(reset=true){
   $('custom-coverage').textContent=cba?'CBA：已收录 2005–06 至 2023–24 的全部赛段场均。逐场、年龄与高阶数据暂缺；不伪造连续纪录。':game?'NBA 逐场：1946–47 至 2023–24；按选定年份下载。早期资料和高阶字段存在缺失，连续纪录只针对已收录出场。':'NBA 赛季：1946–47 至 2025–26 常规赛场均。转队用合计行，不重复统计。';
   if(selected===null||!data.players[selected].pools.includes(pool()))choose(data.players.indexOf(persons.find(p=>p.id==='jordami01')||persons[0]));
   else selectedView();
-  const found=discoveries?.pools[pool()];if(found)$('custom-coverage').textContent+=' '+t('预探索覆盖')+`: ${found.players} · `+t('有表现数据')+`: ${found.withData} · `+t('已找到正向候选纪录')+`: ${found.found}. `+t('预探索会使用更多档案组合，载入后按相同引擎重新验证；不是全史认证。');
+  const found=discoveries?.pools[pool()];if(found)$('custom-coverage').textContent+=' '+t('预探索覆盖')+`: ${found.players} · `+t('有表现数据')+`: ${found.withData} · `+t('已找到正向候选纪录')+`: ${found.found} · `+t('仅单人样本')+`: ${found.isolated||0}. `+t('预探索会使用更多档案组合，载入后按相同引擎重新验证；不是全史认证。');
   results=[];$('custom-results').innerHTML='';
 }
 function query(){return validateQuery({pool:pool(),unit:$('custom-unit').value,mode:$('custom-mode').value,metric:$('custom-metric').value,
