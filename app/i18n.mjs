@@ -1,4 +1,6 @@
-import { ENGLISH } from './i18n-en.mjs';
+import { ENGLISH as BASE_ENGLISH } from './i18n-en.mjs';
+import {CUSTOM_ENGLISH} from './i18n-custom-en.mjs';
+const ENGLISH={...BASE_ENGLISH,...CUSTOM_ENGLISH};
 import { Converter } from './opencc-cn2t.mjs';
 
 export const LANGUAGE_KEY = 'true-goat-language:v1';

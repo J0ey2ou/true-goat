@@ -28,6 +28,11 @@
 !/app/data/guess-players.json
 !/app/data/guess-extra-metrics.json
 !/app/data/guess-source-cba.json
+!/app/data/custom-manifest.json
+!/app/data/custom-discoveries.json
+!/app/data/custom-nba-seasons.json
+!/app/data/custom-cba-seasons.json
+!/app/data/custom-nba-games-*.json.gz
 !/app/tests/
 /app/tests/*
 !/app/tests/*.mjs

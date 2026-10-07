@@ -56,3 +56,9 @@ Code: MIT; generated OpenCC dictionary data: Apache-2.0 (opencc-data).
 https://github.com/nk2028/opencc-data
 License texts: licenses/OPENCC_MIT.txt and licenses/OPENCC_APACHE.txt.
 用于繁体界面与简繁通用检索，感谢 OpenCC 社区与 nk2028 项目的贡献。
+
+9. Customized Player / 定制数据
+NBA 单场统计派生自第 2 项本地快照，1946–47 至 2023–24，按赛季压缩分发必要事实；NBA 常规赛赛季统计使用第 1 项，至 2025–26。并未以季后赛出场名单伪造后续赛季逐场数据。
+CBA 使用第 5 项新浪公开赛季表中必要事实，2005–06 至 2023–24，全部赛段场均。2024–25、2025–26 查询为空，不声明覆盖；已核验身份无法匹配的记录隔离。
+新增出生地：Wikidata (CC0)，https://www.wikidata.org/ ，通过 P2685 Basketball Reference NBA player ID 与 P19 place of birth 精确关联，2026-10-07 读取。每位已匹配球员的条目链接保留在 custom-manifest.json 的 bioSource。无来源或冲突字段保留未知。
+身高、体重、就读院校沿用既有档案快照；不能视为比赛日实测或毕业证明。所有自动生成的第一、并列与连续结果只限已收录比较范围，来源不为这些算法结论背书。

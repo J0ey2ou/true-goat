@@ -1,3 +1,4 @@
+import './feedback.mjs';
 // Appearance is independent of model coefficients, player pools and game progress.
 export const THEME_STORAGE_KEY = 'true-goat-theme:v1';
 export const DEFAULT_THEME = 'aurora';

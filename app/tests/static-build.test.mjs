@@ -49,7 +49,7 @@ test('build does not change sources; public JSON and license files remain byte-e
   for (const [source, target] of STATIC_FILES) {
     const original = await readFile(path.join(PROJECT_ROOT, source));
     assert.deepEqual(await readFile(path.join(fixture, source)), original, source);
-    if (/\.(json|txt)$/.test(target)) assert.deepEqual(await readFile(path.join(result.output, target)), original, target);
+    if (/\.(json|txt|gz)$/.test(target)) assert.deepEqual(await readFile(path.join(result.output, target)), original, target);
   }
 });
 

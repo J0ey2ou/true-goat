@@ -1,6 +1,6 @@
 {
   "name": "true-goat-lab",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,6 +8,7 @@
     "build": "node ../scripts/16_build_static_site.mjs",
     "test:static": "node --test tests/static-build.test.mjs",
     "test:language": "node tests/language-browser-smoke.mjs",
+    "test:custom": "node --test tests/custom.test.mjs && node tests/custom-browser-smoke.mjs",
     "test:onboarding": "node tests/onboarding-browser-smoke.mjs",
     "test:filters": "node tests/guess-filter-browser-smoke.mjs",
     "test:modules": "node tests/modules-browser-smoke.mjs",

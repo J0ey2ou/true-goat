@@ -3,6 +3,7 @@ import {ATTRIBUTES,playersInPool} from './guess-engine.mjs';
 import {searchPlayers} from './player-search.mjs';
 import {t} from './i18n.mjs';
 import {coachMarkup} from './guess-coach.mjs';
+import {initPresence} from './presence.mjs';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SESSION='true-goat-online:session:v1';
 const statusNames={correct:'一致',close:'接近',wrong:'不同',unknown:'未知'};
@@ -18,6 +19,7 @@ export function validMatchSizes(values){return [...new Set(Array.isArray(values)
 export function initOnline({players,pools,dataVersion}) {
   const mount=document.getElementById('online-mount');if(!mount)return;
   let session=null,profile=null,match=null,ready=false,multiReady=false,busy=false,refreshing=false,ws=null,heartbeat=null,register=false,selected=null,serverOffset=0,finishedId=null;
+  const presence=document.createElement('div');presence.className='online-presence';presence.id='online-presence';mount.before(presence);initPresence(presence);
   try{session=JSON.parse(localStorage.getItem(SESSION)||'null');}catch{}
   mount.innerHTML=`<details id="online-panel" class="online-panel panel"><summary><span>在线对战 · 2–5 人 · 账号与天梯</span><small id="online-service-status">正在连接…</small></summary><div class="online-inner">
     <p class="online-rules">2–5 人同题，默认 10 项线索、8 次机会、180 秒。先猜中者获胜；无人猜中则平局。若其余人退出，最后留场者获胜。可看每位对手的次数和颜色进度，不公开猜过的名字。好友房不计积分。</p>

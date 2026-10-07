@@ -4,9 +4,13 @@ import { readFile, writeFile, mkdir, readdir, lstat, realpath } from 'node:fs/pr
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import {gunzipSync} from 'node:zlib';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const STATIC_FILES = Object.freeze([
+  ['app/data/custom-discoveries.json','data/custom-discoveries.json'],
+  ...['custom.html','custom.css','custom.mjs','custom-engine.mjs','custom-worker.mjs','feedback.mjs','feedback.css','presence.mjs','i18n-custom-en.mjs'].map(file=>['app/'+file,file]),
+  ...['custom-manifest.json','custom-nba-seasons.json','custom-cba-seasons.json',...Array.from({length:78},(_,i)=>`custom-nba-games-${1947+i}.json.gz`)].map(file=>['app/data/'+file,'data/'+file]),
   ['app/index.html', 'index.html'],
   ['app/players.html', 'players.html'],
   ['app/guess.html', 'guess.html'],
@@ -54,6 +58,7 @@ export const STATIC_FILES = Object.freeze([
 ].map(entry => Object.freeze(entry)));
 
 const ROUTES = new Map([
+  ['/custom','./custom.html'], ['/custom/','./custom.html'],
   ['/', './index.html'], ['/players', './players.html'], ['/players/', './players.html'],
   ['/guess', './guess.html'], ['/guess/', './guess.html'],
   ...STATIC_FILES.map(([, destination]) => ['/' + destination, './' + destination]),
@@ -160,7 +165,8 @@ export async function buildStaticSite({projectRoot = PROJECT_ROOT, out = 'dist'}
     if (relative.startsWith('..' + path.sep) || relative === '..' || path.isAbsolute(relative)) {
       throw new Error(`${source}: input resolves outside the project`);
     }
-    const original = await readFile(inputPath, 'utf8');
+    const original = destination.endsWith('.gz') ? await readFile(inputPath) : await readFile(inputPath, 'utf8');
+    if(destination.endsWith('.json.gz'))auditPublicJson(gunzipSync(original).toString('utf8'),source);
     const content = destination.endsWith('.json')
       ? (auditPublicJson(original, source), original)
       : /\.(?:html|mjs|css)$/.test(destination) ? transformAsset(original, source) : original;
@@ -199,7 +205,7 @@ async function main(args) {
   const result = await buildStaticSite({out});
   console.log(`Static site ready: ${result.output}`);
   console.log(`${result.fileCount} public files; ${result.bytes.toLocaleString('en-US')} bytes. No raw data, caches, tests, or screenshots included.`);
-  console.log('Entry pages: index.html / players.html / guess.html. Relative URLs support both / and /repository/ hosting.');
+  console.log('Entry pages: index.html / players.html / guess.html / custom.html. Relative URLs support both / and /repository/ hosting.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
