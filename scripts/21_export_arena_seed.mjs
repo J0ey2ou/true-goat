@@ -26,7 +26,9 @@ try{const saved=JSON.parse(await readFile(path.join(dir,'install-token.json'),'u
 token ||= randomBytes(32).toString('hex');
 await writeFile(path.join(dir,'install-token.json'),JSON.stringify({version:source.version,token}));
 const hash=createHash('sha256').update(token).digest('hex');
-const schema=await readFile(path.join(root,'supabase/migrations/202610070001_arena.sql'),'utf8');
+const upgradeSql=await readFile(path.join(root,'supabase/migrations/202610070002_multiplayer.sql'),'utf8');
+const schema=(await readFile(path.join(root,'supabase/migrations/202610070001_arena.sql'),'utf8'))+'\n'+upgradeSql;
+await writeFile(path.join(dir,'03-multiplayer.sql'),upgradeSql);
 const installSql=schema+`\ninsert into goat_private.install_settings(singleton,token_hash,expires_at,version,active) values(true,'${hash}',now()+interval '2 hours','${source.version}',true) on conflict(singleton) do update set token_hash=excluded.token_hash,expires_at=excluded.expires_at,version=excluded.version,active=true;\n`;
 await writeFile(path.join(dir,'01-backend.sql'),installSql);
 const config=await import('../app/online-config.mjs');
@@ -38,6 +40,9 @@ document.getElementById('import').onclick=async()=>{const button=document.getEle
 </script></html>`;
 // Compile the generated browser script before publishing the installation page.
 // A bad escape anywhere in this script also disables the unrelated copy button.
-new vm.Script(html.match(/<script>([\s\S]*)<\/script>/)[1],{filename:'arena-setup-inline.js'});
-await writeFile(path.join(dir,'在线功能安装.html'),html);
+const upgradeSection='<section id="multiplayer-upgrade"><h2>已安装项目：升级 2–5 人对战</h2><p>已有账号和题库不需要重装。复制下面升级 SQL，到 Supabase SQL Editor 粘贴并 Run；保留现有账号、积分和 1v1 对局，不需要重新导入球员。</p><button id="copy-upgrade">复制多人升级 SQL</button><textarea id="upgrade" readonly aria-label="多人升级 SQL"></textarea><p id="upgrade-status" role="status"></p><p>直接注册还需在 Authentication → Sign In / Providers → Email 中关闭 Confirm email 并保存。公开密钥不能修改这个管理设置。</p></section>';
+const upgradeCode=`\ndocument.getElementById('upgrade').value=${JSON.stringify(upgradeSql).replaceAll('<','\\u003c')};\ndocument.getElementById('copy-upgrade').onclick=async()=>{const box=document.getElementById('upgrade'),status=document.getElementById('upgrade-status');try{await navigator.clipboard.writeText(box.value);status.textContent='多人升级 SQL 已复制。请到 SQL Editor 粘贴并 Run；不需要重新导入球员。';}catch{box.focus();box.select();status.textContent='代码已选中，请按 Ctrl+C 复制。';}};\n`;
+const finalHtml=html.replace('<section><h2>1.',upgradeSection+'<section><h2>1.').replace('</script>',upgradeCode+'</script>');
+new vm.Script(finalHtml.match(/<script>([\s\S]*)<\/script>/)[1],{filename:'arena-setup-inline.js'});
+await writeFile(path.join(dir,'在线功能安装.html'),finalHtml);
 console.log(JSON.stringify({players:people.length,version:source.version,seedBytes:Buffer.byteLength(seed),directory:dir}));

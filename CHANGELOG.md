@@ -1,5 +1,17 @@
 # Changelog
 
+## Website v0.10 — 2026-10-07
+
+- 赛季/球队筛选、自选线索、账号/对战收进右上角设置抽屉，键盘和手机端均可使用；在线开局后回到主页面独立显示对局。
+- 猜中或八次用完时用弹窗揭晓，可返回猜测记录或点击下一局刷新；保留池、范围和线索。每日题战绩不被清空，继续玩转入自由练习。
+- 在线扩展为 2–5 人：天梯人数可多选，以共同人数交集匹配；好友房选择固定人数，凑齐后同时开局。默认 10 项线索、8 次机会、180 秒。
+- 每位对手独立显示尝试次数和颜色进度，不公开猜测姓名；多人退出不立即终止其余人的游戏。
+- 胜者与每位对手分摊 K=24 的 Elo，积分转移零和；无胜者时不改变积分，好友房不计分。在线结果同样使用弹窗，下一局刷新后重新匹配或创建好友房。
+- 新增多人数据库升级 SQL，保留现有账号、积分、题库与旧 1v1 对局；未升级项目明确显示仅可两人，不假装已开放多人。
+- 页面按实际 Supabase 注册设置开放入口；关闭邮箱确认属于项目管理设置，不由公开密钥修改。升级和注册设置完成后才能开放相应功能。
+
+Settings move into a top-right drawer; completion dialogs reveal answers and offer a reload-based next game without erasing daily progress. Online rooms support 2–5 participants, multi-select ranked sizes, fixed friendly capacities, private per-opponent color progress and server-settled zero-sum Elo. The database upgrade preserves legacy games and accounts. Registration availability follows the actual Supabase configuration.
+
 ## Website v0.9 — 2026-10-07
 
 - 增加 Supabase 账号、在线 1v1、好友房、对手颜色进度、Elo 天梯与排行榜；在线固定 10 项默认线索、8 次机会、180 秒。

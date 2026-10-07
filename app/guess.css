@@ -284,6 +284,45 @@
 .guess-page .guess-team-sources { display:flex; flex-wrap:wrap; gap:8px 16px; margin-top:12px; }
 .guess-page .guess-team-sources a { font-size:13px; color:var(--lime); }
 .guess-page .guess-team-footnote { margin-bottom:0; font-size:13px; }
+/* Compact controls: settings live in a right-side dialog, not full-width strips. */
+.guess-page .guess-settings-dialog { position:fixed; inset:16px 16px 16px auto; margin:0; width:min(620px,calc(100vw - 32px)); max-width:620px; max-height:calc(100dvh - 32px); padding:24px; background:var(--panel); border-color:var(--line); overscroll-behavior:contain; }
+.guess-page .guess-dialog-head { display:flex; align-items:start; justify-content:space-between; gap:16px; }
+.guess-page .guess-dialog-head>div { min-width:0; }
+.guess-page .guess-dialog-head h2 { font-size:25px; line-height:1.4; margin:7px 0; }
+.guess-page .guess-dialog-head p { font-size:14px; color:var(--muted); margin:6px 0 16px; }
+.guess-page .guess-dialog-head .close-button { width:44px; height:44px; flex-shrink:0; }
+.guess-page .guess-settings-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin:9px 0 20px; }
+.guess-page .guess-settings-tabs button { padding:12px 7px; min-height:44px; font-size:14px; border:1px solid var(--line); border-radius:8px; background:var(--panel2); color:var(--text); }
+.guess-page .guess-settings-tabs button[aria-selected=true] { background:var(--lime); color:var(--bg); font-weight:600; }
+.guess-page .guess-settings-dialog .panel { border:0; background:transparent; padding:0; margin:0; }
+.guess-page .guess-settings-dialog .guess-year-filter { grid-template-columns:minmax(0,1fr) 12px minmax(0,1fr); gap:12px; }
+.guess-page .guess-settings-dialog .guess-filter-title,.guess-page .guess-settings-dialog .guess-team-label { grid-column:1/-1; }
+.guess-page .guess-settings-dialog .guess-filter-actions { justify-content:flex-start; flex-wrap:wrap; }
+.guess-page .guess-settings-dialog .guess-clues-options { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.guess-page .guess-settings-dialog #online-panel>summary { display:none; }
+.guess-page .guess-settings-dialog .online-inner>p:first-child { margin-top:0; }
+.guess-page .guess-result-dialog { width:min(800px,calc(100vw - 32px)); max-width:800px; max-height:calc(100dvh - 32px); background:var(--panel); border-color:var(--line); padding:26px; overscroll-behavior:contain; }
+.guess-page #guess-result-dialog[open] { display:flex; flex-direction:column; overflow:hidden; }
+.guess-page #guess-result-dialog .guess-dialog-head,.guess-page #guess-result-dialog .guess-result-next-note,.guess-page #guess-result-dialog .guess-result-actions { flex:0 0 auto; }
+.guess-page #guess-result-dialog #guess-result { flex:1 1 auto; min-height:0; overflow:auto; overscroll-behavior:contain; }
+.guess-page .guess-result-dialog .guess-result { margin:8px 0 18px; background:var(--panel2); border-color:var(--line); }
+.guess-page .guess-result-dialog .guess-result p,.guess-page .guess-result-dialog .guess-result-coverage { color:var(--muted); }
+.guess-page .guess-result-next-note { color:var(--muted); font-size:14px; line-height:1.8; }
+.guess-page .guess-result-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.guess-page .guess-result-actions .button { width:auto; min-height:48px; margin:0; font-size:15px; }
+.guess-page .guess-result-dialog .guess-result-metrics { grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); }
+@media(max-width:700px) {
+  .guess-page .topbar.has-theme-picker { display:grid; grid-template-columns:minmax(0,1fr) auto; }
+  .guess-page .topbar .top-actions { grid-column:2; grid-row:1; gap:7px; }
+  .guess-page .topbar .guess-nav { grid-column:1/-1; grid-row:2; }
+  .guess-page #guess-open-settings { min-height:44px; font-size:13px; padding:8px 10px; }
+}
+@media(max-width:480px) {
+  .guess-page .guess-settings-dialog { inset:10px 10px 10px auto; width:calc(100vw - 20px); max-height:calc(100dvh - 20px); padding:18px 14px; }
+  .guess-page .guess-settings-tabs button { font-size:12px; }
+  .guess-page .guess-result-dialog { width:calc(100vw - 20px); padding:18px 14px; max-height:calc(100dvh - 20px); }
+  .guess-page .guess-result-actions .button { width:100%; justify-content:center; }
+}
 @media(max-width:900px) {
   .guess-page .guess-year-filter { grid-template-columns:minmax(0,1fr) 10px minmax(0,1fr); }
   .guess-page .guess-filter-title,.guess-page .guess-team-label { grid-column:1/-1; }

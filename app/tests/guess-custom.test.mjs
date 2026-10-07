@@ -1,6 +1,6 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
 import {ATTRIBUTES,ALL_ATTRIBUTES,selectedAttributes,comparePlayers} from '../guess-engine.mjs';
-import {opponentProgress,tier} from '../online.mjs';
+import {opponentProgress,tier,matchParticipants,validMatchSizes} from '../online.mjs';
 const data=JSON.parse(await readFile(new URL('../data/guess-players.json',import.meta.url),'utf8'));
 const extra=JSON.parse(await readFile(new URL('../data/guess-extra-metrics.json',import.meta.url),'utf8'));
 test('default clues stay exactly ten; custom clues accept only known keys',()=>{
@@ -26,4 +26,9 @@ test('opponent view exposes color progress and rating tiers are deterministic',(
  const view=opponentProgress({host_id:'a',guest_id:'b',host_name:'A',guest_name:'B',host_attempts:1,guest_attempts:2,host_state:'playing',guest_state:'playing',guest_tiles:[['close']]},'a');
  assert.equal(view.name,'B');assert.equal(view.attempts,2);assert.ok(!Object.hasOwn(view,'guesses'));
  assert.equal(tier(1000),'白银');assert.equal(tier(1800),'大师');
+});
+test('multiplayer sizes are bounded and progress never copies guess identities',()=>{
+ assert.deepEqual(validMatchSizes([5,2,2,1,6,'3',null]),[2,5]);
+ const people=matchParticipants({members:[{id:'a',name:'A',attempts:2,state:'playing',tiles:[['close']],delta:0,guesses:['private-id']}]});
+ assert.equal(people.length,1);assert.equal(people[0].attempts,2);assert.ok(!Object.hasOwn(people[0],'guesses'));
 });

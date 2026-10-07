@@ -7,6 +7,7 @@ await db.exec(`create role anon;create role authenticated;create schema auth;cre
 create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
 grant usage on schema auth to anon,authenticated;grant execute on function auth.uid() to anon,authenticated;`);
 await db.exec(await readFile('supabase/migrations/202610070001_arena.sql','utf8'));
+await db.exec(await readFile('supabase/migrations/202610070002_multiplayer.sql','utf8'));
 // Also exercise the SQL Editor's optional RLS hardening on private tables.
 await db.exec('alter table goat_private.players enable row level security;alter table goat_private.answers enable row level security;alter table goat_private.guesses enable row level security;alter table goat_private.install_settings enable row level security;');
 const ids=['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222','33333333-3333-4333-8333-333333333333'];

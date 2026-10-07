@@ -6,6 +6,7 @@ import { filterKey } from '../guess-engine.mjs';
 const BASE = (process.env.GOAT_BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/,'');
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1120}});
+await context.route('https://qtfmrczwxinizmqgkebh.supabase.co/**',route=>route.fulfill({status:200,contentType:'application/json',body:route.request().url().includes('/settings')?'{"mailer_autoconfirm":true}':route.request().url().includes('goat_arena_info')?'{"maxPlayers":5}':'[]'}));
 await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page = await context.newPage();
 const errors = [],passed = [];
@@ -48,6 +49,7 @@ try {
   await page.locator('#guess-search').dispatchEvent('keydown',{key:'Enter',isComposing:true,bubbles:true,cancelable:true});
   check('isComposing keyboard event does not consume a guess',await attempts() === 0);
   await page.locator('#guess-search').fill('Michael Jordan');
+  await page.locator('#guess-open-settings').click();
   await page.locator('#guess-year-from').fill('2000');
   await page.locator('#guess-year-to').fill('2000');
   check('pending range blocks guesses until explicitly applied',await page.locator('#guess-search').isDisabled() && await page.locator('#guess-submit').isDisabled() && (await page.locator('#guess-year-status').textContent()).includes('待应用'));
@@ -58,6 +60,7 @@ try {
   check('invalid year submission does not consume a guess',await attempts() === 0);
   await page.locator('#guess-filter-cancel').click();
   check('cancel restores applied range without changing answer',await page.locator('.guess-option[data-id="jordami01"]').isVisible() && (await state()).answerId === nbaInitial.answerId && await attempts() === 0 && await page.locator('#guess-year-from').inputValue() === '' && await page.locator('#guess-year-to').inputValue() === '');
+  await page.locator('#guess-settings-close').click();
   await page.locator('#guess-search').fill('');
   await page.locator('#guess-search').focus(); await page.locator('#guess-search').press('Enter');
   check('empty Enter does not consume a guess',await attempts() === 0);
@@ -107,6 +110,7 @@ try {
   check('correct ID wins and reveals source links',(await state()).status === 'won' && await page.locator('#guess-result').isVisible() && await page.locator('#guess-result a').count() > 0);
   check('answer shows five career facts and coverage explanations',await page.locator('#guess-result [data-result-key]').count() === 5 && await page.locator('.guess-result-coverage li').count() === 5);
   check('won input is locked',await page.locator('#guess-search').isDisabled() && await page.locator('#guess-submit').isDisabled());
+  await page.locator('#guess-result-review').click();
   await page.evaluate(() => Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text => { window.__capturedShare = text; }}}));
   await page.locator('#guess-share').click();
   const share = await page.evaluate(() => window.__capturedShare);
@@ -117,12 +121,14 @@ try {
   check('clipboard denial offers manual copy',await page.locator('#guess-share-text').isVisible() && (await page.locator('#guess-share-text').inputValue()) === share);
   await page.reload(); await page.locator('#guess-app').waitFor({state:'visible'});
   check('daily cannot reroll after reload',(await state()).status === 'won' && (await state()).answerId === nbaStart.answerId && await page.locator('#guess-new').isHidden());
+  await page.locator('#guess-result-review').click();
   await page.locator('[data-mode="practice"]').click();
   check('practice starts independently',await attempts() === 0 && await page.locator('#guess-new').isVisible());
   const practiceStart = await state('practice','nba-easy');
   const wrongEight = data.players.filter(p => p.pools.includes('nba-easy') && p.id !== practiceStart.answerId).slice(0,8);
   for (const player of wrongEight) await guess(player);
   check('eight wrong guesses lose and lock input',(await state('practice','nba-easy')).status === 'lost' && await attempts() === 8 && await page.locator('#guess-search').isDisabled());
+  await page.locator('#guess-result-review').click();
   await page.locator('#guess-new').click();
   check('practice new round resets and chooses another answer',await attempts() === 0 && (await state('practice','nba-easy')).answerId !== practiceStart.answerId);
   const practiceNext = await state('practice','nba-easy');

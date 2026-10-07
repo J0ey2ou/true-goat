@@ -15,15 +15,15 @@ try {
     create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
     grant usage on schema auth to anon,authenticated;grant execute on function auth.uid() to anon,authenticated;`);
   await db.exec(await readFile('supabase/migrations/202610070001_arena.sql','utf8'));
+  await db.exec(await readFile('supabase/migrations/202610070002_multiplayer.sql','utf8'));
   const source=JSON.parse(await readFile('app/data/guess-players.json','utf8'));
   const sample=source.players.filter(p=>['jordami01','jamesle01','curryst01'].includes(p.id));
   for(const p of sample)await db.query('insert into goat_private.players values($1,$2,$3)',[p.id,source.version,p]);
-  const users=[{id:'11111111-1111-4111-8111-111111111111',email:'alpha@example.test'},
-    {id:'22222222-2222-4222-8222-222222222222',email:'beta@example.test'}];
+  const users=Array.from({length:5},(_,i)=>({id:String(i+1).repeat(8)+'-'+String(i+1).repeat(4)+'-4'+String(i+1).repeat(3)+'-8'+String(i+1).repeat(3)+'-'+String(i+1).repeat(12),email:'player'+(i+1)+'@example.test'}));
   for(const user of users)await db.query('insert into auth.users(id) values($1)',[user.id]);
   const sessions=users.map((user,i)=>({access_token:'test-access-'+i,refresh_token:'test-refresh-'+i,user}));
   const methods={goat_profile:['p_name'],goat_lobby:['p_pool','p_action','p_code'],goat_state:['p_match'],
-    goat_guess:['p_match','p_player'],goat_leave:['p_match'],goat_leaderboard:[]};
+    goat_guess:['p_match','p_player'],goat_leave:['p_match'],goat_leaderboard:[],goat_arena_info:[],goat_arena_lobby:['p_pool','p_action','p_code','p_sizes','p_capacity'],goat_arena_state:['p_match'],goat_arena_guess:['p_match','p_player'],goat_arena_leave:['p_match']};
   let queue=Promise.resolve();
   const exclusive=fn=>{const pending=queue.then(fn);queue=pending.catch(()=>{});return pending;};
   const result=await buildStaticSite();
@@ -40,7 +40,7 @@ try {
   browser=await chromium.launch({headless:true,...(process.env.GOAT_BROWSER_EXECUTABLE?{executablePath:process.env.GOAT_BROWSER_EXECUTABLE}:{})});
   const errors=[];
   const pages=[];
-  for(let i=0;i<2;i++){
+  for(let i=0;i<5;i++){
     const context=await browser.newContext({viewport:{width:1200,height:950}});
     await context.route('https://qtfmrczwxinizmqgkebh.supabase.co/**',async route=>{
       const request=route.request();
@@ -78,7 +78,8 @@ try {
     await page.goto(base);
     await page.locator('#guess-app').waitFor({state:'visible'});
     await page.locator('#onboarding-dialog[open] [data-guide-skip]').first().click();
-    await page.locator('#online-panel>summary').click();
+    await page.locator('#guess-open-settings').click();
+    await page.locator('#guess-tab-online').click();
     await page.locator('#online-register-tab').click();
     await page.locator('#online-email').fill(users[i].email);
     await page.locator('#online-password').fill('isolated-test-password');
@@ -90,14 +91,16 @@ try {
   }
   const [host,guest]=pages;
   // A single-player custom clue must not enter online games.
+  await host.locator('#guess-tab-clues').click();
   await host.locator('#guess-clues-enabled').check();
   await host.locator('[data-guess-clue][value="assistsPerGame"]').check();
+  await host.locator('#guess-tab-online').click();
   await host.locator('#online-ranked').click();
-  await host.locator('#online-result').filter({hasText:'等待对手'}).waitFor();
+  await host.locator('#online-result').filter({hasText:'等待凑齐'}).waitFor();
   await guest.locator('#online-ranked').click();
   await host.locator('#online-search-area').waitFor({state:'visible'});
-  const stored=(await exclusive(()=>db.query("select id from public.goat_matches where state='playing'"))).rows[0];
-  const answer=(await exclusive(()=>db.query('select player_id from goat_private.answers where match_id=$1',[stored.id]))).rows[0].player_id;
+  const stored=(await exclusive(()=>db.query("select id from public.goat_rooms where state='playing'"))).rows[0];
+  const answer=(await exclusive(()=>db.query('select data from goat_private.room_answers where room_id=$1',[stored.id]))).rows[0].data.id;
   const wrong=sample.find(p=>p.id!==answer);
   const guess=async(page,player)=>{
     await page.locator('#online-search').fill(player.name);
@@ -115,28 +118,50 @@ try {
   await guest.locator('#online-search-area').waitFor({state:'visible'});
   assert.equal(await guest.locator('#online-history .online-guess').count(),0);
   await guess(guest,sample.find(p=>p.id===answer));
-  await guest.locator('#online-result').filter({hasText:'你赢了'}).waitFor();
-  await host.locator('#online-result').filter({hasText:'对手获胜'}).waitFor();
-  await guest.locator('#online-profile').filter({hasText:'1012 分'}).waitFor();
-  await host.locator('#online-profile').filter({hasText:'988 分'}).waitFor();
-  for(const page of pages)await page.locator('#online-dismiss').click();
+  await guest.locator('#online-completion-summary').filter({hasText:'你赢了'}).waitFor();
+  await host.locator('#online-completion-summary').filter({hasText:'对手获胜'}).waitFor();
+  await guest.locator('#online-profile').filter({hasText:'1012 分'}).waitFor({state:'attached'});
+  await host.locator('#online-profile').filter({hasText:'988 分'}).waitFor({state:'attached'});
+  for(const page of [host,guest]){await page.locator('#online-completion-review').click();await page.locator('#online-dismiss').click();}
   await host.locator('#online-create').click();
-  await host.locator('#online-result').filter({hasText:'等待对手'}).waitFor();
-  const friendly=(await exclusive(()=>db.query("select room_code from public.goat_matches where state='waiting'"))).rows[0];
+  await host.locator('#online-result').filter({hasText:'等待凑齐'}).waitFor();
+  const friendly=(await exclusive(()=>db.query("select room_code from public.goat_rooms where state='waiting'"))).rows[0];
   await guest.locator('#online-room-code').fill(friendly.room_code);
   await guest.locator('#online-join-form button').click();
   await host.locator('#online-search-area').waitFor({state:'visible'});
   host.once('dialog',dialog=>dialog.accept());
   await host.locator('#online-leave').click();
-  await guest.locator('#online-result').filter({hasText:'好友房不计积分'}).waitFor();
+  await guest.locator('#online-completion-summary').filter({hasText:'好友房不计积分'}).waitFor();
+  await guest.locator('#online-completion-review').click();
+  await guest.locator('#online-dismiss').click();
   assert.match(await guest.locator('#online-profile').innerText(),/1012 分/);
   await guest.locator('#online-ranking>summary').click();
   await guest.locator('#online-leaderboard tbody tr').first().waitFor();
   assert.equal(await guest.locator('#online-leaderboard tbody tr').count(),2);
+  await host.locator('#online-completion-review').click();await host.locator('#online-dismiss').click();
+  // Five independently authenticated browsers join only after all five agree.
+  for(let i=0;i<5;i++){
+    const page=pages[i];
+    await page.locator('[data-online-size][value="5"]').check();await page.locator('[data-online-size][value="2"]').uncheck();
+    await page.locator('#online-ranked').click();
+    if(i<4){await page.locator('#online-result').filter({hasText:'等待凑齐 5 人'}).waitFor();assert.equal(await page.locator('#online-search-area').isVisible(),false);}
+  }
+  for(const page of pages){await page.locator('#online-search-area').waitFor();assert.equal(await page.locator('[data-online-member]').count(),5);}
+  const group=(await exclusive(()=>db.query("select id from public.goat_rooms where state='playing'"))).rows[0];
+  const groupAnswer=(await exclusive(()=>db.query('select data from goat_private.room_answers where room_id=$1',[group.id]))).rows[0].data.id;
+  await guess(host,sample.find(p=>p.id!==groupAnswer));
+  for(const page of pages.slice(1)){await page.locator('#online-progress .online-tiles').waitFor();assert.equal(await page.locator('#online-history .online-guess').count(),0);}
+  await guess(pages[4],sample.find(p=>p.id===groupAnswer));
+  for(const page of pages){await page.locator('#online-completion-dialog[open]').waitFor();assert.match(await page.locator('#online-completion-summary').innerText(),/积分变化/);}
+  await Promise.all([pages[4].waitForEvent('load'),pages[4].locator('#online-completion-next').click()]);
+  await pages[4].locator('#online-result').filter({hasText:'等待凑齐 5 人'}).waitFor();
+  assert.equal(await pages[4].locator('[data-online-size][value="5"]').isChecked(),true);
+  assert.equal(await pages[4].locator('[data-online-size][value="2"]').isChecked(),false);
+  await guest.locator('#online-completion-review').click();
   await guest.setViewportSize({width:390,height:844});
   assert.equal(await guest.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
   assert.deepEqual(errors,[]);
-  console.log('PASS: two browser registrations, ranked matching, fixed ten clues, private opponent progress, reload recovery, server Elo, friendly room, forfeit, ladder and mobile layout (isolated database).');
+  console.log('PASS: five browser registrations, 2/5-player matching, no early starts, private progress for every opponent, fixed clues, reload recovery, server Elo, friendly rooms, result popups, next-round reload and mobile layout (isolated database).');
 }finally{
   if(browser)await browser.close();
   if(server)await new Promise(resolve=>server.close(resolve));

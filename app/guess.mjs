@@ -17,6 +17,66 @@ let teamDialogTrigger = null;
 let customClues = false, clueKeys = ATTRIBUTES.map(item=>item.key);
 const activeClueKeys = () => customClues ? clueKeys : undefined;
 let extraLoaded=false;
+let resultShownFor=null;
+
+function settingsTab(tab='range') {
+  if(!['range','clues','online'].includes(tab))tab='range';
+  for(const item of ['range','clues','online']){
+    const active=item===tab;
+    $(`guess-setting-${item}`).hidden=!active;
+    $(`guess-tab-${item}`).setAttribute('aria-selected',String(active));
+    $(`guess-tab-${item}`).tabIndex=active?0:-1;
+  }
+}
+function openSettings(tab='range') {
+  if(!['range','clues','online'].includes(tab))tab='range';
+  settingsTab(tab);
+  const dialog=$('guess-settings-dialog');
+  if(!dialog.open)dialog.showModal();
+  $(`guess-tab-${tab}`).focus();
+}
+function initSettings() {
+  for(const [selector,target]of [['.guess-year-filter','range'],['.guess-clues','clues'],['#online-mount','online']])$('guess-setting-'+target).append(document.querySelector(selector));
+  $('guess-open-settings').disabled=false;
+  $('guess-open-settings').onclick=()=>openSettings();
+  $('guess-settings-close').onclick=()=>$('guess-settings-dialog').close();
+  $('guess-settings-dialog').addEventListener('close',()=>{resetDraft();updateFilterStatus();$('guess-open-settings').focus({preventScroll:true});});
+  for(const button of document.querySelectorAll('[data-settings-tab]')){
+    button.onclick=()=>settingsTab(button.dataset.settingsTab);
+    button.onkeydown=event=>{
+      const keys=['ArrowLeft','ArrowRight','Home','End'];if(!keys.includes(event.key))return;
+      event.preventDefault();const tabs=['range','clues','online'],index=tabs.indexOf(button.dataset.settingsTab);
+      const next=event.key==='Home'?0:event.key==='End'?2:(index+(event.key==='ArrowRight'?1:2))%3;
+      settingsTab(tabs[next]);$(`guess-tab-${tabs[next]}`).focus();
+    };
+  }
+  document.addEventListener('goat:open-settings',event=>openSettings(event.detail?.tab||'online'));
+  $('guess-show-result').onclick=()=>showResult();
+  for(const id of ['guess-result-close','guess-result-review'])$(id).onclick=()=>$('guess-result-dialog').close();
+  $('guess-result-dialog').addEventListener('close',()=>{if(!$('guess-show-result').hidden)$('guess-show-result').focus({preventScroll:true});});
+  $('guess-result-next').onclick=startNextRound;
+}
+function showResult() {
+  if(!['won','lost'].includes(round?.status))return;
+  if($('guess-settings-dialog').open)$('guess-settings-dialog').close();
+  if(!$('guess-result-dialog').open)$('guess-result-dialog').showModal();
+  $('guess-result-dialog').scrollTop=0;
+  ($('guess-result-next').disabled?$('guess-result-close'):$('guess-result-next')).focus();
+}
+function startNextRound() {
+  if(!['won','lost'].includes(round?.status)||currentCandidates().length<2)return;
+  const previous=round.answerId;
+  // Keep daily completion under its existing key; the next game is practice.
+  if(mode==='daily'){save();mode='practice';}
+  round=newRound({mode,pool,date:shanghaiDate(),version:data.version,filters,answerId:practiceAnswer(previous)});
+  save();
+  if(!storageWarning){
+    const url=new URL(location.href);url.searchParams.set('mode','practice');url.searchParams.set('pool',pool);url.hash='';
+    history.replaceState(null,'',url);location.reload();
+  }else{
+    $('guess-result-dialog').close();render();message('浏览器不能保存进度，已在当前页面开启下一局，避免刷新丢失题目。');$('guess-search').focus();
+  }
+}
 async function loadExtraMetrics() {
   if(extraLoaded)return;
   const response=await fetch('/data/guess-extra-metrics.json');
@@ -70,6 +130,7 @@ function updateFilterStatus() {
   $('guess-filter-cancel').hidden = !pending;
   $('guess-year-clear').disabled = !draft.active && draft.valid;
   $('guess-search').disabled = round?.status !== 'playing' || pending;
+  $('guess-open-settings').textContent=pending?'⚙ 设置 · 待应用':'⚙ 设置';
   if (pending) { closeOptions(); $('guess-search-hint').textContent = '范围有待应用的修改。请先应用或撤销，再继续猜测；原范围的进度会保留。'; }
   else $('guess-search-hint').textContent = round?.status === 'empty' ? '当前范围没有可出题球员，请调整年份或球队后应用。' : round?.status === 'playing' ? '↑ ↓ 切换候选，回车或点击候选提交；重复猜测不扣次数。' : '本局已结束，可复制战绩，或前往自由练习。';
   return draft;
@@ -196,8 +257,9 @@ function renderHistory() {
 }
 
 function renderResult() {
-  $('guess-result').hidden = !['won','lost'].includes(round.status);
-  if (!['won','lost'].includes(round.status)) { $('guess-result').innerHTML = ''; return; }
+  const completed=['won','lost'].includes(round.status);
+  $('guess-result').hidden = !completed;$('guess-show-result').hidden=!completed;
+  if (!completed) { $('guess-result').innerHTML = '';if($('guess-result-dialog').open)$('guess-result-dialog').close();return; }
   const answer = players.find(player => player.id === round.answerId);
   const sourceIds = new Set(list(answer.sourceIds));
   const sources = list(data.sources).filter(source => sourceIds.has(source.id));
@@ -206,6 +268,12 @@ function renderResult() {
   const metrics = careerAttributes.map(item => `<div data-result-key="${item.key}" title="${esc(metricDescription(answer,item.key))}"><dt>${esc(item.label.replace('*',''))}</dt><dd>${numeric(answer[item.key])}</dd></div>`).join('');
   const coverage = careerAttributes.map(item => `<li><strong>${esc(item.label.replace('*',''))}</strong>：${esc(metricDescription(answer,item.key))}</li>`).join('');
   $('guess-result').innerHTML = `<div class="eyebrow">${round.status === 'won' ? `FOUND IN ${round.guesses.length} / ${MAX_GUESSES}` : 'ANSWER REVEALED'}</div><h3>${esc(name(answer))}</h3><p>${esc(answer.name)} · ${esc(list(answer.positions).join(' / ') || '位置未知')} · 出生年 ${numeric(answer.birthYear)} · 身高 ${numeric(answer.heightCm)} cm</p><p>首赛年：${numeric(answer.firstSeasonYear)}${answer.firstSeasonScope ? `（${esc(answer.firstSeasonScope)}首次正式出场）` : '（口径未收录）'}<br>已确认球队：${esc(cellValue(answer,'teams'))}${answer.teamsComplete ? '' : '（记录不完整）'}</p><dl class="guess-result-metrics">${metrics}</dl><details class="guess-result-coverage"><summary>统计口径与覆盖范围</summary><ul>${coverage}</ul></details>${list(answer.notes).map(note => `<p>${esc(note)}</p>`).join('')}<div class="guess-result-links">${directoryId ? `<a href="/players?player=${encodeURIComponent(directoryId)}">查看球员档案 ↗</a>` : ''}${sources.map(source => { const url = safeUrl(source.url); return url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.id)} ↗</a>` : ''; }).join('')}</div>`;
+  $('guess-result-title').textContent=round.status==='won'?'猜中了！':'八次机会已用完';
+  $('guess-result-summary').textContent=`${poolInfo().name} · ${round.guesses.length} / ${MAX_GUESSES} 次 · ${mode==='daily'?'每日挑战':'自由练习'}`;
+  $('guess-result-next').disabled=currentCandidates().length<2;
+  $('guess-result-next-note').textContent=currentCandidates().length<2?'当前范围不足两位球员，请返回右上角设置扩大范围。':mode==='daily'?'每日战绩会保留。下一局将刷新页面，进入同一范围的自由练习。':'刷新页面，保留球员池、赛季/球队范围和自选线索，抽取不同球员。';
+  const signature=`${storageKey()}:${round.answerId}:${round.status}:${round.guesses.length}`;
+  if(resultShownFor!==signature){resultShownFor=signature;queueMicrotask(showResult);}
 }
 
 function renderEligibilityProof() {
@@ -255,7 +323,7 @@ function guess(id) {
   if (result.error) { message(result.error); return; }
   round = result.round; save(); render();
   if (round.status === 'playing') { message(`已记录第 ${round.guesses.length} 次猜测，还剩 ${MAX_GUESSES - round.guesses.length} 次。`); $('guess-search').focus(); }
-  else { message(round.status === 'won' ? '猜中了！答案与数据来源已展开。' : '本局结束，答案与数据来源已展开。'); $('guess-result').scrollIntoView({block:'nearest',behavior:'instant'}); }
+  else { message('本局结束，结果已在弹窗揭晓。'); }
 }
 
 function bind() {
@@ -283,7 +351,7 @@ function bind() {
   $('guess-pool').addEventListener('change',() => switchGame(mode,$('guess-pool').value));
   for (const id of ['guess-year-from','guess-year-to']) $(id).addEventListener('input',() => { updateFilterStatus(); closeOptions(); });
   $('guess-team').addEventListener('change',() => { updateFilterStatus(); closeOptions(); });
-  $('guess-filter-apply').addEventListener('click',applyFilters);
+  $('guess-filter-apply').addEventListener('click',()=>{applyFilters();if(!hasPendingFilters())$('guess-settings-dialog').close();});
   $('guess-filter-cancel').addEventListener('click',() => { resetDraft(); updateFilterStatus(); updateOptions(); });
   $('guess-year-clear').addEventListener('click',() => {
     $('guess-year-from').value = ''; $('guess-year-to').value = ''; $('guess-team').value = '';
@@ -363,7 +431,7 @@ async function init() {
     $('guess-clues-options').innerHTML=ALL_ATTRIBUTES.map(item=>`<label><input type="checkbox" data-guess-clue value="${item.key}" ${clueKeys.includes(item.key)?'checked':''}>${esc(item.label.replace('*',''))}</label>`).join('');
     if(customClues)try{await loadExtraMetrics();}catch(error){customClues=false;$('guess-clues-enabled').checked=false;$('guess-clues-options').hidden=true;}
     updateClueSummary();
-    resetDraft(); bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
+    resetDraft(); initSettings();bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
     initOnline({players,pools:data.pools,dataVersion:data.version});
   } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`; $('guess-loading').setAttribute('role','alert'); }
 }

@@ -27,4 +27,13 @@
 .online-panel table { width:100%; border-collapse:collapse; font-size:14px; }
 .online-panel th,.online-panel td { padding:10px 6px; text-align:left; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
 .online-panel details summary { cursor:pointer; }
+.online-size-options { display:flex; gap:12px; flex-wrap:wrap; border:1px solid var(--line); border-radius:8px; padding:14px; margin:18px 0 8px; }
+.online-size-options legend { font-size:14px; padding:0 6px; }
+.online-panel .online-size-options label { display:flex; align-items:center; gap:7px; }
+.online-panel .online-size-options input { width:18px; height:18px; padding:0; accent-color:var(--lime); }
+.online-size-note { color:var(--muted); }
+.online-friend-controls { display:flex; align-items:end; flex-wrap:wrap; gap:12px; margin-top:20px; }
+.online-friend-controls label { flex:1; }
+.online-progress { grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr)); }
+#online-completion-summary,#online-completion-note { font-size:16px; line-height:1.9; overflow-wrap:anywhere; }
 @media(max-width:480px) { .online-panel { padding:17px 14px; } .online-progress { grid-template-columns:1fr; } .online-panel table { font-size:12px; } .online-panel form button { width:100%; } }

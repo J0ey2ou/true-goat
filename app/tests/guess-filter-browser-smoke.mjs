@@ -4,6 +4,7 @@ import {eligiblePlayers,matchingAppearances,teamsForPool,filterKey} from '../gue
 const base=(process.env.GOAT_TEST_URL || 'http://127.0.0.1:8766').replace(/\/$/,'');
 const browser=await chromium.launch(browserOptions), errors=[],checks=[];
 const context=await browser.newContext({viewport:{width:1440,height:1000}});
+await context.route('https://qtfmrczwxinizmqgkebh.supabase.co/**',route=>route.fulfill({status:200,contentType:'application/json',body:route.request().url().includes('/settings')?'{"mailer_autoconfirm":true}':route.request().url().includes('goat_arena_info')?'{"maxPlayers":5}':'[]'}));
 await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v2:guess',JSON.stringify({version:2,page:'guess',seen:true})));
 const page=await context.newPage(); page.setDefaultTimeout(15000);
 page.on('pageerror',error=>errors.push(error.message));
@@ -15,10 +16,13 @@ async function currentRound(){
   return page.evaluate(key=>JSON.parse(localStorage.getItem(key)),key);
 }
 async function setFilters(from='',to='',teamId=''){
+  if(!await page.locator('#guess-settings-dialog').evaluate(el=>el.open))await page.locator('#guess-open-settings').click();
+  await page.locator('#guess-tab-range').click();
   await page.locator('#guess-year-from').fill(String(from));
   await page.locator('#guess-year-to').fill(String(to));
   await page.locator('#guess-team').selectOption(teamId);
   if(await page.locator('#guess-filter-apply').isEnabled())await page.locator('#guess-filter-apply').click();
+  else await page.locator('#guess-settings-close').click();
   return currentRound();
 }
 async function checkAnswer(label){
@@ -67,10 +71,12 @@ try{
   check('different ranges have isolated progress',(await currentRound()).guesses.length===0);
   await setFilters(2010,2010,'NBA:LAL');
   check('returning range restores exact answer and guesses',(await currentRound()).answerId===lakers.answerId && (await currentRound()).guesses[0]===wrong.id);
+  await page.locator('#guess-open-settings').click();
   await page.locator('#guess-year-from').fill('2020');
   check('invalid pending range blocks apply and guessing',await page.locator('#guess-filter-apply').isDisabled() && await page.locator('#guess-search').isDisabled());
   await page.locator('#guess-filter-cancel').click();
   check('cancel preserves applied range and progress',(await currentRound()).guesses.length===1 && await page.locator('#guess-year-from').inputValue()==='2010');
+  await page.locator('#guess-settings-close').click();
   await setFilters(1850,1850);
   const empty=await currentRound();
   check('zero candidates never falls back to unrelated answer',empty.status==='empty' && empty.answerId===null && await page.locator('#guess-search').isDisabled() && await page.locator('#guess-result').isHidden());
@@ -86,6 +92,7 @@ try{
   check('Shanghai evidence is not inferred from Houston seasons',eligiblePlayers(data.players,'cba-history',yaoRound.filters).some(p=>p.id==='mingya01'));
   const revealed=data.players.find(p=>p.id===yaoRound.answerId);await page.locator('#guess-search').fill(revealed.name);await page.locator(`.guess-option[data-id="${revealed.id}"]`).click();
   check('revealed answer shows exact eligibility proof',(await currentRound()).status==='won' && await page.locator('.guess-proof li').count()>0);
+  await page.locator('#guess-result-review').click();
   await page.locator('[data-mode="practice"]').click();
   check('practice reroll availability reflects actual range size',await page.locator('#guess-new').isDisabled()===(eligiblePlayers(data.players,'cba-history',yaoRound.filters).length<2));
   await setFilters(2003,2003,cbaYao.teamId);

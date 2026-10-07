@@ -20,6 +20,7 @@
   <header class="topbar">
     <a class="brand" href="/" aria-label="True GOAT 首页"><span class="brand-mark">G.</span> TRUE GOAT <span class="brand-cn">/ 真正的山羊</span></a>
     <nav class="guess-nav" aria-label="主导航"><a href="/">实验室</a><a href="/players">球员库</a><a href="/guess" aria-current="page">猜球员</a><a href="#online-panel">账号 / 对战</a></nav>
+    <div class="top-actions"><button id="guess-open-settings" class="button outline" type="button" aria-haspopup="dialog" aria-controls="guess-settings-dialog" disabled>⚙ 设置</button></div>
   </header>
   <main class="guess-main">
     <section class="guess-hero"><div><div class="eyebrow">A DIFFERENT KIND OF BASKETBALL IQ</div><h1>八次机会，找到答案<span>。</span></h1><p>从一位你熟悉的球员开始。读懂线索，一步步缩小范围。</p></div><div class="guess-hero-number" aria-hidden="true">08<span>GUESSES / ONE PLAYER</span></div></section>
@@ -36,7 +37,7 @@
         <div class="guess-pools-heading"><h2 id="guess-pools-title">选择球员池</h2><span id="guess-release" role="status"></span></div>
         <p id="guess-library-summary"></p>
         <div id="guess-pool-cards" class="guess-pool-cards" role="group" aria-label="所有球员池"></div>
-        <p class="guess-pools-note">卡片人数为该池未筛选总数；本局人数还受下方赛季与球队限制。各池有重合，不能相加。现役名单按核实快照，不是实时阵容。</p>
+        <p class="guess-pools-note">卡片人数为该池未筛选总数；本局人数还受右上角设置中的赛季与球队限制。各池有重合，不能相加。现役名单按核实快照，不是实时阵容。</p>
       </section>
       <section class="guess-year-filter panel" aria-label="题目范围：赛季与球队">
         <div class="guess-filter-title"><strong>先定范围，再开始猜</strong><span>答案与搜索同时受限制</span></div>
@@ -56,6 +57,7 @@
         <details class="guess-metric-notes"><summary>额外线索怎么定义？</summary><p>助攻、篮板、抢断、盖帽按 NBA/BAA 常规赛生涯总量 ÷ 总出场数；早期未记录的数据保留未知。黄色范围：助攻/篮板 ±1，抢断/盖帽 ±0.3，荣誉次数 ±1。DPOY 为常规赛最佳防守球员，FMVP 为总决赛 MVP，全明星按入选届数而非实际出场计数。</p><p>冠军赛季数匹配来源赛季球队记录与历届冠军，不等同于戒指授予名单，也不作为季后赛出场证明；目前仅已核实原档案有此项。CBA/欧洲联赛暂不套用 NBA 荣誉或统计口径。</p></details>
       </section>
       <section id="online-mount"></section>
+      <section id="online-arena-mount" class="online-panel panel" hidden aria-label="当前在线对局"></section>
       <div class="guess-layout">
         <section class="guess-board panel" aria-labelledby="guess-board-title">
           <div class="guess-board-head"><div><div id="guess-round-label" class="eyebrow"></div><h2 id="guess-board-title">今天，你能几次猜中？</h2></div><div class="guess-counter"><strong id="guess-attempts">0</strong><span>/ 8</span></div></div>
@@ -72,8 +74,7 @@
           <div class="guess-history-head"><span>你的猜测</span><span>基本资料 + 5 项生涯指标</span></div>
           <p class="guess-history-note" id="guess-metrics-cutoff">点击「效力球队」卡片可查看完整队名。各指标按已核实数据比较，截止日期见下方说明。</p>
           <div id="guess-history" class="guess-history" aria-label="猜测记录"></div>
-          <section id="guess-result" class="guess-result" aria-live="polite" hidden></section>
-          <div class="guess-board-actions"><button id="guess-share" class="button outline" type="button" disabled>复制色块战绩 ↗</button><button id="guess-new" class="button outline" type="button" hidden>换一位，再来一局 ↻</button><span id="guess-next-day"></span></div>
+          <div class="guess-board-actions"><button id="guess-show-result" class="button outline" type="button" hidden>查看本局结果 ↗</button><button id="guess-share" class="button outline" type="button" disabled>复制色块战绩 ↗</button><button id="guess-new" class="button outline" type="button" hidden>换一位，再来一局 ↻</button><span id="guess-next-day"></span></div>
           <textarea id="guess-share-text" class="guess-share-text" aria-label="战绩文本，可手动复制" readonly hidden></textarea>
         </section>
         <aside class="guess-aside">
@@ -89,6 +90,19 @@
     </div>
     <footer class="guess-footer"><span>TRUE GOAT · GUESS THE PLAYER</span><a href="/THIRD_PARTY_NOTICES.txt">数据出处与许可 ↗</a><a href="/players">认识更多球员 ↗</a></footer>
   </main>
+  <dialog id="guess-settings-dialog" class="guess-settings-dialog" aria-labelledby="guess-settings-title">
+    <header class="guess-dialog-head"><div><div class="eyebrow">YOUR GAME · YOUR RULES</div><h2 id="guess-settings-title">游戏设置</h2><p>调整范围和线索，或登录后开始在线对战。</p></div><button id="guess-settings-close" class="close-button" type="button" aria-label="关闭游戏设置">×</button></header>
+    <div class="guess-settings-tabs" role="tablist" aria-label="设置分类"><button id="guess-tab-range" type="button" role="tab" data-settings-tab="range" aria-controls="guess-setting-range" aria-selected="true">赛季 / 球队</button><button id="guess-tab-clues" type="button" role="tab" data-settings-tab="clues" aria-controls="guess-setting-clues" aria-selected="false" tabindex="-1">自选线索</button><button id="guess-tab-online" type="button" role="tab" data-settings-tab="online" aria-controls="guess-setting-online" aria-selected="false" tabindex="-1">账号 / 对战</button></div>
+    <section id="guess-setting-range" role="tabpanel" aria-labelledby="guess-tab-range"></section>
+    <section id="guess-setting-clues" role="tabpanel" aria-labelledby="guess-tab-clues" hidden></section>
+    <section id="guess-setting-online" role="tabpanel" aria-labelledby="guess-tab-online" hidden></section>
+  </dialog>
+  <dialog id="guess-result-dialog" class="guess-result-dialog" aria-labelledby="guess-result-title">
+    <header class="guess-dialog-head"><div><div class="eyebrow">ROUND COMPLETE</div><h2 id="guess-result-title">本局结果</h2><p id="guess-result-summary"></p></div><button id="guess-result-close" class="close-button" type="button" aria-label="关闭本局结果">×</button></header>
+    <section id="guess-result" class="guess-result" hidden></section>
+    <p id="guess-result-next-note" class="guess-result-next-note"></p>
+    <div class="guess-result-actions"><button id="guess-result-next" class="button primary" type="button">开启下一局 · 刷新页面 ↻</button><button id="guess-result-review" class="button outline" type="button">返回查看猜测</button></div>
+  </dialog>
   <dialog id="guess-team-dialog" class="guess-team-dialog" aria-labelledby="guess-team-dialog-title" aria-describedby="guess-team-dialog-description">
     <div class="guess-team-dialog-head"><div><div class="eyebrow">YOUR GUESS · TEAM HISTORY</div><h2 id="guess-team-dialog-title">球队经历</h2><p id="guess-team-dialog-player"></p></div><button id="guess-team-dialog-close" class="close-button" type="button" aria-label="关闭球队经历" autofocus>×</button></div>
     <p id="guess-team-dialog-description" class="sr-only">显示已提交球员的全部已收录球队名称。按 Escape 或关闭按钮返回猜测记录。</p>
