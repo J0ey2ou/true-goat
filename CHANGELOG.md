@@ -1,5 +1,15 @@
 # Changelog
 
+## Website v0.9 — 2026-10-07
+
+- 增加 Supabase 账号、在线 1v1、好友房、对手颜色进度、Elo 天梯与排行榜；在线固定 10 项默认线索、8 次机会、180 秒。
+- 服务端隐藏答案与猜测身份，验证池、限制重复猜测、处理超时及一次性积分结算；私有数据禁止客户端直读。
+- 单人玩法增加可选线索开关，保留原默认组合，并提供冠军赛季、DPOY、场均助攻等共 18 项选择。
+- 以逐场实际出场事实补齐猜球员 2025、2026 季后赛与总决赛赛季计数；名单快照、缺失指标和跨联赛口径继续单独说明。
+- 球队弹窗仅展示完整已收录队名，移除逐赛季列表；更新双语说明、数据库权限与双浏览器对战测试。
+
+Supabase-backed accounts and online games add friendly rooms, opponent color progress, server-settled Elo ratings and a ladder. Single-player clues are configurable, playoff appearances reach 2025–26, and team popups list names without season clutter. Browser-local preferences remain independent of accounts.
+
 ## Website v0.8 — 2026-10-04
 
 - 猜球员与默认 300 人评级池分离：NBA/CBA 各提供现役、历史已收录、简单球星池，保留跨联赛池；跨联赛身份显式去重。

@@ -9,7 +9,7 @@ const metrics = ['teamCount','playoffAppearances','finalsAppearances','pointsPer
 const byId = id => data.players.find(player => player.id === id);
 
 test('expanded game data preserves unique identities and stated pool sizes',() => {
-  assert.equal(data.version,'2.0');
+  assert.equal(data.version,'2.1');
   assert.equal(new Set(data.players.map(player => player.id)).size,data.players.length);
   for (const pool of data.pools) assert.equal(pool.count,data.players.filter(player => player.pools.includes(pool.id)).length);
   assert.ok(data.players.filter(player => player.pools.includes('nba-history')).length>=5000);

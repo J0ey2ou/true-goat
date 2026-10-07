@@ -8,6 +8,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23d7f879'/%3E%3Ctext x='7' y='24' font-size='24' font-family='sans-serif' font-weight='bold' fill='%23111411'%3EG%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="/style.css">
   <link rel="stylesheet" href="/guess.css">
+  <link rel="stylesheet" href="/online.css">
   <link rel="stylesheet" href="/onboarding.css">
   <link rel="stylesheet" href="/welcome.css">
   <link rel="stylesheet" href="/themes.css">
@@ -18,7 +19,7 @@
 <body class="guess-page">
   <header class="topbar">
     <a class="brand" href="/" aria-label="True GOAT 首页"><span class="brand-mark">G.</span> TRUE GOAT <span class="brand-cn">/ 真正的山羊</span></a>
-    <nav class="guess-nav" aria-label="主导航"><a href="/">实验室</a><a href="/players">球员库</a><a href="/guess" aria-current="page">猜球员</a></nav>
+    <nav class="guess-nav" aria-label="主导航"><a href="/">实验室</a><a href="/players">球员库</a><a href="/guess" aria-current="page">猜球员</a><a href="#online-panel">账号 / 对战</a></nav>
   </header>
   <main class="guess-main">
     <section class="guess-hero"><div><div class="eyebrow">A DIFFERENT KIND OF BASKETBALL IQ</div><h1>八次机会，找到答案<span>。</span></h1><p>从一位你熟悉的球员开始。读懂线索，一步步缩小范围。</p></div><div class="guess-hero-number" aria-hidden="true">08<span>GUESSES / ONE PLAYER</span></div></section>
@@ -47,6 +48,14 @@
         <p id="guess-year-note">1995 指 1994–95 赛季。指定年份和球队时，球员必须在该年份范围内为该队正式出场过，不能将不同年代的球队经历拼在一起。仅使用已核实记录，不插补空档；CBA 与国际资料覆盖有限，未核实者不进入已筛选题目。</p>
         <p id="guess-year-status" role="status" aria-live="polite"></p>
       </section>
+      <section class="guess-clues panel" aria-label="自选单人线索">
+        <label class="guess-clues-switch"><input type="checkbox" id="guess-clues-enabled">自选线索 · 单人玩法</label>
+        <p>默认保留当前组合。打开后可增加冠军、DPOY、助攻等线索，也可取消某些项目；缺失数据仍显示未知。</p>
+        <div id="guess-clues-options" class="guess-clues-options" hidden></div>
+        <p id="guess-clues-status" role="status"></p>
+        <details class="guess-metric-notes"><summary>额外线索怎么定义？</summary><p>助攻、篮板、抢断、盖帽按 NBA/BAA 常规赛生涯总量 ÷ 总出场数；早期未记录的数据保留未知。黄色范围：助攻/篮板 ±1，抢断/盖帽 ±0.3，荣誉次数 ±1。DPOY 为常规赛最佳防守球员，FMVP 为总决赛 MVP，全明星按入选届数而非实际出场计数。</p><p>冠军赛季数匹配来源赛季球队记录与历届冠军，不等同于戒指授予名单，也不作为季后赛出场证明；目前仅已核实原档案有此项。CBA/欧洲联赛暂不套用 NBA 荣誉或统计口径。</p></details>
+      </section>
+      <section id="online-mount"></section>
       <div class="guess-layout">
         <section class="guess-board panel" aria-labelledby="guess-board-title">
           <div class="guess-board-head"><div><div id="guess-round-label" class="eyebrow"></div><h2 id="guess-board-title">今天，你能几次猜中？</h2></div><div class="guess-counter"><strong id="guess-attempts">0</strong><span>/ 8</span></div></div>
@@ -61,7 +70,7 @@
           <div id="guess-message" class="guess-message" role="status" aria-live="polite"></div>
           <div class="guess-legend" aria-label="提示颜色"><span><i class="correct"></i>一致</span><span><i class="close"></i>接近 / 重合</span><span><i class="wrong"></i>不同</span><span><i class="unknown"></i>未知</span><span>↑ ↓ 答案更大 / 更小</span></div>
           <div class="guess-history-head"><span>你的猜测</span><span>基本资料 + 5 项生涯指标</span></div>
-          <p class="guess-history-note">点击「效力球队」卡片，可展开全部球队与已核实赛季。生涯统计：NBA/BAA 常规赛及 MVP 至 2025–26；季后赛与总决赛至 2023–24。未核实数据为未知。</p>
+          <p class="guess-history-note" id="guess-metrics-cutoff">点击「效力球队」卡片可查看完整队名。各指标按已核实数据比较，截止日期见下方说明。</p>
           <div id="guess-history" class="guess-history" aria-label="猜测记录"></div>
           <section id="guess-result" class="guess-result" aria-live="polite" hidden></section>
           <div class="guess-board-actions"><button id="guess-share" class="button outline" type="button" disabled>复制色块战绩 ↗</button><button id="guess-new" class="button outline" type="button" hidden>换一位，再来一局 ↻</button><span id="guess-next-day"></span></div>
@@ -74,7 +83,7 @@
             <li><strong>位置与球队看集合。</strong>位置集合完全相同为绿，有交集为黄。双方球队记录完整且集合相同才为绿；有交集为黄，无交集且记录完整为灰。</li>
             <li><strong>未知不是零，也不是错误。</strong>缺失、口径不一致或不完整记录不能排除时，显示未知，不给箭头。</li>
           </ol><details class="guess-metric-notes"><summary>查看生涯指标口径</summary><p>新增指标只采用 NBA/BAA 生涯记录，不将 CBA、欧洲联赛计入同一尺度。缺乏完整来源时保留未知，不用 0 代替。</p><p>球队数按实际出场球队去重，同一球队更名或搬迁不重复计数；季后赛和总决赛次数均按实际出场赛季数计，不按场数或仅入选名单；场均得分 = 常规赛总得分 ÷ 总出场；MVP 为常规赛 MVP，不含总决赛 MVP。</p><p>筛选决定谁能成为答案，不截断下方的生涯统计。数据存在截止年份与覆盖差异，揭晓答案后可查看该球员的范围核验记录。</p></details><p class="guess-small">* 首赛年是注明联赛首次正式出场的公历年份，如乔丹为 1984；题目范围使用赛季结束年，两者口径不同。</p></section>
-          <section class="guess-about panel"><div class="eyebrow">ABOUT THIS EDITION</div><h2>篮球版玩法</h2><p>参考 <a href="https://shnlfriberg.online/" target="_blank" rel="noopener noreferrer">“弗一把”</a> 的有限次数、属性提示与每日猜选手机制，独立实现篮球版本。</p><p>NBA 与 CBA 各有现役、历史已收录和简单球星池，另有全球跨联赛池。各范围每日一题，北京时间 00:00 更新；自由练习可换题。</p><p>国际与 CBA 比赛数据仅用于猜球员，不混入 NBA GOAT 评分。答案和搜索候选共同遵守当前池、赛季与球队限制。</p><a class="guess-source-link" href="https://github.com/shnlfriberg/csgofriberg" target="_blank" rel="noopener noreferrer">查看参考规则来源 ↗</a><details><summary>数据、隐私与公平性</summary><p id="guess-data-note"></p><p>进度只保存在本机浏览器，不上传用户输入。答案和规则在客户端，能被查看源码获知；这是练习产品，不是防作弊竞赛。</p><p>NBA 历史为快照内实际出场者；CBA 历史仍有来源空缺，现役 CBA 仅核实国内完成注册者。跨联赛池不是全球所有球员。所有名单按快照展示，并非实时信息。</p></details></section>
+          <section class="guess-about panel"><div class="eyebrow">ABOUT THIS EDITION</div><h2>篮球版玩法</h2><p>参考 <a href="https://shnlfriberg.online/" target="_blank" rel="noopener noreferrer">“弗一把”</a> 的有限次数、属性提示与每日猜选手机制，独立实现篮球版本。</p><p>NBA 与 CBA 各有现役、历史已收录和简单球星池，另有全球跨联赛池。各范围每日一题，北京时间 00:00 更新；自由练习可换题。单人线索可自选，在线 1v1 固定默认 10 项。</p><p>国际与 CBA 比赛数据仅用于猜球员，不混入 NBA GOAT 评分。单人答案和搜索候选共同遵守当前池、赛季与球队限制；在线对战使用独立选择的球员池。</p><a class="guess-source-link" href="https://github.com/shnlfriberg/csgofriberg" target="_blank" rel="noopener noreferrer">查看参考规则来源 ↗</a><details><summary>数据、隐私与公平性</summary><p id="guess-data-note"></p><p>单人进度只保存在本机浏览器；单人答案在客户端，这是休闲练习。账号、在线对局与天梯存于 Supabase；在线答案由服务器保存，双方可看对手颜色进度，不公开对手猜测名字。产品尚非完整防作弊竞技平台。</p><p>NBA 历史为快照内实际出场者；CBA 历史仍有来源空缺，现役 CBA 仅核实国内完成注册者。跨联赛池不是全球所有球员。所有名单按快照展示，并非实时信息。</p></details></section>
         </aside>
       </div>
     </div>
@@ -82,7 +91,7 @@
   </main>
   <dialog id="guess-team-dialog" class="guess-team-dialog" aria-labelledby="guess-team-dialog-title" aria-describedby="guess-team-dialog-description">
     <div class="guess-team-dialog-head"><div><div class="eyebrow">YOUR GUESS · TEAM HISTORY</div><h2 id="guess-team-dialog-title">球队经历</h2><p id="guess-team-dialog-player"></p></div><button id="guess-team-dialog-close" class="close-button" type="button" aria-label="关闭球队经历" autofocus>×</button></div>
-    <p id="guess-team-dialog-description" class="sr-only">显示已提交球员的全部已收录球队名称与实际出场证据。按 Escape 或关闭按钮返回猜测记录。</p>
+    <p id="guess-team-dialog-description" class="sr-only">显示已提交球员的全部已收录球队名称。按 Escape 或关闭按钮返回猜测记录。</p>
     <div id="guess-team-dialog-body"></div>
   </dialog>
 </body>

@@ -10,6 +10,23 @@ export const ATTRIBUTES = [
   {key:'pointsPerGame',label:'场均得分*',tolerance:2,group:'career'},
   {key:'mvpCount',label:'MVP 次数*',tolerance:1,group:'career'}
 ];
+export const EXTRA_ATTRIBUTES = [
+  {key:'championshipCount',label:'冠军赛季数*',tolerance:1,group:'career'},
+  {key:'dpoyCount',label:'DPOY 次数*',tolerance:1,group:'career'},
+  {key:'assistsPerGame',label:'场均助攻*',tolerance:1,group:'career'},
+  {key:'reboundsPerGame',label:'场均篮板*',tolerance:1,group:'career'},
+  {key:'stealsPerGame',label:'场均抢断*',tolerance:0.3,group:'career'},
+  {key:'blocksPerGame',label:'场均盖帽*',tolerance:0.3,group:'career'},
+  {key:'finalsMvpCount',label:'FMVP 次数*',tolerance:1,group:'career'},
+  {key:'allStarCount',label:'全明星入选*',tolerance:1,group:'career'},
+];
+export const ALL_ATTRIBUTES = [...ATTRIBUTES,...EXTRA_ATTRIBUTES];
+export function selectedAttributes(keys) {
+  if (!Array.isArray(keys)) return ATTRIBUTES;
+  const requested = new Set(keys);
+  const selected = ALL_ATTRIBUTES.filter(item => requested.has(item.key));
+  return selected.length ? selected : ATTRIBUTES;
+}
 
 const finite = value => typeof value === 'number' && Number.isFinite(value);
 const unique = values => [...new Set(Array.isArray(values) ? values.filter(value => typeof value === 'string' && value.trim()) : [])].sort();
@@ -143,8 +160,8 @@ function compareCareerMetric(guess,answer,attribute) {
   return {...compared,note:`${g.scope} · 截至 ${g.throughSeason - 1}–${String(g.throughSeason).slice(-2)} 赛季`};
 }
 
-export function comparePlayers(guess,answer) {
-  return ATTRIBUTES.map(attribute => {
+export function comparePlayers(guess,answer,keys) {
+  return selectedAttributes(keys).map(attribute => {
     let comparison;
     if (attribute.key === 'teams') comparison = compareSets(guess.teams?.map(team => team.id),answer.teams?.map(team => team.id),{guessComplete:guess.teamsComplete === true,answerComplete:answer.teamsComplete === true});
     else if (attribute.key === 'positions') comparison = compareSets(guess.positions,answer.positions);
@@ -210,12 +227,12 @@ export function submitGuess(round,id,players) {
   return {round:{...round,guesses,status:roundStatus(guesses,round.answerId)},error:null};
 }
 
-export function shareText(round,players,poolName) {
+export function shareText(round,players,poolName,keys) {
   const answer = players.find(player => player.id === round.answerId);
   const cells = {correct:'🟩',close:'🟨',wrong:'⬛',unknown:'⬜'};
   const lines = round.guesses.map(id => {
     const guessed = players.find(player => player.id === id);
-    return guessed && answer ? comparePlayers(guessed,answer).map(cell => cells[cell.status]).join('') : '⬜'.repeat(ATTRIBUTES.length);
+    return guessed && answer ? comparePlayers(guessed,answer,keys).map(cell => cells[cell.status]).join('') : '⬜'.repeat(selectedAttributes(keys).length);
   });
   const filters = normalizeFilters(round.filters);
   const years = filters.from === null && filters.to === null ? '全部赛季'
@@ -223,5 +240,5 @@ export function shareText(round,players,poolName) {
       : `赛季结束年 ${filters.from ?? '不限'}–${filters.to ?? '不限'}`;
   const team = filters.teamId ? teamsForPool(players,round.pool).find(item => item.id === filters.teamId)?.name || '指定球队' : '全部球队';
   const result = round.status === 'empty' ? '—' : round.status === 'lost' ? 'X' : round.guesses.length;
-  return ['TRUE GOAT · 猜球员',poolName + ' · ' + (round.mode === 'daily' ? '每日 ' + round.date + ' (UTC+8)' : '自由练习'),`范围：${years} · ${team}`,result + '/' + MAX_GUESSES + (round.status === 'empty' ? ' · 暂无题目' : round.status === 'playing' ? ' · 进行中' : round.status === 'won' ? ' · 猜中了' : ' · 本局结束'),...lines,'🟩 一致  🟨 接近/重合  ⬛ 不同  ⬜ 未知'].join('\n');
+  return ['TRUE GOAT · 猜球员',poolName + ' · ' + (round.mode === 'daily' ? '每日 ' + round.date + ' (UTC+8)' : '自由练习'),`范围：${years} · ${team}`,...(keys ? ['自选线索：'+selectedAttributes(keys).map(item=>item.label.replace('*','')).join(' / ')] : []),result + '/' + MAX_GUESSES + (round.status === 'empty' ? ' · 暂无题目' : round.status === 'playing' ? ' · 进行中' : round.status === 'won' ? ' · 猜中了' : ' · 本局结束'),...lines,'🟩 一致  🟨 接近/重合  ⬛ 不同  ⬜ 未知'].join('\n');
 }

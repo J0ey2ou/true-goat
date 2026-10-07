@@ -11,19 +11,19 @@ test('Durant details expose every recorded team without truncating names',() => 
   assert.equal((markup.match(/class="guess-team-record"/g) || []).length,durant.teams.length);
   for (const team of durant.teams) assert.ok(markup.includes(`<h3>${team.name}</h3>`));
   assert.match(markup,/Houston Rockets/);
-  assert.match(markup,/当前口径内的球队名单标记完整/);
-  assert.match(markup,/更名或搬迁可能分列/);
+  assert.ok(!markup.includes('2007–08'));
+  assert.ok(!markup.includes('<a '));
 });
 
-test('verified seasons are individual records, never interpolated across gaps',() => {
+test('team popup lists names without season-by-season details',() => {
   const markup = teamDetailsMarkup(player('jordami01'),data.sources);
-  assert.ok(markup.includes('<li>1992–93</li>'));
-  assert.ok(markup.includes('<li>1994–95</li>'));
+  assert.ok(!markup.includes('<li>1992–93</li>'));
+  assert.ok(!markup.includes('<li>1994–95</li>'));
   assert.ok(!markup.includes('<li>1993–94</li>'));
   const yao = teamDetailsMarkup(player('mingya01'),data.sources);
-  assert.match(yao,/球队名单可能不完整/);
+  assert.match(yao,/缺漏/);
   const cba = yao.split('data-team-id="CBA:上海"')[1].split('</li>')[0];
-  assert.ok(cba.includes('2001–02'));
+  assert.ok(!cba.includes('2001–02'));
   assert.ok(!cba.includes('1997–98'));
 });
 
@@ -31,11 +31,11 @@ test('missing actual appearances remain unknown and roster membership is not inf
   const newcomer = data.players.find(item => item.nbaRoster && !item.appearances.length);
   assert.ok(newcomer);
   const markup = teamDetailsMarkup(newcomer,data.sources);
-  assert.match(markup,/暂无已核实的球队经历/);
+  assert.match(markup,/暂无已收录球队/);
   assert.ok(!markup.includes(newcomer.nbaRoster.teamName));
   const partial = teamDetailsMarkup({teams:[{id:'test',name:'Recorded team'}],teamsComplete:false,appearances:[]});
-  assert.match(partial,/暂无可核实的逐赛季出场记录/);
-  assert.match(partial,/未收录不等于从未效力/);
+  assert.match(partial,/Recorded team/);
+  assert.match(partial,/缺漏/);
 });
 
 test('details escape source content and allow only HTTP(S) evidence links',() => {
@@ -47,11 +47,11 @@ test('details escape source content and allow only HTTP(S) evidence links',() =>
   ]},[{id:'good',title:'<source>',url:'https://example.com/evidence'},{id:'bad',title:'bad',url:'javascript:alert(1)'}]);
   assert.ok(!markup.includes('<script>'));
   assert.ok(markup.includes('&lt;script&gt;'));
-  assert.ok(markup.includes('href="https://example.com/evidence"'));
+  assert.ok(!markup.includes('href="https://example.com/evidence"'));
   assert.ok(!markup.includes('javascript:'));
   assert.ok(!markup.includes('<li>2025–26</li>'));
   assert.ok(!markup.includes('<li>2022–23</li>'));
-  assert.ok(markup.includes('<li>2023–24</li>'));
+  assert.ok(!markup.includes('<li>2023–24</li>'));
 });
 
 test('team details are confined to submitted guesses and native accessible dialogs',async () => {

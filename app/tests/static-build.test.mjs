@@ -181,6 +181,9 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
   const base = `http://127.0.0.1:${server.address().port}${prefix}`;
   try {
     const page = await browser.newPage({viewport:{width:1440,height:1000}});
+    // Static navigation tests must not depend on the external auth/database service.
+    await page.route('https://qtfmrczwxinizmqgkebh.supabase.co/rest/v1/rpc/goat_leaderboard',route=>route.fulfill({status:200,contentType:'application/json',body:'[]'}));
+    await page.route('https://qtfmrczwxinizmqgkebh.supabase.co/auth/v1/settings',route=>route.fulfill({status:200,contentType:'application/json',body:'{"mailer_autoconfirm":true}'}));
     page.on('pageerror', error => errors.push(error.message));
     page.on('console', message => {if (message.type() === 'error') errors.push(message.text());});
     await page.goto(base);
@@ -226,12 +229,23 @@ test('all three pages and interactions work below a GitHub Pages style /reposito
     assert.equal(await page.locator('#guess-attempts').innerText(),'1');
     await page.keyboard.press('Escape');
     assert.equal(await teamClue.evaluate(el=>document.activeElement===el),true);
+    assert.equal(await page.locator('#guess-team-dialog-body .guess-team-seasons').count(),0);
+    await page.locator('#guess-clues-enabled').check();
+    await page.locator('#guess-clues-status').filter({hasText:'当前 10 项'}).waitFor();
+    assert.equal(await page.locator('[data-guess-clue]').count(),18);
+    await page.locator('[data-guess-clue][value="assistsPerGame"]').check();
+    assert.equal(await page.locator('#guess-history [data-key="assistsPerGame"]').count(),1);
+    await page.locator('#online-panel>summary').click();
+    assert.equal(await page.locator('#online-email').isVisible(),true);
+    await page.locator('#online-register-tab').click();
+    assert.equal(await page.locator('#online-name').isVisible(),true);
     await page.setViewportSize({width:390,height:844});
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1), false);
     await teamClue.click();
     await page.locator('#guess-team-dialog[open]').waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1),false);
     await page.locator('#guess-team-dialog-close').click();
+    await page.locator('#guess-clues-enabled').uncheck();
     await page.goto(base+'guess.html?pool=nba-history');
     await page.locator('#guess-app').waitFor({state:'visible'});
     assert.equal(await page.locator('#guess-pool').inputValue(),'nba-history');

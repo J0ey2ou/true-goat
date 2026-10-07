@@ -10,7 +10,7 @@ const played = (id,season,teamId) => player(id).appearances.some(item => item.se
 
 test('every eligibility record pairs an actual season and team with cited positive evidence',() => {
   const sources = new Set(data.sources.map(item => item.id));
-  assert.equal(data.version,'2.0');
+  assert.equal(data.version,'2.1');
   for (const item of data.players) {
     assert.ok(Array.isArray(item.appearances),item.id);
     assert.equal(item.appearanceCoverage.verifiedOnly,true,item.id);

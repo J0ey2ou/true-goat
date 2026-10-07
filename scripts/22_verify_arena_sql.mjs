@@ -1,0 +1,60 @@
+const {PGlite} = await import(process.env.GOAT_PGLITE_MODULE || '@electric-sql/pglite');
+import {readFile} from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const db=new PGlite();
+try {
+await db.exec(`create role anon;create role authenticated;create schema auth;create table auth.users(id uuid primary key,raw_user_meta_data jsonb default '{}');
+create function auth.uid() returns uuid language sql stable as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;
+grant usage on schema auth to anon,authenticated;grant execute on function auth.uid() to anon,authenticated;`);
+await db.exec(await readFile('supabase/migrations/202610070001_arena.sql','utf8'));
+// Also exercise the SQL Editor's optional RLS hardening on private tables.
+await db.exec('alter table goat_private.players enable row level security;alter table goat_private.answers enable row level security;alter table goat_private.guesses enable row level security;alter table goat_private.install_settings enable row level security;');
+const ids=['11111111-1111-4111-8111-111111111111','22222222-2222-4222-8222-222222222222','33333333-3333-4333-8333-333333333333'];
+for(const id of ids)await db.query('insert into auth.users(id) values($1)',[id]);
+const fixture=JSON.parse(await readFile('app/data/guess-players.json','utf8'));
+const sample=fixture.players.filter(p=>['jordami01','jamesle01','curryst01'].includes(p.id));
+for(const p of sample)await db.query('insert into goat_private.players values($1,$2,$3)',[p.id,fixture.version,p]);
+const login=async i=>db.query("select set_config('request.jwt.claim.sub',$1,false)",[ids[i]]);
+const call=async(sql,args=[]) => (await db.query(sql,args)).rows[0].value;
+const profile=async i=>{await login(i);return call('select public.goat_profile() as value');};
+for(let i=0;i<3;i++)await profile(i);
+await login(0);let host=await call("select public.goat_lobby('nba-easy','ranked') as value");assert.equal(host.state,'waiting');assert.equal(host.answer,null);
+await login(1);let guest=await call("select public.goat_lobby('nba-easy','ranked') as value");assert.equal(guest.id,host.id);assert.equal(guest.state,'playing');assert.equal(guest.answer,null);
+await login(2);await assert.rejects(()=>call('select public.goat_state($1) as value',[host.id]),/无权访问/);
+await db.exec('set role authenticated');
+assert.equal((await db.query('select * from public.goat_matches')).rows.length,0);
+await assert.rejects(()=>db.query('update public.goat_profiles set rating=99999'),/permission denied/);
+await assert.rejects(()=>db.query('select * from goat_private.answers'),/permission denied/);
+await db.exec('reset role');
+const answer=(await db.query('select player_id from goat_private.answers where match_id=$1',[host.id])).rows[0].player_id;
+await login(0);await assert.rejects(()=>call('select public.goat_guess($1,$2) as value',[host.id,'fake-id']),/有效球员/);
+const wrong=sample.find(p=>p.id!==answer).id;
+host=await call('select public.goat_guess($1,$2) as value',[host.id,wrong]);assert.equal(host.host_attempts,1);assert.equal(host.guesses[0].feedback.length,10);
+await assert.rejects(()=>call('select public.goat_guess($1,$2) as value',[host.id,wrong]),/已经猜过/);
+await login(1);guest=await call('select public.goat_state($1) as value',[host.id]);assert.equal(guest.host_tiles.length,1);assert.equal(guest.guesses.length,0);assert.equal(guest.answer,null);
+guest=await call('select public.goat_guess($1,$2) as value',[host.id,answer]);assert.equal(guest.state,'finished');assert.equal(guest.winner_id,ids[1]);assert.equal(guest.host_delta,-12);assert.equal(guest.guest_delta,12);assert.equal(guest.answer.id,answer);
+await call('select public.goat_state($1) as value',[host.id]);await call('select public.goat_state($1) as value',[host.id]);
+assert.equal((await profile(0)).rating,988);assert.equal((await profile(1)).rating,1012);assert.equal((await profile(1)).played,1);
+await login(0);host=await call("select public.goat_lobby('nba-easy','create') as value");await login(1);guest=await call("select public.goat_lobby('nba-easy','join',$1) as value",[host.room_code]);assert.equal(guest.id,host.id);
+await login(0);host=await call('select public.goat_leave($1) as value',[host.id]);assert.equal(host.winner_id,ids[1]);assert.equal(host.host_delta,0);assert.equal((await profile(0)).rating,988);
+await login(0);host=await call("select public.goat_lobby('nba-easy','ranked') as value");await login(1);guest=await call("select public.goat_lobby('nba-easy','ranked') as value");
+await db.query("update public.goat_matches set deadline_at=now()-interval '1 second' where id=$1",[host.id]);
+const expired=await call('select public.goat_state($1) as value',[host.id]);assert.equal(expired.state,'finished');assert.equal(expired.winner_id,null);
+assert.equal((await profile(0)).played,2);assert.equal((await profile(1)).played,2);
+await db.exec('set role anon');
+const board=await call('select public.goat_leaderboard() as value');assert.equal(board.length,2);assert.ok(!Object.hasOwn(board[0],'id'));assert.ok(!Object.hasOwn(board[0],'email'));
+await assert.rejects(()=>call('select public.goat_lobby($1,$2) as value',['nba-easy','ranked']),/permission denied/);
+await db.exec('reset role');
+await db.exec("insert into goat_private.install_settings values(true,encode(sha256(convert_to('local-test-capability','UTF8')),'hex'),now()+interval '1 hour','2.1',true)");
+await db.exec('set role anon');
+await assert.rejects(()=>call('select public.goat_seed(null,$1,$2) as value',[[],'2.1']),/安装授权/);
+await assert.rejects(()=>call('select public.goat_seed($1,$2,null) as value',['local-test-capability',[]]),/安装授权/);
+await assert.rejects(()=>call('select public.goat_seed($1,$2,$3) as value',['wrong',[],'2.1']),/安装授权/);
+assert.equal(await call('select public.goat_seed($1,$2,$3,true) as value',['local-test-capability',[],'2.1']),0);
+await assert.rejects(()=>call('select public.goat_seed($1,$2,$3) as value',['local-test-capability',[],'2.1']),/安装授权/);
+await db.exec('reset role');
+// The SQL referee and browser referee must agree for every default clue.
+const {comparePlayers}=await import('../app/guess-engine.mjs');
+for(const g of sample)for(const a of sample){const feedback=await call('select goat_private.feedback($1,$2) as value',[g,a]);assert.deepEqual(feedback,comparePlayers(g,a).map(({key,status,direction})=>({key,status,direction})));}
+await db.close();console.log('PASS: SQL install, matching, hidden answers, RLS, invalid/duplicate guesses, opponent progress, Elo, exactly-once settlement, friendly rooms, timeout, anonymous leaderboard and referee parity.');
+} catch(error) { console.error(JSON.stringify({message:error.message,code:error.code,position:error.position}));await db.close();process.exitCode=1; }

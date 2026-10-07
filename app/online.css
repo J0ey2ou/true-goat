@@ -1,0 +1,30 @@
+.online-panel { margin:0 0 22px; padding:20px 22px; }
+.online-panel>summary { display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; cursor:pointer; font-size:18px; font-weight:600; }
+.online-panel>summary small { font-size:12px; color:var(--muted); font-weight:400; }
+.online-inner p { font-size:14px; line-height:1.85; }
+.online-rules,.online-privacy { color:var(--muted); }
+.online-panel label { display:grid; gap:7px; min-width:0; font-size:14px; }
+.online-panel input,.online-panel select { width:100%; min-width:0; color:var(--text); background:var(--panel2); border:1px solid var(--line); border-radius:7px; padding:12px; font-size:16px; }
+.online-panel button { color:var(--text); background:var(--panel2); border:1px solid var(--line); border-radius:7px; padding:11px 15px; min-height:44px; font-size:14px; }
+.online-panel button:disabled { opacity:.45; }
+.online-panel form { display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:18px 0; }
+.online-panel form label { flex:1 1 180px; }
+.online-actions,.online-auth-tabs,.online-account-head,.online-match-head { display:flex; gap:12px; flex-wrap:wrap; justify-content:space-between; align-items:center; margin:16px 0; }
+.online-auth-tabs { justify-content:flex-start; }
+.online-auth-tabs button[aria-pressed=true],#online-ranked,#online-submit { background:var(--lime); color:var(--bg); font-weight:600; }
+.online-progress { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:20px 0; }
+.online-progress>div { padding:15px; background:var(--panel2); border-radius:9px; min-width:0; overflow-wrap:anywhere; }
+.online-progress span { display:block; color:var(--muted); font-size:13px; margin-top:6px; }
+.online-tiles { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); gap:3px; margin-top:7px; }
+.online-tiles i { height:16px; border-radius:2px; }
+.online-candidates { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+.online-guess { margin:14px 0; padding:15px; background:var(--panel2); border-radius:9px; }
+.online-feedback { display:grid; grid-template-columns:repeat(auto-fit,minmax(105px,1fr)); gap:8px; margin-top:12px; }
+.online-feedback>div { padding:10px; border-radius:7px; overflow-wrap:anywhere; }
+.online-feedback small { display:block; font-size:12px; margin-bottom:6px; }
+.online-feedback span { font-size:15px; }
+.online-message { min-height:24px; color:var(--orange); }
+.online-panel table { width:100%; border-collapse:collapse; font-size:14px; }
+.online-panel th,.online-panel td { padding:10px 6px; text-align:left; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.online-panel details summary { cursor:pointer; }
+@media(max-width:480px) { .online-panel { padding:17px 14px; } .online-progress { grid-template-columns:1fr; } .online-panel table { font-size:12px; } .online-panel form button { width:100%; } }

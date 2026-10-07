@@ -268,6 +268,14 @@
 .guess-page .guess-team-records { list-style:none; margin:20px 0; padding:0; display:grid; gap:14px; }
 .guess-page .guess-team-record { padding:17px 18px; border:1px solid var(--line); border-radius:10px; }
 .guess-page .guess-team-record h3 { font-size:18px; margin:0 0 10px; line-height:1.5; }
+.guess-page .guess-team-record h3:last-child { margin-bottom:0; }
+.guess-page .guess-clues { padding:20px 22px; margin-bottom:20px; }
+.guess-page .guess-clues p { font-size:13px; line-height:1.8; color:var(--muted); }
+.guess-page .guess-clues-switch { display:flex; align-items:center; gap:10px; font-size:16px; font-weight:600; }
+.guess-page .guess-clues-switch input,.guess-page .guess-clues-options input { width:18px; height:18px; accent-color:var(--lime); }
+.guess-page .guess-clues-options { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; }
+.guess-page .guess-clues-options label { display:flex; gap:8px; align-items:center; font-size:14px; padding:10px; background:var(--panel2); border-radius:7px; }
+.guess-page .guess-clue-grid { grid-template-columns:repeat(auto-fit,minmax(118px,1fr)); }
 .guess-page .guess-team-record p { margin:0; color:var(--muted); }
 .guess-page .guess-team-seasons { margin-top:10px; }
 .guess-page .guess-team-seasons>span { color:var(--muted); font-size:13px; }

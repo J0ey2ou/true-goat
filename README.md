@@ -37,7 +37,11 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 ### 猜球员：按熟悉程度选择范围
 
-[猜球员](https://j0ey2ou.github.io/true-goat/guess.html)与 GOAT 评级名单独立，不限制在 300 人。八次机会、逐项属性反馈；支持每日挑战和自由练习，暂不做对战。
+[猜球员](https://j0ey2ou.github.io/true-goat/guess.html)与 GOAT 评级名单独立，不限制在 300 人。八次机会、逐项属性反馈；每日挑战和自由练习无需登录，也可注册账号参加在线 1v1。
+
+默认保留 10 项线索。打开“自选线索 · 单人玩法”，可以增减项目，另外选择冠军赛季数、DPOY、场均助攻/篮板/抢断/盖帽、FMVP 和全明星入选，共 18 项可选。额外数据按需加载，不影响 GOAT 评分；资料不完整时显示未知，而不是零。冠军赛季数按来源赛季球队记录与冠军名单匹配，不等同于戒指授予人数；目前这项仅覆盖原已核实档案。
+
+展开“在线 1v1 · 账号与天梯”，登录后可天梯匹配，或创建好友房分享房间码。双方同题、8 次机会、180 秒，在线固定默认 10 项线索，不采用单人自选模块或赛季/球队筛选。可以同时看到对方的尝试次数和颜色进度，但看不到对方猜过的名字。先猜中者胜；双方未猜中则平局。初始 1000 分、Elo K=24，仅天梯对局计分，好友房不计分；排行榜展示前 100 名已参赛玩家。答案、猜测判定和积分结算在 Supabase 云端处理。
 
 七个池以可点击卡片直接展示，人数取自实际加载的题库；也保留下拉切换。可[直接进入 NBA 现役池](https://j0ey2ou.github.io/true-goat/guess.html?pool=nba-active)。页面显示题库与网站版本，发布时自动为脚本、样式及数据附加内容版本号，避免沿用旧资源缓存；这不会清除本机进度。
 
@@ -55,7 +59,7 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 输入中文、英文或已收录绰号都可检索，例如“哈登”“大胡子”“James Harden”。新扩展球员尚无核实中文译名时保留英文。提示中的未知不是零，不同联赛或截止期的统计不直接比较。筛选决定谁能入题，不将生涯线索截断为所选年份。
 
-点击猜测记录中的“效力球队”卡片，可以展开该次已猜球员的完整已收录队名、逐项核实赛季与来源；不会泄露尚未猜中的答案。历史队名可能分列，名称条数不一定等于按球队沿革去重后的“效力球队数”。页面采用更大的说明字号与响应式线索卡布局，手机上也能点击查看完整信息。
+点击猜测记录中的“效力球队”卡片，只展开该次已猜球员的全部已收录球队名称，不逐赛季罗列；不会泄露尚未猜中的答案。历史队名可能分列，名称条数不一定等于按球队沿革去重后的“效力球队数”。页面采用更大的说明字号与响应式线索卡布局，手机上也能点击查看完整信息。
 
 每日题按北京时间 00:00 更新，同版本、日期、球员池和范围保持一致。各范围进度分别保存在浏览器；题目答案可从客户端数据读取，因此它是休闲练习，不是防作弊竞技服务。猜球员玩法受到 CS 猜选手游戏与社区的启发，完整引用见下方[玩法灵感与特别致谢](#inspiration-zh)。
 
@@ -74,11 +78,11 @@ True GOAT 的猜球员并不是凭空诞生的。感谢 CS 社区把选手知识
 
 每个页面只展示自己的动画导览，支持重看、键盘操作与减少动态效果设置。六套皮肤包含鲜艳深色、奶油浅色与经典森林，跨页同步，不改变分数或猜测颜色的含义。
 
-无需登录即可使用。账号注册和云端同步尚未接入；模型、自选名单、皮肤及游戏进度保存在本机浏览器，不是在线账户。模型分享链接包含所分享的设置和球员 ID，不包含猜球员进度。
+排名、球员库和单人猜球员无需登录。模型、自选名单、皮肤及单人进度仍保存在本机浏览器，不随账号同步；账号档案、在线对局和天梯积分保存在 Supabase。当前采用邮箱＋密码直接注册，不验证邮箱归属；未配置发送邮件服务，暂不支持邮件找回密码。模型分享链接包含所分享的设置和球员 ID，不包含猜球员进度。
 
 ### 数据诚实比“什么都有”更重要
 
-- 数据有快照日期。常规赛主要截至 2025–26；已核实季后赛/总决赛实际出场统计截至 2023–24，其他字段以来源标记为准。
+- 数据有快照日期。猜球员的常规赛、奖项及已核实季后赛/总决赛实际出场统计截至 2025–26；后两项于 2026-10-07 补齐 2025、2026 两季的逐场出场事实，排除附加赛。现役名单仍是 2026-10-04 快照，CBA/欧洲资料有缺漏。GOAT 评分和资料库的旧季后赛统计独立标记，不因猜球员更新而改变。
 - 早期防守、奖项机会和跨联赛背景覆盖不同；缺失与结构性时代差异不会因为画成图就消失。
 - “同场对手交锋”有逐场数据基础，但当前没有逐回合防守者信息。直接防守对位分尚未开放，也不把同场得分冒充对另一人的单独进攻表现。
 - 网站不是 NBA、CBA、EuroLeague 或任何评论员的官方产品。来源和许可边界见 [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt)。
@@ -113,7 +117,11 @@ New players use frozen reference standards. Adding someone never recalculates th
 
 ### Guess players at your own level
 
-The [guessing game](https://j0ey2ou.github.io/true-goat/guess.html) has an independent player universe, not a 300-player cap. You get eight attempts and attribute feedback, with daily challenges and free practice. Multiplayer is not implemented.
+The [guessing game](https://j0ey2ou.github.io/true-goat/guess.html) has an independent player universe, not a 300-player cap. You get eight attempts and attribute feedback. Daily challenges and free practice need no login; registered accounts can also play online 1v1.
+
+The default ten clues stay unchanged. Enable the single-player custom-clue switch to add or remove modules, with championship seasons, DPOY, career assists/rebounds/steals/blocks per game, Finals MVP and All-Star selections among 18 choices. Extra facts load on demand and never change GOAT ratings. Incomplete data stays unknown, not zero. Championship seasons match sourced team-season records to champion teams, not ring recipients; this field currently covers only the previously verified profiles.
+
+Open the online panel to sign in, join ranked matchmaking, or share a friendly room code. Both players get the same answer, eight attempts and 180 seconds. Online games always use the default ten clues and their own pool, not single-player custom clues or season/team filters. Opponent attempts and colored progress are visible, but guessed names are not. The first correct answer wins; neither solving means a draw. Ranked ratings start at 1000 with Elo K=24; friendly rooms do not affect ratings. The leaderboard lists up to 100 ranked participants. Hidden answers, clue judgments and rating settlement are handled by Supabase.
 
 The 2026-10-04 snapshot has **620** active, **5,105** historical and **152** easy NBA players; **328** active, **1,487** recorded historical and **47** easy CBA players. The cross-league union contains **6,717** records after verified identity merges. Pools overlap, so their counts are not additive. There are still 63 unresolved cross-source identity candidates; a shared name is not enough to merge people. The first two pages offer an expanded NBA catalog of **5,217** people.
 
@@ -131,7 +139,7 @@ Season and team filters constrain both the answer and search results. The year a
 
 Search accepts English names, verified Chinese labels and collected nicknames, such as “哈登”, “大胡子” and “James Harden”. Newly added players without reviewed translations remain searchable in English. Unknown is not zero; incompatible statistical scopes or cutoffs are not directly compared. Filtering selects eligible people rather than truncating the career statistics used as clues.
 
-Click a submitted player's team clue to open the full recorded team names, individually verified seasons and sources; the hidden answer is not exposed. Historical names may be listed separately, so name entries can differ from the franchise-deduplicated career team count. Larger explanatory text and responsive clue cards make these details easier to read and tap on phones.
+Click a submitted player's team clue to open all recorded team names, without season-by-season listings; the hidden answer is not exposed. Historical names may be listed separately, so name entries can differ from the franchise-deduplicated career team count. Larger explanatory text and responsive clue cards make these details easier to read and tap on phones.
 
 Daily answers change at midnight in Beijing (UTC+8), remaining deterministic for the same data version, date, pool and filters. Each range has separate browser progress. Answers are available in client-side data: this is a casual game, not an anti-cheat competition. The guessing experience draws inspiration from CS player-guessing games and their communities; see the explicit [credits below](#inspiration-en).
 
@@ -151,11 +159,11 @@ These credits recognize inspiration, community influence and open-source sharing
 
 Each page has its own replayable animated introduction, keyboard support and reduced-motion behavior. Six themes include vivid dark palettes, a light cream palette and the classic forest theme. Themes synchronize across pages without changing scores or clue semantics.
 
-No login is required. Registration and cloud synchronization are not connected yet. Models, custom rosters, themes and game progress are browser-local, not online accounts. Shared model URLs contain the selected settings and player IDs, but not guessing-game progress.
+The lab, directory and single-player game need no login. Models, custom rosters, themes and single-player progress remain browser-local and are not synchronized through accounts; online profiles, matches and ranked ratings live in Supabase. Registration currently uses email and password without verifying email ownership. Email password recovery is unavailable until a mail service is configured. Shared model URLs contain the selected settings and player IDs, but not guessing-game progress.
 
 ### Honest boundaries
 
-- Data is a snapshot, not a live feed. Regular-season data generally reaches 2025–26; verified playoff/Finals appearance counts reach 2023–24. Other fields carry their own cutoffs.
+- Data is a snapshot, not a live feed. Guessing-game regular-season, awards and verified playoff/Finals appearances reach 2025–26. The latter were supplemented on 2026-10-07 with actual participants in 2025 and 2026 games, excluding play-ins. Current rosters remain the 2026-10-04 snapshot, with CBA/European gaps. Older playoff statistics in GOAT ratings and the directory retain independent cutoffs.
 - Early defensive coverage, award availability and cross-league biographies differ. Visualizations do not remove those limitations.
 - Existing box scores can support a future same-game opponent comparison, but do not identify possession-level defenders. Direct defensive-matchup scoring is not available.
 - This is not an official NBA, CBA, EuroLeague or commentator product. See [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt) for attribution and licensing boundaries.
@@ -192,9 +200,15 @@ node scripts/16_build_static_site.mjs
 # Public-only static output: dist/
 ```
 
-三个页面均在浏览器运行，不需自建服务器。静态输出支持 GitHub Pages 仓库子路径；只发布 `dist/`，不要上传整个工作区。现有 [Pages workflow](.github/workflows/pages.yml) 在推送 main 后测试、构建并部署。其他静态托管可以使用同一输出；此仓库不宣称已部署 Cloudflare。
+三个页面的前端均在浏览器运行，不需自建服务器；账号与在线对战使用 Supabase 托管后端。静态输出支持 GitHub Pages 仓库子路径；只发布 `dist/`，不要上传整个工作区。现有 [Pages workflow](.github/workflows/pages.yml) 在推送 main 后测试、构建并部署。其他静态托管可以使用同一输出；此仓库不宣称已部署 Cloudflare。
 
-All three pages run in the browser without a self-managed backend. The static output supports GitHub Pages repository subpaths. Publish only `dist/`, not the workspace. The existing [Pages workflow](.github/workflows/pages.yml) tests, builds and deploys pushes to main. Other static hosts can use the same output; this repository does not claim a Cloudflare deployment exists.
+All three frontends run in the browser without a self-managed server; accounts and online games use a managed Supabase backend. The static output supports GitHub Pages repository subpaths. Publish only `dist/`, not the workspace. The existing [Pages workflow](.github/workflows/pages.yml) tests, builds and deploys pushes to main. Other static hosts can use the same output; this repository does not claim a Cloudflare deployment exists.
+
+### 在线后端 / Online backend
+
+部署步骤与权限边界见 [Supabase 配置说明 / Supabase setup](docs/supabase-setup.md)。网页配置只使用项目 URL 和 Publishable key，不能放 Secret key、数据库密码或 service_role。数据库通过受控 RPC 校验用户、判定线索和结算积分；对局表启用参与者 RLS，答案与猜测保存在禁止客户端直读的私有 schema。WebSocket 更新带权限过滤，断线时轮询补充同步。
+
+See [Supabase setup](docs/supabase-setup.md) for deployment and access boundaries. Frontend configuration contains only the project URL and publishable key, never secret keys, database passwords or service_role. Controlled RPCs validate players, judge clues and settle scores. Participant RLS protects matches; private schemas hide answers and guesses from direct client access. Authorized WebSocket updates have a polling fallback.
 
 ### 测试 / Tests
 
@@ -225,6 +239,8 @@ python scripts/15_build_guess_players.py
 python scripts/17_build_guess_pool_variants.py --catalog
 python scripts/18_build_cba_pool_variants.py
 python scripts/19_integrate_player_library.py
+python scripts/20_refresh_guess_metrics.py
+# Add --refresh to refresh public 2025/2026 postseason box scores before rebuilding.
 ```
 
 数据构建需要来源说明中列出的原始快照；公开仓库不包含大体积原始数据或完整网页缓存。17/18 使用有出处的事实快照，网络刷新仅在明确请求时运行。19 合并核实过的跨联赛身份、输出扩展题库和添加球员目录；不要只运行旧的 15 后就发布，以免覆盖扩展题库。生成结果与源数据均不应包含个人路径或凭据。

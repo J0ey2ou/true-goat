@@ -26,6 +26,7 @@
 !/app/data/player-directory.json
 !/app/data/player-catalog.json
 !/app/data/guess-players.json
+!/app/data/guess-extra-metrics.json
 !/app/data/guess-source-cba.json
 !/app/tests/
 /app/tests/*
@@ -38,6 +39,11 @@
 /config/*
 !/config/*.json
 !/config/*.yaml
+!/supabase/
+/supabase/*
+!/supabase/migrations/
+/supabase/migrations/*
+!/supabase/migrations/*.sql
 /config/guess-cba-identity-candidates.json
 /config/guess-cba-identity-audit-*.json
 !/docs/

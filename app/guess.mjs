@@ -1,4 +1,5 @@
-import { MAX_GUESSES, ATTRIBUTES, playersInPool, poolFamily, normalizeFilters, filterKey, eligiblePlayers, teamsForPool, matchingAppearances, shanghaiDate, comparePlayers, newRound, restoreRound, submitGuess, shareText } from './guess-engine.mjs';
+import { MAX_GUESSES, ATTRIBUTES, ALL_ATTRIBUTES, selectedAttributes, playersInPool, poolFamily, normalizeFilters, filterKey, eligiblePlayers, teamsForPool, matchingAppearances, shanghaiDate, comparePlayers, newRound, restoreRound, submitGuess, shareText } from './guess-engine.mjs';
+import { initOnline } from './online.mjs';
 import { normalizeSearch, searchPlayers } from './player-search.mjs';
 
 const $ = id => document.getElementById(id);
@@ -13,6 +14,25 @@ const PREF_KEY = 'true-goat-guess:preferences:v2';
 let data,players = [],mode = 'daily',pool = 'nba-easy',round,matches = [],activeIndex = 0,storageWarning = false,isComposing = false;
 let filters = {from:null,to:null,teamId:''}, filtersByPool = {};
 let teamDialogTrigger = null;
+let customClues = false, clueKeys = ATTRIBUTES.map(item=>item.key);
+const activeClueKeys = () => customClues ? clueKeys : undefined;
+let extraLoaded=false;
+async function loadExtraMetrics() {
+  if(extraLoaded)return;
+  const response=await fetch('/data/guess-extra-metrics.json');
+  if(!response.ok)throw Error('额外线索数据暂时无法加载，请稍后重试。');
+  const extra=await response.json();
+  if(extra.version!==data.version)throw Error('额外线索版本已更新，请刷新页面。');
+  for(const player of players){
+    const facts=extra.players[player.id];if(!facts)continue;
+    for(const [key,definition] of Object.entries(extra.definitions)){
+      player[key]=facts[key]??null;
+      player.metricCoverage[key]={...definition,complete:facts.completeFields.includes(key)};
+      player.fieldSources[key]=definition.sourceIds;
+    }
+  }
+  extraLoaded=true;
+}
 
 function storageKey() { return `true-goat-guess:v2:${data.version}:${mode}:${pool}:${encodeURIComponent(filterKey(filters))}`; }
 function safeUrl(value) { try { const url = new URL(value); return ['http:','https:'].includes(url.protocol) ? url.href : null; } catch { return null; } }
@@ -70,7 +90,7 @@ function metricDescription(player,key) {
 }
 function save() {
   stateCache.set(storageKey(),round);
-  try { localStorage.setItem(storageKey(),JSON.stringify(round)); localStorage.setItem(PREF_KEY,JSON.stringify({mode,pool,filtersByPool})); }
+  try { localStorage.setItem(storageKey(),JSON.stringify(round)); localStorage.setItem(PREF_KEY,JSON.stringify({mode,pool,filtersByPool,customClues,clueKeys})); }
   catch { storageWarning = true; }
 }
 
@@ -136,28 +156,8 @@ function cellValue(player,key) {
 
 // This detail view receives only the submitted player, never the hidden answer.
 export function teamDetailsMarkup(player,sources = []) {
-  const teams = list(player.teams), coverage = player.appearanceCoverage || {};
-  const seasonLabel = season => `${season - 1}–${String(season).slice(-2)}`;
-  const verified = list(player.appearances).filter(row => row && Number.isInteger(row.season) && row.season >= 1850 && row.season <= 2100 && row.teamId
-    && (row.evidence === 'season-games' && Number.isFinite(row.games) && row.games > 0 || row.evidence === 'dated-performance'));
-  const scope = player.teamsScope || '球队记录口径未注明';
-  const complete = player.teamsComplete === true ? '当前口径内的球队名单标记完整；不等于全球职业生涯完整。' : '球队名单可能不完整。未收录不等于从未效力。';
-  const appearanceNote = `出场记录：${coverage.scope || '口径未注明'}${Number.isInteger(coverage.throughSeason) ? ` · 截至 ${seasonLabel(coverage.throughSeason)} 赛季` : ' · 截止赛季未注明'}。${coverage.complete === true ? '当前出场口径内标记完整。' : '已核实出场记录仍可能有缺漏。'}`;
-  const items = teams.map(team => {
-    const rows = verified.filter(row => row.teamId === team.id);
-    const leagues = [...new Set(rows.map(row => row.league || '联赛未注明'))];
-    const seasons = leagues.map(league => {
-      const years = [...new Set(rows.filter(row => (row.league || '联赛未注明') === league).map(row => row.season))].sort((a,b) => a - b);
-      return `<div class="guess-team-seasons"><span>${esc(league)} · 已核实出场赛季</span><ul>${years.map(year => `<li>${seasonLabel(year)}</li>`).join('')}</ul></div>`;
-    }).join('');
-    const ids = new Set(rows.map(row => row.sourceId));
-    const links = list(sources).filter(source => ids.has(source.id)).map(source => {
-      const url = safeUrl(source.url);
-      return url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.id)} ↗</a>` : '';
-    }).join('');
-    return `<li class="guess-team-record" data-team-id="${esc(team.id)}"><h3>${esc(team.name || team.id)}</h3>${seasons || '<p>已收录球队名称，暂无可核实的逐赛季出场记录；不能据此判断具体效力年份。</p>'}${links ? `<div class="guess-team-sources">${links}</div>` : ''}</li>`;
-  }).join('');
-  return `<section class="guess-team-coverage"><strong>已收录 ${teams.length} 条球队名称记录</strong><p>球队口径：${esc(scope)}。${complete}</p><p>${esc(appearanceNote)}</p></section><p class="guess-team-explainer">以下仅是你已提交的这位球员，不是答案提示。赛季逐项列出，不将空档补成连续年份；阵容或注册名单不等同正式出场。</p>${teams.length ? `<ul class="guess-team-records">${items}</ul>` : '<p class="guess-team-empty">暂无已核实的球队经历。这表示资料不足，不代表没有效力过球队。</p>'}<p class="guess-team-footnote">列表保留历史队名，更名或搬迁可能分列；上方「效力球队数」指标按球队沿革去重，因此不一定等于这里的名称条数。这里展示已收录生涯记录，不随本局赛季筛选截断。</p>`;
+  const teams = list(player.teams);
+  return teams.length ? `<ul class="guess-team-records">${teams.map(team=>`<li class="guess-team-record" data-team-id="${esc(team.id)}"><h3>${esc(team.name || team.id)}</h3></li>`).join('')}</ul>${player.teamsComplete === true ? '' : '<p class="guess-team-footnote">显示全部已收录球队；部分球员履历仍有缺漏。</p>'}` : '<p class="guess-team-empty">暂无已收录球队。</p>';
 }
 
 function openTeamDetails(id,trigger) {
@@ -177,20 +177,21 @@ function openTeamDetails(id,trigger) {
 function renderHistory() {
   if (round.status === 'empty') { $('guess-history').innerHTML = '<div class="guess-empty"><strong>没有满足范围的已核实球员。</strong><p>可扩大年份或选择其他球队，再点击「应用范围」。<br>资料缺失不等于从未效力；只使用已收录的正式出场证据。</p></div>'; return; }
   if (!round.guesses.length) {
-    $('guess-history').innerHTML = '<div class="guess-empty"><strong>在当前范围内，从你最熟悉的人开始。</strong><p>支持中文、英文和常见绰号。<br>每次猜测留下 10 项线索，分两组帮你缩小范围。</p></div>';
+    $('guess-history').innerHTML = `<div class="guess-empty"><strong>在当前范围内，从你最熟悉的人开始。</strong><p>支持中文、英文和常见绰号。<br>每次猜测留下 ${selectedAttributes(activeClueKeys()).length} 项线索，帮你缩小范围。</p></div>`;
     return;
   }
   const answer = players.find(player => player.id === round.answerId);
   $('guess-history').innerHTML = round.guesses.map((id,index) => {
     const guessed = players.find(player => player.id === id);
-    const cells = comparePlayers(guessed,answer);
+    const cells = comparePlayers(guessed,answer,activeClueKeys());
     const renderCells = group => cells.filter(cell => (cell.group === 'career') === (group === 'career')).map(cell => {
       const value = cellValue(guessed,cell.key),arrow = cell.direction === 'up' ? '↑' : cell.direction === 'down' ? '↓' : '';
       const note = [cell.note,cell.group === 'career' ? metricDescription(guessed,cell.key) : ''].filter(Boolean).join(' · ');
-      if (cell.key === 'teams') return `<button type="button" class="guess-cell guess-team-cell ${cell.status}" data-key="teams" data-label="${esc(cell.label)}" data-team-details="${esc(guessed.id)}" aria-haspopup="dialog" aria-controls="guess-team-dialog" aria-label="${esc(name(guessed))}的效力球队：${statusNames[cell.status]}。查看全部球队与已核实赛季"><span class="cell-label">${esc(cell.label)}</span><span class="cell-value">${esc(value)}</span><small>${cell.status === 'unknown' ? '未知 / 不可比较' : statusNames[cell.status]}</small><span class="guess-cell-action">查看全部球队 <span aria-hidden="true">↗</span></span></button>`;
+      if (cell.key === 'teams') return `<button type="button" class="guess-cell guess-team-cell ${cell.status}" data-key="teams" data-label="${esc(cell.label)}" data-team-details="${esc(guessed.id)}" aria-haspopup="dialog" aria-controls="guess-team-dialog" aria-label="${esc(name(guessed))}的效力球队：${statusNames[cell.status]}。查看全部球队"><span class="cell-label">${esc(cell.label)}</span><span class="cell-value">${esc(value)}</span><small>${cell.status === 'unknown' ? '未知 / 不可比较' : statusNames[cell.status]}</small><span class="guess-cell-action">查看全部球队 <span aria-hidden="true">↗</span></span></button>`;
       return `<div class="guess-cell ${cell.status}" data-key="${cell.key}" data-label="${esc(cell.label)}" aria-label="${esc(cell.label)}：${esc(value)}，${statusNames[cell.status]}${arrow ? '，答案数值' + (cell.direction === 'up' ? '更大' : '更小') : ''}" title="${esc(value)}${note ? ' · ' + esc(note) : ''}"><span class="cell-label">${esc(cell.label)}</span><span class="cell-value">${esc(value)}${arrow ? `<b class="cell-arrow" aria-hidden="true">${arrow}</b>` : ''}</span><small>${cell.status === 'unknown' ? '未知 / 不可比较' : statusNames[cell.status]}</small></div>`;
     }).join('');
-    return `<article class="guess-row" data-guessed="${esc(id)}"><div class="guess-player"><div><strong>${esc(name(guessed))}</strong>${name(guessed) !== guessed.name ? `<small>${esc(guessed.name)}</small>` : ''}</div><span class="guess-order">${String(index + 1).padStart(2,'0')} / 08</span></div><section class="guess-clue-group" aria-label="基本资料"><h3>基本资料</h3><div class="guess-clue-grid">${renderCells('basic')}</div></section><section class="guess-clue-group" aria-label="NBA/BAA 生涯指标"><h3>NBA / BAA 生涯指标</h3><div class="guess-clue-grid">${renderCells('career')}</div></section></article>`;
+    const basic=renderCells('basic'),career=renderCells('career');
+    return `<article class="guess-row" data-guessed="${esc(id)}"><div class="guess-player"><div><strong>${esc(name(guessed))}</strong>${name(guessed) !== guessed.name ? `<small>${esc(guessed.name)}</small>` : ''}</div><span class="guess-order">${String(index + 1).padStart(2,'0')} / 08</span></div>${basic?`<section class="guess-clue-group" aria-label="基本资料"><h3>基本资料</h3><div class="guess-clue-grid">${basic}</div></section>`:''}${career?`<section class="guess-clue-group" aria-label="NBA/BAA 生涯指标"><h3>NBA / BAA 生涯指标</h3><div class="guess-clue-grid">${career}</div></section>`:''}</article>`;
   }).join('');
 }
 
@@ -201,7 +202,7 @@ function renderResult() {
   const sourceIds = new Set(list(answer.sourceIds));
   const sources = list(data.sources).filter(source => sourceIds.has(source.id));
   const directoryId = answer.directoryId || null;
-  const careerAttributes = ATTRIBUTES.filter(item => item.group === 'career');
+  const careerAttributes = selectedAttributes(activeClueKeys()).filter(item => item.group === 'career');
   const metrics = careerAttributes.map(item => `<div data-result-key="${item.key}" title="${esc(metricDescription(answer,item.key))}"><dt>${esc(item.label.replace('*',''))}</dt><dd>${numeric(answer[item.key])}</dd></div>`).join('');
   const coverage = careerAttributes.map(item => `<li><strong>${esc(item.label.replace('*',''))}</strong>：${esc(metricDescription(answer,item.key))}</li>`).join('');
   $('guess-result').innerHTML = `<div class="eyebrow">${round.status === 'won' ? `FOUND IN ${round.guesses.length} / ${MAX_GUESSES}` : 'ANSWER REVEALED'}</div><h3>${esc(name(answer))}</h3><p>${esc(answer.name)} · ${esc(list(answer.positions).join(' / ') || '位置未知')} · 出生年 ${numeric(answer.birthYear)} · 身高 ${numeric(answer.heightCm)} cm</p><p>首赛年：${numeric(answer.firstSeasonYear)}${answer.firstSeasonScope ? `（${esc(answer.firstSeasonScope)}首次正式出场）` : '（口径未收录）'}<br>已确认球队：${esc(cellValue(answer,'teams'))}${answer.teamsComplete ? '' : '（记录不完整）'}</p><dl class="guess-result-metrics">${metrics}</dl><details class="guess-result-coverage"><summary>统计口径与覆盖范围</summary><ul>${coverage}</ul></details>${list(answer.notes).map(note => `<p>${esc(note)}</p>`).join('')}<div class="guess-result-links">${directoryId ? `<a href="/players?player=${encodeURIComponent(directoryId)}">查看球员档案 ↗</a>` : ''}${sources.map(source => { const url = safeUrl(source.url); return url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.id)} ↗</a>` : ''; }).join('')}</div>`;
@@ -258,6 +259,12 @@ function guess(id) {
 }
 
 function bind() {
+  $('guess-clues-enabled').addEventListener('change',async()=>{customClues=$('guess-clues-enabled').checked; $('guess-clues-options').hidden=!customClues; save();try{if(customClues)await loadExtraMetrics();renderHistory();renderResult();updateClueSummary();}catch(error){$('guess-clues-status').textContent=error.message;}});
+  $('guess-clues-options').addEventListener('change',event=>{
+    const next=[...document.querySelectorAll('[data-guess-clue]:checked')].map(input=>input.value);
+    if (!next.length) { event.target.checked=true; $('guess-clues-status').textContent='请至少保留一项线索。'; return; }
+    clueKeys=next; save(); renderHistory(); renderResult(); updateClueSummary();
+  });
   $('guess-history').addEventListener('click',event => {
     const trigger = event.target.closest('[data-team-details]');
     if (trigger) openTeamDetails(trigger.dataset.teamDetails,trigger);
@@ -303,7 +310,7 @@ function bind() {
     round = newRound({mode,pool,date:shanghaiDate(),version:data.version,filters,answerId:practiceAnswer(round.answerId)}); save(); render(); message('当前范围内的新练习题已准备好。'); $('guess-search').focus();
   });
   $('guess-share').addEventListener('click',async () => {
-    const text = shareText(round,players,poolInfo().name);
+    const text = shareText(round,players,poolInfo().name,activeClueKeys());
     try { await navigator.clipboard.writeText(text); message('色块战绩已复制，不含答案姓名或球员 ID。'); }
     catch { $('guess-share-text').value = text; $('guess-share-text').hidden = false; $('guess-share-text').focus(); $('guess-share-text').select(); message('浏览器未允许自动复制，可在下方手动复制战绩。'); }
   });
@@ -325,6 +332,8 @@ async function init() {
     if (!data.pools.some(item => item.id === pool)) pool = data.pools[0].id;
     try {
       const pref = JSON.parse(localStorage.getItem(PREF_KEY) || 'null');
+      customClues=pref?.customClues===true;
+      clueKeys=selectedAttributes(pref?.clueKeys).map(item=>item.key);
       const migratedPool = ({nba:'nba-history',cba:'cba-history'})[pref?.pool] || pref?.pool;
       if (['daily','practice'].includes(pref?.mode)) mode = pref.mode;
       if (data.pools.some(item => item.id === migratedPool)) pool = migratedPool;
@@ -339,6 +348,7 @@ async function init() {
     filters = canonical(filtersByPool[pool] || {}); filtersByPool[pool] = {...filters};
     $('guess-pool').innerHTML = [['nba','NBA · 按难度与范围选择'],['cba','CBA · 按难度与范围选择'],['global','跨联赛']].map(([family,label]) => `<optgroup label="${esc(label)}">${data.pools.filter(item => poolFamily(item.id) === family).map(item => `<option value="${esc(item.id)}">${esc(item.name)} · ${playersInPool(players,item.id).length} 人</option>`).join('')}</optgroup>`).join('');
     $('guess-data-note').textContent = data.meta.note || '缺少可靠来源的字段保留未知；不会推测国籍、球队或职业首年。';
+    $('guess-metrics-cutoff').textContent=`点击「效力球队」查看完整队名。常规赛与奖项截至 2025–26；季后赛和总决赛实际出场截至 ${data.meta.postseasonThrough?`${data.meta.postseasonThrough-1}–${String(data.meta.postseasonThrough).slice(-2)}`:'2023–24'}。阵容快照 ${data.meta.snapshotDate}；统计补充 ${data.meta.postseasonUpdatedAt||data.dataAsOf}。`;
     $('guess-pools-title').textContent = `${data.pools.length} 个球员池 · 点击切换`;
     $('guess-library-summary').textContent = `猜球员题库共 ${players.length.toLocaleString('zh-CN')} 份球员档案，独立于评级页面的默认 300 人名单。`;
     const release = document.querySelector('meta[name="true-goat-release"]')?.content;
@@ -348,8 +358,20 @@ async function init() {
       const button = event.target.closest('[data-pool-card]');
       if (button) switchGame(mode,button.dataset.poolCard);
     });
+    $('guess-clues-enabled').checked=customClues;
+    $('guess-clues-options').hidden=!customClues;
+    $('guess-clues-options').innerHTML=ALL_ATTRIBUTES.map(item=>`<label><input type="checkbox" data-guess-clue value="${item.key}" ${clueKeys.includes(item.key)?'checked':''}>${esc(item.label.replace('*',''))}</label>`).join('');
+    if(customClues)try{await loadExtraMetrics();}catch(error){customClues=false;$('guess-clues-enabled').checked=false;$('guess-clues-options').hidden=true;}
+    updateClueSummary();
     resetDraft(); bind(); loadRound(); $('guess-loading').hidden = true; $('guess-app').hidden = false;
+    initOnline({players,pools:data.pools,dataVersion:data.version});
   } catch (error) { $('guess-loading').textContent = `游戏暂时无法载入（${error.message}）。请检查网络连接，稍后刷新重试。`; $('guess-loading').setAttribute('role','alert'); }
 }
 
 if (typeof document !== 'undefined') init();
+
+function updateClueSummary() {
+  const attributes=selectedAttributes(activeClueKeys());
+  $('guess-clues-status').textContent=`当前 ${attributes.length} 项线索 · 在线对战固定使用默认 10 项。`;
+  document.querySelector('.guess-history-head>span:last-child').textContent=`${attributes.length} 项${customClues?'自选':'默认'}线索`;
+}

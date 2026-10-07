@@ -29,11 +29,15 @@ const routes = {
   '/guess.css': ['guess.css', 'text/css; charset=utf-8'],
   '/guess.mjs': ['guess.mjs', 'text/javascript; charset=utf-8'],
   '/guess-engine.mjs': ['guess-engine.mjs', 'text/javascript; charset=utf-8'],
+  '/online.mjs': ['online.mjs', 'text/javascript; charset=utf-8'],
+  '/online-config.mjs': ['online-config.mjs', 'text/javascript; charset=utf-8'],
+  '/online.css': ['online.css', 'text/css; charset=utf-8'],
   '/player-search.mjs': ['player-search.mjs', 'text/javascript; charset=utf-8'],
   '/player-library.mjs': ['player-library.mjs', 'text/javascript; charset=utf-8'],
   '/player-library.css': ['player-library.css', 'text/css; charset=utf-8'],
   '/data/player-catalog.json': ['data/player-catalog.json', 'application/json; charset=utf-8'],
   '/data/guess-players.json': ['data/guess-players.json', 'application/json; charset=utf-8'],
+  '/data/guess-extra-metrics.json': ['data/guess-extra-metrics.json', 'application/json; charset=utf-8'],
   '/data/player-directory.json': ['data/player-directory.json', 'application/json; charset=utf-8'],
   '/ui.mjs': ['ui.mjs', 'text/javascript; charset=utf-8'],
   '/model.mjs': ['model.mjs', 'text/javascript; charset=utf-8'],
@@ -53,7 +57,7 @@ const server = http.createServer(async (req, res) => {
     res.writeHead(200, {
       'Content-Type': route[1], 'Cache-Control': 'no-cache',
       'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
-      'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+      'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://qtfmrczwxinizmqgkebh.supabase.co wss://qtfmrczwxinizmqgkebh.supabase.co; object-src 'none'; base-uri 'none'; frame-ancestors 'none'",
     });
     res.end(req.method === 'HEAD' ? undefined : body);
   } catch (error) {
