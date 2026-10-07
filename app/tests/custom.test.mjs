@@ -1,11 +1,18 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {evaluate,validateQuery,explorationQueries} from '../custom-engine.mjs';
-import {createAccumulator} from '../custom-engine.mjs';
+import {createAccumulator,applyExclusions,EXCLUSIONS} from '../custom-engine.mjs';
 import {describeClaim} from '../custom-claim.mjs';
 import {issueUrl} from '../feedback.mjs';import {mergePresence,presenceCount} from '../presence.mjs';
 const players=[{id:'a',pools:['nba-history'],positions:['G'],heightCm:190,weightKg:90,college:'A'},{id:'b',pools:['nba-history'],positions:['G'],heightCm:200,weightKg:100,college:'B'},{id:'c',pools:['nba-history'],positions:['F']}];
 const q={pool:'nba-history',unit:'game',mode:'first',metric:'points',from:2020,to:2021,phase:'rs',filters:[{key:'points',op:'gte',value:30}],opponentPlayer:null};
 const row=(p,date,points,other={})=>({p,date,points,year:Number(date.slice(0,4)),phase:'rs',team:'NBA:A',opponent:'NBA:B',...other});
+test('excluded qualifier types are absent from every exploration, not just hidden in the claim',()=>{
+  const excluded=Object.keys(EXCLUSIONS),query=applyExclusions({...q,team:'NBA:A',college:'A',opponent:'NBA:B',opponentPlayer:1,honors:[{key:'mvpCount',op:'gte',value:1}],filters:[...q.filters,{key:'heightCm',op:'gte',value:185}]},excluded);
+  const variants=explorationQueries(query,[row(0,'2020-01-01',40,{age:22,assists:10})],{...players[0],birthplaceId:'place'});
+  assert.ok(variants.length>1);for(const v of variants){validateQuery(v);assert.equal(v.team,'');assert.equal(v.college,'');assert.equal(v.birthplace,'');assert.equal(v.opponent,'');assert.equal(v.opponentPlayer,null);assert.deepEqual(v.honors,[]);assert.ok(v.filters.every(f=>!excluded.includes(f.key)));}
+  assert.throws(()=>validateQuery({...query,team:'NBA:A'}));assert.throws(()=>validateQuery({...query,filters:[...q.filters,{key:'age',op:'lt',value:25}]}));assert.throws(()=>applyExclusions(q,['invented']));
+  const scoped={...q,mode:'highest',team:'NBA:A'};const rows=[row(0,'2020-01-01',40),row(1,'2020-01-01',50,{team:'NBA:C'})];assert.equal(evaluate(rows,scoped,players,0).first,true);assert.equal(evaluate(rows,applyExclusions(scoped,['team']),players,0).rank,2);
+});
 test('complete claims retain scope, qualifiers, ties, counterexamples and missing records',()=>{
   const people=players.map((p,i)=>({...p,name:'Player '+i,chineseName:'球员'+i})),data={players:people,teams:{'NBA:A':'Team A'}};
   const rows=[row(0,'2020-01-01',40),row(1,'2020-01-01',40),row(2,'2020-01-02',31)];

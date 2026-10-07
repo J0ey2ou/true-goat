@@ -14,13 +14,13 @@ export function createClaimDialog({copy,view}){
 }
 
 export function setupCustomTour(){
-  const key='true-goat-custom-tour:v1',dialog=document.createElement('dialog');dialog.className='custom-dialog custom-tour';dialog.id='custom-tour';dialog.setAttribute('aria-labelledby','custom-tour-title');
+  const key='true-goat-custom-tour:v2',dialog=document.createElement('dialog');dialog.className='custom-dialog custom-tour';dialog.id='custom-tour';dialog.setAttribute('aria-labelledby','custom-tour-title');
   dialog.innerHTML='<div class="custom-dialog-head"><span class="eyebrow">QUICK TOUR</span><button type="button" id="custom-tour-skip">跳过演示</button></div><p id="custom-tour-step" class="custom-small"></p><h2 id="custom-tour-title"></h2><p id="custom-tour-description"></p><div id="custom-tour-demo" class="custom-demo" aria-hidden="true"></div><p class="custom-small">动画为虚构示意，不代表真实球员纪录。</p><div class="custom-actions"><button type="button" class="button outline" id="custom-tour-back">上一步</button><button type="button" class="button primary" id="custom-tour-next">下一步</button></div>';
   document.body.append(dialog);let step=0;
   const steps=[
-    ['先选一位球员，为他找第一','想知道喜欢的球员有什么独特纪录？选球员，再选得分、助攻等维度，系统验证一组候选定语。',['球员 A','得分 / 助攻','他的候选第一']],
-    ['先写条件，反过来找球员','不知道选谁？组合年龄、表现、球队或生涯荣誉。系统列出已收录范围内所有符合者，再按最高、最早或最长连续排序。',['年龄 < 25 · 得分 ≥ 30','核验已收录记录','球员 A / 球员 B']],
-    ['结论是一句话，下面有依据','点击结果，查看带完整定语的结论、比较人数与数据来源。并列、单人样本和缺失数据都会明示。',['完整的一句话','对照比较名单','复制结论 + 来源']]
+    ['他在哪方面是第一？','搜一位你喜欢的球员，选得分、助攻等项目，再点「一键找定语」。不想只和同队球员比？勾选「不使用效力球队」。',['选你喜欢的球员','选择得分或助攻','看看他能拿哪些第一']],
+    ['反过来，谁能做到？','比如：谁在 25 岁前单场拿过 40 分？选择「为条件找球员」，填上年龄和得分，再点「按条件寻找球员」。',['年龄 < 25 岁','单场得分 ≥ 40 分','找到符合条件的球员']],
+    ['找到一句话，也能查清为什么','点开结果，看看他和谁比、在哪场比赛或哪个赛季做到。觉得有意思，就把完整结论和来源一起复制分享。',['读完整结论','查看比赛与比较名单','复制并分享']]
   ];
   function render(){const s=steps[step];$('custom-tour-title').textContent=t(s[0]);$('custom-tour-description').textContent=t(s[1]);$('custom-tour-step').textContent=`${step+1} / ${steps.length}`;$('custom-tour-demo').replaceChildren(...s[2].map(label=>{const div=document.createElement('div');div.textContent=t(label);return div;}));$('custom-tour-back').disabled=step===0;$('custom-tour-next').textContent=t(step===2?'开始探索':'下一步');}
   function close(){try{localStorage.setItem(key,'seen');}catch{}dialog.close();}

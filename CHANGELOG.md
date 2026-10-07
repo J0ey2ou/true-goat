@@ -1,5 +1,14 @@
 # Changelog
 
+## Website v0.13.1 — 2026-10-07
+
+- 定制数据导览改为玩家可以直接照着操作的例子，简化查询说明，移除主界面的内部球员编号、球员池标识和预计算术语；常用 NBA 球队支持中文显示与中英文检索。
+- 新增「不想用哪些限定？」：可排除效力球队、位置、院校、出生地、年龄、身高、体重、对手球队、对手球员和荣誉。偏好在当前浏览器保存，自动寻找、参考纪录与手动查询统一遵守；排除后重新计算名次，不只是隐藏文字。
+- NBA 对手输入在赛季模式下也可使用；确认对手后自动切到单场比较，保留年份并说明数值条件改为单场，移除不支持的赛季专属指标时给出提示。输入名字后必须确认候选，未匹配时不能无声忽略。CBA 缺少逐场数据，明确说明暂不可用。
+- 同步简中、繁中与英文；无需数据库更新，README 未改。
+
+The tour now uses practical player-facing examples. Exclude unwanted qualifier types, such as playing team, across exploration, suggested records and manual comparisons; rankings are recalculated after exclusions. NBA opponent searches work from season mode and switch to individual games on selection, keeping the selected years and explaining changed or unsupported conditions. Typed names must be confirmed, and unavailable CBA opponent searches are explained. Common NBA team names support Chinese and English search. No database migration or README changes.
+
 ## Website v0.13 — 2026-10-07
 
 - 定制数据分为两个明确入口：「为球员找第一」选择球员、表现维度及第一类型；「为条件找球员」不需先选人，按定语或生涯荣誉反查全部已收录符合者，分页展示而非只保留前十。

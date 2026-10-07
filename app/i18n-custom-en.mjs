@@ -128,6 +128,83 @@ NBA 赛季：1946–47 至 2025–26 常规赛场均。转队用合计行，不�
 在线人数暂不可用|Online count unavailable
 实时在线约|Online now, approximately
 人|people
+和哪些球员比较？|Who should we compare?
+所有 NBA|All NBA players
+所有 CBA|All CBA players
+已排除：|Excluded:
+他在哪方面是第一？|Where does your player lead?
+搜一位你喜欢的球员，选得分、助攻等项目，再点「一键找定语」。不想只和同队球员比？勾选「不使用效力球队」。|Find a player you like, choose points or assists, then click Explore qualifiers. Want to compare beyond their team? Check Do not use playing team.
+选你喜欢的球员|Pick your favorite player
+选择得分或助攻|Choose points or assists
+看看他能拿哪些第一|Find where they rank first
+反过来，谁能做到？|Or ask: who can do this?
+比如：谁在 25 岁前单场拿过 40 分？选择「为条件找球员」，填上年龄和得分，再点「按条件寻找球员」。|Who scored 40 points in a game before turning 25? Choose Find players by conditions, enter age and points, then click Find matching players.
+年龄 < 25 岁|Age < 25 years
+单场得分 ≥ 40 分|Game points ≥ 40
+找到符合条件的球员|Find players who qualify
+找到一句话，也能查清为什么|Find a claim and see the proof
+点开结果，看看他和谁比、在哪场比赛或哪个赛季做到。觉得有意思，就把完整结论和来源一起复制分享。|Open a result to see who they were compared with and when they did it. Copy the full claim and source to share it.
+读完整结论|Read the complete claim
+查看比赛与比较名单|See the game and comparisons
+复制并分享|Copy and share
+想找哪方面的第一？|Which skills should we explore?
+所有项目|All skills
+想找哪种第一？|What kind of first?
+都找找看|Try every type
+只找下方选择的类型|Only the type selected below
+点「一键找定语」，帮他寻找第一；有自己的想法，也可以在下方填写条件，再点「验证这句第一」。|Click Explore qualifiers to find their firsts. Have a claim in mind? Enter your conditions below and click Verify this claim.
+不想用哪些限定？|Which qualifiers should we leave out?
+例如勾选「不使用效力球队」，就不会为了让他第一，只拿他和同队球员比较。自动寻找、参考纪录和手动验证都会遵守。|Check Do not use playing team to avoid narrowing the comparison to one team. This applies to exploration, suggested records and manual comparisons.
+不使用效力球队|Do not use playing team
+不使用位置|Do not use position
+不使用就读院校|Do not use college
+不使用出生地|Do not use birthplace
+不使用年龄|Do not use age
+不使用身高|Do not use height
+不使用体重|Do not use weight
+不使用对手球队|Do not use opponent team
+不使用对手球员|Do not use opponent player
+不使用生涯荣誉|Do not use career honors
+条件已更新，请重新查询。|Conditions changed. Run your search again.
+已排除的条件不会用于比较；取消勾选即可重新使用。|Checked qualifiers will not be used. Uncheck them to use them again.
+目前允许使用所有限定，你可以勾选不想用的项目。|All qualifiers are allowed. Check any you want to leave out.
+看一条参考纪录|Try a suggested record
+还没有足够的比赛资料，暂时无法为他找纪录。|We do not have enough game information to find this player's records yet.
+暂时没找到适合他的第一，试试换个比较项目。|No suitable first found yet. Try a different skill.
+请点击候选球员，确认你要比较的对手。|Click a suggested player to confirm the opponent.
+没找到这位球员，试试英文名或其他称呼。|No player found. Try their English name or another name.
+输入球队名筛选，再从下方选择|Type a team name, then select below
+选择对手球队|Select opponent team
+输入姓名，再点击候选球员|Type a name, then click a suggestion
+请从下方列表选择对手球队。|Select the opponent team from the list below.
+没有找到球队，试试英文名或球队简称。|No team found. Try an English name or team abbreviation.
+可以直接选择对手球队或搜索对手球员。选中后改用单场比较，得分等条件也按单场计算；球员须从候选名单中点击确认。|Select an opposing team or search for an opponent. Selecting one switches to individual games, including points and other conditions. Click a suggested player to confirm.
+正在按单场比较。输入对手姓名后，请点击候选球员；同场作为对手不代表由他直接防守。|Comparing individual games. Type an opponent's name and click a suggestion. Opponents in the same game are not necessarily direct defensive matchups.
+CBA 暂无逐场比赛资料，不能按对手查找。请选择 NBA 球员池使用此功能。|CBA game-by-game data is not available here, so opponent searches are unavailable. Select an NBA pool to use this feature.
+你已排除对手条件；取消上方勾选后即可使用。|You excluded opponent qualifiers. Uncheck them above to use these fields.
+已切换为单场比较，年份保持不变，得分等条件现在按单场计算。单场资料截至 2023–24。|Switched to individual games without changing your years. Points and other conditions now apply to one game. Game data runs through 2023–24.
+已移除仅适用于赛季的条件：|Removed season-only conditions:
+可比较 CBA 2005–06 至 2023–24 赛季场均，包含各赛段。暂不支持按对手或连续比赛查询。|Compare CBA season averages from 2005–06 to 2023–24, covering all phases. Opponent and streak searches are not available yet.
+可比较 NBA 1946–47 至 2023–24 的单场表现，也可以指定对手。更晚的比赛还未加入。|Compare individual NBA games from 1946–47 to 2023–24, including against selected opponents. Later games have not been added yet.
+可比较 NBA 1946–47 至 2025–26 的常规赛场均。想看面对某个对手的表现？在下方选对手，会改用单场比较。|Compare NBA regular-season averages from 1946–47 to 2025–26. Choose an opponent below to switch to individual games against them.
+现役名单更新于 2026-10-04；CBA 只包含已确认的国内球员，不含全部外援。|Active rosters were updated on 2026-10-04. CBA includes confirmed domestic players, not all imports.
+“现役”只和当前名单里的球员比较；想和退役球星比较，请选“所有 NBA / CBA”。资料不完整时，不能据此认定历史第一。|Active compares only players on the current list. Choose All NBA / CBA to include retired stars. Incomplete information cannot establish an all-time record.
+生涯荣誉 · NBA|Career honors · NBA
+只寻找同时满足这些条件的表现。没有资料的项目不会当成 0。|Find performances meeting every condition. Missing information is not treated as zero.
+已尝试的组合|Combinations checked
+与其他球员比较后领先|Firsts against other players
+只看与其他球员比较后领先的结果|Only show firsts against other players
+这里列出这次找到的结果。没找到满意的？换个项目或条件再试试。|Here are the results of this search. Not what you hoped for? Try another skill or condition.
+这次没有找到领先的结果。取消“只看领先”可以查看其他名次。|No firsts found this time. Clear the firsts-only filter to see other rankings.
+按你选择的方式排序，成绩相同就并列。点击球员查看完整结论，向下可加载更多。|Sorted as you chose, with shared ranks for ties. Click a player for the full claim, or load more below.
+资料不全的记录|Records with missing information
+正在查找符合条件的表现，请稍候…|Finding matching performances. Please wait…
+参与比较的球员|Players compared
+达到条件的球员|Players who qualify
+结论只适用于当前比较范围；资料不全，不能直接当作历史纪录。|This result applies to your chosen comparison. Incomplete information cannot establish an all-time record.
+只有一位球员可比较，不算竞争中的第一|Only one comparable player, not a competitive first
+选球员 → 选得分或助攻等项目 → 点「一键找定语」。不想靠球队等条件缩小比较范围？可以在下方排除。|Choose a player → choose a skill → click Explore qualifiers. Exclude qualifiers below if you do not want to narrow the comparison by team or other details.
+填条件 → 点「按条件寻找球员」→ 查看符合者。不需要先选一位球员。|Enter conditions → click Find matching players → see who qualifies. No need to choose a player first.
 每一句“第一”，|Every “first”
 都要经得起|must stand up to
 比较。|comparison.

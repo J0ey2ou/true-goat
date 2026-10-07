@@ -2,6 +2,14 @@
 export const METRICS=Object.freeze({points:'得分',rebounds:'篮板',assists:'助攻',steals:'抢断',blocks:'盖帽',threes:'三分命中',minutes:'出场分钟',fgPct:'投篮命中率 %',tsPct:'真实命中率 TS%',efgPct:'有效命中率 eFG%',gameScore:'Game Score',bpm:'BPM',per:'PER',usgPct:'使用率 USG%',efficiency:'新浪效率值',age:'年龄',games:'赛季出场数',heightCm:'档案身高 cm',weightKg:'档案体重 kg'});
 export const POOLS=['nba-active','nba-history','cba-active','cba-history'];
 export const HONORS=Object.freeze({mvpCount:'NBA MVP 次数',dpoyCount:'NBA DPOY 次数',finalsMvpCount:'NBA FMVP 次数',championshipCount:'NBA/BAA 冠军球队赛季数'});
+export const EXCLUSIONS=Object.freeze({team:'效力球队',position:'位置',college:'就读院校',birthplace:'出生地',age:'年龄',heightCm:'身高',weightKg:'体重',opponent:'对手球队',opponentPlayer:'对手球员',honors:'生涯荣誉'});
+export function applyExclusions(q,excluded=[]){
+  if(!Array.isArray(excluded)||excluded.some(k=>!Object.hasOwn(EXCLUSIONS,k)))throw Error('Invalid exclusions');
+  const result={...q,excluded:[...new Set(excluded)],filters:q.filters.filter(f=>!excluded.includes(f.key))};
+  for(const key of excluded)if(key==='honors')result.honors=[];else if(key==='opponentPlayer')result.opponentPlayer=null;else if(!['age','heightCm','weightKg'].includes(key))result[key]='';
+  return result;
+}
+function hasExcludedCondition(q){return (q.excluded||[]).some(k=>k==='honors'?q.honors?.length:k==='opponentPlayer'?q.opponentPlayer!==null:q.filters.some(f=>f.key===k)||!!q[k]);}
 const OPS={gte:(a,b)=>a>=b,lte:(a,b)=>a<=b,lt:(a,b)=>a<b,gt:(a,b)=>a>b};
 export function validateQuery(q){
   if(!q||!POOLS.includes(q.pool)||!['season','game'].includes(q.unit)||!['first','highest','streak'].includes(q.mode))throw Error('Invalid scope');
@@ -15,6 +23,7 @@ export function validateQuery(q){
   if(['first','streak'].includes(q.mode)&&!q.filters.some(f=>!['age','games','heightCm','weightKg'].includes(f.key)))throw Error('Needs a performance threshold');
   if(q.opponentPlayer!==null&&!Number.isInteger(q.opponentPlayer))throw Error('Invalid opponent');
   if(q.honors!==undefined&&(!Array.isArray(q.honors)||q.honors.length>4||q.honors.some(f=>!Object.hasOwn(HONORS,f.key)||!Object.hasOwn(OPS,f.op)||!Number.isInteger(f.value)||f.value<0)||q.pool.startsWith('cba')&&q.honors.length))throw Error('Invalid honors');
+  if(q.excluded!==undefined&&(!Array.isArray(q.excluded)||q.excluded.some(k=>!Object.hasOwn(EXCLUSIONS,k))||hasExcludedCondition(q)))throw Error('Excluded condition');
   return q;
 }
 export function supportsMetric(key,q){
@@ -67,8 +76,9 @@ export function evaluate(rows,query,players,target){const a=createAccumulator(qu
 
 /** Bounded, disclosed search. No name, exact birthday or arbitrary identity qualifiers. */
 export function explorationQueries(q,targetRows,person={},metrics=['points','assists','rebounds','threes']){
+  validateQuery(q);
   const variants=[q],seen=new Set([JSON.stringify(q)]);
-  const add=x=>{if(x.filters.length>8)return;const s=JSON.stringify(x);if(!seen.has(s)&&variants.length<128){seen.add(s);variants.push(x);}};
+  const add=x=>{if(x.filters.length>8||hasExcludedCondition(x))return;const s=JSON.stringify(x);if(!seen.has(s)&&variants.length<128){seen.add(s);variants.push(x);}};
   for(const metric of metrics.filter(k=>supportsMetric(k,q))){
     const peaks=targetRows.filter(r=>Number.isFinite(r[metric])).sort((a,b)=>b[metric]-a[metric]).slice(0,2);
     for(const r of peaks){
@@ -90,7 +100,7 @@ export function explorationQueries(q,targetRows,person={},metrics=['points','ass
       if(q.unit==='game'&&r.opponent&&!q.opponent)add({...base,opponent:r.opponent});
       if(person.college&&!q.college)add({...base,college:person.college});
       if(person.birthplaceId&&!q.birthplace)add({...base,birthplace:person.birthplaceId});
-      const physical=['heightCm','weightKg'].filter(k=>Number.isFinite(person[k])).flatMap(key=>[
+      const physical=['heightCm','weightKg'].filter(k=>!(q.excluded||[]).includes(k)&&Number.isFinite(person[k])).flatMap(key=>[
         {key,op:'gte',value:Math.floor(person[key]/5)*5},{key,op:'lt',value:Math.floor(person[key]/5)*5+5}]);
       if(physical.length){add({...base,filters:[...base.filters,...physical]});
         if(person.college&&!q.college)add({...base,college:person.college,filters:[...base.filters,...physical]});
