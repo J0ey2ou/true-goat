@@ -46,6 +46,7 @@ function configure(reset=true){
   $('custom-coverage').textContent=cba?'CBA：已收录 2005–06 至 2023–24 的全部赛段场均。逐场、年龄与高阶数据暂缺；不伪造连续纪录。':game?'NBA 逐场：1946–47 至 2023–24；按选定年份下载。早期资料和高阶字段存在缺失，连续纪录只针对已收录出场。':'NBA 赛季：1946–47 至 2025–26 常规赛场均。转队用合计行，不重复统计。';
   if(selected===null||!data.players[selected].pools.includes(pool()))choose(data.players.indexOf(persons.find(p=>p.id==='jordami01')||persons[0]));
   else selectedView();
+  if(pool().endsWith('active'))$('custom-coverage').textContent+=' '+t('现役名单是 2026-10-04 快照；CBA 仅含已核实的国内球员注册，不含全部外援。');
   const found=discoveries?.pools[pool()];if(found)$('custom-coverage').textContent+=' '+t('预探索覆盖')+`: ${found.players} · `+t('有表现数据')+`: ${found.withData} · `+t('已找到正向候选纪录')+`: ${found.found} · `+t('仅单人样本')+`: ${found.isolated||0}. `+t('预探索会使用更多档案组合，载入后按相同引擎重新验证；不是全史认证。');
   results=[];$('custom-results').innerHTML='';
 }

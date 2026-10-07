@@ -25,6 +25,7 @@ export const CUSTOM_ENGLISH=Object.freeze(Object.fromEntries(`
 所有 CBA · 已收录|All recorded CBA players
 现役 NBA|Active NBA
 现役 CBA|Active CBA
+现役名单是 2026-10-04 快照；CBA 仅含已核实的国内球员注册，不含全部外援。|Active rosters are a 2026-10-04 snapshot. CBA includes verified domestic registrations only, not every overseas player.
 搜索球员|Find a player
 姓名 / 中文名 / 绰号|Name / Chinese name / nickname
 统计单位|Statistical unit
