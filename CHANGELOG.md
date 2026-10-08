@@ -1,5 +1,15 @@
 # Changelog
 
+## Website v0.14 — 2026-10-08
+
+- 七维标题、说明、雷达轴和表格都能打开计算详情：原始统计、参考百分位、内部权重、逐项贡献、实际总分贡献，以及可搜索和分页的维度排名。
+- 排名实验室与球员库默认提供 6,717 份去重档案，支持 NBA / BAA、CBA、EuroLeague 与数据覆盖筛选。原自选名单改为收藏；缺少资料的球员不获得虚构分数，现有覆盖不宣称全球完备。
+- 新增默认开启、可关闭并分享的同代对手调整。真实同场对手的得分、稳定迭代实力排名与出场分钟影响常规赛和季后赛指数；已核实冠军赛季按实际季后赛路径调整团队成就。公式、来源、覆盖和调整前后指数全部公开。对手数据覆盖 1947–2024，缺失联赛或赛季保持原值。
+- 已审校姓名映射补齐原 300 人中英文显示，保护未译原名；同步三语档案、公式及缺失说明。
+- 定制数据重写为球迷能直接照着操作的指引，新增直接找亮点入口；结果主句自然连贯，范围、条件、并列、依据和缺失说明仍保留在弹窗与分享文本中。
+
+Dimension dialogs now expose actual calculation inputs and rankings. Both discovery pages load all 6,717 collected global profiles with league and coverage filters. Bounded, transparent same-season opponent context and verified title paths adjust ratings without inventing missing data. Reviewed names and three-language presentation are completed where sourced. Custom-stat guidance and shareable claims use natural basketball language while retaining evidence and scope.
+
 ## Website v0.13.1 — 2026-10-07
 
 - 定制数据导览改为玩家可以直接照着操作的例子，简化查询说明，移除主界面的内部球员编号、球员池标识和预计算术语；常用 NBA 球队支持中文显示与中英文检索。

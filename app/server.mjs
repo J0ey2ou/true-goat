@@ -5,6 +5,9 @@ import path from 'node:path';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const routes = {
+  ...Object.fromEntries(['global-catalog.mjs','player-localization.mjs','player-name-data.mjs','opponent-context.mjs','dimension-details.mjs'].map(file=>['/'+file,[file,'text/javascript; charset=utf-8']])),
+  '/dimension-details.css':['dimension-details.css','text/css; charset=utf-8'],
+  ...Object.fromEntries(['global-player-index.json','opponent-context.json','dimension-audit.json'].map(file=>['/data/'+file,['data/'+file,'application/json; charset=utf-8']])),
   '/data/custom-discoveries.json':['data/custom-discoveries.json','application/json; charset=utf-8'],
   '/i18n-custom-en.mjs':['i18n-custom-en.mjs','text/javascript; charset=utf-8'],
   '/custom':['custom.html','text/html; charset=utf-8'],

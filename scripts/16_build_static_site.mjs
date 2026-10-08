@@ -8,6 +8,8 @@ import {gunzipSync} from 'node:zlib';
 
 export const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const STATIC_FILES = Object.freeze([
+  ...['global-catalog.mjs','player-localization.mjs','player-name-data.mjs','opponent-context.mjs','dimension-details.mjs','dimension-details.css'].map(file=>['app/'+file,file]),
+  ...['global-player-index.json','opponent-context.json','dimension-audit.json'].map(file=>['app/data/'+file,'data/'+file]),
   ['app/data/custom-discoveries.json','data/custom-discoveries.json'],
   ...['custom.html','custom.css','custom.mjs','custom-engine.mjs','custom-worker.mjs','custom-claim.mjs','custom-ui.mjs','feedback.mjs','feedback.css','presence.mjs','i18n-custom-en.mjs'].map(file=>['app/'+file,file]),
   ...['custom-manifest.json','custom-nba-seasons.json','custom-cba-seasons.json',...Array.from({length:78},(_,i)=>`custom-nba-games-${1947+i}.json.gz`)].map(file=>['app/data/'+file,'data/'+file]),

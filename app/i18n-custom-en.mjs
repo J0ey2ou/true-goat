@@ -1,4 +1,56 @@
 export const CUSTOM_ENGLISH=Object.freeze(Object.fromEntries(`
+你想聊的球员，|Your favorite player.
+到底有多|How good are they\u0020
+能打？|really?
+找一场代表作，比一项拿手活。选球员、加条件，聊球时多一句有出处的话。|Find a signature performance or compare a favorite stat. Pick a player, set the conditions, and bring evidence to the conversation.
+花半分钟，看看怎么玩|See how it works in 30 seconds
+帮喜欢的球员找亮点|Find your player's standout moments
+搜他的名字，看看哪些表现排得上号。|Search their name and see which performances stand out.
+这种表现谁有过|Who has done this?
+比如：25 岁前，谁单场拿过 40 分？|For example: who scored 40 in a game before turning 25?
+先选一位想聊的球员|Who do you want to talk about?
+想聊他的哪项本事？|Which part of their game?
+想从哪个角度比？|What kind of comparison?
+就按下面选的方式比|Use the comparison selected below
+懒得想条件？直接点「帮我找亮点」。有想验证的说法，就往下填，看看他能排第几。|Not sure what to compare? Hit “Find standout moments”. Have a claim in mind? Set the conditions below and see where your player ranks.
+帮我找亮点|Find standout moments
+哪些条件不想拿来比？|Any filters you want to leave out?
+不想只跟同队球员比？勾选「不使用效力球队」。这里排除的条件，自动查找和手动比较都不会用。|Want to compare beyond one team? Check “Exclude team”. Any filters excluded here stay out of both automatic searches and manual comparisons.
+比一场，还是比一季？|One game or a whole season?
+怎么排先后？|How should we rank them?
+连续达标场次最多|Longest qualifying streak
+再加点条件|Add a few conditions
+这些条件要同时满足。比如加上「年龄不到 25 岁」和「得分至少 40 分」，就只比较这样的表现。|All conditions must be met. Add “under 25” and “at least 40 points” to compare only those performances.
+加一个数据条件|Add a stat filter
+想比特定球队、位置，或对手？|Looking at a particular team, position or opponent?
+看看排第几|See where they rank
+这次，和谁比？|Who is in this comparison?
+想把退役球星也拉进来比，选「所有 NBA / CBA」；选「现役」就只看当前名单。|Choose “All NBA / CBA” to include retired players, or “Active” to compare only current rosters.
+这回，想聊谁？|Who are we talking about?
+选好球员，点「帮我找亮点」。也可以自己定条件，查查常聊的那句话到底站不站得住。|Choose a player and hit “Find standout moments”, or set your own conditions and put that familiar claim to the test.
+想找什么样的表现？|What performance are you looking for?
+找出这些球员|Find these players
+比如想找「25 岁前单场 40 分」：选单场、加上年龄和得分条件，再点「找出这些球员」。|Try “40 points in a game before age 25”: choose game stats, add age and points filters, then hit “Find these players”.
+先搜球员，再点「帮我找亮点」。已有想比的内容？自己加条件，看看他能排第几。|Search for a player, then hit “Find standout moments”. Already have a comparison in mind? Set your filters and see where they rank.
+这句，拿数据说话|A claim with the numbers behind it
+复制这句话和依据|Copy the claim and evidence
+看看其他球员|See the other players
+看看这句话的依据|See the evidence
+想聊谁？先搜他的名字|Got a player in mind? Start with their name
+选好球员，点「帮我找亮点」，看看他有哪些拿得出手的表现。想自己比？把得分、年龄等条件填好，再点「看看排第几」。|Pick a player and hit “Find standout moments”. Want to make your own comparison? Set points, age or other filters, then hit “See where they rank”.
+① 搜一位球员|1. Search for a player
+② 点「帮我找亮点」|2. Hit “Find standout moments”
+③ 看表现，也看和谁比|3. Check the performance and the comparison
+反过来，这种表现谁打出来过？|Turn it around: who has done this?
+比如想找 25 岁前单场拿过 40 分的球员：点「这种表现谁有过」，选单场，再加上年龄和得分。最后点「找出这些球员」，名单就出来了。|Want players who scored 40 before turning 25? Choose “Who has done this?”, select game stats, then add age and points filters. Hit “Find these players” to see the list.
+选单场表现|Choose game stats
+年龄 < 25 岁，得分 ≥ 40 分|Age < 25, points ≥ 40
+点「找出这些球员」|Hit “Find these players”
+聊球有话说，也有出处|Bring a talking point and the evidence
+结果会帮你写成一句顺口的话，旁边能看到比赛、比较名单和来源。并列就写并列，只有一个人也会说明；分享时会把比较条件一起带上。|Get a readable claim alongside the game, comparison list and sources. Ties and one-player samples are stated clearly, and sharing includes the conditions behind the result.
+一句话看懂表现|Read the performance in one sentence
+往下看比赛和比较范围|Check the game and comparison below
+连同依据一起分享|Share it with the evidence
 定制数据|Customized Player
 得分|Points
 篮板|Rebounds

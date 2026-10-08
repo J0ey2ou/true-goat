@@ -4,6 +4,9 @@ import { radarMarkup, contributionMarkup } from './score-charts.mjs';
 import { createPlayerLibrary, mergeSelectedPlayers } from './player-library.mjs';
 import { searchPlayers } from './player-search.mjs';
 import { registerNames } from './i18n.mjs';
+import { dimensionDetailsMarkup, bindDimensionRanking } from './dimension-details.mjs';
+import { OPPONENT_VERSION, applyOpponentContext, opponentContextMarkup } from './opponent-context.mjs';
+import { playerLeagues, playerCoverage, leagueLabels, coverageLabels } from './global-catalog.mjs';
 
 const $ = (id) => document.getElementById(id);
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -16,7 +19,8 @@ const chinese = {
   malonka01:'卡尔·马龙',stockjo01:'约翰·斯托克顿',wadedw01:'德维恩·韦德',robinda01:'大卫·罗宾逊'
 };
 const name = p => chinese[p.player_id] || p.chineseName || p.player_name;
-const shortName = p => name(p).replace('迈克尔·','').replace('卡里姆·','').replace('勒布朗·','').replace('魔术师约翰逊','魔术师');
+// Full reviewed names remain unambiguous when translating a global roster.
+const shortName = p => name(p);
 const fmt = n => Number.isFinite(n) ? n.toFixed(2) : '—';
 const coef = n => Number.isFinite(n) ? n.toFixed(3) : '—';
 const signed = n => Number.isFinite(n) ? (n > 0 ? '+' : '') + n.toFixed(2) : '—';
@@ -24,14 +28,17 @@ const STORAGE = 'true-goat-v04';
 let data, experts, players, coefficients, priorCoefficient = 0, preset, targetId = 'jordami01', baseline, ranking, dirty = false, all = false, result = null, suggestions = [], toastTimer;
 let advanced=sanitizeAdvanced(),directory=new Map(),directoryAvailable=false;
 let basePlayers=[],baseDirectory=new Map(),library,uiReady=false,pendingTarget=null;
+let rawPlayers=[],opponentPayload=null,opponentEnabled=true,dimensionAudit=null,dimensionAuditRequest=null,dialogRevision=0,rankPage=1;
 const activeDetails=p=>scoreWithModules(p,coefficients,priorCoefficient,advanced,directory.get(p.player_id));
 function rebuildPlayerChoices() {
-  $('target-select').innerHTML=[...players].sort((a,b)=>(a.rankings?.posterior_rank||999)-(b.rankings?.posterior_rank||999)).map(p=>'<option value="'+esc(p.player_id)+'">'+esc(name(p))+' · '+esc(p.player_name)+(p.customPlayer?' · 自选':'')+'</option>').join('');
+  $('target-select').innerHTML=[...players].sort((a,b)=>(a.rankings?.posterior_rank||999)-(b.rankings?.posterior_rank||999)).map(p=>'<option value="'+esc(p.player_id)+'">'+esc(name(p))+' · '+esc(p.player_name)+'</option>').join('');
   document.querySelector('.hero-number').textContent=players.length;
   const navCount=document.querySelector('.page-nav a[href*="players"] span');if(navCount)navCount.textContent=players.length;
 }
 function updateCustomPlayers({profiles,models}) {
-  players=mergeSelectedPlayers(basePlayers,models,'player_id');directory=new Map([...baseDirectory,...profiles.map(p=>[p.id,p])]);
+  directory=new Map([...baseDirectory,...(library?.catalog()?.players||profiles).map(p=>[p.id,p])]);
+  rawPlayers=mergeSelectedPlayers(basePlayers,models,'player_id').map(p=>{const profile=directory.get(p.player_id);return {...p,chineseName:profile?.chineseName||p.chineseName,aliases:profile?.aliases||p.aliases,leagues:playerLeagues(profile||p),dataCoverage:playerCoverage(profile||p)};});
+  players=applyOpponentContext(rawPlayers,opponentPayload,{enabled:opponentEnabled});
   if(pendingTarget&&players.some(p=>p.player_id===pendingTarget)){targetId=pendingTarget;pendingTarget=null;}
   if(!players.some(p=>p.player_id===targetId))targetId='jordami01';
   if(uiReady){baselineRanking();rebuildPlayerChoices();renderAll();persist();}
@@ -40,12 +47,12 @@ function updateCustomPlayers({profiles,models}) {
 function toast(message) { $('toast').textContent = message; $('toast').hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => $('toast').hidden = true, 4000); }
 function expert() { return experts.find(e => e.id === preset); }
 function presetCoefficients() { return expert()?.coefficients || Object.fromEntries(DIMENSIONS.map(d=>[d.key,data.default_user_weights[d.key]*10])); }
-function baselineRanking() { baseline = new Map(rankPlayers(players,presetCoefficients(),0).map(p=>[p.player_id,p.rank])); }
+function baselineRanking() { baseline = new Map(rankPlayers(rawPlayers.length?rawPlayers:players,presetCoefficients(),0).map(p=>[p.player_id,p.rank])); }
 function reset(id = preset) {
-  preset=id; coefficients=sanitizeCoefficients(presetCoefficients()); priorCoefficient=0; advanced=sanitizeAdvanced(); dirty=false; result=null;
+  preset=id; coefficients=sanitizeCoefficients(presetCoefficients()); priorCoefficient=0; advanced=sanitizeAdvanced(); opponentEnabled=true;players=applyOpponentContext(rawPlayers,opponentPayload,{enabled:opponentEnabled});dirty=false; result=null;
   baselineRanking(); $('expert-select').value=preset; renderAll(); persist();
 }
-function stateObject() { return {v:4,preset,coefficients,priorCoefficient,intercept:50,targetId,advanced,customPlayerIds:library?.ids() || []}; }
+function stateObject() { return {v:4,preset,coefficients,priorCoefficient,intercept:50,targetId,advanced,opponentEnabled,opponentVersion:OPPONENT_VERSION,customPlayerIds:library?.ids() || []}; }
 function persist() {
   const serialized=JSON.stringify(stateObject());
   try { localStorage.setItem(STORAGE,serialized); } catch {}
@@ -72,10 +79,12 @@ async function restore() {
     }
     if(players.some(p=>p.player_id===saved.targetId))targetId=saved.targetId;
     advanced=sanitizeAdvanced(saved.advanced);
-    dirty=advanced.enabled || priorCoefficient!==0 || DIMENSIONS.some(d=>Math.abs(coefficients[d.key]-presetCoefficients()[d.key])>1e-7);
+    opponentEnabled=saved.opponentEnabled!==false;players=applyOpponentContext(rawPlayers,opponentPayload,{enabled:opponentEnabled});
+    dirty=advanced.enabled || !opponentEnabled || priorCoefficient!==0 || DIMENSIONS.some(d=>Math.abs(coefficients[d.key]-presetCoefficients()[d.key])>1e-7);
   } catch { toast('无法读取模型链接，已保留当前起点。'); }
 }
 function updateSliders() {
+  $('opponent-enabled').checked=opponentEnabled;$('opponent-enabled').disabled=!opponentPayload;
   for(const d of DIMENSIONS){
     const input=$('coef-'+d.key);
     input.value=coefficients[d.key]; input.style.setProperty('--fill',coefficients[d.key]*10+'%');
@@ -112,6 +121,19 @@ function showScore(id) {
   const details=activeDetails(p);
   showDialog(name(p)+' · 多维得分图','<div class="score-modal-summary"><div>'+esc(p.player_name)+'<br><small>'+(advanced.enabled?'高级自选模块模型':'基础七维加性模型')+' · '+(p.rank===null?'未评分':'第 '+p.rank+' 名')+'</small></div><strong>'+(details.score===null?'未评分':fmt(details.score)+' 分')+'</strong></div><h3>七维数据画像</h3>'+radarMarkup(p)+contributionMarkup(details)+'<h3>本次模块的公式与数据截止</h3><div class="module-definition-list">'+details.termDetails.map(t=>'<details><summary>'+esc(t.label)+'</summary><p>'+esc(t.formula)+'</p><p>'+esc(t.cutoff)+'</p></details>').join('')+'</div><p><a href="/players?player='+esc(p.player_id)+'">查看原始统计和球员背景 ↗</a></p>');
 }
+async function showDimension(key,id=targetId) {
+  const player=players.find(p=>p.player_id===id),dimension=DIMENSIONS.find(d=>d.key===key);if(!player||!dimension)return;
+  const revision=++dialogRevision;
+  showDialog(dimension.label+' · 计算组成与排名','<p role="status">正在载入原始输入与固定参考分布…</p>',false);
+  if(!dimensionAudit){
+    try{if(!dimensionAuditRequest)dimensionAuditRequest=fetch('/data/dimension-audit.json').then(response=>{if(!response.ok)throw new Error('原始组成文件暂不可用');return response.json();}).catch(error=>{dimensionAuditRequest=null;throw error;});dimensionAudit=await dimensionAuditRequest;}
+    catch(error){if(revision===dialogRevision)showDialog(dimension.label+' · 原始组成暂不可用','<p>'+esc(error.message)+'。当前不会用推测值替代真实组成。</p><button class="button outline" data-dimension="'+esc(key)+'" data-dimension-player="'+esc(id)+'">重新载入</button>',false);return;}
+  }
+  if(revision!==dialogRevision||!$('model-dialog').open)return;
+  const disabled=advanced.enabled&&advanced.disabledBase.includes(key);
+  showDialog(dimension.label+' · 计算组成与排名',dimensionDetailsMarkup({player,key,audit:dimensionAudit,coefficient:coefficients[key],disabled,name,opponentMarkup:opponentContextMarkup(player,key)}),false);
+  bindDimensionRanking({root:$('dialog-body'),players,key,coefficient:coefficients[key],disabled,selectedId:id,name});
+}
 function showAdvancedModel() {
   const p=currentTarget(),details=activeDetails(p),warnings=overlapWarnings(coefficients,advanced);
   const equations=details.termDetails.map(t=>'+ '+coef(t.coefficient)+' × '+(t.key==='public_prior'?'(大众参考 − 50) ÷ 10':DIMENSIONS.some(d=>d.key===t.key)?'('+t.label+' − 50) ÷ 10':MODULES.find(m=>m.key===t.key).formula.replace(/^β × /,'')));
@@ -131,16 +153,19 @@ function renderRanking() {
 function renderRows() {
   const q = $('search').value.trim().toLowerCase();
   const matches=q?new Set(searchPlayers(ranking.map(p=>({...p,id:p.player_id,name:p.player_name,chineseName:name(p)})),q).map(p=>p.id)):null;
-  const filtered = ranking.filter(p => !matches || matches.has(p.player_id));
-  const visible = q || all ? filtered : filtered.slice(0,20);
-  $('result-count').textContent = q ? filtered.length+' 位匹配' : all ? '全部 '+players.length+' 位' : '前 20 位 / '+players.length;
+  const league=$('rank-league').value,coverage=$('rank-coverage').value;
+  const filtered = ranking.filter(p => (!matches || matches.has(p.player_id))&&(!league||playerLeagues(p).includes(league))&&(!coverage||playerCoverage(p)===coverage));
+  const pageSize=q||all||league||coverage?50:20,pages=Math.max(1,Math.ceil(filtered.length/pageSize));rankPage=Math.min(pages,Math.max(1,rankPage));
+  const visible=filtered.slice((rankPage-1)*pageSize,rankPage*pageSize);
+  $('result-count').textContent = '匹配 '+filtered.length+' 位 / 全库 '+players.length+' 位';
+  $('rank-page').textContent=rankPage+' / '+pages;$('rank-prev').disabled=rankPage===1;$('rank-next').disabled=rankPage===pages;
   $('rank-rows').innerHTML = visible.map(p => {
     const baseRank = baseline.get(p.player_id);
     const delta = Number.isFinite(baseRank) && Number.isFinite(p.rank) ? baseRank-p.rank : null;
-    return '<tr data-player="'+esc(p.player_id)+'" class="'+(p.player_id===targetId?'selected':'')+'"><td class="rank-number">'+(p.rank ?? '—')+'</td><td><button class="text-button player-main" data-player="'+esc(p.player_id)+'" style="color:inherit">'+esc(name(p))+'</button><div class="player-sub">'+esc((chinese[p.player_id] || p.chineseName ? p.player_name : p.era+' · '+p.position)+(p.customPlayer?' · 用户添加':''))+'</div></td><td class="numeric"><button type="button" class="score-trigger" data-score-player="'+esc(p.player_id)+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+fmt(p.score)+'</button></td><td class="delta '+(delta>0?'up':delta<0?'down':'flat')+'">'+(Number.isFinite(delta) && delta !== 0 ? (delta>0?'↑ ':'↓ ')+Math.abs(delta) : '—')+'</td></tr>';
+    return '<tr data-player="'+esc(p.player_id)+'" class="'+(p.player_id===targetId?'selected':'')+'"><td class="rank-number">'+(p.rank ?? '—')+'</td><td><button class="text-button player-main" data-player="'+esc(p.player_id)+'" style="color:inherit">'+esc(name(p))+'</button><div class="player-sub">'+esc(p.player_name+' · '+playerLeagues(p).join(' / ')+' · '+coverageLabels[playerCoverage(p)])+'</div></td><td class="numeric"><button type="button" class="score-trigger" data-score-player="'+esc(p.player_id)+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+(Number.isFinite(p.score)?fmt(p.score):'未评分')+'</button></td><td class="delta '+(delta>0?'up':delta<0?'down':'flat')+'">'+(Number.isFinite(delta) && delta !== 0 ? (delta>0?'↑ ':'↓ ')+Math.abs(delta) : '—')+'</td></tr>';
   }).join('') || '<tr><td colspan="4">没有找到球员，试试英文姓名。</td></tr>';
   $('show-all').hidden = !!q;
-  $('show-all').textContent = all ? '收起为前 20 位 ↑' : '展开全部 '+players.length+' 位球员 ↓';
+  $('show-all').textContent = all ? '每页显示 20 位 ↑' : '每页显示 50 位 ↓';
 }
 function currentTarget() { return ranking.find(p => p.player_id === targetId); }
 function measure(p, list = ranking) {
@@ -160,9 +185,9 @@ function renderTarget() {
   $('target-profile-link').href='/players?player='+encodeURIComponent(targetId);
   document.querySelectorAll('[data-quick]').forEach(b=>b.classList.toggle('active',b.dataset.quick===targetId));
   $('target-summary').innerHTML = '<div class="target-stats"><div class="target-rank">'+(m.unavailable?'<span style="font-size:24px">未评分</span>':'<small>#</small>'+p.rank)+'</div><button type="button" class="target-score score-trigger" data-score-player="'+esc(p.player_id)+'" title="'+(Number.isFinite(p.score)?p.score.toFixed(8):'缺失')+'" aria-label="查看'+esc(name(p))+'的多维得分图">'+fmt(p.score)+' 分 ↗</button></div><div class="target-gap">'+comparison+'</div>';
-  $('profile').innerHTML = DIMENSIONS.map(d => {const v=p.components[d.key+'_score'];return '<div class="profile-row"><span>'+esc(d.short||d.label)+'</span><div class="profile-track"><span style="width:'+(Number.isFinite(v)?Math.max(0,Math.min(100,v)):0)+'%"></span></div><b>'+(Number.isFinite(v)?v.toFixed(1):'缺失')+'</b></div>';}).join('');
+  $('profile').innerHTML = DIMENSIONS.map(d => {const v=p.components[d.key+'_score'];return '<button type="button" class="profile-row dimension-trigger" data-dimension="'+d.key+'" data-dimension-player="'+esc(p.player_id)+'"><span>'+esc(d.short||d.label)+'</span><span class="profile-track"><span style="width:'+(Number.isFinite(v)?Math.max(0,Math.min(100,v)):0)+'%"></span></span><b>'+(Number.isFinite(v)?v.toFixed(1):'缺失')+'</b></button>';}).join('');
   const missing=activeDetails(p).missingModules||[];
-  $('target-data-note').textContent=(p.customPlayer?'用户添加档案：部分指数可能未计算；可在高级模式使用有记录的原始统计。 ':'')+(missing.length?'本次计算有 '+missing.length+' 项使用中性填补，建议结合背景数据解读。':'已启用的数据维度均有观测值。');
+  $('target-data-note').textContent=(playerCoverage(p)!=='complete'?'全球目录档案：部分指数可能未计算；可在高级模式使用有记录的原始统计。 ':'')+(missing.length?'本次计算有 '+missing.length+' 项使用中性填补，建议结合背景数据解读。':'已启用的数据维度均有观测值。');
   renderAdvice();
 }
 function renderAdvice() {
@@ -183,7 +208,11 @@ function changeModel(nextCoefficients,nextPriorCoefficient=priorCoefficient) {
   updateSliders();renderRanking();renderTarget();$('search-result').innerHTML='';persist();
 }
 function chooseTarget(id) { targetId=id;result=null;renderRows();renderTarget();$('search-result').innerHTML='';persist(); }
-function showDialog(title,html) { $('dialog-title').textContent=title;$('dialog-body').innerHTML=html;if(!$('model-dialog').open)$('model-dialog').showModal(); }
+function showDialog(title,html,invalidate=true) {
+  if(invalidate)dialogRevision++;
+  if(['我的加性评级模型','我的高级模块模型'].includes(title))html='<p class="model-summary">'+(opponentEnabled?'已启用对手强度修正：下列七维指数使用修正后的值。对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。':'对手强度修正已关闭：下列七维指数使用原始基础值。')+'点击侧栏维度可查原始组成、修正量与实际贡献。</p>'+html;
+  $('dialog-title').textContent=title;$('dialog-body').innerHTML=html;if(!$('model-dialog').open)$('model-dialog').showModal();$('model-dialog').scrollTop=0;
+}
 function showModel() {
   if(advanced.enabled){showAdvancedModel();return;}
   const p=currentTarget(),details=scorePlayer(p,coefficients,priorCoefficient),e=expert();
@@ -202,7 +231,7 @@ function showModel() {
 function sourceLinks(e) { return [e.source,...(e.supporting_sources||[])].map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.title)+'</a>').join('<br>'); }
 function showSources() {
   const e=expert();if(!e){showNotes();return;}
-  const own=rankPlayers(players,sanitizeCoefficients(e.coefficients),0),ownMap=new Map(own.map(p=>[p.player_id,p]));
+  const own=rankPlayers(rawPlayers,sanitizeCoefficients(e.coefficients),0),ownMap=new Map(own.map(p=>[p.player_id,p]));
   const subset=[...e.ranking].sort((a,b)=>ownMap.get(b).score-ownMap.get(a).score);
   const pairs=e.ranking.length*(e.ranking.length-1)/2;let correct=0;
   for(let i=0;i<e.ranking.length;i++)for(let j=i+1;j<e.ranking.length;j++)if(ownMap.get(e.ranking[i]).score>ownMap.get(e.ranking[j]).score+1e-8)correct++;
@@ -210,10 +239,12 @@ function showSources() {
   showDialog(e.name+' · 加性拟合依据','<p>'+esc(e.role)+' · '+esc(e.date)+'</p><p>'+esc(e.note)+'</p><p class="model-summary">使用 '+e.ranking.length+' 人的 '+pairs+' 项已知成对顺序，模型复现 '+correct+' 项。这是样本内一致情况，不是置信度；短榜内的成对约束并不独立。</p><table class="source-table"><thead><tr><th>公开名次</th><th>球员</th><th>样本内名次</th><th>全池名次</th></tr></thead><tbody>'+rows+'</tbody></table><h3>新模型怎么拟合</h3><p>S = 50 + Σ β×(指数−50)/10；β 在 0–10 内独立拟合，没有总和约束。目标是减小已知排序的间隔误差，并通过正则项避免系数无意义放大。固定截距无法由排序数据识别，所以约定为 50。未入榜者不被当作输家，也不强制某位球员第一。</p><p>拟合使用现有数据近似历史观点，不是历史时点回测，不代表任何媒体或评论员本人的真实公式。高级模式新增的模块也不属于这次基础拟合。<a href="/players">查看数据覆盖与入选范围 ↗</a></p><h3>证据与出处</h3><p>'+esc(e.evidence)+'</p><p>'+sourceLinks(e)+'</p>');
 }
 function showNotes() {
-  showDialog('数据边界与方法说明','<p>默认 300 人与七维指数沿用 v0.2，采集标记为 <strong>'+esc(data.data_access_date)+'</strong>。现在可从扩展目录添加球员；新增球员使用固定的原 300 人参考标准，不会改变原有球员分数。<a href="/players">打开球员库 ↗</a></p><h3>独立加性模型</h3><ul><li>每项使用 z=(指数−50)/10，独立系数乘以 z 后逐项相加。固定起点为 50；不是百分比分配，也不是百分制。</li><li>缺失维度贡献为 0，不放大其他项；全部启用项缺失则未评分。这是明确的处理约定，不消除时代或覆盖偏差。</li><li>大众排名是独立加性项。未入榜贡献中性，不把数据分冒充公众先验。</li><li>高级模式可自行选择统计、荣誉与协同模块；内部定义固定可查，系数由用户决定。评论员预设只拟合基础七维，不代表本人公布的真实公式。</li><li>单杆建议测试 ±0.5 系数；联合搜索只检验有限候选，不能证明全局最优。放大系数会扩大分差，不等于提高预测信心。</li></ul><h3>覆盖范围</h3><p>默认名单的完整季后赛逐场基础数据覆盖至 2024；新增历史球员当前仅扩展六个基础维度，季后赛指数保持未知。其他字段以各来源截止期为准，当前阵容不是实际出场证据。早期防守和高级统计存在缺失；荣誉与冠军等模块可能重复强调同一信息。</p><h3>本地保存与分享</h3><p>名单、模型及偏好只保存在本机浏览器，未接入账号或云同步。分享链接包含系数、模块和自选球员 ID，不包含游戏进度。旧 v0.3 设置按 β=10×(1−旧参考比例)×旧权重、γ=10×旧参考比例迁移，缺失情况可能因新策略改变。</p>');
+  showDialog('数据边界与方法说明','<p>排名实验室自动载入本库全部 '+players.length+' 位球员，包括 NBA / BAA、CBA 与 EuroLeague 已收录档案；不是全球所有篮球运动员的完整名单。可以按联赛和数据覆盖筛选。<a href="/players">打开球员库 ↗</a></p><h3>基础指标与参考分布</h3><p>原始 300 人七维指数沿用已发布快照，采集标记为 '+esc(data.data_access_date)+'。扩展 NBA 档案使用同一原始定义和原 300 人固定百分位参照，新增球员不会改变基础分布。未计算的维度保持缺失，不能把不同联赛的资料缺口当作真实能力差距。点击任一维度可查看原始输入、权重、百分位和逐项贡献。</p><h3>独立加性模型</h3><p>S = 50 + Σ β × (当前有效指数 − 50) ÷ 10 + 大众参考贡献。系数独立，分数不是百分比。缺失维度贡献为 0；全部启用项缺失时不评分。高级模式的原始统计、荣誉与协同模块是可选的用户规则，未纳入原评论员拟合。</p><h3>对手强度修正</h3><p>对手的同赛季场均表现和递归排名构成对手强度，按实际同场出场及分钟数汇总；冠军按已核实夺冠路径修正。排名由冻结资料计算，不随用户系数循环变化。修正只用于有基础指数和对手证据的维度，缺少资料时保留原始指数。</p><p>对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。对手与球员季后赛逐场资料覆盖至 2024，其他资料以来源截止期为准；同场不代表直接防守对位，冠军球队归属不等于个人夺冠贡献。</p><h3>本地保存与分享</h3><p>系数、模块、对手开关和收藏保存在本机浏览器。分享链接与 JSON 导出保留当前模型设置；不包含游戏进度。单杆建议和联合搜索只探索评分规则，不更改球员数据，也不保证某位球员能排名第一。</p>');
 }
 function exportModel() {
-  const payload={...stateObject(),app_version:'0.8.0',data_version:data.model_version,data_access_date:data.data_access_date,method:advanced.enabled?'S=50+sum(selected independent terms); see module_definitions and target_details for exact transforms; no percentage normalization; all active observations missing => null':'S=50+sum(beta[k]*(X[k]-50)/10)+gamma*(P-50)/10; independent coefficients; missing values use neutral 50; all active observations missing => null',module_registry_version:MODULE_VERSION,module_definitions:MODULES,target_details:activeDetails(currentTarget()),starting_expert:expert()||null,baseline_note:'Basic seven-dimension preset; additional modules are user rules, not fitted commentator claims.',dimensions:DIMENSIONS,top20:ranking.slice(0,20).map(p=>({player_id:p.player_id,player_name:p.player_name,rank:p.rank,score:p.score})),created_at:new Date().toISOString()};
+  const payload={...stateObject(),app_version:'0.14.0',data_version:data.model_version,data_access_date:data.data_access_date,method:advanced.enabled?'S=50+sum(selected independent terms); see module_definitions and target_details for exact transforms; no percentage normalization; all active observations missing => null':'S=50+sum(beta[k]*(X[k]-50)/10)+gamma*(P-50)/10; independent coefficients; missing values use neutral 50; all active observations missing => null',module_registry_version:MODULE_VERSION,module_definitions:MODULES,target_details:activeDetails(currentTarget()),starting_expert:expert()||null,baseline_note:'Basic seven-dimension preset; additional modules are user rules, not fitted commentator claims.',dimensions:DIMENSIONS,top20:ranking.slice(0,20).map(p=>({player_id:p.player_id,player_name:p.player_name,rank:p.rank,score:p.score})),created_at:new Date().toISOString()};
+  payload.opponent_model={version:OPPONENT_VERSION,enabled:opponentEnabled,throughSeason:opponentPayload?.throughSeason??null,rawComponents:currentTarget().rawComponents,adjustedComponents:currentTarget().components,targetEvidence:currentTarget().opponentContext};
+  payload.baseline_note='Global library ranked with the unadjusted seven-dimension preset. Opponent adjustments and extra modules are user model rules, not fitted commentator claims.';
   const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='true-goat-additive-model.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('已导出加性系数、公式与来源。');
 }
 async function share() {
@@ -245,13 +276,14 @@ async function explore() {
 async function init() {
   const responses=await Promise.all([fetch('/data/players.json'),fetch('/data/experts.json')]);
   if(responses.some(r=>!r.ok))throw new Error('模型文件未准备好，请先运行拟合脚本。');
-  [data,{experts}]=await Promise.all(responses.map(r=>r.json()));basePlayers=data.players;players=[...basePlayers];
+  [data,{experts}]=await Promise.all(responses.map(r=>r.json()));basePlayers=data.players;rawPlayers=[...basePlayers];players=[...basePlayers];
   registerNames(players.map(p=>({...p,chineseName:chinese[p.player_id]||p.chineseName})));
   try {const response=await fetch('/data/player-directory.json');if(!response.ok)throw new Error('球员库未准备好');const payload=await response.json();directory=new Map((payload.players||[]).map(p=>[p.id,p]));directoryAvailable=directory.size>0;}catch{toast('球员库暂不可用：基础模型仍可用，原始统计模块将明确显示缺失。');}
+  try{const response=await fetch('/data/opponent-context.json');if(!response.ok)throw new Error('对手数据暂不可用');opponentPayload=await response.json();players=applyOpponentContext(rawPlayers,opponentPayload,{enabled:opponentEnabled});}catch{toast('对手强度数据暂不可用，当前保留基础指数。');}
   if(!experts.length || !experts[0].coefficients)throw new Error('请先运行 scripts/13_build_expert_presets.py 生成 v0.4 加性预设。');
   baseDirectory=new Map(directory);
   library=createPlayerLibrary({baseIds:basePlayers.map(p=>p.player_id),onChange:updateCustomPlayers});
-  try{await library.initialize();}catch{toast('自选球员档案暂不可用；保留已保存的选择，先显示默认球员。');}
+  try{await library.initialize();}catch{toast('全球目录暂不可用，当前先显示已载入球员。');}
   preset=experts[0].id;coefficients=sanitizeCoefficients(presetCoefficients());await restore();
   const requested=new URLSearchParams(location.search).get('player');
   if(players.some(p=>p.player_id===requested))targetId=requested;
@@ -260,7 +292,12 @@ async function init() {
   $('expert-select').innerHTML=experts.map(e=>'<option value="'+esc(e.id)+'">'+esc(e.name)+'</option>').join('')+'<option value="balanced">均衡起点 · 自由探索</option>';$('expert-select').value=preset;
   rebuildPlayerChoices();
   $('quick-targets').innerHTML=[['jordami01','乔丹'],['jamesle01','詹姆斯'],['curryst01','库里'],['bryanko01','科比']].map(([id,label])=>'<button data-quick="'+id+'">'+label+'</button>').join('');
-  $('sliders').innerHTML=DIMENSIONS.map((d,i)=>'<div class="slider-row"><label class="base-module-toggle" hidden><input type="checkbox" id="base-enabled-'+d.key+'" data-base-toggle="'+d.key+'" checked>将「'+esc(d.label)+'」放入高级模型</label><label class="slider-label" for="coef-'+d.key+'"><span class="coef-symbol">β'+(i+1)+'</span><span>'+esc(d.label)+'</span></label><input id="coef-number-'+d.key+'" class="coef-number" type="number" min="0" max="10" step="0.001" aria-label="'+esc(d.label)+'系数数值"><input id="coef-'+d.key+'" type="range" min="0" max="10" step="0.01" data-coefficient="'+d.key+'" aria-describedby="desc-'+d.key+'"><div class="slider-desc" id="desc-'+d.key+'">'+esc(d.description)+'</div></div>').join('');
+  $('sliders').innerHTML=DIMENSIONS.map((d,i)=>'<div class="slider-row"><label class="base-module-toggle" hidden><input type="checkbox" id="base-enabled-'+d.key+'" data-base-toggle="'+d.key+'" checked>将「'+esc(d.label)+'」放入高级模型</label><button type="button" class="slider-label dimension-trigger" data-dimension="'+d.key+'" aria-label="查看'+esc(d.label)+'的计算组成与排名"><span class="coef-symbol">β'+(i+1)+'</span><span>'+esc(d.label)+' ↗</span></button><input id="coef-number-'+d.key+'" class="coef-number" type="number" min="0" max="10" step="0.001" aria-label="'+esc(d.label)+'系数数值"><input id="coef-'+d.key+'" type="range" min="0" max="10" step="0.01" data-coefficient="'+d.key+'" aria-label="'+esc(d.label)+'系数" aria-describedby="desc-'+d.key+'"><button type="button" class="slider-desc dimension-trigger" id="desc-'+d.key+'" data-dimension="'+d.key+'">'+esc(d.description)+'</button></div>').join('');
+  $('rank-league').innerHTML='<option value="">全部联赛</option>'+Object.entries(leagueLabels).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
+  $('rank-coverage').innerHTML='<option value="">全部数据覆盖</option>'+Object.entries(coverageLabels).map(([key,label])=>'<option value="'+esc(key)+'">'+esc(label)+'</option>').join('');
+  $('opponent-enabled').onchange=e=>{opponentEnabled=e.target.checked;players=applyOpponentContext(rawPlayers,opponentPayload,{enabled:opponentEnabled});dirty=true;result=null;renderAll();persist();};
+  document.addEventListener('click',event=>{const trigger=event.target.closest('[data-dimension]'),back=event.target.closest('[data-dimension-back]');if(trigger){event.preventDefault();showDimension(trigger.dataset.dimension,trigger.dataset.dimensionPlayer||targetId);}else if(back)showScore(back.dataset.dimensionBack);});
+  document.addEventListener('keydown',event=>{const trigger=event.target.closest('g[data-dimension]');if(trigger&&(event.key==='Enter'||event.key===' ')){event.preventDefault();showDimension(trigger.dataset.dimension,trigger.dataset.dimensionPlayer||targetId);}});
   buildModuleCards();
   $('advanced-enabled').onchange=e=>changeAdvanced({...advanced,enabled:e.target.checked});
   $('sliders').addEventListener('change',e=>{const key=e.target.dataset.baseToggle;if(key)changeAdvanced({...advanced,disabledBase:e.target.checked?advanced.disabledBase.filter(k=>k!==key):[...advanced.disabledBase,key]});});
@@ -278,7 +315,8 @@ async function init() {
   $('rank-rows').onclick=e=>{if(e.target.closest('[data-score-player]'))return;const row=e.target.closest('[data-player]');if(row)chooseTarget(row.dataset.player);};
   $('workspace').addEventListener('click',e=>{const b=e.target.closest('[data-score-player]');if(b)showScore(b.dataset.scorePlayer);});
   $('suggestions').onclick=e=>{const b=e.target.closest('[data-suggestion]');if(b){const s=suggestions[Number(b.dataset.suggestion)];changeModel(s.coefficients);toast('只调整了这一项系数，其他项保持不变。');}};
-  $('search').oninput=renderRows;$('show-all').onclick=()=>{all=!all;renderRows();};
+  $('search').oninput=()=>{rankPage=1;renderRows();};$('show-all').onclick=()=>{all=!all;rankPage=1;renderRows();};
+  $('rank-league').onchange=$('rank-coverage').onchange=()=>{rankPage=1;renderRows();};$('rank-prev').onclick=()=>{rankPage--;renderRows();};$('rank-next').onclick=()=>{rankPage++;renderRows();};
   $('open-model').onclick=showModel;$('formula-help').onclick=showModel;$('open-source').onclick=showSources;$('data-notes').onclick=showNotes;
   $('close-dialog').onclick=()=>$('model-dialog').close();
   $('model-dialog').onclick=e=>{if(e.target===$('model-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}};

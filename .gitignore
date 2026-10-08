@@ -25,6 +25,9 @@
 !/app/data/experts.json
 !/app/data/player-directory.json
 !/app/data/player-catalog.json
+!/app/data/global-player-index.json
+!/app/data/opponent-context.json
+!/app/data/dimension-audit.json
 !/app/data/guess-players.json
 !/app/data/guess-extra-metrics.json
 !/app/data/guess-source-cba.json

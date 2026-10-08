@@ -13,12 +13,12 @@ try{
   assert.doesNotMatch(await page.locator('#custom-tour-description').innerText(),/系统|核验|快照|候选/);await mkdir('output/custom-qa',{recursive:true});await page.waitForFunction(()=>[...document.querySelectorAll('#custom-tour-demo>div')].every(el=>getComputedStyle(el).opacity==='1'));await page.screenshot({path:'output/custom-qa/tour-v0131.png'});
   await page.locator('#custom-tour-next').click();assert.match(await page.locator('#custom-tour-title').innerText(),/反过来/);await page.locator('#custom-tour-back').click();await page.locator('#custom-tour-skip').click();
   await page.locator('#custom-tour-replay').click();await page.locator('#custom-tour-next').click();await page.locator('#custom-tour-next').click();await page.locator('#custom-tour-next').click();assert.equal(await page.locator('#custom-tour').isVisible(),false);
-  const closeResult=async()=>{await page.locator('#custom-result-dialog[open]').waitFor();assert.ok((await page.locator('#custom-result-sentence').innerText()).length>60);await page.locator('#custom-result-close').click();};
+  const closeResult=async()=>{await page.locator('#custom-result-dialog[open]').waitFor();assert.ok((await page.locator('#custom-result-sentence').innerText()).length>15);assert.ok((await page.locator('#custom-result-scope').innerText()).length>30);await page.locator('#custom-result-close').click();};
   assert.match(await page.locator('#custom-selected').innerText(),/Michael Jordan/);assert.equal(await page.locator('#custom-pool option').count(),4);
   await page.locator('#custom-run').click();await page.locator('.custom-card').waitFor({timeout:60000});assert.match(await page.locator('.custom-card').innerText(),/目标名次/);await closeResult();
   await page.locator('#custom-explore').click();await page.locator('.custom-card').first().waitFor({timeout:60000});assert.ok(await page.locator('.custom-card').count()>1);await closeResult();
   await page.locator('#custom-discovery').click();await page.locator('.custom-card').waitFor();assert.equal(await page.locator('.custom-card').getAttribute('data-first'),'true');
-  await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async value=>{window.__copied=value;}}});});await page.locator('#custom-result-copy').click();assert.match(await page.evaluate(()=>window.__copied),/第一名球员/);assert.match(await page.evaluate(()=>window.__copied),/basketball-reference.com/);await closeResult();
+  await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async value=>{window.__copied=value;}}});});await page.locator('#custom-result-copy').click();assert.match(await page.evaluate(()=>window.__copied),/第一/);assert.match(await page.evaluate(()=>window.__copied),/basketball-reference.com/);await closeResult();
   await page.locator('.custom-exclusions summary').click();await page.locator('#custom-exclusions input[value=team]').check();
   assert.equal(await page.locator('#custom-team').isDisabled(),true);
   await page.locator('#custom-explore').click();await closeResult();assert.ok(await page.evaluate(()=>window.__customQueries.every(q=>!q.team&&q.excluded.includes('team'))));
@@ -46,8 +46,8 @@ try{
   await page.locator('[data-path=reverse]').click();assert.equal(await page.locator('#custom-player-controls').isVisible(),false);
   await page.locator('#custom-pool').selectOption('nba-history');await page.locator('#custom-mode').selectOption('highest');
   await page.locator('#custom-honors-section summary').click();await page.locator('#custom-add-honor').click();await page.locator('#custom-run').click();
-  await page.locator('#custom-result-dialog[open]').waitFor();assert.match(await page.locator('#custom-result-sentence').innerText(),/career snapshot/);await closeResult();
-  assert.ok(await page.locator('.custom-person-result').count()>10);await page.locator('.custom-person-result').last().click();assert.match(await page.locator('#custom-result-sentence').innerText(),/not first/);await closeResult();
+  await page.locator('#custom-result-dialog[open]').waitFor();assert.match(await page.locator('#custom-result-scope').innerText(),/career snapshot/);await closeResult();
+  assert.ok(await page.locator('.custom-person-result').count()>10);await page.locator('.custom-person-result').last().click();assert.match(await page.locator('#custom-result-sentence').innerText(),/ranks [2-9][0-9]*/);await closeResult();
   await page.locator('#report-data-error').click();await page.locator('[name=subject]').fill('Yi Jianlian / points');await page.locator('[name=wrong]').fill('Incorrect number');await page.locator('[name=correct]').fill('Correct number');await page.locator('[name=source]').fill('https://example.org/boxscore');
   await page.evaluate(()=>{window.open=(url)=>{window.__reportDraft=url;return null;};});await page.locator('#feedback-form button[type=submit]').click();
   assert.match(await page.evaluate(()=>window.__reportDraft),/^https:\/\/github.com\/J0ey2ou\/true-goat\/issues\/new\?/);assert.match(await page.locator('#feedback-status').innerText(),/not been submitted/);await page.locator('#feedback-close').click();

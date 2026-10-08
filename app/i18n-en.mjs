@@ -1209,4 +1209,358 @@ Object.assign(ENGLISH,Object.fromEntries(`
 默认球员仍可使用。关闭后重新打开可重试。|Default players remain available. Close and reopen to retry.
 其他标签的球员选择暂未载入；请打开添加球员重试。|Selections from another tab could not load. Open player selection to retry.
 保存不可用，仅本页有效。|Saving unavailable; changes apply to this page only.
+中文译名未核实，保留原文姓名。|Chinese translation unverified; original name retained.
+英文姓名未核实，保留原文姓名。|English name unverified; original name retained.
+用户可添加的扩展球员；原300人的分数与媒体模型不改变。|Expanded player profile. The original 300-player scores and fitted analyst models are unchanged.
+扩展基础分沿用原七维定义和原300人固定分位参照；这里尚未计算季后赛维度，显示未知，不是0。|Expanded indices use the original seven definitions and fixed 300-player reference distribution. The playoff dimension has not been calculated here and remains unknown, not zero.
+团队成就沿用既有模型的冠军/总决赛球队赛季归属定义，不等同于球员实际在总决赛出场；猜球员次数则另用实际出场证据。|Team achievement uses the existing champion/finalist team-season definition. This does not prove a player appeared in the Finals. Guess the Player counts use separate appearance evidence.
+部分历史基础数据缺失：场均展示有记录比赛口径，指标覆盖场次可查；覆盖不足的原始场均模块不会评分。|Some historical statistics are missing. Averages use recorded games, with coverage available for inspection. Raw-average modules remain unscored when coverage is insufficient.
+官方当前名单登记，但没有可核实NBA/BAA常规赛历史出场记录；不以注册名单制造统计，基础评分暂为未知。|Listed on an official current roster, with no verified NBA/BAA regular-season appearances. Roster membership does not create statistics; base scores remain unknown.
+未核实|Unverified
+已核实的跨联赛实际出场|Verified cross-league appearances
+实际出场赛季数；不含附加赛。|Seasons with actual appearances; play-ins excluded.
+Finals实赛赛季数，不计DNP。|Finals seasons with actual appearances; DNPs excluded.
+EuroLeague 官方比赛资料中的两队精选；出生年、身高、位置及球队按 2025-09-30 登记。|A selection from two teams in official EuroLeague game records. Birth year, height, position and team were recorded on 2025-09-30.
+不是完整履历；首个职业赛季、国家/地区未收录。部分球员曾打 NBA，但不在原 GOAT 300 人目录中。|This is not a complete career record. Professional debut and country/region are unrecorded. Some players have NBA experience but were outside the original 300-player GOAT sample.
+球队数、季后赛/总决赛次数、常规赛场均分及MVP缺少同联赛完整生涯记录，均保留未知；单队档案不能当作只效力过一队。|Team counts, playoff/Finals seasons, regular-season scoring average and MVP totals remain unknown without complete same-league career records. A single-team profile does not prove a one-team career.
+仅有明确赛季、球队及正出场数/比赛表现的记录才能筛选；登记名单和档案年份不算出场。资料为部分历史记录，未收录不等于未效力。|Filters use records with an explicit season, team and positive appearances or game performance. Registrations and profile-page years do not prove appearances. Historical coverage is partial; missing records do not prove a player never played there.
+原始首秀日期与 NBA/BAA 首个赛季不一致或缺失（可能是 ABA 首秀），因此本游戏首赛年暂置未知。|The recorded debut date conflicts with or is missing from the first NBA/BAA season and may refer to the ABA. The game's debut-year field remains unknown.
+官方国内注册名单已核实，尚无匹配的生涯档案；未知资料不编造。|Official domestic registration is verified, but no matching career profile is available. Missing information is not invented.
+注册记录不转换为出场证据，因此限定实际出场年份/球队的题目不会抽到无出场资料者。|Registration is not converted into appearance evidence. Players without appearance records are excluded from questions filtered by actual years or teams played.
+未取得完整同口径生涯统计；未知不是零。|Complete career statistics using a comparable definition are unavailable. Unknown does not mean zero.
+公开赛季索引与个人历史表，不以注册或生涯连续区间补齐出场。|Public season indexes and individual history tables; registrations or uninterrupted career ranges are not used to fill appearance gaps.
+两个新浪档案经完整姓名与完整出生日期|Two Sina profiles were matched using the full name and complete date of birth,\u0020
+核对为同一人，显式合并。|, and explicitly merged as the same person.
+非官方新浪档案；页面赛季：|Unofficial Sina profile; page season:\u0020
+。球队记录不完整，不代表当前注册名单。|. Team records are incomplete and do not represent current registrations.
+首个职业赛季未核实，保持未知；不以最早收录赛季冒充首秀。|The professional debut season is unverified and remains unknown. The earliest recorded season is not assumed to be the debut.
+重复档案身高冲突，未选边或取平均，保留未知。|Duplicate profiles disagree on height. Neither value is selected or averaged; height remains unknown.
+未取得完整可比生涯资料，未知不是 0。|Complete comparable career records are unavailable. Unknown does not mean zero.
+NBA/BAA 生涯球队另补已核实的 CBA 上海；首赛年仍只指 NBA/BAA 首次正式出场年。|The NBA/BAA team history also includes verified CBA Shanghai appearances. Debut year still refers to the first official NBA/BAA appearance.
+CBA 上海记录来自 NBA 官方回顾；跨联赛球队集合不宣称完整。|CBA Shanghai evidence comes from an official NBA retrospective. The cross-league team list is not claimed to be complete.
+NBA/BAA实际常规赛赛季与原始球队同行连接，g>0且排除合计行；不以生涯年份补齐中断。 姚明CBA目前只逐条核实2001–02上海赛季，其他CBA年份不推断。|NBA/BAA regular-season appearances link season and team on the same row, with g>0 and total rows excluded. Career gaps are not filled. Yao Ming's CBA evidence currently verifies only Shanghai in 2001–02; other CBA years are not inferred.
+NBA.com当前名单登记；未与历史正出场快照核实连接，不能据名单推断已出场赛季、首秀或生涯累计数据。|Listed on NBA.com's current roster without a verified link to historical positive-appearance records. Roster membership cannot establish seasons played, debut or career totals.
+CNTV2011东莞报道在同场称约什与阿克格农，补足档案简称；完整DOB1986-02-10吻合。|A 2011 CNTV Dongguan report links the short and full names in the same game. The complete date of birth, 1986-02-10, also matches.
+新浪身高183cm与NBA档案180cm存在差异，未平均或据此另造身份。|Sina records 183 cm while the NBA profile records 180 cm. These are not averaged or treated as separate identities.
+新浪身高203cm与NBA档案198cm存在差异，未平均或据此另造身份。|Sina records 203 cm while the NBA profile records 198 cm. These are not averaged or treated as separate identities.
+新浪身高203cm与NBA档案206cm存在差异，未平均或据此另造身份。|Sina records 203 cm while the NBA profile records 206 cm. These are not averaged or treated as separate identities.
+新浪身高211cm与NBA档案208cm存在差异，未平均或据此另造身份。|Sina records 211 cm while the NBA profile records 208 cm. These are not averaged or treated as separate identities.
+杭州日报采访浙江俱乐部总经理确认前篮网中锋约什·布恩2010年签约，报道1984年出生、208cm和2006年第23顺位，与NBA身份及新浪浙江2011–13出场履历吻合。新浪生日1984-11-18与NBA1984-11-21冲突，未采用新浪生日。|A Hangzhou Daily interview with Zhejiang's general manager confirms former Nets center Josh Boone signed in 2010. His reported birth year (1984), height (208 cm) and 2006 draft pick (23) match the NBA identity and Sina's Zhejiang appearances in 2011–13. Sina's birth date of 1984-11-18 conflicts with the NBA's 1984-11-21 and is not used.
+ESPN确认Carlos Boozer加盟广东，匹配新浪广东出场、1981出生年和206cm；新浪未提供完整生日。|ESPN confirms Carlos Boozer joined Guangdong, matching Sina's team appearances, 1981 birth year and 206 cm height. Sina does not provide a full birth date.
+与1989年出生的MarShon Brooks是不同球员。|A different player from MarShon Brooks, who was born in 1989.
+与1985年出生的Aaron Brooks是不同球员。|A different player from Aaron Brooks, who was born in 1985.
+新浪生日缺失；掘金官方报道的2011–12广厦履历与新浪档案对应，不与Tyson Chandler合并。|Sina has no birth date. An official Nuggets report of the 2011–12 Guangsha stint matches the profile. This identity is not merged with Tyson Chandler.
+新浪仅有出生年；太阳官方签约公告明确Jimmer Fredette曾效力上海，与上海个人档案对应。|Sina lists only the birth year. An official Suns signing announcement confirms Jimmer Fredette's Shanghai stint, matching the individual profile.
+阿奇-古德温旧档案缺生日；与新档案7628完整译名对应，后者经完整生日确认NBA Archie Goodwin。没有基于Goodwin姓氏泛化合并。|The older Archie Goodwin profile has no birth date. Its full translated name matches profile 7628, whose complete birth date verifies the NBA identity. The merge is not based on the surname alone.
+新浪仅有出生年；快船官方签约公告确认Lester Hudson的辽宁CBA履历。|Sina lists only the birth year. An official Clippers signing announcement confirms Lester Hudson's CBA career with Liaoning.
+公开报道确认Al Jefferson效力新疆，匹配新浪完整译名、1985出生年和208cm，不与Cory Jefferson合并。|Published reporting confirms Al Jefferson played for Xinjiang, matching Sina's full translated name, 1985 birth year and 208 cm height. He is not merged with Cory Jefferson.
+原候选Joe Alexander错误，已纠正为Alexander Johnson。辽宁日报报道明确亚历山大·约翰逊2012年加盟辽宁、身高206cm，匹配新浪1983-02和辽宁2012–13履历；另有2009年加盟东莞报道对应其东莞首段记录。新浪具体生日缺失保持不补造。|The incorrect Joe Alexander candidate was corrected to Alexander Johnson. Liaoning Daily confirms Johnson joined Liaoning in 2012 at 206 cm, matching Sina's February 1983 birth record and 2012–13 appearances. Separate 2009 reporting confirms the earlier Dongguan stint. Sina's missing birth-day value remains missing.
+奇才官方公告确认Ty Lawson山东履历，匹配新浪完整译名、1987出生年及山东出场。|An official Wizards announcement confirms Ty Lawson's Shandong stint, matching Sina's full translated name, 1987 birth year and team appearances.
+新浪仅有出生年；NBA官方报道明确Jeremy Lin加盟北京首钢，与中文姓名及北京出场档案交叉核验。|Sina lists only the birth year. Official NBA reporting confirms Jeremy Lin joined Beijing, cross-checked against his Chinese name and Beijing appearance records.
+FIBA明确OJ Mayo效力辽宁，匹配新浪辽宁出场及1987出生年，不根据Mayo姓氏单独推断。|FIBA confirms O.J. Mayo played for Liaoning, matching Sina's appearances and 1987 birth year. The identity is not inferred from the surname alone.
+格雷格·门罗与旧档案7487完整译名、出生年及208cm一致；新档案生日为6月3日，旧档案与NBA为6月4日。显式合并同人但保留生日冲突。|Greg Monroe matches profile 7487 by full translated name, birth year and 208 cm height. The newer profile lists June 3; the older profile and NBA list June 4. The identity is merged while the birth-date conflict is retained.
+湖人官方选秀介绍确认Emmanuel Mudiay在广东出战12场，匹配新浪穆迪埃2014–15广东12场记录。新浪生日缺失，保持缺失；NBA生日采用本地身份档案。新浪196cm与NBA档案190cm有差异，不将身高作为决定性证据。|An official Lakers draft profile confirms Emmanuel Mudiay played 12 games for Guangdong, matching Sina's 2014–15 record. Sina's missing birth date remains missing; the NBA birth date uses the existing identity profile. Sina's 196 cm height conflicts with the NBA profile's 190 cm and is not decisive identity evidence.
+NBA官方报道确认Greg Oden在中国打球；新浪完整译名、1988年1月出生与NBA身份对应。|Official NBA reporting confirms Greg Oden played in China. Sina's full translated name and January 1988 birth record match the NBA identity.
+鹈鹕官方签约公告确认Josh Smith的四川履历，匹配新浪完整译名、1985出生年和206cm。|An official Pelicans signing announcement confirms Josh Smith's Sichuan stint, matching Sina's full translated name, 1985 birth year and 206 cm height.
+独立签约报道确认掘金后卫J.R. Smith在2011–12赛季加盟浙江；与该档案32场浙江出场记录相符。新浪生日1985-11-09与NBA档案1985-09-09冲突，身份核验依靠明确全名和球队履历，不将新浪日期当作生日证据。|Independent signing coverage confirms Nuggets guard J.R. Smith joined Zhejiang in 2011–12, matching the 32-game record. Sina's birth date of 1985-11-09 conflicts with the NBA's 1985-09-09. Identity uses the explicit full name and team history; Sina's date is not treated as birth-date evidence.
+中新网报道确认2002年NBA第9顺位斯塔德迈尔在2019年11月为福建完成CBA首秀，与档案完整中文姓名及2019–20赛季索引福建记录对应。新浪生日缺失，不补造源字段；NBA身份档案生日1982-11-16。|China News Service confirms the 2002 NBA No. 9 pick Stoudemire made his CBA debut for Fujian in November 2019, matching the full Chinese name and 2019–20 index. Sina's missing birth date is not filled; the NBA identity profile records 1982-11-16.
+新浪新档案将生日记为7月7日，旧档案7002与NBA均为7月8日；完整姓名别名、1986出生年、198cm及广东履历对应同人，保留冲突，不覆盖生日。|The newer Sina profile gives July 7; profile 7002 and the NBA give July 8. Full-name aliases, 1986 birth year, 198 cm height and Guangdong history identify the same player. The conflict is retained without overwriting the birth date.
+新华社现场报道明确邦奇·威尔斯为前NBA火箭球员并在山西队，匹配新浪2008–09山西履历和完整中文姓名。NBA官方球员档案确认1976-09-28；新浪1976-09-20有冲突，未以该日期证明身份。|Xinhua's on-site reporting identifies former Rockets player Bonzi Wells at Shanxi, matching the 2008–09 record and full Chinese name. His official NBA profile gives 1976-09-28; Sina's conflicting 1976-09-20 date is not used to establish identity.
+原候选Terrence Williams错误，已明确纠正为Marcus Williams。新浪别名含马库斯，完整生日1986-11-18匹配NBA willima04，且报道确认其2009–10浙江及2010年重返浙江履历。排除1985年出生的同名后卫willima03。新浪198cm与NBA201cm有差异。|The incorrect Terrence Williams candidate was corrected to Marcus Williams. Sina's alias and complete birth date, 1986-11-18, match NBA ID willima04; reporting confirms his 2009–10 Zhejiang stint and 2010 return. The namesake guard born in 1985 (willima03) is excluded. Sina gives 198 cm and the NBA gives 201 cm.
+原候选Shawne Williams错误，已纠正为Sean Williams。海峡都市报报道确认前篮网球员肖恩·威廉姆斯2010年加盟福建；新浪1986-09及福建2010出场记录匹配该身份，不是同姓直接合并。新浪缺具体日保持不补造。|The incorrect Shawne Williams candidate was corrected to Sean Williams. Haixia Metropolis Daily confirms the former Nets player joined Fujian in 2010, matching Sina's September 1986 birth record and 2010 appearances. This is not a surname-only merge. Sina's missing birth-day value remains missing.
+独立转会报道明确前NBA五号秀谢尔顿·威廉姆斯加盟天津，补足档案仅姓氏的歧义。|Independent transfer reporting identifies former NBA No. 5 pick Shelden Williams joining Tianjin, resolving the profile's surname-only ambiguity.
+摩西·赖特与已核实7470为同一完整译名；新档案生日1970-01-01是明显占位值，身高206cm与NBA对应，不把占位日期写入背景字段。|Moses Wright matches verified profile 7470 by full translated name. The newer birth date, 1970-01-01, is a placeholder; the 206 cm height matches the NBA record. The placeholder is not used in the background fields.
+凯尔特人官方公告确认Guerschon Yabusele上海履历，匹配新浪亚布塞莱身份和出生年。|An official Celtics announcement confirms Guerschon Yabusele's Shanghai stint, matching Sina's identity and birth year.
+新浪生日月份与NBA档案冲突；中国国家队、北京奥神与湖人履历交叉确认同一孙悦，不因月份冲突拆成两个人，不覆盖生日。|Sina's birth month conflicts with the NBA profile. China national team, Beijing Aoshen and Lakers history confirm the same Sun Yue. The month conflict does not create a separate person or overwrite the birth date.
+对手含金量|Opponent strength
+这位球员还没有可核实的同赛季对手资料，本项不作调整。|No verified same-season opponent records are available for this player; no adjustment is applied.
+原始指数|Original index
+调整后|Adjusted
+本项实际调整|Applied adjustment
+已计入当前模型。|Included in the current model.
+当前已关闭；保留原始指数。|Currently disabled; the original index is retained.
+对手实力和排名怎么算？|How are opponent strength and rankings calculated?
+B = 50% × 得分百分位 + 20% × 助攻百分位 + 15% × 篮板百分位 + 15% × TS% 百分位。均在同赛季比较；缺失子项按已知权重折算。出场少于该季最多出场数的 25%（至少 10 场）时向 50 收缩。|B = 50% × scoring percentile + 20% × assist percentile + 15% × rebound percentile + 15% × TS% percentile. All comparisons use the same season. Missing inputs use the available weights. Players below 25% of that season's maximum appearances (at least 10 games) are shrunk toward 50.
+R = 0.8 × B + 0.2 × 实际对手 R 的加权平均，反复计算至变化小于 0.00000001。再按 R 得到同赛季排名百分位。Q = 50% × 对手场均得分百分位 + 50% × 对手 R 排名百分位。|R = 0.8 × B + 0.2 × the weighted mean R of actual opponents, iterated until the change is below 0.00000001. R determines each player's same-season rank percentile. Q = 50% × opponent scoring-average percentile + 50% × opponent R rank percentile.
+对手在该场的出场时间决定权重；早期分钟数不全时等权。只统计实际在对面球队出场的人，同场不代表直接防守对位。排名固定于数据快照，不随你添加球员或改变 GOAT 系数循环变化。|Opponents are weighted by their minutes in that game; equal weights are used when historical minutes are incomplete. Only opponents who played count. Sharing a game does not imply a direct defensive matchup. Rankings are fixed to the data snapshot and do not change when you add players or adjust GOAT coefficients.
+每个已核实夺冠赛季：冠军系数 = 限制在 0.75–1.25 内的 [1 + 0.5 × (该球员季后赛路径 Q − 同季常规赛对手基准) ÷ 100 × 覆盖率]。团队成就指数调整 = 4 × Σ(冠军系数 − 1)，限制在 ±8 内；最终指数限制在 0–100。系数为模型约定。|For each verified championship season: title factor = clamp [1 + 0.5 × (the player's playoff-path Q − same-season regular-season opponent baseline) ÷ 100 × coverage] to 0.75–1.25. Team-achievement adjustment = 4 × Σ(title factor − 1), capped at ±8; the final index is limited to 0–100. These coefficients are model conventions.
+冠军赛季|Championship season
+路径强度|Path strength
+同代基准|Same-era baseline
+冠军系数|Title factor
+已核实对手|Verified opponents
+没有可核实的夺冠季后赛路径，本项不作调整；这不等于零次总冠军。|No verified championship playoff path is available, so no adjustment is applied. This does not mean zero championships.
+只调整已证实为冠军球队参加季后赛的赛季；缺少路径的冠军保留原值。该权重衡量已遇到的对手，不代表个人夺冠贡献。|Only verified playoff appearances for a championship team are adjusted. Titles without path evidence retain their original value. This weight measures the opponents faced, not individual credit for winning.
+指数调整 = 8 × (对手强度 − 同代基准) ÷ 50 × 覆盖率，限制在 ±8 内；最终指数限制在 0–100。|Index adjustment = 8 × (opponent strength − same-era baseline) ÷ 50 × coverage, capped at ±8; the final index is limited to 0–100.
+已记录|Recorded
+对手强度|Opponent strength
+对手赛季场均得分加权平均|Weighted mean of opponents' season scoring averages
+可计算|Computable
+场因分钟资料不足使用等权。|games used equal weights because minute records were incomplete.
+场。其中|games. Of these,\u0020
+赛季场均得分|Season points per game
+同代实力排名|Same-era strength rank
+相遇场次|Games faced
+实力 Q|Strength Q
+列出接触权重最高的 12 条对手赛季记录；计算使用全部已核实对手。|The 12 opponent-season records with the highest exposure weights are shown. Calculations use all verified opponents.
+下表列出接触权重较高的对手赛季记录；计算使用全部已核实对手。|The table shows opponent-season records with higher exposure weights. Calculations use all verified opponents.
+该赛段缺少可核实对手，本项不作调整。|No verified opponents are available for this phase; no adjustment is applied.
+对手资料截至 2023–24；覆盖率只针对已收录比赛，不代表整个生涯完整覆盖。CBA、欧洲及尚未收录赛季不套用 NBA 对手系数。|Opponent data runs through 2023–24. Coverage refers to recorded games, not necessarily the full career. NBA opponent factors are not applied to CBA, Europe or unrecorded seasons.
+逐场数据来源|Game-level data source
+NBA 历届冠军|NBA championship history
+生涯场均得分|Career points per game
+生涯场均篮板|Career rebounds per game
+生涯场均助攻|Career assists per game
+生涯真实命中率|Career true shooting percentage
+常规赛总得分 ÷ 常规赛总场次|Regular-season points ÷ regular-season games
+常规赛总篮板 ÷ 常规赛总场次|Regular-season rebounds ÷ regular-season games
+常规赛总助攻 ÷ 常规赛总场次|Regular-season assists ÷ regular-season games
+总得分 ÷ [2 × (总出手 + 0.44 × 总罚球出手)]|Points ÷ [2 × (field-goal attempts + 0.44 × free-throw attempts)]
+时代内生涯质量|Era-relative career quality
+Σ(赛季可用表现 × 场次) ÷ 生涯总场次|Σ(availability-adjusted season performance × games) ÷ career games
+最佳 1 季|Best season
+最佳 3 季|Best three seasons
+最佳 5 季|Best five seasons
+最佳 7 季|Best seven seasons
+最好的 1 个有效赛季可用表现的均值|Availability-adjusted performance in the best eligible season
+最好的 3 个有效赛季可用表现的均值；不足 3 季则缺失|Mean availability-adjusted performance in the best three eligible seasons; missing with fewer than three seasons
+最好的 5 个有效赛季可用表现的均值；不足 5 季则缺失|Mean availability-adjusted performance in the best five eligible seasons; missing with fewer than five seasons
+最好的 7 个有效赛季可用表现的均值；不足 7 季则缺失|Mean availability-adjusted performance in the best seven eligible seasons; missing with fewer than seven seasons
+生涯场次|Career games
+生涯时间|Career minutes
+Σ 常规赛出场分钟|Σ regular-season minutes played
+Σ 常规赛出场|Σ regular-season games played
+精英赛季|Elite seasons
+正价值赛季|Positive-value seasons
+赛季可用表现 ≥ 1.0 的赛季数|Seasons with availability-adjusted performance ≥ 1.0
+赛季可用表现 ≥ 0.5 的赛季数|Seasons with availability-adjusted performance ≥ 0.5
+累计表现|Cumulative performance
+标准分累计|Cumulative standardized score
+Σ max(赛季可用表现 + 0.5, 0)|Σ max(availability-adjusted season performance + 0.5, 0)
+生涯胜利贡献值|Career Win Shares
+生涯替代价值|Career Value over Replacement Player
+平均出勤比例|Mean participation rate
+各季 (个人出场 ÷ 该季联盟最高个人出场) 的均值|Mean across seasons of player games ÷ the league's highest player game count that season
+Σ 有记录的季后赛出场|Σ recorded playoff appearances
+季后赛最佳 3 季|Best three playoff seasons
+最好的至多 3 个有效季后赛赛季综合分的均值|Mean composite score from up to three best eligible playoff seasons
+季后赛时代内表现|Era-relative playoff performance
+有效季后赛赛季综合分按出场数加权平均|Game-weighted mean of eligible playoff-season composite scores
+已知季后赛胜场|Recorded playoff wins
+Σ 有记录的季后赛胜场|Σ recorded playoff wins
+季后赛真实命中率|Playoff true shooting percentage
+有记录的季后赛 TS% 按场次加权平均|Game-weighted mean of recorded playoff TS%
+官方 MVP 获奖数|Official MVP awards
+MVP 得票份额|MVP vote shares
+份额累计|Cumulative shares
+MVP 前三|MVP top-three finishes
+MVP 投票排名 ≤ 3 的赛季数|Seasons with MVP voting rank ≤ 3
+官方总决赛 MVP 获奖数|Official Finals MVP awards
+NBA / BAA 最佳阵容一阵入选数|All-NBA / All-BAA First Team selections
+一阵 + 二阵 + 三阵|First + Second + Third Team selections
+不同全明星入选赛季数|Distinct seasons selected as an All-Star
+数据王合计|Statistical titles
+得分王 + 篮板王 + 助攻王 + 抢断王 + 盖帽王|Scoring + rebounding + assist + steal + block titles
+防守胜利贡献值|Defensive Win Shares
+时代内防守|Era-relative defense
+各有效赛季防守标准分的均值|Mean standardized defensive score across eligible seasons
+官方 DPOY 获奖数|Official DPOY awards
+防守一阵|All-Defensive First Team
+防守二阵|All-Defensive Second Team
+最佳防守阵容一阵入选数|All-Defensive First Team selections
+最佳防守阵容二阵入选数|All-Defensive Second Team selections
+生涯场均抢断|Career steals per game
+生涯场均盖帽|Career blocks per game
+常规赛总抢断 ÷ 常规赛总场次|Regular-season steals ÷ regular-season games
+常规赛总盖帽 ÷ 常规赛总场次|Regular-season blocks ÷ regular-season games
+冠军球队赛季|Championship team seasons
+被记录在 NBA / BAA 冠军球队的赛季数|Recorded seasons on an NBA / BAA championship team
+总决赛球队赛季|Finalist team seasons
+被记录在 NBA / BAA 总决赛球队的赛季数|Recorded seasons on an NBA / BAA finalist team
+返回球员多维图|Back to player charts
+球员完整档案|Full player profile
+基础维度指数|Base dimension index
+当前有效指数|Current effective index
+本次模型贡献|Contribution to this model
+这个维度怎样算出来|How this dimension is calculated
+先将每项原始值转成固定参考样本内的百分位，再按可用项权重求加权平均。下表的贡献相加，得到基础维度指数。|Each raw value becomes a percentile within the fixed reference sample. Available inputs are combined using their relative weights. The contributions below add up to the base dimension index.
+百分位 × 100 × 原始权重|percentile × 100 × original weight
+可用项原始权重|available original weights
+模型贡献|Model contribution
+此维度已从高级模型移除|This dimension is excluded from the advanced model
+系数为 0，本次不参与计分|Coefficient is zero; this term contributes nothing
+原始数据组成与逐项贡献|Raw inputs and individual contributions
+有观测组成：|Observed inputs:\u0020
+可用原始权重合计：|Total available original weight:\u0020
+此档案没有可审计的基础维度输入；缺失不等于 0，也不代表球员能力居中。|No auditable inputs are available for this profile's base dimension. Missing does not mean zero or average ability.
+扩展球员使用原 300 人固定参照；新增球员不会改变参考分布。|Additional players use the fixed original 300-player reference. Adding players does not change the distribution.
+参考分布来自原始|The reference distribution comes from the original\u0020
+人指标快照；不是全球人口百分位。|player snapshot; it is not a percentile of all players worldwide.
+组成 / 定义|Input / Definition
+原始值|Raw value
+百分位|Percentile
+原始权重|Original weight
+有效权重|Effective weight
+指数贡献|Index contribution
+参考 n|Reference n
+重算|Recalculated
+发布基础指数|Published base index
+没有足够输入，无法重算基础指数。|Insufficient inputs to recalculate the base index.
+展示值已舍入，计算使用完整精度。缺失输入在维度内部不计入分母；整个维度缺失时，在最终模型里贡献为 0，不放大其他维度。|Displayed values are rounded; calculations use full precision. Missing inputs are excluded from the dimension's denominator. A completely missing dimension contributes zero to the final model without enlarging other dimensions.
+百分位、时代调整与统计边界|Percentiles, era adjustments and statistical scope
+原样本百分位 = 升序平均名次 ÷ 该项有效样本数；相同值取并列平均名次。扩展样本：相同参考值沿用上述百分位，无相同值则用严格低于该值的参考样本占比，范围 0–100。|Original-sample percentile = ascending average rank ÷ valid sample count; ties share their average rank. Additional players inherit the percentile of matching reference values. Without a match, the share of reference values strictly below the input is used, ranging from 0–100.
+赛季标准分 z = clip((x − 同季有效球员均值) ÷ 同季总体标准差, −3, 3)。常规赛资格要求至少 20 场且出场比例至少 35%；无变化或没有观测时记缺失。|Season z-score = clip((x − same-season eligible-player mean) ÷ same-season population standard deviation, −3, 3). Regular-season eligibility requires at least 20 games and 35% participation. Zero variance or absent observations produce a missing value.
+赛季防守 = 可用项加权均值 {抢断 z: 25%, 盖帽 z: 30%, DBPM z: 45%}。赛季综合 = 可用项加权均值 {得分 z: 24%, 篮板 z: 13%, 助攻 z: 14%, TS z: 14%, PER z: 11%, BPM z: 12%, WS/48 z: 8%, 赛季防守: 4%}。赛季可用表现 = 赛季综合 − 0.45 × (1 − 出场比例)。|Season defense = available-input weighted mean {steals z: 25%, blocks z: 30%, DBPM z: 45%}. Season composite = available-input weighted mean {points z: 24%, rebounds z: 13%, assists z: 14%, TS z: 14%, PER z: 11%, BPM z: 12%, WS/48 z: 8%, season defense: 4%}. Availability-adjusted performance = season composite − 0.45 × (1 − participation rate).
+季后赛综合 = 可用项加权均值 {得分 z: 40%, 篮板 z: 18%, 助攻 z: 22%, TS z: 20%}；同季至少 5 场才计算 z，球员逐场资料截至 2024。扩展档案的季后赛指数仍可能缺失。|Playoff composite = available-input weighted mean {points z: 40%, rebounds z: 18%, assists z: 22%, TS z: 20%}. Z-scores require at least five games in the season. Player game data runs through 2024. Additional profiles may still lack playoff indices.
+冠军与总决赛的基础输入使用球队赛季归属，不保证球员实际参加每轮或总决赛。早期缺少防守和高级统计；原快照的一些累计项曾由求和或荣誉汇总生成 0，不能把这些 0 解读为该年代完整观测。当前页面忠实展开已发布输入，不补造历史数据。|Base championship and Finals inputs use team-season membership, not proof that a player appeared in every round or the Finals. Early defensive and advanced statistics are incomplete. Some original totals became zero through aggregation; those zeros do not establish complete historical observation. This page displays the published inputs without inventing missing history.
+计算来源：scripts/04_build_indicators.py · scripts/data_utils.py · data/processed/model_features_full.csv。公开基础来源为 Kaggle NBA/ABA/BAA 历史数据、NBA 官方荣誉与球队历史；季后赛来自留存逐场数据。具体档案出处可打开球员完整档案。|Calculation sources: scripts/04_build_indicators.py · scripts/data_utils.py · data/processed/model_features_full.csv. Public inputs use historical Kaggle NBA/ABA/BAA data, official NBA awards and team history, plus archived playoff game data. Open the full player profile for specific sources.
+查看最佳赛季的原始场均与时代调整结果|Inspect top seasons' raw averages and era adjustments
+TS 比率|TS ratio
+可用表现|Availability-adjusted performance
+该维度的全库排名|Full-library ranking for this dimension
+按当前有效维度指数排序，与用户设置的 β 系数无关；缺失档案列在末尾且不授予名次。只代表本库已收录球员，不是全球所有运动员的完整排名。|Sorted by the current effective dimension index, independent of your β coefficient. Missing values appear last without a rank. This covers recorded players in this library, not every player worldwide.
+搜索中文名 / 英文名 / 绰号|Search Chinese / English name / Nickname
+搜索该维度排名|Search this dimension's ranking
+维度指数|Dimension index
+没有匹配的球员。|No matching players.
+全库|Full library
+有此维度|With this dimension
+缺失|Missing
+比率|Ratio
+标准分|Standardized score
+对手|Opponent
+分钟|Minutes
+季|seasons
+胜|wins
+季后赛出场|Playoff appearances
+已收录 NBA / BAA、CBA 与 EuroLeague 档案；不是全球全部篮球运动员。跨联赛仅按已核实身份映射合并，未核实身份保留独立。不同联赛的统计口径与覆盖不相同，缺失资料不评分。|Recorded NBA/BAA, CBA and EuroLeague profiles; not every basketball player worldwide. Cross-league records merge only through verified identity links. Other identities remain separate. Definitions and coverage differ across leagues; missing data is not scored.
+全球球员 · 全部已收录档案|Global players · All recorded profiles
+正在载入跨联赛球员档案…|Loading cross-league player profiles…
+浏览全球球员 / 收藏|Browse global players / Favorites
+浏览全球已收录球员|Browse all recorded global players
+关闭球员库|Close Player Library
+搜索全部已收录球员|Search all recorded players
+跨联赛人数可重叠|League counts can overlap
+档案尚未载入|Profiles not loaded yet
+浏览器存储不可用，收藏仅本页有效。|Browser storage is unavailable; favorites last for this page only.
+已保存的自选名单继续作为收藏；全部档案均可检索。|Previous selections remain as favorites. Every recorded profile is searchable.
+全球球员档案载入失败，请稍后重试（HTTP|Global player profiles could not load. Try again later (HTTP
+所有已收录球员都可直接查看与比较；无可用评分数据者不参与得分排名。|All recorded players can be viewed and compared. Profiles without usable scoring data receive no score rank.
+没有匹配的已收录档案。试试其他姓名或清除筛选条件。|No matching recorded profiles. Try another name or clear the filters.
+正在载入全球球员档案…|Loading global player profiles…
+其他标签的收藏暂未载入；请打开球员库重试。|Favorites from another tab could not load. Open Player Library to retry.
+计算组成与排名|Calculation breakdown and ranking
+正在载入原始输入与固定参考分布…|Loading raw inputs and the fixed reference distribution…
+全球目录档案：部分指数可能未计算；可在高级模式使用有记录的原始统计。|Global-library profile: some indices may be uncalculated. Recorded raw statistics are available in advanced mode.
+已启用对手强度修正：下列七维指数使用修正后的值。对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。|Opponent adjustments are enabled: the seven indices below use adjusted values. This changes the analyst preset's original fitted result; disable it to inspect the base scores.
+对手强度修正已关闭：下列七维指数使用原始基础值。|Opponent adjustments are disabled: the seven indices below use their original values.
+点击侧栏维度可查原始组成、修正量与实际贡献。|Click a sidebar dimension to inspect its inputs, adjustment and actual contribution.
+排名实验室自动载入本库全部|The Ranking Lab automatically loads all\u0020
+位球员，包括 NBA / BAA、CBA 与 EuroLeague 已收录档案；不是全球所有篮球运动员的完整名单。可以按联赛和数据覆盖筛选。|recorded NBA/BAA, CBA and EuroLeague players. This is not a complete worldwide roster. Filter by league or data coverage.
+基础指标与参考分布|Base indices and reference distribution
+原始 300 人七维指数沿用已发布快照，采集标记为|The original 300-player indices follow the published snapshot, recorded on\u0020
+。扩展 NBA 档案使用同一原始定义和原 300 人固定百分位参照，新增球员不会改变基础分布。未计算的维度保持缺失，不能把不同联赛的资料缺口当作真实能力差距。点击任一维度可查看原始输入、权重、百分位和逐项贡献。|. Additional NBA profiles use the same definitions and fixed original 300-player percentile reference. Adding players does not change the base distribution. Uncalculated dimensions remain missing; differences in league coverage are not differences in ability. Click any dimension to inspect inputs, weights, percentiles and contributions.
+S = 50 + Σ β × (当前有效指数 − 50) ÷ 10 + 大众参考贡献。系数独立，分数不是百分比。缺失维度贡献为 0；全部启用项缺失时不评分。高级模式的原始统计、荣誉与协同模块是可选的用户规则，未纳入原评论员拟合。|S = 50 + Σ β × (current effective index − 50) ÷ 10 + consensus contribution. Coefficients are independent; scores are not percentages. Missing dimensions contribute zero; a player is unscored when all enabled inputs are missing. Advanced statistics, awards and interactions are optional user rules outside the original analyst fit.
+对手强度修正|Opponent-strength adjustment
+对手的同赛季场均表现和递归排名构成对手强度，按实际同场出场及分钟数汇总；冠军按已核实夺冠路径修正。排名由冻结资料计算，不随用户系数循环变化。修正只用于有基础指数和对手证据的维度，缺少资料时保留原始指数。|Opponent strength combines same-season averages and recursive rankings, aggregated using actual appearances and minutes. Championships use verified playoff paths. Rankings come from frozen data and do not feed back from user coefficients. Adjustments require both a base index and opponent evidence; missing evidence leaves the original index intact.
+对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。对手与球员季后赛逐场资料覆盖至 2024，其他资料以来源截止期为准；同场不代表直接防守对位，冠军球队归属不等于个人夺冠贡献。|Opponent adjustments change the analyst preset's original fitted result; disable them to inspect base scores. Opponent and player playoff game data runs through 2024; other fields follow their source cutoffs. Sharing a game does not establish direct defensive matchups; championship-team membership does not measure individual championship contribution.
+系数、模块、对手开关和收藏保存在本机浏览器。分享链接与 JSON 导出保留当前模型设置；不包含游戏进度。单杆建议和联合搜索只探索评分规则，不更改球员数据，也不保证某位球员能排名第一。|Coefficients, modules, the opponent toggle and favorites are saved in this browser. Share links and JSON exports preserve current model settings, excluding game progress. Slider suggestions and joint searches explore scoring rules without changing player data or guaranteeing any player first place.
+对手强度数据暂不可用，当前保留基础指数。|Opponent-strength data is unavailable; base indices are retained.
+全球目录暂不可用，当前先显示已载入球员。|The global library is unavailable; loaded players are shown for now.
+考虑对手强度|Consider opponent strength
+结合同时代对手表现、对手排名和夺冠路径，修正常规赛、季后赛与团队成就。点击维度查看原始组成和修正依据。|Use same-era opponent performance, opponent rankings and championship paths to adjust regular-season, playoff and team-achievement indices. Click a dimension to inspect its inputs and adjustment evidence.
+对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。|Opponent adjustments change the analyst preset's original fitted result; disable them to inspect base scores.
+对手强度依据球队和赛季层面的交锋背景；不是“谁直接防守谁”的个人对位效果。缺少证据的球员保留基础指数。|Opponent strength uses game and season context, not direct individual defensive matchups. Players without evidence retain their base indices.
+“较起点”对比未加对手修正的评论员 / 均衡基础模型。点击分数查看多维图，点击维度查看计算组成。|“Change” compares with the analyst/balanced base model before opponent adjustments. Click a score for charts or a dimension for its calculation.
+按联赛筛选|Filter by league
+按数据覆盖筛选|Filter by data coverage
+全球球员 · 已收录范围|Global players · Recorded coverage
+跨联赛档案 · 身份去重|Cross-league profiles · Verified identity merging
+筛选范围|Filter scope
+全部已收录|All recorded players
+我的收藏|My favorites
+全球已收录|Global recorded players:\u0020
+同一球员可能有多个联赛经历，各联赛人数不能直接相加。只有具备可用数据的维度参与评分；未收录的数据不会编造。原 A/B/C 入选路径保留供核查。|Players can have experience in multiple leagues, so league counts cannot be added directly. Only dimensions with usable data are scored; missing facts are not invented. Original A/B/C selection paths remain available for inspection.
+历史实际常规赛出场档案与现役阵容快照；评分数据依来源覆盖。|Historical regular-season appearance records and active-roster snapshots. Scoring depends on source coverage.
+已核实历史出场档案与国内球员注册快照；并非 CBA 全史完备名单。|Verified historical appearances and domestic-registration snapshots, not a complete all-time CBA roster.
+官方比赛资料中的已收录球员；目前仅覆盖部分球队。|Recorded players from official game data; only some teams are currently covered.
+生涯起止按已收录联赛的实际赛季记录展示，不等同于正式宣布出道或退役的年份；仅有注册或阵容资料时，赛季起止保持未知。身高体重为来源记录值，不代表实时测量。|Career dates use actual season records in the covered leagues, not formally announced debuts or retirements. Registration-only or roster-only profiles retain unknown season dates. Height and weight are recorded source values, not live measurements.
+尚未取得可比较的完整联赛荣誉记录，未知不代表 0。|Complete comparable league-award records are unavailable. Unknown does not mean zero.
+这是有来源的全球已收录档案，自动进入球员库与排名实验室，并非 A/B/C 原始入选者。|This sourced global profile automatically appears in the Library and Lab. It is outside the original A/B/C selection.
+可用指标按明确的数据覆盖与固定参照计算；未计算项保持缺失。仅有基础档案者不参与得分排名。数据覆盖：|Available indices use stated coverage and fixed references; uncalculated values remain missing. Basic profiles receive no score rank. Coverage:\u0020
+全球档案暂不可用，已保存收藏保留；先显示基础球员，可打开球员库重试。|Global profiles are unavailable. Saved favorites are retained and base players are shown; open Player Library to retry.
+NBA 官方档案：|Official NBA profile: \u0020
+（背景抽查）| (background spot check)
+仅抽查生日字段与本地快照一致；不是 300 人逐项官方核验|Only the birth date was spot-checked against the local snapshot; this is not official verification of every field for all 300 players
+NBA 官方：姚明由上海鲨鱼进入 NBA|Official NBA: Yao Ming's move from the Shanghai Sharks to the NBA
+schedule.csv季后赛赛程与逐场球员boxscore连接，核对所有赛程场次，排除DNP，去重实际出场赛季；截至2023–24。|Playoff games in schedule.csv are joined to player box scores. Scheduled games are checked, DNPs excluded and actual appearance seasons deduplicated through 2023–24.
+schedule.csv 的 Series=Finals 与逐场 boxscore 连接；排除DNP，按球员与赛季去重，非球队名单归属；截至2023–24。|Schedule rows with Series=Finals are joined to box scores. DNPs are excluded and player-seasons deduplicated through 2023–24; roster membership alone does not qualify.
+；2024–25与2025–26另用ESPN逐场记录补齐。| ESPN game records supplement 2024–25 and 2025–26.
+保留的官方历届获奖快照1955–56至2025–26，采用已匹配球员ID的awards.csv；不含FMVP。|Retained official MVP snapshots from 1955–56 through 2025–26 use awards.csv with matched player IDs. Finals MVP is excluded.
+FIBA：姚明上海最后一季的实际场均表现与2002年转入NBA|FIBA: Yao Ming's final Shanghai season averages and 2002 NBA move
+官方回顾明确上海最后一季场均表现及同年2002转入NBA，仅证明2001–02上海实际出场；不据1997–2002履历区间补齐其他赛季。|The official retrospective gives final-season Shanghai averages and the 2002 NBA move. It verifies only 2001–02 Shanghai appearances; other seasons are not inferred from the 1997–2002 career range.
+Player Career Info.csv基础事实；Player Totals.csv筛出实际NBA/BAA出场者；不是GOAT300精选。|Profile facts come from Player Career Info.csv; Player Totals.csv identifies actual NBA/BAA participants. This is not the selected 300-player GOAT sample.
+NBA全明星入选按球员/赛季去重，保留受伤被替换的入选者；不含ABA，不等于实际全明星出场次数。|NBA All-Star selections are deduplicated by player and season, retaining injured players who were replaced. ABA is excluded. Selections do not equal actual All-Star appearances.
+完整30队JSON：ROSTER_STATUS=1、HISTORIC=false、TEAM_ID>0；含训练营/双向/新人，不宣称常规赛15人正式名单或已出场。|JSON covers all 30 teams with ROSTER_STATUS=1, HISTORIC=false and TEAM_ID>0, including camp, two-way and rookie players. It does not establish a final 15-player roster or appearances.
+EuroLeague 官方：2025-26 首轮 BKN–OLY 比赛资料，PDF 第3–4页|Official EuroLeague: 2025–26 Round 1 BKN–OLY game notes, PDF pages 3–4
+只选两队18人，球队只代表该日登记，不代表完整履历或现效力球队。|A selection of 18 players from two teams. Team labels reflect that day's registrations, not complete careers or current teams.
+EuroLeague官方：霍华德2023–24得分王，巴斯克尼亚38场|Official EuroLeague: Howard's 2023–24 scoring title, 38 Baskonia games
+官方新闻明确2023–24巴斯克尼亚、38场与实际总得分；仅作实际出场证据，不当作完整生涯统计。|Official news confirms 38 Baskonia games and total points in 2023–24. This is appearance evidence, not complete career statistics.
+EuroLeague官方：2024–25季后赛OLY–RMB赛前统计|Official EuroLeague: 2024–25 playoff OLY–RMB pregame statistics
+第7页奥林匹亚科斯当季场均、投篮表现与第11页当季已完成比赛实际表现；只取赛季明确的正统计，不用注册名单或可能延续自受伤前的跨季连续表现。|Page 7 gives Olympiacos season averages and shooting; page 11 gives completed games that season. Only positive statistics tied to an explicit season qualify, not registrations or cross-season streaks that may predate injury.
+EuroLeague 官方：2025-26首轮BKN–OLY资料第11页历史比赛表现|Official EuroLeague: historical game performances on page 11 of the 2025–26 Round 1 BKN–OLY notes
+只取有年份、所属球队及球员实际得分/篮板/投篮表现的已发生比赛；另以第9页2024–25霍尔场均盖帽与第11页明确上季巴斯克尼亚归属交叉核实。第3–4页注册名单不作为出场证据。|Only completed games with a year, team and actual player scoring, rebounding or shooting qualify. Page 9's 2024–25 Hall block average is cross-checked with page 11's Baskonia history. Registrations on pages 3–4 are not appearance evidence.
+非官方公开统计表：仅采集 CBA个人历史数据 中场次大于0的赛季、球队、场次；不采用页面标题赛季、近期比赛与档案球队的推断连接，也不插值。|Unofficial public tables: only seasons, teams and positive game counts in individual CBA history are used. Page-heading seasons, recent games and profile teams are not joined by inference; no interpolation is used.
+显式逐人核对，不使用同姓模糊匹配。NBA ID、英文全名与出生日期来自本地 Player Career Info.csv；新浪完整生日另行读取公开个人档案。生日缺失或冲突时必须有独特姓名、球队履历与独立来源支持；冲突保留在说明中，不覆盖背景字段。|Identities are checked individually, never by surname-only fuzzy matching. NBA IDs, full English names and birth dates come from the local Player Career Info.csv; Sina birth dates come from public profiles. Missing or conflicting dates require a distinctive name, team history and independent sources. Conflicts remain in notes without overwriting background fields.
+新浪CBA球员公开档案：|Public Sina CBA profile: \u0020
+NBA/CBA身份履历交叉核验：|NBA/CBA identity and career cross-check: \u0020
+NBA历届冠军与原档案冠军赛季统计|NBA championship history and original-profile championship seasons
+NBA历届DPOY|NBA DPOY award history
+NBA历届FMVP|NBA Finals MVP award history
+NBA/BAA赛季球队记录与官方冠军名单匹配|NBA/BAA team-season records matched to official champions
+赛季CBA联赛国内球员注册信息| CBA domestic-player registration
+官网公开名单更新时间：|Official roster update: \u0020
+；注册和实际出场是两种独立证据。|; registrations and actual appearances are separate evidence.
+北京控股|Beijing Royal Fighters
+北京首钢|Beijing Ducks
+福建浔兴|Fujian Xunxing
+广东宏远|Guangdong Hongyuan
+广州龙狮|Guangzhou Loong Lions
+吉林东北虎|Jilin Northeast Tigers
+江苏肯帝亚|Jiangsu Dragons
+辽宁沈阳三生|Liaoning Flying Leopards
+南京同曦|Nanjing Tongxi
+宁波富邦|Ningbo Fubon
+青岛国信海天|Qingdao Guoxin Haitian
+山东山高|Shandong Hi-Speed
+山西汾酒|Shanxi Fenjiu
+上海久事|Shanghai Jiushi
+深圳新世纪|Shenzhen New Century
+四川锦城|Sichuan Jincheng
+天津荣钢|Tianjin Ronggang
+新疆广汇|Xinjiang Guanghui
+浙江稠州|Zhejiang Chouzhou
+浙江广厦|Zhejiang Guangsha
+直接搜索全球已收录球员，按联赛和资料覆盖筛选。履历、荣誉和来源都在档案里，收藏会与排名实验室同步。|Search recorded players across leagues and filter by league or data coverage. Profiles include careers, awards and sources; favorites sync with the Ranking Lab.
+输入中文名、英文名或球队，再按联赛、位置、年代和数据覆盖筛选。筛选只影响你看到的列表。|Enter a Chinese or English name or team, then filter by league, position, era and data coverage. Filters only change the displayed list.
+这里汇集不同联赛的已收录档案，按英文姓名排列。有人七维完整，有人只有基础履历；资料少不等于球技差。|Recorded profiles from multiple leagues are sorted by English name. Some have all seven dimensions; others only have basic profiles. Less data does not mean less ability.
+从熟悉的球星开始，也可以挑战现役、历史或跨联赛球员。现役按已核实的注册与阵容快照，历史按已收录的正式出场；具体名单与数据覆盖见下方说明。|Start with familiar stars or try active, historical and cross-league players. Active pools use verified registration and roster snapshots; historical pools use recorded official appearances. See the coverage notes below.
+雷达图展示当前有效七维指数（0–100），不是得分占比，不随系数变化。点击轴、名称或圆点查看原始组成、对手修正和排名；缺失项留空。|The radar shows current effective dimension indices (0–100), not shares of the score. Coefficient changes do not alter these indices. Click an axis, label or dot to inspect raw inputs, opponent adjustments and rankings. Missing values remain blank.
+已收录联赛|Recorded leagues
+统计口径|Statistical scope
+统计口径：未取得可比较的生涯统计。多联赛履历不代表数据已跨联赛合计。|Statistical scope: comparable career statistics are unavailable. A multi-league career does not imply that statistics have been combined across leagues.
+多联赛履历不代表数据已跨联赛合计。|A multi-league career does not imply that statistics have been combined across leagues.
+出生年份|Birth year
+七维数据画像，点击维度查看组成与排名|Seven-dimension profile; click a dimension for its inputs and ranking
+对手资料截至 2023–24，排除附加赛和 2023 年季中锦标赛决赛；覆盖率只针对已收录比赛，不代表整个生涯完整覆盖。|Opponent data runs through 2023–24, excluding play-ins and the 2023 In-Season Tournament final. Coverage refers to recorded games, not necessarily the full career.
+CBA、欧洲及尚未收录赛季不套用 NBA 对手系数。| NBA opponent factors are not applied to CBA, Europe or unrecorded seasons.
+七维完整|All seven dimensions
+部分评分数据|Partial scoring data
+仅基础档案|Basic profile only
+全部联赛|All leagues
+全部数据覆盖|All coverage levels
+只看我的收藏|My favorites only
+取消收藏|Remove from favorites
+收藏|Favorite
+已收录档案自动进入球员库与排名实验室。仅有基础档案者可以检索，缺失评分保持未知。当前覆盖 NBA / BAA、CBA 与 EuroLeague 的已核实来源，尚非全球完整名单。|All recorded profiles appear in the Library and Lab. Basic profiles are searchable, while missing scores remain unknown. Verified sources currently cover NBA/BAA, CBA and EuroLeague; this is not a complete worldwide roster.
 `.trim().split('\n').map(line=>{const i=line.indexOf('|');return [line.slice(0,i),line.slice(i+1)];})));

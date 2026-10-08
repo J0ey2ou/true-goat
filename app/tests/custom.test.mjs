@@ -17,12 +17,12 @@ test('complete claims retain scope, qualifiers, ties, counterexamples and missin
   const people=players.map((p,i)=>({...p,name:'Player '+i,chineseName:'球员'+i})),data={players:people,teams:{'NBA:A':'Team A'}};
   const rows=[row(0,'2020-01-01',40),row(1,'2020-01-01',40),row(2,'2020-01-02',31)];
   const result=evaluate(rows,{...q,mode:'highest'},people,0);
-  const claim=describeClaim(result,people[0],data);assert.match(claim.sentence,/2020–2021/);assert.match(claim.sentence,/得分 ≥ 30/);assert.match(claim.sentence,/并列第一名球员/);assert.match(claim.evidence,/40/);
-  assert.match(describeClaim(evaluate(rows,{...q,mode:'highest'},people,2),people[2],data).sentence,/排名第 3，不是第一/);
-  assert.match(describeClaim({...result,isolated:true},people[0],data).sentence,/不能据此认定/);
-  assert.match(describeClaim({...result,target:null},people[0],data).sentence,/没有符合条件/);
+  const claim=describeClaim(result,people[0],data);assert.match(claim.scope,/2020–2021/);assert.match(claim.scope,/得分 ≥ 30/);assert.match(claim.sentence,/并列第一/);assert.doesNotMatch(claim.sentence,/同时满足|第一名球员|筛选条件/);assert.match(claim.evidence,/40/);
+  assert.match(describeClaim(evaluate(rows,{...q,mode:'highest'},people,2),people[2],data).sentence,/排在第 3/);
+  assert.match(describeClaim({...result,isolated:true},people[0],data).sentence,/不能据此认定第一/);
+  assert.match(describeClaim({...result,target:null},people[0],data).sentence,/没查到.*符合条件/);
   const english=describeClaim(result,people[0],data,{language:'en',translate:s=>s==='得分'?'points':s});assert.match(english.sentence,/ties for first among 2/);assert.doesNotMatch(english.sentence,/[\u3400-\u9fff]/);
-  assert.match(describeClaim({...result,query:{...result.query,unit:'season'}},people[0],data).sentence,/赛季场均得分/);
+  assert.match(describeClaim({...result,query:{...result.query,unit:'season'}},people[0],data).scope,/赛季场均得分/);
 });
 test('reverse mode returns all matches and honors exclude unknown rather than treating it as zero',()=>{
   const people=Array.from({length:30},(_,i)=>({...players[0],id:String(i),honors:i===29?{}:{mvpCount:i%2}}));
@@ -30,6 +30,20 @@ test('reverse mode returns all matches and honors exclude unknown rather than tr
   a.add(people.map((_,i)=>row(i,'2020-01-01',30+i)));const result=a.finish(-1,{all:true});assert.equal(result.leaders.length,14);assert.equal(result.unknown,1);assert.equal(result.leaders[0].p,27);
   assert.throws(()=>validateQuery({...query,honors:[{key:'fake',op:'gte',value:1}]}));
   assert.throws(()=>validateQuery({...query,pool:'cba-history',unit:'season',phase:'all'}));
+});
+test('season claims read naturally in Chinese and English while keeping scope alongside',()=>{
+  const player={...players[0],name:'Michael Jordan',chineseName:'迈克尔·乔丹'};
+  const query={...q,unit:'season',from:1991,to:1991,mode:'highest'};
+  const result={query,target:{p:0,value:31.5,evidence:{date:'1991',values:{}}},eligible:3,unknown:2,rank:1,ties:1,first:true};
+  const data={players:[player],teams:{}};
+  const zh=describeClaim(result,player,data),en=describeClaim(result,player,data,{language:'en',translate:s=>s==='得分'?'points':s});
+  assert.match(zh.sentence,/场均拿到 31.5 分/);assert.match(en.sentence,/averaged 31.5 points/);
+  const first={...result,query:{...query,mode:'first'}};
+  assert.match(describeClaim(first,player,data).sentence,/1990–91赛季/);
+  assert.match(describeClaim(first,player,data,{language:'en',translate:s=>s==='得分'?'points':s}).sentence,/in the 1990–91 season/);
+  assert.match(zh.scope,/赛季结束年/);assert.match(zh.caveat,/2 条资料不全/);
+  const rounded=describeClaim({...result,target:{...result.target,value:31.54321}},player,data,{language:'en',translate:s=>s==='得分'?'points':s});
+  assert.match(rounded.sentence,/31.5 points/);assert.doesNotMatch(rounded.sentence,/31.54321/);assert.match(rounded.evidence,/31.54321/);
 });
 test('focused exploration preserves explicit constraints and honors',()=>{
   const query={...q,team:'NBA:A',college:'Locked',honors:[{key:'mvpCount',op:'gte',value:1}],metric:'assists'};

@@ -5,10 +5,13 @@ import { chromium, browserOptions } from './browser-runtime.mjs';
 const BASE_URL = (process.env.GOAT_BASE_URL || 'http://127.0.0.1:8765').replace(/\/$/, '');
 const screenshotPath = name => fileURLToPath(new URL(name, import.meta.url));
 import assert from 'node:assert/strict';
+import {mergeGlobalCatalog} from '../global-catalog.mjs';
+import {normalizeCatalog} from '../player-library.mjs';
+import {searchPlayers} from '../player-search.mjs';
 const browser = await chromium.launch(browserOptions);
 const context = await browser.newContext({viewport:{width:1440,height:1100}});
-await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh-CN'));
-await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
+await context.addInitScript(()=>{if(location.origin!=='null')localStorage.setItem('true-goat-language:v1','zh-CN');});
+await context.addInitScript(()=>{if(location.origin==='null')return;for(const page of ['lab','directory','guess'])localStorage.setItem('true-goat-onboarding-v2:'+page,JSON.stringify({version:2,page,seen:true}));});
 const page = await context.newPage();
 const errors=[]; const passed=[];
 page.on('pageerror',error=>errors.push(error.message));
@@ -18,11 +21,12 @@ try {
   await page.goto(BASE_URL + '/players');
   await page.locator('#directory-content').waitFor({state:'visible'});
   const data=await page.evaluate(async()=>await (await fetch('/data/player-directory.json')).json());
-  check('300 players loaded',await page.locator('#directory-total').textContent()==='300');
+  const catalog=normalizeCatalog(mergeGlobalCatalog(await (await fetch(BASE_URL+'/data/player-catalog.json')).json(),await (await fetch(BASE_URL+'/data/global-player-index.json')).json()));
+  check('all sourced global players loaded',Number(await page.locator('#directory-total').textContent())===catalog.players.length);
   check('25 rows first page',await page.locator('[data-player]').count()===25);
-  check('verified A/B/C counts',(await page.locator('#pool-cards strong').allTextContents()).map(x=>x.trim()).join(',')==='203 人,219 人,162 人');
+  check('verified league counts',(await page.locator('#pool-cards strong').allTextContents()).map(x=>Number(x.replace(/\D/g,''))).join(',')===Object.values(catalog.meta.leagues).join(','));
   await page.screenshot({path:screenshotPath('players-desktop.png')});
-  await page.locator('#directory-search').fill('乔丹');
+  await page.locator('#directory-search').fill('迈克尔·乔丹');
   check('Chinese search',await page.locator('[data-player]').count()===1);
   await page.locator('#directory-search').fill('Michael Jordan');
   check('English search',await page.locator('[data-player]').count()===1);
@@ -37,12 +41,15 @@ try {
   check('Escape closes',await page.locator('#player-dialog').evaluate(el=>!el.open));
   check('close clears detail URL',!new URL(page.url()).searchParams.has('player'));
   await page.locator('#clear-filters').click();
+  await page.locator('#filter-pool').selectOption('A');
   const seen=new Set();
-  for(let index=0;index<12;index++) {
+  const totalA=data.players.filter(player=>player.eligibility.pools.A).length;
+  const pagesA=Math.ceil(totalA/25);
+  for(let index=0;index<pagesA;index++) {
     for(const id of await page.locator('[data-player]').evaluateAll(rows=>rows.map(row=>row.dataset.player)))seen.add(id);
-    if(index<11)await page.locator('#directory-next').click();
+    if(index<pagesA-1)await page.locator('#directory-next').click();
   }
-  check('pagination covers all 300 once',seen.size===300 && await page.locator('#directory-next').isDisabled());
+  check('pagination covers a filtered source cohort once',seen.size===totalA && await page.locator('#directory-next').isDisabled());
   await page.locator('#clear-filters').click();
   await page.locator('#filter-pool').selectOption('A');
   check('A filter count',(await page.locator('#directory-count').textContent()).startsWith('203 /'));
@@ -54,7 +61,7 @@ try {
   check('empty-state stable',await page.locator('.dir-empty').count()===1 && await page.locator('#directory-next').isDisabled());
   await page.locator('#clear-filters').click();
   await page.locator('#directory-search').fill('BOS');
-  const bos=data.players.filter(p=>(p.name+' '+p.id+' '+p.teams.map(t=>t.code+' '+t.name).join(' ')).toLowerCase().includes('bos')).length;
+  const bos=searchPlayers(catalog.players,'BOS',{includeTeams:true}).length;
   check('team search',(await page.locator('#directory-count').textContent()).startsWith(bos+' /'));
   await page.goto(BASE_URL + '/players?player=chambwi01');
   await page.locator('#player-dialog[open]').waitFor();
@@ -73,11 +80,11 @@ try {
   await page.locator('#directory-search').fill('Gilgeous');
   await page.locator('[data-player]').click();
   check('mobile long-name detail no horizontal overflow',await page.locator('#player-dialog').evaluate(el=>el.scrollWidth<=el.clientWidth+1) && await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-  check('mobile correct selected player',(await page.locator('#player-dialog-title').textContent()).includes('Gilgeous'));
+  check('mobile correct selected player',new URL(page.url()).searchParams.get('player')==='gilgesh01');
   await page.keyboard.press('Escape');
   await page.locator('#clear-filters').click();
   await page.locator('#directory-search').fill('LeBron');
-  await page.locator('[data-player]').click();
+  await page.locator('[data-player="jamesle01"]').click();
   check('missing college explicit',(await page.locator('.dir-fact').filter({has:page.locator('dt').filter({hasText:'学院 / 大学'})}).locator('dd').textContent()).includes('未收录'));
   check('zero page and console errors',errors.length===0);
   console.log(JSON.stringify({passed:passed.length,checks:passed,errors},null,2));

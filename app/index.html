@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/onboarding.css">
   <link rel="stylesheet" href="/welcome.css">
   <link rel="stylesheet" href="/modules.css">
+  <link rel="stylesheet" href="/dimension-details.css">
   <link rel="stylesheet" href="/themes.css">
   <link rel="stylesheet" href="/player-library.css">
   <link rel="stylesheet" href="/i18n.css">
@@ -22,13 +23,13 @@
 <body class="lab-page">
   <header class="topbar">
     <a class="brand" href="/" aria-label="True GOAT 首页"><span class="brand-mark">G.</span> TRUE GOAT <span class="brand-divider">/</span> <span class="brand-cn">真正的山羊</span></a>
-    <nav class="page-nav" aria-label="主导航"><a href="/" aria-current="page">排名实验室</a><a href="/players">球员库 <span>300</span></a><a href="/guess">猜球员</a><a href="/guess#online-panel">账号 / 对战</a></nav>
+    <nav class="page-nav" aria-label="主导航"><a href="/" aria-current="page">排名实验室</a><a href="/players">球员库 <span>—</span></a><a href="/guess">猜球员</a><a href="/guess#online-panel">账号 / 对战</a></nav>
     <div class="top-actions"><button id="open-model" class="button outline" disabled>查看我的模型 <span>↗</span></button></div>
   </header>
   <main>
     <section class="hero">
       <div><div class="eyebrow">THE GREATEST IS A MATTER OF VALUES</div><h1>GOAT，由你定义<span>。</span></h1><p>同一份数据，不同的篮球价值观。独立调整每项系数，看看历史如何重新排序。</p></div>
-      <div class="hero-aside"><span class="hero-number">300</span><span>位球员 · 7 个维度<br>没有预设的正确答案</span></div>
+      <div class="hero-aside"><span class="hero-number">—</span><span>位球员 · 7 个维度<br>没有预设的正确答案</span></div>
     </section>
     <section class="welcome-strip" aria-label="新手入门"><div class="welcome-copy"><span class="welcome-icon" aria-hidden="true">↗</span><div><strong>第一次来？从一个小实验开始。</strong><p>选一种观点 → 拉动一个系数 → 看看谁的排名变了。</p></div></div><div class="welcome-actions"><button type="button" data-open-guide>动画导览 <span aria-hidden="true">▷</span></button><button type="button" data-open-tour>带我上手 <span aria-hidden="true">→</span></button></div></section>
     <section class="formula-band" aria-label="加性模型速览"><span class="formula-tag">加性模型 04</span><div><strong>50 + 常规赛贡献 + 巅峰贡献 + … + 大众参考贡献</strong><p>系数独立，不合计为 100%；每一分都可以逐项追溯。</p></div><button id="formula-help" class="text-button">怎么计算？ ↗</button></section>
@@ -45,19 +46,22 @@
         <div class="section-heading"><span class="step">02</span><h2>调出你的价值观</h2><button id="reset" class="text-button reset">重置</button></div>
         <p class="hint">每项系数独立，调整它不会改变其他项。系数 1 表示该维度每高出基准 10 分，总分加 1 分。</p>
         <div class="advanced-switch"><label for="advanced-enabled"><input id="advanced-enabled" type="checkbox">高级模式 · 自选评价模块</label><p class="hint">保留基础加性模型，也可以自由组合原始统计、荣誉积分与协同项。默认关闭。</p></div>
+        <div class="opponent-model-control"><label for="opponent-enabled"><input id="opponent-enabled" type="checkbox" checked>考虑对手强度</label><p>结合同时代对手表现、对手排名和夺冠路径，修正常规赛、季后赛与团队成就。点击维度查看原始组成和修正依据。</p><p>对手修正会改变评论员起点的原拟合结果；关闭可查看原始评分。</p></div>
         <div id="sliders"></div>
         <section id="module-builder" hidden aria-label="自定义评价模块"><p class="module-intro">勾选要放进模型的模块，再调整独立系数。模块不互相挤占权重；取消七维模块只在高级模式生效，退出后恢复原基础系数。</p><p class="module-intro">以下基准和步长是透明的产品约定，不是联盟官方标准、样本均值或拟合结论。原始统计不含时代校正。MVP 始于 1955–56、FMVP 始于 1969、DPOY 始于 1982–83；早期球员没有同等奖项机会，零次数不表示同等竞争下能力为零。</p><div id="module-count" class="module-count" aria-live="polite"></div><div id="module-cards"></div><div id="module-warnings" class="module-warnings" hidden></div></section>
         <div class="anchor-box"><div class="prior-label"><label for="prior-coef"><span class="coef-symbol">γ</span> 大众参考系数</label><input id="prior-number" class="coef-number" type="number" min="0" max="10" step="0.001" value="0" aria-label="大众参考系数数值"></div><input id="prior-coef" type="range" min="0" max="10" step="0.01" value="0"><p>独立加上 γ ×（大众指数 − 50）÷ 10。设为 0 则不启用；未入榜者中性处理。</p></div>
-        <p class="hint">交锋数据可行性：同场对手双方的技术统计可以单独构建；当前档案不支持“谁直接防守谁”的真实攻防对位，因此尚未作为评分模块开放。</p>
+        <p class="hint">对手强度依据球队和赛季层面的交锋背景；不是“谁直接防守谁”的个人对位效果。缺少证据的球员保留基础指数。</p>
         <div class="control-footer"><span id="model-state">评论员拟合起点</span><button id="share" class="text-button">复制模型链接 ↗</button></div>
       </aside>
       <section class="ranking panel" aria-labelledby="ranking-title">
         <div class="ranking-head"><div><div class="eyebrow">YOUR ALL-TIME LIST</div><h2 id="ranking-title">你的历史排名</h2></div><span class="live-badge"><i></i> 实时计算</span></div>
         <div id="podium" class="podium"></div>
-        <p id="baseline-note" class="model-baseline-note">“较起点”始终对比评论员 / 均衡基础七维模型。点击分数查看多维图与实际贡献。</p>
+        <p id="baseline-note" class="model-baseline-note">“较起点”对比未加对手修正的评论员 / 均衡基础模型。点击分数查看多维图，点击维度查看计算组成。</p>
         <div class="list-toolbar"><label class="search-field"><span>⌕</span><input id="search" type="search" placeholder="搜索球员 / 中文名" aria-label="搜索排行榜"></label><span id="result-count">前 20 位</span></div>
+        <div class="lab-roster-filters"><select id="rank-league" aria-label="按联赛筛选"></select><select id="rank-coverage" aria-label="按数据覆盖筛选"></select></div>
         <div class="table-wrap"><table class="ranking-table"><colgroup><col class="rank-col"><col class="name-col"><col class="score-col"><col class="change-col"></colgroup><thead><tr><th scope="col">排名</th><th scope="col">球员</th><th scope="col">模型分</th><th scope="col">较起点</th></tr></thead><tbody id="rank-rows"></tbody></table></div>
-        <button id="show-all" class="show-all">展开全部 300 位球员 ↓</button>
+        <button id="show-all" class="show-all">每页显示 50 位 ↓</button>
+        <div class="lab-rank-pagination"><button id="rank-prev" class="text-button" type="button">上一页</button><span id="rank-page"></span><button id="rank-next" class="text-button" type="button">下一页</button></div>
         <p class="table-note">显示值已舍入，排序使用完整精度；模型分不是百分制，可超过 100。</p>
       </section>
       <aside class="insights">

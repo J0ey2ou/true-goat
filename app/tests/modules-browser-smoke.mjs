@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { chromium,browserOptions } from './browser-runtime.mjs';
 import { DIMENSIONS,rankPlayers } from '../model.mjs';
 import { MODULES,rankWithModules } from '../modules.mjs';
+import {loadLabFixture} from './lab-fixture.mjs';
 const base=process.env.GOAT_TEST_URL||'http://127.0.0.1:8765';
 const browser=await chromium.launch(browserOptions);
 const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
@@ -10,12 +11,10 @@ await context.addInitScript(()=>localStorage.setItem('true-goat-language:v1','zh
 await context.addInitScript(()=>localStorage.setItem('true-goat-onboarding-v2:lab',JSON.stringify({version:2,page:'lab',seen:true})));
 const page=await context.newPage(),errors=[],results=[];
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
-const payload=await(await fetch(base+'/data/players.json')).json();
-const profiles=await(await fetch(base+'/data/player-directory.json')).json();
-const directory=new Map(profiles.players.map(p=>[p.id,p]));
+const fixture=await loadLabFixture(base),directory=fixture.directory;
 const ready=()=>page.locator('#workspace').waitFor({state:'visible'});
 const state=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('true-goat-v04')));
-const expected=s=>rankWithModules(payload.players,s.coefficients,s.priorCoefficient,s.advanced,directory);
+const expected=s=>rankWithModules(fixture.players(s),s.coefficients,s.priorCoefficient,s.advanced,directory);
 const range=async(id,value)=>page.locator('#'+id).evaluate((e,v)=>{e.value=v;e.dispatchEvent(new Event('input',{bubbles:true}));},String(value));
 async function test(name,fn){try{await fn();results.push({name,passed:true});console.log('PASS '+name);}catch(e){results.push({name,passed:false,error:e.stack});console.error('FAIL '+name+': '+e.message);}}
 async function matchesRanking(){const s=await state(),rows=expected(s);assert.equal(await page.locator('#rank-rows tr').first().getAttribute('data-player'),rows[0].player_id);assert.equal(await page.locator('#rank-rows .numeric').first().innerText(),rows[0].score.toFixed(2));}
@@ -58,7 +57,7 @@ try{
   });
   await test('turn advanced off returns exact saved basic formula without deleting module choices',async()=>{
     const before=await state();await page.uncheck('#advanced-enabled');const after=await state();assert.deepEqual(after.coefficients,before.coefficients);assert.deepEqual(after.advanced.modules,before.advanced.modules);
-    const rows=rankPlayers(payload.players,after.coefficients,after.priorCoefficient);assert.equal(await page.locator('#rank-rows .numeric').first().innerText(),rows[0].score.toFixed(2));assert.equal(await page.locator('#find-weights').isDisabled(),false);
+    const rows=rankPlayers(fixture.players(after),after.coefficients,after.priorCoefficient);assert.equal(await page.locator('#rank-rows .numeric').first().innerText(),rows[0].score.toFixed(2));assert.equal(await page.locator('#find-weights').isDisabled(),false);
     await page.check('#advanced-enabled');await matchesRanking();
   });
   await test('mobile advanced controls and both chart dialogs have no horizontal page overflow',async()=>{

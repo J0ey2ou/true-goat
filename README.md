@@ -27,13 +27,13 @@ True GOAT 是一个可以亲手调整的篮球排名实验室，也有球员资�
 
 目前提供 Stephen A. Smith、Kendrick Perkins、Skip Bayless、Nick Wright、Chris Broussard、Shannon Sharpe 六个有出处的历史观点。日期与适用范围单独展示；Nick Wright 的样本只是“近 50 年”榜单前五。模型近似这些已知排序，不声称还原评论员心中的真实公式。
 
-### 300 人是默认名单，不是上限
+### 全球球员库：先看覆盖，再谈排名
 
-[球员库](https://j0ey2ou.github.io/true-goat/players.html)展示入选理由、背景、球队经历、统计、荣誉和来源。默认 300 人来自荣誉、数据表现与外部讨论等候选入口的去重并集，并非预先指定的历史前 300 名。
+[球员库](https://j0ey2ou.github.io/true-goat/players.html)与排名实验室默认载入全部 **6,717** 份已收录档案，可按联赛、数据覆盖、中文名、英文名和绰号检索，并分页浏览。NBA / BAA、CBA 和 EuroLeague 按已核实身份去重；这是全球联赛目录的现有覆盖，不是全球所有篮球运动员的完备名单。
 
-实验室和球员库都有“添加球员”入口，可以从扩展 NBA 目录加入自己关心的人，两页共用你的自选名单。默认球员保留；自选球员可以移除。添加操作只影响自己的浏览器，不修改公共数据库。
+原 300 人保留原有七维基础指标及缺失状态，扩展 NBA 球员沿用固定参考标准；没有可比资料的国际球员保留档案，缺失指数不变成零或虚构评分。原来的自选名单继续作为浏览器内收藏，取消收藏不再将球员移出全库。
 
-新增球员沿用固定参考标准，不会因你加人而重新计算原有 300 人的指数。资料不足的维度会明确缺失；尚无实际比赛记录的新人不会获得虚构的生涯评级。当前新增历史球员可计算六个基础维度，季后赛维度尚未扩展，不能把部分覆盖当成完整七维评价。
+点击侧栏维度名称、说明、雷达图轴或数值表，可打开该维度的原始组成、固定参考百分位、权重、逐项贡献、计算公式与全库维度排名。排名支持搜索和分页。原始指数、对手调整后指数和本次模型贡献分别列出；不能把部分覆盖当成完整七维评价。
 
 ### 猜球员：按熟悉程度选择范围
 
@@ -107,13 +107,13 @@ The project separates **what a player did** from **how much you value it**. Publ
 
 Six sourced historical viewpoints are available: Stephen A. Smith, Kendrick Perkins, Skip Bayless, Nick Wright, Chris Broussard and Shannon Sharpe. Dates and scope are explicit; Nick Wright's sample is only the top five of a “last 50 years” list. The fitted models approximate known ordering constraints, not the commentators' undisclosed personal formulas.
 
-### 300 is the default, not a limit
+### A global directory with explicit coverage
 
-The [player directory](https://j0ey2ou.github.io/true-goat/players.html) explains selection, biographies, teams, statistics, honors and sources. The default 300 are the deduplicated union of honors, statistical and public-discussion candidate pools—not a predetermined all-time top 300.
+The [player directory](https://j0ey2ou.github.io/true-goat/players.html) and ranking lab load all **6,717** collected profiles by default. Search names and aliases, filter leagues and scoring coverage, and browse paginated results. Verified NBA / BAA, CBA and EuroLeague identities are deduplicated; this is the available global coverage, not a complete census of every basketball player.
 
-Both the lab and directory let you add players from an expanded NBA catalog. They share your custom roster; the default players remain, and custom additions can be removed. Your selection changes only your browser, not the public database.
+The original 300 retain their existing base indices, including any missing dimensions. Extended NBA profiles use frozen reference standards. International profiles without comparable inputs remain searchable without invented ratings. Previous custom selections become browser-local favorites; removing a favorite no longer removes the player from the directory.
 
-New players use frozen reference standards. Adding someone never recalculates the original 300 players' indices. Missing dimensions stay explicit, and newcomers without verified playing records do not receive invented career ratings. Six base dimensions are currently available for newly added historical players; their playoff dimension is not yet extended, so partial coverage must not be mistaken for a complete seven-dimensional assessment.
+Click a sidebar dimension, description, radar axis or index table to inspect its raw inputs, frozen percentiles, weights, component contributions, formulas and searchable dimension rankings. The base index, opposition-adjusted index and current model contribution appear separately. Partial data coverage is not a complete seven-dimensional assessment.
 
 ### Guess players at your own level
 
@@ -181,6 +181,14 @@ The lab, directory and single-player game need no login. Models, custom rosters,
 
 The seven dimensions are regular season, peak, longevity, playoffs, awards, defense and team success. Independent coefficients range from 0 to 10; an index of 80 with coefficient 2 adds 6 points. Scores are not percentages and may exceed 100 or fall below zero. Public consensus P is another additive term, not a Bayesian posterior.
 
+对手含金量默认开启，可关闭比较并保存/分享设置。依据 1947–2024 逐场实际出场和同季常规赛数据，为 4,895 名球员建立对手背景。个人同季基础实力 B 使用得分、助攻、篮板和 TS% 的百分位，权重为 50%、20%、15%、15%；缺失子项折算，少量出场向中性收缩。R = 0.8B + 0.2×实际对手平均 R，迭代收敛；对手 Q 则等权结合得分百分位与 R 排名百分位。比赛内按对手实际分钟加权，缺分钟时等权。以同赛季常规赛对手均值为基准，常规赛/季后赛指数调整为 8×强度差÷50×覆盖率，限制在 ±8；最终指数限制在 0–100。
+
+夺冠路径只使用该球员为已核实冠军球队实际参加的季后赛。每季冠军系数为 clip(1 + 0.5×路径强度差÷100×覆盖率, 0.75, 1.25)，团队指数调整为 clip(4×Σ(系数−1), −8, 8)。这些权重是可检查的模型约定，并非官方标准或个人夺冠贡献。缺少对手资料的联赛/赛季保留原分，不伪造直接防守对位；对手排名不随用户 GOAT 系数循环变化。对手调整会改变评论员原拟合结果，关闭可恢复基础评分。
+
+Opponent context is enabled by default and can be disabled, saved and shared. It covers 4,895 players using recorded appearances in 1947–2024. Same-season performance percentiles form B, and the contraction R = 0.8B + 0.2×opponents' mean R gives stable contemporaneous rankings. Opponent quality combines scoring and R-rank percentiles. Actual opponent minutes weight each game, with equal weights when minutes are unavailable. Regular-season/playoff indices receive bounded, coverage-weighted adjustments relative to their own season's opposition baseline. Verified championship paths also adjust team-success indices. The visible formulas are modeling choices; missing leagues or seasons remain unadjusted. These are same-game opponents, not identified individual defenders. Turning context off restores the base scores and original commentator fit.
+
+“定制数据”提供按球员找亮点和按条件查表现两条路线，结果主句使用自然篮球表述；比较范围、并列、证据和缺失说明仍保留。中文姓名采用已有审校映射；没有可靠译名时保留原文并提示，避免凭空音译。
+
 高级模式可移除基础项，并添加 13 个原始统计、荣誉及协同模块。标准见 [app/modules.mjs](app/modules.mjs)；荣誉综合积分的内部配方固定，产品约定不是官方标准。协同只乘两项高于中性基准的非负部分。重叠信息会提示重复强调。
 
 Advanced mode can remove base dimensions and add 13 statistical, honors and interaction modules. Definitions live in [app/modules.mjs](app/modules.mjs). The honors composite uses fixed inner weights: product conventions, not official standards. Interactions multiply only positive excesses above neutral baselines. Overlapping information is flagged.
@@ -240,6 +248,10 @@ python scripts/17_build_guess_pool_variants.py --catalog
 python scripts/18_build_cba_pool_variants.py
 python scripts/19_integrate_player_library.py
 python scripts/20_refresh_guess_metrics.py
+node scripts/23_build_global_player_index.mjs
+python scripts/23_build_opponent_context.py
+python scripts/32_build_dimension_audit.py
+node scripts/38_build_player_name_data.mjs
 # Add --refresh to refresh public 2025/2026 postseason box scores before rebuilding.
 ```
 

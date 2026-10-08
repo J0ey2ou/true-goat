@@ -34,7 +34,7 @@ const PAGE_INTROS = {
   },
   directory: {
     label: '球员库 / 看懂排名背后', title: '先认识球员，再比较伟大。',
-    description: '从默认 300 位候选开始，查看履历、荣誉与来源；也可点击「添加球员」扩展自己的名单，与排名实验室同步。',
+    description: '直接搜索全球已收录球员，按联赛和资料覆盖筛选。履历、荣誉和来源都在档案里，收藏会与排名实验室同步。',
     takeaway: '入选不等于高排名；不同年份与统计口径，会在档案中说明。', demo: 'directory',
   },
   guess: {
@@ -59,8 +59,8 @@ const PAGE_TOURS = {
     page: 'directory', startLabel: '浏览球员档案 →',
     ready: '#directory-content', label: '球员库', primary: '#directory-search',
     steps: [
-      { title: '从一个熟悉的名字开始。', description: '输入中文名、英文名或球队，再按位置、主要年代与入选路径筛选。筛选只影响列表，不改变实验室的候选池。', target: '#directory-search', targetLabel: '姓名与球队搜索', tip: '试试乔丹、Curry 或 BOS；也可以随时清除筛选。' },
-      { title: '这份名单，不是实力榜。', description: '列表按英文姓名排列，展示生涯赛季、位置、年代与入选路径。荣誉、数据、共识三个入口允许重合，人数不能简单相加。', target: '#directory-list', targetLabel: '球员列表', tip: '浏览列表或翻页，找到想进一步了解的球员。' },
+      { title: '从一个熟悉的名字开始。', description: '输入中文名、英文名或球队，再按联赛、位置、年代和数据覆盖筛选。筛选只影响你看到的列表。', target: '#directory-search', targetLabel: '姓名与球队搜索', tip: '试试乔丹、Curry 或 BOS；也可以随时清除筛选。' },
+      { title: '这份名单，不是实力榜。', description: '这里汇集不同联赛的已收录档案，按英文姓名排列。有人七维完整，有人只有基础履历；资料少不等于球技差。', target: '#directory-list', targetLabel: '球员列表', tip: '浏览列表或翻页，找到想进一步了解的球员。' },
       { title: '打开档案，把结论对照数据。', description: '点击任意球员可以查看履历、统计、荣誉和数据覆盖情况。档案中还可以跳到实验室，为这位球员调整你的评级模型。', target: '#directory-list .dir-player-row', fallback: '#directory-list', targetLabel: '第一条球员档案入口', tip: '本导览只定位入口，不替你打开档案或修改筛选。' },
     ],
   },

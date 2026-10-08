@@ -1,5 +1,7 @@
 import { createPlayerLibrary, mergeSelectedPlayers } from './player-library.mjs';
 import { searchPlayers } from './player-search.mjs';
+import { playerLeagues, playerCoverage, leagueLabels, coverageLabels } from './global-catalog.mjs';
+import { decoratePlayerIdentity, playerNameNote } from './player-localization.mjs';
 const $ = id => document.getElementById(id);
 const PAGE_SIZE = 25;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
@@ -17,15 +19,17 @@ const chinese = {
   malonka01:'卡尔·马龙',stockjo01:'约翰·斯托克顿',wadedw01:'德维恩·韦德',robinda01:'大卫·罗宾逊'
 };
 const knownAliases = {johnsma02:['魔术师'],antetgi01:['字母哥'],onealsh01:['大鲨鱼'],chambwi01:['张大帅'],olajuha01:['大梦']};
-import { registerNames } from './i18n.mjs';
+import { registerNames, getLanguage } from './i18n.mjs';
 const displayName = player => player.chineseName || chinese[player.id] || player.name;
 const seasonRange = player => [player.firstSeason,player.lastSeason].filter(has).filter((value,index,all) => all.indexOf(value) === index).join(' — ') || '赛季未收录';
 const poolIds = player => ['A','B','C'].filter(id => player.eligibility?.pools?.[id]);
 const positionLabels = {PG:'控球后卫',SG:'得分后卫',SF:'小前锋',PF:'大前锋',C:'中锋',G:'后卫',F:'前锋','G-F':'后卫 / 前锋','F-G':'前锋 / 后卫','C-F':'中锋 / 前锋','F-C':'前锋 / 中锋'};
 let directory, players = [], basePlayers = [], library, page = 1, directoryReady = false;
-const decoratePlayer=player=>({...player,chineseName:player.chineseName || chinese[player.id],aliases:[...list(player.aliases),...list(knownAliases[player.id])],teams:list(player.teams).map(team=>({...team,abbreviation:team.abbreviation || team.code})),searchText:normalize([player.name,player.chineseName,chinese[player.id],player.id,...list(player.aliases),...list(knownAliases[player.id]),...list(player.teams).flatMap(team => [team.code,team.name])].filter(has).join(' '))});
-function applySelection({profiles}) {
-  players=mergeSelectedPlayers(basePlayers,profiles.map(decoratePlayer)).sort((a,b)=>String(a.name).localeCompare(String(b.name),'en'));
+const decoratePlayer=player=>decoratePlayerIdentity({...player,chineseName:player.chineseName || chinese[player.id],aliases:[...list(player.aliases),...list(knownAliases[player.id])],teams:list(player.teams).map(team=>({...team,abbreviation:team.abbreviation || team.code})),searchText:normalize([player.name,player.chineseName,chinese[player.id],player.id,...list(player.aliases),...list(knownAliases[player.id]),...list(player.teams).flatMap(team => [team.code,team.name])].filter(has).join(' '))});
+function applySelection({profiles,catalog}) {
+  const byId=new Map(catalog.players.map(player=>[player.id,player]));
+  const originals=basePlayers.map(player=>{const extra=byId.get(player.id);return decoratePlayer({...player,chineseName:extra?.chineseName||player.chineseName,englishName:extra?.englishName||player.englishName,aliases:[...list(player.aliases),...list(extra?.aliases)],leagues:extra?.leagues||['NBA'],dataCoverage:extra?.dataCoverage||'partial',statScope:'NBA / BAA',teams:extra?.teams||player.teams,background:{...extra?.background,...Object.fromEntries(Object.entries(player.background||{}).filter(([,value])=>has(value)))},coverage:{...player.coverage,sources:[...new Set([...list(player.coverage?.sources),...list(extra?.coverage?.sources)])]}});});
+  players=mergeSelectedPlayers(originals,profiles.map(decoratePlayer)).sort((a,b)=>String(a.name).localeCompare(String(b.name),'en'));
   if(directoryReady){refreshFilterOptions();renderMethod();renderList();const id=new URL(location.href).searchParams.get('player');if(id&&$('player-dialog').open)showPlayer(id);}
 }
 
@@ -35,16 +39,16 @@ function safeLink(url) {
 }
 
 function renderMethod() {
-  const meta = directory.meta || {};
+  const meta = library.catalog()?.meta || directory.meta || {};
   $('directory-total').textContent = players.length;
-  const customCount=players.filter(p=>p.customPlayer).length;
-  $('pool-heading').textContent = customCount ? `默认 ${basePlayers.length} 位 + 你添加的 ${customCount} 位` : `为什么是这 ${players.length} 位？`;
-  $('directory-method').textContent = (meta.note || '')+(customCount?' 用户添加的档案来自扩展库，不代表通过 A/B/C 入选规则；添加不修改默认样本的指数。':' 这些是默认样本，可通过上方入口加入其他有据可查的球员。');
-  document.querySelector('.dir-overlap-note').textContent=customCount?'默认三池 + 用户自选':'三个入口 · 去重合并';
-  $('pool-overlap').textContent='同一位默认球员可以属于多个候选池，各池人数不可直接相加。'+(customCount?'用户添加 '+customCount+' 人单独标记，不计入 A/B/C。':'')+'入选不等于上榜，也不保证高分。';
-  $('pool-cards').innerHTML = list(directory.pools).map(pool => {
-    const count = players.filter(player => player.eligibility?.pools?.[pool.id]).length;
-    return `<article class="dir-pool-card"><header><span class="dir-pool-letter">${esc(pool.id)}</span><h3>${esc(pool.name)}</h3><strong>${number(count)}<span class="sr-only"> 人</span></strong></header><p>${esc(pool.description)}</p>${list(pool.rules).length ? `<details><summary>查看筛选规则</summary><ul>${pool.rules.map(rule => `<li>${esc(rule)}</li>`).join('')}</ul></details>` : ''}</article>`;
+  $('pool-heading').textContent = `全球已收录 ${players.length} 位球员`;
+  $('directory-method').textContent = meta.note || '跨联赛档案持续扩展；未收录不等于没有该球员，缺失数据不代表 0。';
+  document.querySelector('.dir-overlap-note').textContent='跨联赛档案 · 身份去重';
+  $('pool-overlap').textContent='同一球员可能有多个联赛经历，各联赛人数不能直接相加。只有具备可用数据的维度参与评分；未收录的数据不会编造。原 A/B/C 入选路径保留供核查。';
+  $('pool-cards').innerHTML = Object.entries(leagueLabels).map(([id,label]) => {
+    const count = players.filter(player => playerLeagues(player).includes(id)).length;
+    const description={NBA:'历史实际常规赛出场档案与现役阵容快照；评分数据依来源覆盖。',CBA:'已核实历史出场档案与国内球员注册快照；并非 CBA 全史完备名单。',EuroLeague:'官方比赛资料中的已收录球员；目前仅覆盖部分球队。'}[id];
+    return `<article class="dir-pool-card"><header><h3>${esc(label)}</h3><strong>${number(count)}<span class="sr-only"> 人</span></strong></header><p>${esc(description)}</p></article>`;
   }).join('');
   const through = [];
   if (has(meta.regularSeasonThrough)) through.push(`常规赛截至 ${meta.regularSeasonThrough}`);
@@ -65,7 +69,7 @@ function setupFilters() {
   refreshFilterOptions();
   $('directory-filters').addEventListener('submit', event => event.preventDefault());
   $('directory-search').addEventListener('input', () => { page = 1; renderList(); });
-  for (const id of ['filter-position','filter-era','filter-pool']) $(id).addEventListener('change', () => { page = 1; renderList(); });
+  for (const id of ['filter-position','filter-era','filter-pool','filter-league','filter-coverage']) $(id).addEventListener('change', () => { page = 1; renderList(); });
   $('clear-filters').addEventListener('click', () => { $('directory-filters').reset(); page = 1; renderList(); $('directory-search').focus(); });
   $('directory-prev').addEventListener('click', () => { page -= 1; renderList(); scrollToList(); });
   $('directory-next').addEventListener('click', () => { page += 1; renderList(); scrollToList(); });
@@ -85,7 +89,9 @@ function filteredPlayers() {
   const position = $('filter-position').value, era = $('filter-era').value, pool = $('filter-pool').value;
   return players.filter(player => (!position || player.position === position)
     && (!era || String(player.era) === era)
-    && (!pool || (pool==='custom'?player.customPlayer:player.eligibility?.pools?.[pool]))
+    && (!pool || (pool==='custom'?library.isFavorite(player.id):player.eligibility?.pools?.[pool]))
+    && (!$('filter-league').value || playerLeagues(player).includes($('filter-league').value))
+    && (!$('filter-coverage').value || playerCoverage(player)===$('filter-coverage').value)
     && matching.has(player.id));
 }
 
@@ -100,7 +106,7 @@ function renderList() {
     <span class="dir-player-meta dir-career" data-label="赛季">${esc(seasonRange(player))}</span>
     <span class="dir-player-meta dir-position" data-label="位置">${esc(player.position || '—')}</span>
     <span class="dir-player-meta dir-era" data-label="年代">${esc(player.era || '—')}</span>
-    <span class="dir-pool-tags" aria-label="${player.customPlayer?'用户添加':'入选候选池 '+poolIds(player).join('、')}">${player.customPlayer?'<span class="dir-tag">自选</span>':poolIds(player).map(id => `<span class="dir-pool-letter">${id}</span>`).join('')}</span>
+    <span class="dir-pool-tags" aria-label="数据覆盖"><span class="dir-tag">${esc(coverageLabels[playerCoverage(player)])}</span></span>
     <span class="dir-player-arrow" aria-hidden="true">↗</span></button>`).join('') || '<div class="dir-empty">没有匹配的球员。试试英文姓名，或清除筛选条件。</div>';
   $('directory-range').textContent = filtered.length ? `第 ${start + 1}–${Math.min(start + PAGE_SIZE,filtered.length)} 位，共 ${filtered.length} 位` : '没有匹配结果';
   $('directory-page').textContent = `${page} / ${totalPages}`;
@@ -125,14 +131,15 @@ function renderBackground(player) {
   const draftText = draft && has(draft.year) ? [draft.year,has(draft.round) ? `第 ${draft.round} 轮` : null,has(draft.pick) ? `第 ${draft.pick} 顺位` : null,draft.team].filter(has).join(' · ') : null;
   const teams = list(player.teams);
   return `<section class="dir-detail-section"><h3>球员履历</h3><dl class="dir-facts">
+    ${fact('已收录联赛',textValue(playerLeagues(player).map(league=>leagueLabels[league])))}${fact('统计口径',textValue(player.statScope))}
     ${fact('场上位置',textValue(player.position ? `${player.position}${positionLabels[player.position] ? ' · ' + positionLabels[player.position] : ''}` : null))}
     ${fact('主要年代',textValue(player.era))}
     ${fact('首个赛季',textValue(player.firstSeason))}${fact('最近赛季',textValue(player.lastSeason))}
     ${fact('记录赛季数',countValue(player.seasons))}${fact('档案首赛',textValue(background.debutDate ? `${background.debutDate}${background.debutScope ? '（' + background.debutScope + '）' : '（联赛范围待核实）'}` : null))}
     ${fact('身高',textValue(height))}${fact('体重',textValue(weight))}
-    ${fact('出生日期',textValue(background.birthDate))}${fact('学院 / 大学',textValue(background.college))}
+    ${fact('出生日期',textValue(background.birthDate))}${fact('出生年份',textValue(background.birthYear))}${fact('国家 / 地区',textValue(background.country))}${fact('学院 / 大学',textValue(background.college))}
     ${fact('选秀记录',textValue(draftText))}${fact('数据状态',textValue(player.snapshotStatus === 'active' ? '快照末季仍有参赛记录' : player.snapshotStatus === 'retired' ? '生涯记录已结束（快照口径）' : null))}
-    </dl><p class="dir-detail-caption">生涯起止按数据中的 NBA / BAA 赛季记录展示，不等同于正式宣布出道或退役的年份；身高体重为来源记录值，不代表实时测量。</p>
+    </dl><p class="dir-detail-caption">生涯起止按已收录联赛的实际赛季记录展示，不等同于正式宣布出道或退役的年份；仅有注册或阵容资料时，赛季起止保持未知。身高体重为来源记录值，不代表实时测量。</p>
     <h3>效力球队</h3><div class="dir-teams">${teams.length ? teams.map(team => `<span class="dir-team">${esc(team.name || team.code)}${team.code && team.name && team.code !== team.name ? ` (${esc(team.code)})` : ''}${has(team.firstSeason) ? ` · ${esc(team.firstSeason)}${has(team.lastSeason) && team.firstSeason !== team.lastSeason ? ` — ${esc(team.lastSeason)}` : ''}` : ''}</span>`).join('') : '<span class="dir-value-missing">球队记录未收录</span>'}</div><p class="dir-detail-caption">每支球队列出首次与最后一次记录赛季，不代表期间连续效力。</p></section>`;
 }
 
@@ -143,23 +150,24 @@ function renderStats(player) {
     ['场均抢断','spg',1],['场均盖帽','bpg',1],['场均上场分钟','mpg',1],['累计得分','points',0],['累计篮板','rebounds',0],['累计助攻','assists',0],
     ['累计抢断','steals',0],['累计盖帽','blocks',0],['累计上场分钟','minutes',0],['真实命中率 TS%','ts',1,true]
   ];
-  const coverage = player.coverage || {}, meta = directory.meta || {};
+  const coverage = player.coverage || {}, meta = player.customPlayer ? {} : directory.meta || {};
   const through = [has(coverage.regularSeasonThrough ?? meta.regularSeasonThrough) ? `常规赛最后记录 ${coverage.regularSeasonThrough ?? meta.regularSeasonThrough}` : '',has(coverage.playoffsThrough ?? meta.playoffsThrough) ? `季后赛最后记录 ${coverage.playoffsThrough ?? meta.playoffsThrough}` : ''].filter(Boolean).join('；');
   const coverageKeys = {ppg:'points',rpg:'rebounds',apg:'assists',spg:'steals',bpg:'blocks',mpg:'minutes'};
   const partial = key => { const games = rs.metricCoverageGames?.[coverageKeys[key] || key]; return typeof games === 'number' && games > 0 && games < rs.games; };
   const partialNotes = rows.filter(([,key]) => partial(key) && !Object.hasOwn(coverageKeys,key)).map(([label,key]) => `${label}：${number(rs.metricCoverageGames[key])} / ${number(rs.games)} 场有记录`);
-  return `<section class="dir-detail-section"><h3>生涯数据</h3><table class="dir-stats"><caption class="sr-only">${esc(displayName(player))} 常规赛与季后赛数据</caption><thead><tr><th scope="col">指标</th><th scope="col">常规赛</th><th scope="col">季后赛</th></tr></thead><tbody>${rows.map(([label,key,digits,percentage]) => `<tr><td>${label}</td><td>${metric(rs[key],digits,percentage)}${partial(key) ? '<sup title="仅涵盖有记录赛季，见表后说明">†</sup>' : ''}</td><td>${metric(po[key],digits,percentage)}</td></tr>`).join('')}</tbody></table>
-    <p class="dir-detail-caption">${esc(through)}（赛季结束年）。— 表示未收录或该项未有可用记录，不代表 0。季后赛合计未收录，不从已四舍五入的场均倒推累计。${partialNotes.length ? `<br>† ${esc(partialNotes.join('；'))}。累计仅涵盖已观测赛季，场均也以有记录场数为分母。` : ''}</p></section>`;
+  return `<section class="dir-detail-section"><h3>生涯数据</h3><p class="dir-detail-caption">统计口径：${esc(player.statScope || '未取得可比较的生涯统计')}。多联赛履历不代表数据已跨联赛合计。</p><table class="dir-stats"><caption class="sr-only">${esc(displayName(player))} 常规赛与季后赛数据</caption><thead><tr><th scope="col">指标</th><th scope="col">常规赛</th><th scope="col">季后赛</th></tr></thead><tbody>${rows.map(([label,key,digits,percentage]) => `<tr><td>${label}</td><td>${metric(rs[key],digits,percentage)}${partial(key) ? '<sup title="仅涵盖有记录赛季，见表后说明">†</sup>' : ''}</td><td>${metric(po[key],digits,percentage)}</td></tr>`).join('')}</tbody></table>
+    <p class="dir-detail-caption">${through?esc(through)+'（赛季结束年）。':''}— 表示未收录或该项未有可用记录，不代表 0。季后赛合计未收录，不从已四舍五入的场均倒推累计。${partialNotes.length ? `<br>† ${esc(partialNotes.join('；'))}。累计仅涵盖已观测赛季，场均也以有记录场数为分母。` : ''}</p></section>`;
 }
 
 function renderAwards(player) {
+  if(!playerLeagues(player).includes('NBA'))return '<section class="dir-detail-section"><h3>生涯荣誉</h3><p>尚未取得可比较的完整联赛荣誉记录，未知不代表 0。</p></section>';
   const awards = player.awards || {};
   const awardFields = [['常规赛 MVP','mvp'],['总决赛 MVP','finalsMvp'],['最佳防守球员','dpoy'],['最佳阵容一阵','allNbaFirst'],['最佳阵容合计','allNba'],['最佳防守阵容','allDefense'],['全明星次数','allStar'],['总冠军次数','championships'],['总决赛次数','finalsAppearances']];
   return `<section class="dir-detail-section"><h3>生涯荣誉</h3><dl class="dir-facts">${awardFields.map(([label,key]) => fact(label,countValue(awards[key]))).join('')}${fact('篮球名人堂',booleanValue(awards.hallOfFame))}${fact('NBA 75 大',booleanValue(awards.nba75))}${fact('NBA 50 大',booleanValue(awards.nba50))}</dl><p class="dir-detail-caption">荣誉按当前数据快照统计；奖项的设立时间不同，早期球员的 0 次不等于不具备相应能力。</p></section>`;
 }
 
 function renderEligibility(player) {
-  if(player.customPlayer)return '<section class="dir-detail-section"><h3>为什么在当前比较池？</h3><p>这是'+(library.has(player.id)?'你从扩展档案选择的球员':'扩展档案预览，尚未加入当前比较池')+'，并非 A/B/C 默认入选者。添加操作不会改变原 '+basePlayers.length+' 位默认球员的指数或入选规则。</p><p class="dir-detail-caption">新增指标按档案明确的覆盖与固定参照计算；未计算项保持缺失，不以 50 冒充观测指数。可查看原始统计并选择高级模块。</p></section>';
+  if(player.customPlayer)return '<section class="dir-detail-section"><h3>为什么在当前比较池？</h3><p>这是有来源的全球已收录档案，自动进入球员库与排名实验室，并非 A/B/C 原始入选者。</p><p class="dir-detail-caption">可用指标按明确的数据覆盖与固定参照计算；未计算项保持缺失。仅有基础档案者不参与得分排名。数据覆盖：'+esc(coverageLabels[playerCoverage(player)])+'。</p></section>';
   const eligibility = player.eligibility || {}, ids = poolIds(player);
   const rankings = list(eligibility.externalRankings);
   const rankingList = rankings.length ? `<details class="dir-source-mapping"><summary>查看入选参考榜单中的位置</summary><ul class="dir-notes">${rankings.map(ranking => {
@@ -180,7 +188,7 @@ function renderCoverage(player) {
   const missingFields = list(coverage.missingFields);
   const notes = list(coverage.notes);
   const ids = new Set(list(coverage.sources));
-  const sourcePool=player.customPlayer?list(library.catalog()?.sources):list(directory.sources);
+  const sourcePool=[...new Map([...list(directory.sources),...list(library.catalog()?.sources)].map(source=>[source.id,source])).values()];
   const sources = sourcePool.filter(source => !ids.size || ids.has(source.id));
   const fieldLabels = {background:'球员背景',draft:'选秀',teams:'球队',regularSeason:'常规赛',playoffs:'季后赛',awards:'荣誉',eligibility:'入选依据'};
   const missingLabels = {country:'国家 / 地区',college:'学院 / 大学',draft:'选秀记录',birthDate:'出生日期',height:'身高',weight:'体重'};
@@ -194,13 +202,13 @@ function renderCoverage(player) {
 
 function showPlayer(id) {
   if(document.getElementById('language-dialog')?.open){document.addEventListener('goat:language-ready',()=>showPlayer(id),{once:true});return;}
-  const player = players.find(item => item.id === id) || library?.get(id);
+  const canonical=library?.get(id)?.id||id;
+  const player = players.find(item => item.id === canonical) || library?.get(canonical);
   if (!player) return;
   $('player-dialog-title').textContent = displayName(player);
   $('player-dialog-subtitle').textContent = [player.name,seasonRange(player)].filter(Boolean).join(' · ');
-  const included=!player.customPlayer || library.has(id);
-  $('player-dialog-body').innerHTML = `<div class="dir-detail-lead"><div class="dir-detail-tags">${[player.position,player.era,...poolIds(player).map(pool => `${pool} 池`),player.customPlayer?(included?'用户添加':'扩展库预览'):null].filter(has).map(tag => `<span class="dir-tag">${esc(tag)}</span>`).join('')}</div>${included?`<a class="button primary" href="/?player=${encodeURIComponent(player.id)}">去实验室为他评分 ↗</a>`:`<button id="add-profile-player" class="button primary" type="button">加入我的比较池 ＋</button>`}</div>${!included?'<p class="library-unselected-note">分享链接打开的是档案预览，不会自动修改你的名单。确认资料后，点击加入；该选择会在当前浏览器的两个页面共用。</p>':''}${renderBackground(player)}${renderStats(player)}${renderAwards(player)}${renderEligibility(player)}${renderCoverage(player)}`;
-  if(!included)$('add-profile-player').onclick=async()=>{await library.add(id);showPlayer(id);};
+  const nameNote=playerNameNote(player,getLanguage());
+  $('player-dialog-body').innerHTML = `<div class="dir-detail-lead"><div class="dir-detail-tags">${[player.position,player.era,...playerLeagues(player).map(league=>leagueLabels[league]),coverageLabels[playerCoverage(player)]].filter(has).map(tag => `<span class="dir-tag">${esc(tag)}</span>`).join('')}</div><a class="button primary" href="/?player=${encodeURIComponent(player.id)}">去实验室为他评分 ↗</a></div>${nameNote?'<p class="dir-detail-caption">'+esc(nameNote)+'</p>':''}${renderBackground(player)}${renderStats(player)}${renderAwards(player)}${renderEligibility(player)}${renderCoverage(player)}`;
   if (!$('player-dialog').open) $('player-dialog').showModal();
   $('player-dialog').scrollTop = 0;
   $('close-player-dialog').focus({preventScroll:true});
@@ -216,6 +224,7 @@ function setupDialog() {
     if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
   });
   dialog.addEventListener('close', () => { const url = new URL(location.href); url.searchParams.delete('player'); history.replaceState(null,'',url); });
+  document.addEventListener('goat:language-change',()=>{const id=new URL(location.href).searchParams.get('player');if(dialog.open&&id)showPlayer(id);});
 }
 
 async function init() {
@@ -224,10 +233,10 @@ async function init() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     directory = await response.json();
     if (!Array.isArray(directory.players) || !directory.players.length) throw new Error('球员数据为空');
-    basePlayers = directory.players.map(decoratePlayer).sort((a,b) => String(a.name).localeCompare(String(b.name),'en'));players=[...basePlayers];
+    basePlayers = directory.players.map(player=>decoratePlayer({...player,leagues:['NBA'],dataCoverage:playerCoverage(player),statScope:'NBA / BAA'})).sort((a,b) => String(a.name).localeCompare(String(b.name),'en'));players=[...basePlayers];
     registerNames(players);
     library=createPlayerLibrary({baseIds:basePlayers.map(p=>p.id),onChange:applySelection,onPreview:p=>showPlayer(p.id)});
-    try{await library.initialize();}catch{$('custom-player-summary').textContent='自选档案暂不可用，已保存选择不删除；先显示默认球员，可打开添加窗口重试。';}
+    try{await library.initialize();}catch{$('custom-player-summary').textContent='全球档案暂不可用，已保存收藏保留；先显示基础球员，可打开球员库重试。';}
     renderMethod(); setupFilters(); setupDialog(); renderList();directoryReady=true;
     $('directory-loading').hidden = true; $('directory-content').hidden = false;
     const selected = new URL(location.href).searchParams.get('player');

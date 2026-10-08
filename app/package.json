@@ -1,6 +1,6 @@
 {
   "name": "true-goat-lab",
-  "version": "0.13.1",
+  "version": "0.14.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -14,7 +14,8 @@
     "test:modules": "node tests/modules-browser-smoke.mjs",
     "test:themes": "node tests/themes-browser-smoke.mjs",
     "test:library": "node tests/player-library-browser-smoke.mjs",
-    "test": "node --test tests/model.test.mjs tests/guess.test.mjs tests/player-search.test.mjs tests/guess-data.test.mjs tests/guess-eligibility-data.test.mjs tests/onboarding.test.mjs tests/modules.test.mjs tests/themes.test.mjs tests/player-library.test.mjs tests/pool-variants.test.mjs tests/guess-readability.test.mjs tests/guess-custom.test.mjs tests/i18n.test.mjs tests/guess-coach.test.mjs",
+    "test:dimensions": "node --test tests/dimension-details.test.mjs tests/opponent-context.test.mjs && node tests/dimension-browser-smoke.mjs",
+    "test": "node --test tests/model.test.mjs tests/guess.test.mjs tests/player-search.test.mjs tests/guess-data.test.mjs tests/guess-eligibility-data.test.mjs tests/onboarding.test.mjs tests/modules.test.mjs tests/themes.test.mjs tests/player-library.test.mjs tests/pool-variants.test.mjs tests/guess-readability.test.mjs tests/guess-custom.test.mjs tests/i18n.test.mjs tests/guess-coach.test.mjs tests/global-catalog.test.mjs tests/dimension-details.test.mjs tests/opponent-context.test.mjs tests/custom.test.mjs",
     "test:server": "node --test tests/server.test.mjs",
     "test:browser": "node tests/browser-smoke.mjs && node tests/player-directory-smoke.mjs && node tests/guess-browser-smoke.mjs"
   },

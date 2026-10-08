@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 const screenshotPath = name => fileURLToPath(new URL(name, import.meta.url));
 import { DIMENSIONS, scorePlayer, rankPlayers } from '../model.mjs';
+import {loadLabFixture} from './lab-fixture.mjs';
 const browser=await chromium.launch(browserOptions);
 const base=process.env.GOAT_TEST_URL||'http://127.0.0.1:8765';
 const context=await browser.newContext({viewport:{width:1440,height:1000},acceptDownloads:true});
@@ -13,7 +14,7 @@ await context.addInitScript(()=>{for(const page of ['lab','directory','guess'])l
 const page=await context.newPage(),errors=[],results=[];
 const track=p=>{p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text());});};
 track(page);
-const payload=await(await fetch(base+'/data/players.json')).json(),players=payload.players;
+const fixture=await loadLabFixture(base),payload=fixture.payload,players=fixture.rawPlayers;
 const expertData=await(await fetch(base+'/data/experts.json')).json();
 const state=p=>(p||page).evaluate(()=>JSON.parse(localStorage.getItem('true-goat-v04')));
 const ready=p=>(p||page).locator('#workspace').waitFor({state:'visible'});
@@ -46,7 +47,7 @@ try {
     await page.locator('#model-dialog').screenshot({path:screenshotPath('additive-model.png')});
     const download=page.waitForEvent('download');await page.click('#export-model');const file=await download;
     const exported=JSON.parse(await readFile(await file.path(),'utf8')),s=await state();
-    const expected=rankPlayers(players,s.coefficients,s.priorCoefficient).slice(0,20);
+    const expected=rankPlayers(fixture.players(s),s.coefficients,s.priorCoefficient).slice(0,20);
     assert.equal(exported.v,4);assert.equal(exported.intercept,50);
     for(let i=0;i<20;i++){assert.equal(exported.top20[i].player_id,expected[i].player_id);assert.ok(Math.abs(exported.top20[i].score-expected[i].score)<1e-9);}
     await page.keyboard.press('Escape');
@@ -55,7 +56,7 @@ try {
     await setRange('prior-coef',0);for(const d of DIMENSIONS)await setRange('coef-'+d.key,0);
     const s=await state(),rows=rankPlayers(players,s.coefficients,0);
     assert.ok(rows.every(p=>p.score===50&&p.rank===1));
-    assert.match(await page.locator('#target-summary').innerText(),/300 位球员并列第 1 名/);
+    assert.ok((await page.locator('#target-summary').innerText()).includes(players.length+' 位球员并列第 1 名'));
     for(const d of DIMENSIONS)await setRange('coef-'+d.key,10);
     assert.ok(Number(await page.locator('#rank-rows .numeric').first().innerText())>100);
     await page.click('#reset');
@@ -85,11 +86,11 @@ try {
     assert.equal(v.score,50+(p.components.regular_season_score-50)/10);
     await page.click('#reset');
   });
-  await test('player query navigation, all 300 rows and search',async()=>{
+  await test('player query navigation, global pagination and search',async()=>{
     await page.goto(base+'/?player=bryanko01');await ready();assert.equal(await page.locator('#target-select').inputValue(),'bryanko01');
     assert.match(await page.locator('#target-profile-link').getAttribute('href'),/players\?player=bryanko01/);
-    await page.fill('#search','乔丹');assert.equal(await page.locator('#rank-rows tr[data-player]').count(),1);
-    await page.fill('#search','');await page.click('#show-all');assert.equal(await page.locator('#rank-rows tr[data-player]').count(),300);await page.click('#show-all');
+    await page.fill('#search','迈克尔·乔丹');assert.equal(await page.locator('#rank-rows tr[data-player="jordami01"]').count(),1);
+    await page.fill('#search','');await page.click('#show-all');assert.equal(await page.locator('#rank-rows tr[data-player]').count(),50);assert.ok((await page.locator('#result-count').innerText()).includes(String(players.length)));await page.click('#rank-next');assert.match(await page.locator('#rank-page').innerText(),/^2 \/ /);await page.click('#show-all');
   });
   await test('state survives reload, hash restoration and same-page hash changes',async()=>{
     await setRange('coef-peak',3.21);const s=await state();await page.reload();await ready();assert.deepEqual(await state(),s);
